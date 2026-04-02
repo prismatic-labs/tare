@@ -1176,12 +1176,18 @@ function fallbackCopy(text, btn) {
 }
 
 /* ─── Country selector ───────────────────────────────────────────────────── */
+function exposureWarning(multiplier) {
+  if (multiplier >= 2.0) return '⚠️⚠️ ';
+  if (multiplier >= 1.5) return '⚠️ ';
+  return '';
+}
+
 function populateCountrySelector() {
   const sel = document.getElementById('country-select');
   state.data.countries.forEach(c => {
     const opt = document.createElement('option');
     opt.value = c.code;
-    opt.textContent = `${c.name} (${c.currency})`;
+    opt.textContent = `${exposureWarning(c.impact_multiplier)}${c.name} (${c.currency})`;
     if (c.code === state.country) opt.selected = true;
     sel.appendChild(opt);
   });
