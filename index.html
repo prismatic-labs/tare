@@ -899,6 +899,18 @@ function formatEur(amount) {
   }).format(amount);
 }
 
+// Country-adjusted exposure: scale EU baseline by the country's impact multiplier
+function countryExposure(food, country) {
+  return Math.min(99, Math.round(food.crisis_exposure_pct * country.impact_multiplier));
+}
+
+function severityFromPct(pct) {
+  if (pct >= 60) return 'extreme';
+  if (pct >= 40) return 'high';
+  if (pct >= 20) return 'moderate';
+  return 'low';
+}
+
 function severityClass(s) {
   return `severity-${s}`;
 }
@@ -912,7 +924,10 @@ function escHtml(str) {
 }
 
 /* ─── Render Card ────────────────────────────────────────────────────────── */
-function renderCard(food) {
+function renderCard(food, country) {
+  const adjPct = countryExposure(food, country);
+  const sev    = severityFromPct(adjPct);
+
   const driversHtml = food.drivers.slice(0, 3).map(d => `
     <div class="driver-chip">
       <span class="driver-icon" aria-hidden="true">${driverIcon(d.category)}</span>
@@ -921,17 +936,15 @@ function renderCard(food) {
     </div>
   `).join('');
 
-  const sev = food.severity;
-
   return `
     <article
       class="card ${severityClass(sev)}"
       data-id="${escHtml(food.id)}"
       data-category="${escHtml(food.category)}"
-      data-exposure="${food.crisis_exposure_pct}"
+      data-exposure="${adjPct}"
       role="listitem"
       tabindex="0"
-      aria-label="${escHtml(food.name)}, ${food.crisis_exposure_pct}% crisis exposure, ${sev}"
+      aria-label="${escHtml(food.name)}, ${adjPct}% crisis exposure, ${sev}"
     >
       <div class="card-header">
         <span class="card-emoji" aria-hidden="true">${food.emoji}</span>
@@ -943,12 +956,12 @@ function renderCard(food) {
       </div>
 
       <div class="exposure-row">
-        <div class="exposure-number">${food.crisis_exposure_pct}%</div>
+        <div class="exposure-number">${adjPct}%</div>
         <div class="exposure-label">crisis<br>exposure</div>
       </div>
 
       <div class="bar-track" aria-hidden="true">
-        <div class="bar-fill" style="width:${food.crisis_exposure_pct}%"></div>
+        <div class="bar-fill" style="width:${adjPct}%"></div>
       </div>
 
       <div class="drivers-preview" aria-label="Main cost drivers">
@@ -982,8 +995,10 @@ function renderGrid() {
     );
   }
 
-  // Sort by exposure descending
-  foods.sort((a, b) => b.crisis_exposure_pct - a.crisis_exposure_pct);
+  const country = getCountry();
+
+  // Sort by country-adjusted exposure descending
+  foods.sort((a, b) => countryExposure(b, country) - countryExposure(a, country));
 
   const grid = document.getElementById('grid');
   const meta = document.getElementById('results-meta');
@@ -992,7 +1007,7 @@ function renderGrid() {
     grid.innerHTML = `<div class="empty-state"><p>🔍</p><p>No foods match "${escHtml(query)}"</p></div>`;
     meta.textContent = '0 results';
   } else {
-    grid.innerHTML = foods.map(renderCard).join('');
+    grid.innerHTML = foods.map(f => renderCard(f, country)).join('');
     const total = data.foods.length;
     meta.innerHTML = foods.length === total
       ? `Showing all <strong>${total}</strong> foods — sorted by crisis exposure`
@@ -1025,7 +1040,15 @@ function openFood(id) {
   window.location.hash = id;
 
   const country = getCountry();
-  const sev = food.severity;
+  const adjPct  = countryExposure(food, country);
+  const sev     = severityFromPct(adjPct);
+
+  // Show EU baseline note when country differs meaningfully from EU calibration
+  const euPct        = food.crisis_exposure_pct;
+  const showEuRef    = country.impact_multiplier !== 1.0 && Math.abs(adjPct - euPct) >= 3;
+  const euRefHtml    = showEuRef
+    ? `<span style="font-size:0.72rem;color:var(--muted-light);margin-left:0.5rem">(EU baseline: ${euPct}%)</span>`
+    : '';
 
   // Crisis deltas in EUR (how much the crisis has added to the EU reference price)
   const euDeltaToday = food.current_price_eur_kg   - food.base_price_eur_kg;
@@ -1068,14 +1091,14 @@ function openFood(id) {
         <h2 class="modal-title" id="modal-title">${escHtml(food.name)}</h2>
         <span class="badge badge-${sev}">${sev} crisis exposure</span>
         <div class="modal-exposure-row">
-          <div class="modal-exposure-big severity-${sev}" style="color:${barColors[sev]}">${food.crisis_exposure_pct}%</div>
-          <div class="modal-exposure-label">of retail price<br>linked to Hormuz inputs</div>
+          <div class="modal-exposure-big severity-${sev}" style="color:${barColors[sev]}">${adjPct}%</div>
+          <div class="modal-exposure-label">of retail price<br>linked to Hormuz inputs${euRefHtml}</div>
         </div>
       </div>
     </div>
 
     <div class="modal-bar-track" aria-hidden="true">
-      <div class="modal-bar-fill" style="width:${food.crisis_exposure_pct}%; background:${barColors[sev]}"></div>
+      <div class="modal-bar-fill" style="width:${adjPct}%; background:${barColors[sev]}"></div>
     </div>
 
     <p class="section-title">⚠️ Estimated crisis impact per kg — ${escHtml(country.name)}</p>
@@ -1141,7 +1164,9 @@ function shareFood(id) {
   if (!food) return;
 
   const url = `https://prismatic-labs.github.io/tare/#${id}`;
-  const text = `${food.crisis_exposure_pct}% of ${food.name.toLowerCase()}'s retail price is linked to Hormuz supply chain disruptions. Full breakdown: ${url} #tare #Hormuz`;
+  const country = getCountry();
+  const pct  = countryExposure(food, country);
+  const text = `${pct}% of ${food.name.toLowerCase()}'s retail price is linked to Hormuz supply chain disruptions (${country.name}). Full breakdown: ${url} #tare #Hormuz`;
 
   const btn = document.getElementById('modal-share-btn');
 
