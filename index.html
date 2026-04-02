@@ -1107,21 +1107,44 @@ function findSubstitutes(food, country, count = 2) {
 /* ─── #6 Country multiplier tooltip ─────────────────────────────────────── */
 function buildCountryTooltip(country, food) {
   if (country.impact_multiplier === 1.0) return '';
+
+  // EU reference country (IT, multiplier = 1.0) for comparison
+  const euRef = state.data.countries.find(c => c.impact_multiplier === 1.0 && c.code === 'IT')
+             || state.data.countries.find(c => c.impact_multiplier === 1.0);
+
   const oil  = country.hormuz_oil_dependency_pct;
   const lng  = country.hormuz_lng_dependency_pct;
   const fert = country.hormuz_fertilizer_dependency_pct;
-  const dir  = country.impact_multiplier > 1 ? 'more' : 'less';
-  const cats = [];
-  if (oil  != null) cats.push(`<strong>${oil}%</strong> of its crude oil`);
-  if (lng  != null) cats.push(`<strong>${lng}%</strong> of its LNG`);
-  if (fert != null) cats.push(`<strong>${fert}%</strong> of its fertilizer`);
-  const sources = cats.length ? cats.join(', ') : 'a significant share of key commodities';
+  const mult = country.impact_multiplier;
+  const dir  = mult > 1 ? 'above' : 'below';
+  const pctDiff = Math.abs(Math.round((mult - 1) * 100));
+
+  // Build a comparison row for each dimension where we have EU reference data
+  const rows = [];
+  if (oil  != null && euRef?.hormuz_oil_dependency_pct  != null) {
+    const arrow = oil  > euRef.hormuz_oil_dependency_pct  ? '↑' : oil  < euRef.hormuz_oil_dependency_pct  ? '↓' : '≈';
+    rows.push(`Crude oil: <strong>${oil}%</strong> ${arrow} EU ${euRef.hormuz_oil_dependency_pct}%`);
+  }
+  if (lng  != null && euRef?.hormuz_lng_dependency_pct  != null) {
+    const arrow = lng  > euRef.hormuz_lng_dependency_pct  ? '↑' : lng  < euRef.hormuz_lng_dependency_pct  ? '↓' : '≈';
+    rows.push(`LNG: <strong>${lng}%</strong> ${arrow} EU ${euRef.hormuz_lng_dependency_pct}%`);
+  }
+  if (fert != null && euRef?.hormuz_fertilizer_dependency_pct != null) {
+    const arrow = fert > euRef.hormuz_fertilizer_dependency_pct ? '↑' : fert < euRef.hormuz_fertilizer_dependency_pct ? '↓' : '≈';
+    rows.push(`Fertilizer: <strong>${fert}%</strong> ${arrow} EU ${euRef.hormuz_fertilizer_dependency_pct}%`);
+  }
+
+  // Explain how the multiplier is computed
+  const multExplain = mult === 1.0
+    ? 'on par with the EU baseline'
+    : `<strong>${mult}× the EU baseline</strong> — ${pctDiff}% ${dir} average. Oil carries the largest weight because it affects transport, heating, and packaging costs across every food category.`;
+
   return `
     <div class="country-detail" role="note">
-      <strong>${escHtml(country.name)}</strong> sources ${sources}
-      through the Strait of Hormuz — making it <strong>${country.impact_multiplier}× ${dir} exposed</strong>
-      than the EU baseline.
-      ${country.data_confidence !== 'high' ? `<br><em>Note: dependency figures for ${escHtml(country.name)} are estimated.</em>` : ''}
+      <strong>${escHtml(country.name)}</strong>'s Hormuz import dependency, vs the EU reference:
+      <br><span style="font-size:0.75rem;line-height:2;display:inline-block;margin-top:0.2rem">${rows.join(' &nbsp;·&nbsp; ')}</span>
+      <br>Combined exposure index: ${multExplain}
+      ${country.data_confidence !== 'high' ? `<br><em style="font-size:0.72rem">Figures for ${escHtml(country.name)} are estimated — treat as indicative.</em>` : ''}
     </div>`;
 }
 
@@ -1643,17 +1666,20 @@ function populateCountrySelector() {
 // Equirectangular positions for each country (as % of SVG width/height).
 // Formula: x = (lon + 180) / 360 * 100
 //          y = (83 - lat) / 148 * 100   (map spans ~83°N to ~-65°S = 148°)
+// Equirectangular base positions + manual nudges to prevent overlap
+// Formula: x=(lon+180)/360*100, y=(83-lat)/148*100
+// European countries (IT/DE/GB) are geographically close — nudged apart
 const COUNTRY_MAP_POS = {
-  IT: { left: '53.5%', top: '28.3%' }, // Rome        41.9°N  12.5°E
-  DE: { left: '53.7%', top: '20.6%' }, // Berlin      52.5°N  13.4°E
-  GB: { left: '49.7%', top: '21.3%' }, // London      51.5°N  -0.1°E
-  US: { left: '22.7%', top: '30.1%' }, // US centre   38.5°N  98.4°W
-  JP: { left: '88.8%', top: '32.0%' }, // Tokyo       35.7°N  139.7°E
-  IN: { left: '71.4%', top: '36.8%' }, // New Delhi   28.6°N  77.2°E
-  PH: { left: '83.6%', top: '46.2%' }, // Manila      14.6°N  121.0°E
-  BR: { left: '36.7%', top: '66.8%' }, // Brasília    15.8°S  47.9°W
-  AU: { left: '87.5%', top: '73.0%' }, // Centre AUS  25.0°S  135.0°E
-  LK: { left: '72.2%', top: '51.4%' }, // Colombo     6.9°N   79.9°E
+  IT: { left: '55.5%', top: '31.5%' }, // Rome   — nudged right+down from DE/GB
+  DE: { left: '53.7%', top: '22.5%' }, // Berlin — nudged slightly down
+  GB: { left: '48.5%', top: '24.0%' }, // London — nudged left
+  US: { left: '22.7%', top: '30.1%' }, // US centre
+  JP: { left: '88.8%', top: '32.0%' }, // Tokyo
+  IN: { left: '71.4%', top: '36.8%' }, // New Delhi
+  PH: { left: '84.5%', top: '46.2%' }, // Manila
+  BR: { left: '36.7%', top: '66.8%' }, // Brasília
+  AU: { left: '85.5%', top: '71.0%' }, // Centre AUS
+  LK: { left: '73.5%', top: '52.5%' }, // Colombo
 };
 
 const SEVERITY_COLOR = {
