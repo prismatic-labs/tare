@@ -495,6 +495,7 @@
     }
     .modal-back:hover { color: var(--text); }
 
+    .share-wrap { position: relative; }
     .modal-share-btn {
       font-family: var(--sans);
       font-size: 0.78rem;
@@ -507,7 +508,38 @@
       transition: background 0.15s;
     }
     .modal-share-btn:hover { background: var(--mid-green); }
-    .modal-share-btn.copied { background: #27AE60; }
+    .share-menu {
+      display: none;
+      position: absolute;
+      top: calc(100% + 6px);
+      right: 0;
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      min-width: 170px;
+      z-index: 200;
+      overflow: hidden;
+    }
+    .share-menu.open { display: block; }
+    .share-item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.55rem 0.9rem;
+      font-size: 0.82rem;
+      color: var(--text);
+      text-decoration: none;
+      cursor: pointer;
+      background: none;
+      border: none;
+      width: 100%;
+      font-family: var(--sans);
+      transition: background 0.12s;
+    }
+    .share-item:hover { background: #f5f0e8; }
+    .share-item-icon { font-size: 1rem; line-height: 1; width: 1.2rem; text-align: center; }
+    .share-divider { height: 1px; background: #eee; margin: 0; }
 
     .modal-body { padding: 1.25rem; }
 
@@ -917,7 +949,24 @@
       <button class="modal-back" id="modal-back-btn" aria-label="Close detail view">
         ← All foods
       </button>
-      <button class="modal-share-btn" id="modal-share-btn" aria-live="polite">Share</button>
+      <div class="share-wrap" id="share-wrap">
+        <button class="modal-share-btn" id="modal-share-btn" aria-haspopup="true" aria-expanded="false">Share ▾</button>
+        <div class="share-menu" id="share-menu" role="menu">
+          <a class="share-item" id="share-x" href="#" target="_blank" rel="noopener" role="menuitem">
+            <span class="share-item-icon">𝕏</span> Post on X
+          </a>
+          <a class="share-item" id="share-linkedin" href="#" target="_blank" rel="noopener" role="menuitem">
+            <span class="share-item-icon">in</span> Share on LinkedIn
+          </a>
+          <a class="share-item" id="share-whatsapp" href="#" target="_blank" rel="noopener" role="menuitem">
+            <span class="share-item-icon">💬</span> Send on WhatsApp
+          </a>
+          <div class="share-divider"></div>
+          <button class="share-item" id="share-copy" role="menuitem">
+            <span class="share-item-icon">🔗</span> <span id="share-copy-label">Copy link</span>
+          </button>
+        </div>
+      </div>
     </div>
     <div class="modal-body" id="modal-body"></div>
   </div>
@@ -1485,59 +1534,89 @@ function openFood(id) {
   attachSubCardListeners();
 
   // Reset share button
-  const shareBtn = document.getElementById('modal-share-btn');
-  shareBtn.textContent = 'Share';
-  shareBtn.classList.remove('copied');
-  shareBtn.dataset.foodId = id;
+  // Reset share menu
+  closeShareMenu();
+  document.getElementById('share-copy-label').textContent = 'Copy link';
+  document.getElementById('share-menu').querySelectorAll('a').forEach(a => a.href = '#');
+  document.getElementById('share-wrap').dataset.foodId = id;
 }
 
 function closeFood() {
   state.activeFood = null;
+  closeShareMenu();
   document.getElementById('modal-overlay').classList.remove('open');
   document.body.style.overflow = '';
   history.pushState('', document.title, window.location.pathname + window.location.search);
 }
 
-/* ─── Share ──────────────────────────────────────────────────────────────── */
-function shareFood(id) {
+/* ─── Share menu ─────────────────────────────────────────────────────────── */
+let _shareState = { id: null };
+
+function buildShareContent(id) {
   const food = state.data.foods.find(f => f.id === id);
-  if (!food) return;
-
-  const url = `https://prismatic-labs.github.io/tare/#${id}`;
+  if (!food) return null;
+  const url     = `https://prismatic-labs.github.io/tare/#${id}`;
   const country = getCountry();
-  const pct  = countryExposure(food, country);
-  const text = `${pct}% of ${food.name.toLowerCase()}'s retail price is linked to Hormuz supply chain disruptions (${country.name}). Full breakdown: ${url} #tare #Hormuz`;
+  const pct     = countryExposure(food, country);
+  const short   = `${pct}% of ${food.name.toLowerCase()}'s retail price is exposed to the Hormuz crisis (${country.name}).`;
+  const xText   = `${short} Full breakdown: ${url} #tare #Hormuz`;
+  const waText  = `${short}\n${url}`;
+  return { url, xText, waText, short };
+}
 
-  const btn = document.getElementById('modal-share-btn');
+function openShareMenu(id) {
+  _shareState.id = id;
+  const c = buildShareContent(id);
+  if (!c) return;
 
-  if (navigator.share) {
-    navigator.share({ title: `Tare — ${food.name}`, text, url }).catch(() => {});
-    return;
-  }
+  document.getElementById('share-x').href =
+    `https://twitter.com/intent/tweet?text=${encodeURIComponent(c.xText)}`;
 
+  document.getElementById('share-linkedin').href =
+    `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(c.url)}`;
+
+  document.getElementById('share-whatsapp').href =
+    `https://wa.me/?text=${encodeURIComponent(c.waText)}`;
+
+  const menu = document.getElementById('share-menu');
+  const btn  = document.getElementById('modal-share-btn');
+  const isOpen = menu.classList.toggle('open');
+  btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+}
+
+function closeShareMenu() {
+  document.getElementById('share-menu').classList.remove('open');
+  document.getElementById('modal-share-btn').setAttribute('aria-expanded', 'false');
+}
+
+function copyShareLink(id) {
+  const c = buildShareContent(id);
+  if (!c) return;
+  const label = document.getElementById('share-copy-label');
+  const doCopy = () => {
+    label.textContent = 'Copied!';
+    setTimeout(() => { label.textContent = 'Copy link'; }, 2000);
+    closeShareMenu();
+  };
   if (navigator.clipboard) {
-    navigator.clipboard.writeText(text).then(() => {
-      btn.textContent = 'Copied!';
-      btn.classList.add('copied');
-      setTimeout(() => { btn.textContent = 'Share'; btn.classList.remove('copied'); }, 2200);
-    }).catch(() => fallbackCopy(text, btn));
+    navigator.clipboard.writeText(c.url).then(doCopy).catch(() => {
+      _fallbackCopyText(c.url);
+      doCopy();
+    });
   } else {
-    fallbackCopy(text, btn);
+    _fallbackCopyText(c.url);
+    doCopy();
   }
 }
 
-function fallbackCopy(text, btn) {
+function _fallbackCopyText(text) {
   const ta = document.createElement('textarea');
   ta.value = text;
-  ta.style.position = 'fixed';
-  ta.style.opacity = '0';
+  ta.style.cssText = 'position:fixed;opacity:0';
   document.body.appendChild(ta);
   ta.select();
   document.execCommand('copy');
   document.body.removeChild(ta);
-  btn.textContent = 'Copied!';
-  btn.classList.add('copied');
-  setTimeout(() => { btn.textContent = 'Share'; btn.classList.remove('copied'); }, 2200);
 }
 
 /* ─── Country selector ───────────────────────────────────────────────────── */
@@ -1728,9 +1807,16 @@ async function init() {
     if (e.target === document.getElementById('modal-overlay')) closeFood();
   });
 
-  // Share button
-  document.getElementById('modal-share-btn').addEventListener('click', e => {
-    shareFood(e.currentTarget.dataset.foodId);
+  // Share menu toggle
+  document.getElementById('modal-share-btn').addEventListener('click', () => {
+    openShareMenu(document.getElementById('share-wrap').dataset.foodId);
+  });
+  document.getElementById('share-copy').addEventListener('click', () => {
+    copyShareLink(document.getElementById('share-wrap').dataset.foodId);
+  });
+  // Close share menu when clicking outside
+  document.addEventListener('click', e => {
+    if (!document.getElementById('share-wrap').contains(e.target)) closeShareMenu();
   });
 
   // Keyboard: Esc to close modal
