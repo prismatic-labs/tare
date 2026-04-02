@@ -32,7 +32,8 @@
       "hormuz_oil_dependency_pct": 14,
       "hormuz_lng_dependency_pct": 12,
       "hormuz_fertilizer_dependency_pct": 30,
-      "impact_multiplier": 1.0
+      "impact_multiplier": 1.0,
+      "price_level_index": 1.00
     },
     {
       "code": "GB",
@@ -41,7 +42,8 @@
       "hormuz_oil_dependency_pct": 12,
       "hormuz_lng_dependency_pct": 14,
       "hormuz_fertilizer_dependency_pct": 28,
-      "impact_multiplier": 1.05
+      "impact_multiplier": 1.05,
+      "price_level_index": 1.05
     },
     {
       "code": "JP",
@@ -50,7 +52,8 @@
       "hormuz_oil_dependency_pct": 70,
       "hormuz_lng_dependency_pct": 25,
       "hormuz_fertilizer_dependency_pct": 35,
-      "impact_multiplier": 2.1
+      "impact_multiplier": 2.1,
+      "price_level_index": 1.00
     },
     {
       "code": "PH",
@@ -59,7 +62,8 @@
       "hormuz_oil_dependency_pct": 98,
       "hormuz_lng_dependency_pct": 10,
       "hormuz_fertilizer_dependency_pct": 40,
-      "impact_multiplier": 2.8
+      "impact_multiplier": 2.8,
+      "price_level_index": 0.45
     },
     {
       "code": "US",
@@ -68,7 +72,8 @@
       "hormuz_oil_dependency_pct": 5,
       "hormuz_lng_dependency_pct": 2,
       "hormuz_fertilizer_dependency_pct": 15,
-      "impact_multiplier": 0.4
+      "impact_multiplier": 0.4,
+      "price_level_index": 1.30
     },
     {
       "code": "DE",
@@ -77,7 +82,8 @@
       "hormuz_oil_dependency_pct": 10,
       "hormuz_lng_dependency_pct": 15,
       "hormuz_fertilizer_dependency_pct": 28,
-      "impact_multiplier": 1.0
+      "impact_multiplier": 1.0,
+      "price_level_index": 0.95
     },
     {
       "code": "IN",
@@ -86,7 +92,8 @@
       "hormuz_oil_dependency_pct": 33,
       "hormuz_lng_dependency_pct": 18,
       "hormuz_fertilizer_dependency_pct": 35,
-      "impact_multiplier": 1.5
+      "impact_multiplier": 1.5,
+      "price_level_index": 0.45
     },
     {
       "code": "BR",
@@ -95,7 +102,8 @@
       "hormuz_oil_dependency_pct": 5,
       "hormuz_lng_dependency_pct": 3,
       "hormuz_fertilizer_dependency_pct": 48,
-      "impact_multiplier": 0.9
+      "impact_multiplier": 0.9,
+      "price_level_index": 0.75
     },
     {
       "code": "AU",
@@ -104,7 +112,8 @@
       "hormuz_oil_dependency_pct": 15,
       "hormuz_lng_dependency_pct": 5,
       "hormuz_fertilizer_dependency_pct": 20,
-      "impact_multiplier": 0.7
+      "impact_multiplier": 0.7,
+      "price_level_index": 1.25
     },
     {
       "code": "LK",
@@ -113,7 +122,8 @@
       "hormuz_oil_dependency_pct": 25,
       "hormuz_lng_dependency_pct": 12,
       "hormuz_fertilizer_dependency_pct": 38,
-      "impact_multiplier": 1.8
+      "impact_multiplier": 1.8,
+      "price_level_index": 0.40
     }
   ],
   "foods": [

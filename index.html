@@ -475,45 +475,72 @@
     }
     .modal-bar-fill { height: 100%; border-radius: 3px; }
 
-    /* Price table */
-    .price-table {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
-      background: var(--border);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
+    /* Impact table */
+    .impact-block {
       margin-bottom: 1.25rem;
     }
 
-    .price-cell {
+    .impact-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: var(--radius) var(--radius) 0 0;
+      overflow: hidden;
+    }
+
+    .impact-cell {
       background: var(--white);
-      padding: 0.8rem;
+      padding: 0.85rem;
       text-align: center;
     }
 
-    .price-cell-label {
+    .impact-cell-label {
       font-size: 0.65rem;
       text-transform: uppercase;
       letter-spacing: 0.06em;
       color: var(--muted-light);
-      margin-bottom: 0.25rem;
+      margin-bottom: 0.3rem;
     }
 
-    .price-cell-value {
+    .impact-cell-value {
       font-family: var(--serif);
-      font-size: 1.2rem;
-      color: var(--text);
+      font-size: 1.35rem;
+      color: var(--high);
     }
-    .price-cell.current .price-cell-value { color: var(--high); }
-    .price-cell.projected .price-cell-value { color: var(--extreme); }
+    .impact-cell.projected .impact-cell-value { color: var(--extreme); }
 
-    .price-cell-sub {
+    .impact-cell-sub {
       font-size: 0.65rem;
       color: var(--muted-light);
       margin-top: 0.15rem;
     }
+
+    .impact-eu-ref {
+      font-size: 0.72rem;
+      color: var(--muted);
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-top: none;
+      padding: 0.45rem 0.75rem;
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+    .impact-eu-ref span { white-space: nowrap; }
+
+    .impact-disclaimer {
+      font-size: 0.72rem;
+      color: var(--muted);
+      background: #fffbf0;
+      border: 1px solid #f0e8c8;
+      border-top: none;
+      border-radius: 0 0 var(--radius) var(--radius);
+      padding: 0.5rem 0.75rem;
+      line-height: 1.5;
+    }
+    .impact-disclaimer strong { color: var(--text); }
 
     /* Drivers section */
     .section-title {
@@ -788,28 +815,30 @@ function getCountry() {
          state.data.countries[0];
 }
 
-function formatPrice(eur, country) {
-  const rates = state.data.sources.exchange_rates;
+// Format a EUR delta as a signed local-currency string (e.g. "+¥389" or "+€2.40")
+function formatDelta(eurDelta, country) {
+  const rates    = state.data.sources.exchange_rates;
   const currency = country.currency;
-  const rate = rates[currency] || 1;
-  const amount = eur * rate;
-  const decimals = currency === 'JPY' || currency === 'LKR' ? 0 : 2;
+  const rate     = rates[currency] || 1;
+  const amount   = eurDelta * rate;
+  const decimals = (currency === 'JPY' || currency === 'LKR') ? 0 : 2;
   try {
-    return new Intl.NumberFormat(CURRENCY_LOCALES[currency] || 'en', {
-      style: 'currency',
-      currency,
+    const abs = new Intl.NumberFormat(CURRENCY_LOCALES[currency] || 'en', {
+      style: 'currency', currency,
       maximumFractionDigits: decimals,
       minimumFractionDigits: decimals,
-    }).format(amount);
+    }).format(Math.abs(amount));
+    return (amount >= 0 ? '+' : '−') + abs;
   } catch {
-    return `${currency} ${amount.toFixed(decimals)}`;
+    return `+${currency} ${Math.abs(amount).toFixed(decimals)}`;
   }
 }
 
-function adjustedPrice(food, priceEur, country) {
-  const base = food.base_price_eur_kg;
-  const delta = priceEur - base;
-  return base + delta * country.impact_multiplier;
+// Format a plain EUR amount for display in the EU reference row
+function formatEur(amount) {
+  return new Intl.NumberFormat('de-DE', {
+    style: 'currency', currency: 'EUR', maximumFractionDigits: 2,
+  }).format(amount);
 }
 
 function severityClass(s) {
@@ -940,9 +969,15 @@ function openFood(id) {
   const country = getCountry();
   const sev = food.severity;
 
-  const baseAdj     = adjustedPrice(food, food.base_price_eur_kg, country);
-  const currentAdj  = adjustedPrice(food, food.current_price_eur_kg, country);
-  const projAdj     = adjustedPrice(food, food.projected_price_eur_kg, country);
+  // Crisis deltas in EUR (how much the crisis has added to the EU reference price)
+  const euDeltaToday = food.current_price_eur_kg   - food.base_price_eur_kg;
+  const euDeltaProj  = food.projected_price_eur_kg - food.base_price_eur_kg;
+
+  // Country-scaled deltas: multiply by how exposed this country is to Hormuz
+  const localDeltaToday = euDeltaToday * country.impact_multiplier;
+  const localDeltaProj  = euDeltaProj  * country.impact_multiplier;
+
+  const isEuBaseline = country.impact_multiplier === 1.0 && country.currency === 'EUR';
 
   const driversHtml = food.drivers.map(d => `
     <div class="driver-row cat-${escHtml(d.category)}">
@@ -967,7 +1002,7 @@ function openFood(id) {
         <span class="badge badge-${sev}">${sev} crisis exposure</span>
         <div class="modal-exposure-row">
           <div class="modal-exposure-big severity-${sev}" style="color:${barColors[sev]}">${food.crisis_exposure_pct}%</div>
-          <div class="modal-exposure-label">of retail price<br>driven by the crisis</div>
+          <div class="modal-exposure-label">of retail price<br>linked to Hormuz inputs</div>
         </div>
       </div>
     </div>
@@ -976,22 +1011,34 @@ function openFood(id) {
       <div class="modal-bar-fill" style="width:${food.crisis_exposure_pct}%; background:${barColors[sev]}"></div>
     </div>
 
-    <p class="section-title">Price per kg — ${country.name} (${country.currency})</p>
-    <div class="price-table" role="table" aria-label="Price comparison">
-      <div class="price-cell" role="cell">
-        <div class="price-cell-label">Before crisis</div>
-        <div class="price-cell-value">${formatPrice(baseAdj, country)}</div>
-        <div class="price-cell-sub">pre Feb 2026</div>
+    <p class="section-title">⚠️ Estimated crisis impact per kg — ${escHtml(country.name)}</p>
+    <div class="impact-block">
+      <div class="impact-row" role="table" aria-label="Estimated crisis price impact">
+        <div class="impact-cell" role="cell">
+          <div class="impact-cell-label">Adding to price today</div>
+          <div class="impact-cell-value">${formatDelta(localDeltaToday, country)}</div>
+          <div class="impact-cell-sub">April 2026 estimate</div>
+        </div>
+        <div class="impact-cell projected" role="cell">
+          <div class="impact-cell-label">Adding to price (projected)</div>
+          <div class="impact-cell-value">${formatDelta(localDeltaProj, country)}</div>
+          <div class="impact-cell-sub">if disruption persists</div>
+        </div>
       </div>
-      <div class="price-cell current" role="cell">
-        <div class="price-cell-label">Now</div>
-        <div class="price-cell-value">${formatPrice(currentAdj, country)}</div>
-        <div class="price-cell-sub">April 2026</div>
-      </div>
-      <div class="price-cell projected" role="cell">
-        <div class="price-cell-label">Projected</div>
-        <div class="price-cell-value">${formatPrice(projAdj, country)}</div>
-        <div class="price-cell-sub">if crisis persists</div>
+      ${!isEuBaseline ? `
+      <div class="impact-eu-ref" aria-label="EU reference for comparison">
+        <span>EU reference:</span>
+        <span>today <strong>${formatEur(euDeltaToday)}/kg</strong></span>
+        <span>·</span>
+        <span>projected <strong>${formatEur(euDeltaProj)}/kg</strong></span>
+        <span>·</span>
+        <span>${escHtml(country.name)} has <strong>${country.impact_multiplier}×</strong> the EU's Hormuz exposure</span>
+      </div>` : ''}
+      <div class="impact-disclaimer">
+        <strong>⚠️ Estimates only.</strong> These figures show the crisis-driven increase in supply chain costs,
+        not absolute retail prices. Calculated from European cost-of-production data (FAO/USDA)
+        scaled by ${escHtml(country.name)}'s Hormuz import dependency coefficient.
+        Actual shelf prices vary by country, region, retailer, and market conditions.
       </div>
     </div>
 
