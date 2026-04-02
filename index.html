@@ -726,8 +726,8 @@
     <select id="country-select" aria-label="Select your country">
       <!-- Populated by JS -->
     </select>
-    <span class="country-caveat" aria-label="Note: impact figures are estimates">
-      ⚠️ Impact figures are <em>estimates</em> scaled to this country's Hormuz exposure coefficient — not sourced retail prices.
+    <span class="country-caveat" aria-label="Note on data confidence">
+      ⚠️ = limited local data · ⚠️⚠️ = extrapolated only. All figures are estimates — not sourced retail prices.
     </span>
   </div>
 </header>
@@ -1176,18 +1176,20 @@ function fallbackCopy(text, btn) {
 }
 
 /* ─── Country selector ───────────────────────────────────────────────────── */
-function exposureWarning(multiplier) {
-  if (multiplier >= 2.0) return '⚠️⚠️ ';
-  if (multiplier >= 1.5) return '⚠️ ';
-  return '';
-}
+const CONFIDENCE_LABEL = {
+  high:   { prefix: '',     title: 'Data confidence: high — calibrated from EU/USDA sources' },
+  medium: { prefix: '⚠️ ',  title: 'Data confidence: medium — impact coefficients are estimated, limited local source data' },
+  low:    { prefix: '⚠️⚠️ ', title: 'Data confidence: low — figures are extrapolated; treat as indicative only' },
+};
 
 function populateCountrySelector() {
   const sel = document.getElementById('country-select');
   state.data.countries.forEach(c => {
+    const conf = CONFIDENCE_LABEL[c.data_confidence] || CONFIDENCE_LABEL.medium;
     const opt = document.createElement('option');
     opt.value = c.code;
-    opt.textContent = `${exposureWarning(c.impact_multiplier)}${c.name} (${c.currency})`;
+    opt.textContent = `${conf.prefix}${c.name} (${c.currency})`;
+    opt.title = conf.title;
     if (c.code === state.country) opt.selected = true;
     sel.appendChild(opt);
   });
