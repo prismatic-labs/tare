@@ -33,7 +33,7 @@
       "hormuz_lng_dependency_pct": 12,
       "hormuz_fertilizer_dependency_pct": 30,
       "impact_multiplier": 1.0,
-      "price_level_index": 1.00,
+      "price_level_index": 1.0,
       "data_confidence": "high"
     },
     {
@@ -55,7 +55,7 @@
       "hormuz_lng_dependency_pct": 25,
       "hormuz_fertilizer_dependency_pct": 35,
       "impact_multiplier": 2.1,
-      "price_level_index": 1.00,
+      "price_level_index": 1.0,
       "data_confidence": "medium"
     },
     {
@@ -76,8 +76,8 @@
       "hormuz_oil_dependency_pct": 5,
       "hormuz_lng_dependency_pct": 2,
       "hormuz_fertilizer_dependency_pct": 15,
-      "impact_multiplier": 0.4,
-      "price_level_index": 1.30,
+      "impact_multiplier": 0.65,
+      "price_level_index": 1.3,
       "data_confidence": "high"
     },
     {
@@ -132,7 +132,7 @@
       "hormuz_lng_dependency_pct": 12,
       "hormuz_fertilizer_dependency_pct": 38,
       "impact_multiplier": 1.8,
-      "price_level_index": 0.40,
+      "price_level_index": 0.4,
       "data_confidence": "low"
     }
   ],
@@ -144,9 +144,9 @@
       "emoji": "🍗",
       "crisis_exposure_pct": 73,
       "severity": "extreme",
-      "base_price_eur_kg": 5.40,
-      "current_price_eur_kg": 7.80,
-      "projected_price_eur_kg": 9.50,
+      "base_price_eur_kg": 5.4,
+      "current_price_eur_kg": 7.8,
+      "projected_price_eur_kg": 9.5,
       "drivers": [
         {
           "input": "Nitrogen fertilizer",
@@ -182,9 +182,9 @@
       "emoji": "🍞",
       "crisis_exposure_pct": 32,
       "severity": "moderate",
-      "base_price_eur_kg": 2.10,
+      "base_price_eur_kg": 2.1,
       "current_price_eur_kg": 2.65,
-      "projected_price_eur_kg": 3.10,
+      "projected_price_eur_kg": 3.1,
       "drivers": [
         {
           "input": "Wheat farming",
@@ -214,9 +214,9 @@
       "emoji": "🍅",
       "crisis_exposure_pct": 45,
       "severity": "high",
-      "base_price_eur_kg": 3.20,
-      "current_price_eur_kg": 4.50,
-      "projected_price_eur_kg": 5.80,
+      "base_price_eur_kg": 3.2,
+      "current_price_eur_kg": 4.5,
+      "projected_price_eur_kg": 5.8,
       "drivers": [
         {
           "input": "Greenhouse heating",
@@ -246,9 +246,9 @@
       "emoji": "🍣",
       "crisis_exposure_pct": 65,
       "severity": "extreme",
-      "base_price_eur_kg": 18.50,
-      "current_price_eur_kg": 26.20,
-      "projected_price_eur_kg": 32.00,
+      "base_price_eur_kg": 18.5,
+      "current_price_eur_kg": 26.2,
+      "projected_price_eur_kg": 32.0,
       "drivers": [
         {
           "input": "Fish feed",
@@ -284,9 +284,9 @@
       "emoji": "🍚",
       "crisis_exposure_pct": 28,
       "severity": "moderate",
-      "base_price_eur_kg": 1.80,
-      "current_price_eur_kg": 2.20,
-      "projected_price_eur_kg": 2.60,
+      "base_price_eur_kg": 1.8,
+      "current_price_eur_kg": 2.2,
+      "projected_price_eur_kg": 2.6,
       "drivers": [
         {
           "input": "Urea fertilizer",
@@ -316,8 +316,8 @@
       "emoji": "🍝",
       "crisis_exposure_pct": 35,
       "severity": "moderate",
-      "base_price_eur_kg": 1.60,
-      "current_price_eur_kg": 2.10,
+      "base_price_eur_kg": 1.6,
+      "current_price_eur_kg": 2.1,
       "projected_price_eur_kg": 2.55,
       "drivers": [
         {
@@ -348,7 +348,7 @@
       "emoji": "🌾",
       "crisis_exposure_pct": 30,
       "severity": "moderate",
-      "base_price_eur_kg": 0.90,
+      "base_price_eur_kg": 0.9,
       "current_price_eur_kg": 1.15,
       "projected_price_eur_kg": 1.38,
       "drivers": [
@@ -380,8 +380,8 @@
       "emoji": "🥣",
       "crisis_exposure_pct": 16,
       "severity": "low",
-      "base_price_eur_kg": 1.40,
-      "current_price_eur_kg": 1.60,
+      "base_price_eur_kg": 1.4,
+      "current_price_eur_kg": 1.6,
       "projected_price_eur_kg": 1.75,
       "drivers": [
         {
@@ -406,9 +406,9 @@
       "emoji": "🌽",
       "crisis_exposure_pct": 28,
       "severity": "moderate",
-      "base_price_eur_kg": 3.20,
+      "base_price_eur_kg": 3.2,
       "current_price_eur_kg": 3.95,
-      "projected_price_eur_kg": 4.70,
+      "projected_price_eur_kg": 4.7,
       "drivers": [
         {
           "input": "Corn farming",
@@ -438,9 +438,9 @@
       "emoji": "🫙",
       "crisis_exposure_pct": 33,
       "severity": "moderate",
-      "base_price_eur_kg": 1.90,
+      "base_price_eur_kg": 1.9,
       "current_price_eur_kg": 2.45,
-      "projected_price_eur_kg": 2.90,
+      "projected_price_eur_kg": 2.9,
       "drivers": [
         {
           "input": "Durum wheat farming",
@@ -470,9 +470,9 @@
       "emoji": "🍜",
       "crisis_exposure_pct": 58,
       "severity": "high",
-      "base_price_eur_kg": 3.50,
-      "current_price_eur_kg": 5.00,
-      "projected_price_eur_kg": 6.20,
+      "base_price_eur_kg": 3.5,
+      "current_price_eur_kg": 5.0,
+      "projected_price_eur_kg": 6.2,
       "drivers": [
         {
           "input": "Wheat and palm oil",
@@ -508,9 +508,9 @@
       "emoji": "🍘",
       "crisis_exposure_pct": 24,
       "severity": "moderate",
-      "base_price_eur_kg": 3.00,
+      "base_price_eur_kg": 3.0,
       "current_price_eur_kg": 3.65,
-      "projected_price_eur_kg": 4.20,
+      "projected_price_eur_kg": 4.2,
       "drivers": [
         {
           "input": "Wheat farming",
@@ -540,9 +540,9 @@
       "emoji": "🥩",
       "crisis_exposure_pct": 55,
       "severity": "high",
-      "base_price_eur_kg": 12.00,
-      "current_price_eur_kg": 16.50,
-      "projected_price_eur_kg": 20.00,
+      "base_price_eur_kg": 12.0,
+      "current_price_eur_kg": 16.5,
+      "projected_price_eur_kg": 20.0,
       "drivers": [
         {
           "input": "Feed grain costs",
@@ -578,9 +578,9 @@
       "emoji": "🥓",
       "crisis_exposure_pct": 48,
       "severity": "high",
-      "base_price_eur_kg": 6.50,
-      "current_price_eur_kg": 8.80,
-      "projected_price_eur_kg": 10.80,
+      "base_price_eur_kg": 6.5,
+      "current_price_eur_kg": 8.8,
+      "projected_price_eur_kg": 10.8,
       "drivers": [
         {
           "input": "Feed costs",
@@ -610,9 +610,9 @@
       "emoji": "🍖",
       "crisis_exposure_pct": 52,
       "severity": "high",
-      "base_price_eur_kg": 14.00,
-      "current_price_eur_kg": 18.50,
-      "projected_price_eur_kg": 23.00,
+      "base_price_eur_kg": 14.0,
+      "current_price_eur_kg": 18.5,
+      "projected_price_eur_kg": 23.0,
       "drivers": [
         {
           "input": "Pasture fertilizer",
@@ -648,9 +648,9 @@
       "emoji": "🦃",
       "crisis_exposure_pct": 45,
       "severity": "high",
-      "base_price_eur_kg": 7.00,
-      "current_price_eur_kg": 9.50,
-      "projected_price_eur_kg": 12.00,
+      "base_price_eur_kg": 7.0,
+      "current_price_eur_kg": 9.5,
+      "projected_price_eur_kg": 12.0,
       "drivers": [
         {
           "input": "Feed grain",
@@ -680,9 +680,9 @@
       "emoji": "🌭",
       "crisis_exposure_pct": 58,
       "severity": "high",
-      "base_price_eur_kg": 5.50,
-      "current_price_eur_kg": 7.80,
-      "projected_price_eur_kg": 9.50,
+      "base_price_eur_kg": 5.5,
+      "current_price_eur_kg": 7.8,
+      "projected_price_eur_kg": 9.5,
       "drivers": [
         {
           "input": "Pork and feed costs",
@@ -718,7 +718,7 @@
       "emoji": "🥛",
       "crisis_exposure_pct": 35,
       "severity": "moderate",
-      "base_price_eur_kg": 1.20,
+      "base_price_eur_kg": 1.2,
       "current_price_eur_kg": 1.55,
       "projected_price_eur_kg": 1.85,
       "drivers": [
@@ -750,9 +750,9 @@
       "emoji": "🧀",
       "crisis_exposure_pct": 42,
       "severity": "high",
-      "base_price_eur_kg": 8.50,
-      "current_price_eur_kg": 12.00,
-      "projected_price_eur_kg": 15.00,
+      "base_price_eur_kg": 8.5,
+      "current_price_eur_kg": 12.0,
+      "projected_price_eur_kg": 15.0,
       "drivers": [
         {
           "input": "Milk production costs",
@@ -782,9 +782,9 @@
       "emoji": "🧈",
       "crisis_exposure_pct": 48,
       "severity": "high",
-      "base_price_eur_kg": 6.00,
-      "current_price_eur_kg": 8.80,
-      "projected_price_eur_kg": 11.00,
+      "base_price_eur_kg": 6.0,
+      "current_price_eur_kg": 8.8,
+      "projected_price_eur_kg": 11.0,
       "drivers": [
         {
           "input": "Cream and milk",
@@ -814,7 +814,7 @@
       "emoji": "🫙",
       "crisis_exposure_pct": 38,
       "severity": "moderate",
-      "base_price_eur_kg": 1.80,
+      "base_price_eur_kg": 1.8,
       "current_price_eur_kg": 2.35,
       "projected_price_eur_kg": 2.85,
       "drivers": [
@@ -846,9 +846,9 @@
       "emoji": "🥚",
       "crisis_exposure_pct": 55,
       "severity": "high",
-      "base_price_eur_kg": 3.50,
-      "current_price_eur_kg": 5.20,
-      "projected_price_eur_kg": 6.50,
+      "base_price_eur_kg": 3.5,
+      "current_price_eur_kg": 5.2,
+      "projected_price_eur_kg": 6.5,
       "drivers": [
         {
           "input": "Poultry feed",
@@ -878,9 +878,9 @@
       "emoji": "🍦",
       "crisis_exposure_pct": 40,
       "severity": "high",
-      "base_price_eur_kg": 4.00,
-      "current_price_eur_kg": 5.50,
-      "projected_price_eur_kg": 6.80,
+      "base_price_eur_kg": 4.0,
+      "current_price_eur_kg": 5.5,
+      "projected_price_eur_kg": 6.8,
       "drivers": [
         {
           "input": "Dairy feed",
@@ -910,7 +910,7 @@
       "emoji": "🥔",
       "crisis_exposure_pct": 28,
       "severity": "moderate",
-      "base_price_eur_kg": 0.90,
+      "base_price_eur_kg": 0.9,
       "current_price_eur_kg": 1.15,
       "projected_price_eur_kg": 1.35,
       "drivers": [
@@ -942,7 +942,7 @@
       "emoji": "🧅",
       "crisis_exposure_pct": 22,
       "severity": "moderate",
-      "base_price_eur_kg": 0.80,
+      "base_price_eur_kg": 0.8,
       "current_price_eur_kg": 0.98,
       "projected_price_eur_kg": 1.15,
       "drivers": [
@@ -968,8 +968,8 @@
       "emoji": "🍌",
       "crisis_exposure_pct": 32,
       "severity": "moderate",
-      "base_price_eur_kg": 1.40,
-      "current_price_eur_kg": 1.80,
+      "base_price_eur_kg": 1.4,
+      "current_price_eur_kg": 1.8,
       "projected_price_eur_kg": 2.15,
       "drivers": [
         {
@@ -1000,9 +1000,9 @@
       "emoji": "🍎",
       "crisis_exposure_pct": 18,
       "severity": "low",
-      "base_price_eur_kg": 1.80,
+      "base_price_eur_kg": 1.8,
       "current_price_eur_kg": 2.08,
-      "projected_price_eur_kg": 2.30,
+      "projected_price_eur_kg": 2.3,
       "drivers": [
         {
           "input": "Orchard fertilizer",
@@ -1026,7 +1026,7 @@
       "emoji": "🍊",
       "crisis_exposure_pct": 16,
       "severity": "low",
-      "base_price_eur_kg": 1.50,
+      "base_price_eur_kg": 1.5,
       "current_price_eur_kg": 1.74,
       "projected_price_eur_kg": 1.95,
       "drivers": [
@@ -1052,8 +1052,8 @@
       "emoji": "🥬",
       "crisis_exposure_pct": 12,
       "severity": "low",
-      "base_price_eur_kg": 1.60,
-      "current_price_eur_kg": 1.80,
+      "base_price_eur_kg": 1.6,
+      "current_price_eur_kg": 1.8,
       "projected_price_eur_kg": 1.95,
       "drivers": [
         {
@@ -1078,9 +1078,9 @@
       "emoji": "🫑",
       "crisis_exposure_pct": 42,
       "severity": "high",
-      "base_price_eur_kg": 2.80,
-      "current_price_eur_kg": 4.00,
-      "projected_price_eur_kg": 5.20,
+      "base_price_eur_kg": 2.8,
+      "current_price_eur_kg": 4.0,
+      "projected_price_eur_kg": 5.2,
       "drivers": [
         {
           "input": "Greenhouse heating",
@@ -1110,7 +1110,7 @@
       "emoji": "🥕",
       "crisis_exposure_pct": 14,
       "severity": "low",
-      "base_price_eur_kg": 0.90,
+      "base_price_eur_kg": 0.9,
       "current_price_eur_kg": 1.03,
       "projected_price_eur_kg": 1.15,
       "drivers": [
@@ -1136,9 +1136,9 @@
       "emoji": "🥑",
       "crisis_exposure_pct": 48,
       "severity": "high",
-      "base_price_eur_kg": 2.50,
-      "current_price_eur_kg": 3.60,
-      "projected_price_eur_kg": 4.50,
+      "base_price_eur_kg": 2.5,
+      "current_price_eur_kg": 3.6,
+      "projected_price_eur_kg": 4.5,
       "drivers": [
         {
           "input": "Long-haul refrigerated freight",
@@ -1168,9 +1168,9 @@
       "emoji": "🧄",
       "crisis_exposure_pct": 16,
       "severity": "low",
-      "base_price_eur_kg": 4.00,
+      "base_price_eur_kg": 4.0,
       "current_price_eur_kg": 4.65,
-      "projected_price_eur_kg": 5.20,
+      "projected_price_eur_kg": 5.2,
       "drivers": [
         {
           "input": "Fertilizer",
@@ -1194,9 +1194,9 @@
       "emoji": "🥒",
       "crisis_exposure_pct": 38,
       "severity": "moderate",
-      "base_price_eur_kg": 1.20,
+      "base_price_eur_kg": 1.2,
       "current_price_eur_kg": 1.55,
-      "projected_price_eur_kg": 1.90,
+      "projected_price_eur_kg": 1.9,
       "drivers": [
         {
           "input": "Greenhouse gas heating",
@@ -1220,9 +1220,9 @@
       "emoji": "🦐",
       "crisis_exposure_pct": 68,
       "severity": "extreme",
-      "base_price_eur_kg": 15.00,
-      "current_price_eur_kg": 22.00,
-      "projected_price_eur_kg": 28.00,
+      "base_price_eur_kg": 15.0,
+      "current_price_eur_kg": 22.0,
+      "projected_price_eur_kg": 28.0,
       "drivers": [
         {
           "input": "Shrimp feed",
@@ -1258,9 +1258,9 @@
       "emoji": "🐟",
       "crisis_exposure_pct": 35,
       "severity": "moderate",
-      "base_price_eur_kg": 4.50,
-      "current_price_eur_kg": 5.80,
-      "projected_price_eur_kg": 7.00,
+      "base_price_eur_kg": 4.5,
+      "current_price_eur_kg": 5.8,
+      "projected_price_eur_kg": 7.0,
       "drivers": [
         {
           "input": "Fishing vessel fuel",
@@ -1290,9 +1290,9 @@
       "emoji": "🐠",
       "crisis_exposure_pct": 38,
       "severity": "moderate",
-      "base_price_eur_kg": 12.00,
-      "current_price_eur_kg": 15.50,
-      "projected_price_eur_kg": 18.50,
+      "base_price_eur_kg": 12.0,
+      "current_price_eur_kg": 15.5,
+      "projected_price_eur_kg": 18.5,
       "drivers": [
         {
           "input": "Fishing and trawling fuel",
@@ -1322,9 +1322,9 @@
       "emoji": "🥫",
       "crisis_exposure_pct": 62,
       "severity": "extreme",
-      "base_price_eur_kg": 4.00,
-      "current_price_eur_kg": 5.80,
-      "projected_price_eur_kg": 7.20,
+      "base_price_eur_kg": 4.0,
+      "current_price_eur_kg": 5.8,
+      "projected_price_eur_kg": 7.2,
       "drivers": [
         {
           "input": "Long-range fishing fleets",
@@ -1360,9 +1360,9 @@
       "emoji": "🫙",
       "crisis_exposure_pct": 72,
       "severity": "extreme",
-      "base_price_eur_kg": 2.50,
-      "current_price_eur_kg": 4.20,
-      "projected_price_eur_kg": 5.80,
+      "base_price_eur_kg": 2.5,
+      "current_price_eur_kg": 4.2,
+      "projected_price_eur_kg": 5.8,
       "drivers": [
         {
           "input": "Oilseed fertilizer",
@@ -1398,9 +1398,9 @@
       "emoji": "🍕",
       "crisis_exposure_pct": 75,
       "severity": "extreme",
-      "base_price_eur_kg": 4.50,
-      "current_price_eur_kg": 6.50,
-      "projected_price_eur_kg": 8.50,
+      "base_price_eur_kg": 4.5,
+      "current_price_eur_kg": 6.5,
+      "projected_price_eur_kg": 8.5,
       "drivers": [
         {
           "input": "Wheat, cheese, and meat",
@@ -1436,9 +1436,9 @@
       "emoji": "🍫",
       "crisis_exposure_pct": 52,
       "severity": "high",
-      "base_price_eur_kg": 8.00,
-      "current_price_eur_kg": 11.50,
-      "projected_price_eur_kg": 14.00,
+      "base_price_eur_kg": 8.0,
+      "current_price_eur_kg": 11.5,
+      "projected_price_eur_kg": 14.0,
       "drivers": [
         {
           "input": "Cocoa farming",
@@ -1474,9 +1474,9 @@
       "emoji": "🥔",
       "crisis_exposure_pct": 68,
       "severity": "extreme",
-      "base_price_eur_kg": 5.50,
-      "current_price_eur_kg": 8.00,
-      "projected_price_eur_kg": 10.50,
+      "base_price_eur_kg": 5.5,
+      "current_price_eur_kg": 8.0,
+      "projected_price_eur_kg": 10.5,
       "drivers": [
         {
           "input": "Potato farming",
@@ -1512,9 +1512,9 @@
       "emoji": "🍪",
       "crisis_exposure_pct": 42,
       "severity": "high",
-      "base_price_eur_kg": 4.00,
-      "current_price_eur_kg": 5.60,
-      "projected_price_eur_kg": 7.00,
+      "base_price_eur_kg": 4.0,
+      "current_price_eur_kg": 5.6,
+      "projected_price_eur_kg": 7.0,
       "drivers": [
         {
           "input": "Wheat and sugar",
@@ -1544,8 +1544,8 @@
       "emoji": "🥤",
       "crisis_exposure_pct": 45,
       "severity": "high",
-      "base_price_eur_kg": 0.80,
-      "current_price_eur_kg": 1.10,
+      "base_price_eur_kg": 0.8,
+      "current_price_eur_kg": 1.1,
       "projected_price_eur_kg": 1.35,
       "drivers": [
         {
@@ -1576,9 +1576,9 @@
       "emoji": "🍺",
       "crisis_exposure_pct": 40,
       "severity": "high",
-      "base_price_eur_kg": 1.80,
-      "current_price_eur_kg": 2.50,
-      "projected_price_eur_kg": 3.20,
+      "base_price_eur_kg": 1.8,
+      "current_price_eur_kg": 2.5,
+      "projected_price_eur_kg": 3.2,
       "drivers": [
         {
           "input": "Barley and malt",
@@ -1608,9 +1608,9 @@
       "emoji": "☕",
       "crisis_exposure_pct": 55,
       "severity": "high",
-      "base_price_eur_kg": 12.00,
-      "current_price_eur_kg": 18.00,
-      "projected_price_eur_kg": 24.00,
+      "base_price_eur_kg": 12.0,
+      "current_price_eur_kg": 18.0,
+      "projected_price_eur_kg": 24.0,
       "drivers": [
         {
           "input": "Plantation fertilizer",
@@ -1646,7 +1646,7 @@
       "emoji": "🍬",
       "crisis_exposure_pct": 30,
       "severity": "moderate",
-      "base_price_eur_kg": 1.20,
+      "base_price_eur_kg": 1.2,
       "current_price_eur_kg": 1.55,
       "projected_price_eur_kg": 1.85,
       "drivers": [
@@ -1672,9 +1672,9 @@
       "emoji": "🥜",
       "crisis_exposure_pct": 50,
       "severity": "high",
-      "base_price_eur_kg": 5.50,
-      "current_price_eur_kg": 7.80,
-      "projected_price_eur_kg": 9.50,
+      "base_price_eur_kg": 5.5,
+      "current_price_eur_kg": 7.8,
+      "projected_price_eur_kg": 9.5,
       "drivers": [
         {
           "input": "Peanut farming",
@@ -1710,9 +1710,9 @@
       "emoji": "🍊",
       "crisis_exposure_pct": 32,
       "severity": "moderate",
-      "base_price_eur_kg": 1.80,
-      "current_price_eur_kg": 2.30,
-      "projected_price_eur_kg": 2.80,
+      "base_price_eur_kg": 1.8,
+      "current_price_eur_kg": 2.3,
+      "projected_price_eur_kg": 2.8,
       "drivers": [
         {
           "input": "Brazilian orange farming",
@@ -1742,9 +1742,9 @@
       "emoji": "🫙",
       "crisis_exposure_pct": 48,
       "severity": "high",
-      "base_price_eur_kg": 4.50,
-      "current_price_eur_kg": 6.50,
-      "projected_price_eur_kg": 8.20,
+      "base_price_eur_kg": 4.5,
+      "current_price_eur_kg": 6.5,
+      "projected_price_eur_kg": 8.2,
       "drivers": [
         {
           "input": "Vegetable oil",
@@ -1774,9 +1774,9 @@
       "emoji": "🍅",
       "crisis_exposure_pct": 36,
       "severity": "moderate",
-      "base_price_eur_kg": 2.00,
-      "current_price_eur_kg": 2.60,
-      "projected_price_eur_kg": 3.20,
+      "base_price_eur_kg": 2.0,
+      "current_price_eur_kg": 2.6,
+      "projected_price_eur_kg": 3.2,
       "drivers": [
         {
           "input": "Tomato farming",
@@ -1806,9 +1806,9 @@
       "emoji": "🍼",
       "crisis_exposure_pct": 65,
       "severity": "extreme",
-      "base_price_eur_kg": 25.00,
-      "current_price_eur_kg": 38.00,
-      "projected_price_eur_kg": 48.00,
+      "base_price_eur_kg": 25.0,
+      "current_price_eur_kg": 38.0,
+      "projected_price_eur_kg": 48.0,
       "drivers": [
         {
           "input": "Dairy base",
@@ -1844,8 +1844,8 @@
       "emoji": "🫘",
       "crisis_exposure_pct": 18,
       "severity": "low",
-      "base_price_eur_kg": 1.80,
-      "current_price_eur_kg": 2.10,
+      "base_price_eur_kg": 1.8,
+      "current_price_eur_kg": 2.1,
       "projected_price_eur_kg": 2.35,
       "drivers": [
         {
@@ -1870,8 +1870,8 @@
       "emoji": "🫘",
       "crisis_exposure_pct": 15,
       "severity": "low",
-      "base_price_eur_kg": 2.00,
-      "current_price_eur_kg": 2.30,
+      "base_price_eur_kg": 2.0,
+      "current_price_eur_kg": 2.3,
       "projected_price_eur_kg": 2.55,
       "drivers": [
         {
@@ -1896,9 +1896,9 @@
       "emoji": "🫕",
       "crisis_exposure_pct": 25,
       "severity": "moderate",
-      "base_price_eur_kg": 2.80,
-      "current_price_eur_kg": 3.50,
-      "projected_price_eur_kg": 4.10,
+      "base_price_eur_kg": 2.8,
+      "current_price_eur_kg": 3.5,
+      "projected_price_eur_kg": 4.1,
       "drivers": [
         {
           "input": "Soybean farming",
@@ -1928,9 +1928,9 @@
       "emoji": "🫘",
       "crisis_exposure_pct": 12,
       "severity": "low",
-      "base_price_eur_kg": 1.50,
+      "base_price_eur_kg": 1.5,
       "current_price_eur_kg": 1.72,
-      "projected_price_eur_kg": 1.90,
+      "projected_price_eur_kg": 1.9,
       "drivers": [
         {
           "input": "Nitrogen fixing",
@@ -1954,9 +1954,9 @@
       "emoji": "🌾",
       "crisis_exposure_pct": 28,
       "severity": "moderate",
-      "base_price_eur_kg": 6.00,
-      "current_price_eur_kg": 7.80,
-      "projected_price_eur_kg": 9.20,
+      "base_price_eur_kg": 6.0,
+      "current_price_eur_kg": 7.8,
+      "projected_price_eur_kg": 9.2,
       "drivers": [
         {
           "input": "Andean farming",
@@ -1986,9 +1986,9 @@
       "emoji": "🫒",
       "crisis_exposure_pct": 38,
       "severity": "moderate",
-      "base_price_eur_kg": 9.00,
-      "current_price_eur_kg": 12.00,
-      "projected_price_eur_kg": 15.50,
+      "base_price_eur_kg": 9.0,
+      "current_price_eur_kg": 12.0,
+      "projected_price_eur_kg": 15.5,
       "drivers": [
         {
           "input": "Grove fertilizer",
@@ -2024,8 +2024,8 @@
       "emoji": "🟢",
       "crisis_exposure_pct": 28,
       "severity": "moderate",
-      "base_price_eur_kg": 1.50,
-      "current_price_eur_kg": 1.90,
+      "base_price_eur_kg": 1.5,
+      "current_price_eur_kg": 1.9,
       "projected_price_eur_kg": 2.25,
       "drivers": [
         {
