@@ -101,10 +101,76 @@
       background: #5dbb6d;
       animation: pulse 2s ease-in-out infinite;
     }
+    .pulse-dot.delayed { background: #E67E22; }
     @keyframes pulse {
       0%, 100% { opacity: 1; transform: scale(1); }
       50%       { opacity: 0.5; transform: scale(0.8); }
     }
+
+    /* Sparkline on cards */
+    .sparkline { display: block; width: 100%; height: 28px; margin-top: 0.4rem; }
+    .sparkline-line { fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* Substitution engine */
+    .sub-section { margin-top: 1.4rem; }
+    .sub-section .section-title { margin-bottom: 0.6rem; }
+    .sub-cards { display: flex; gap: 0.7rem; flex-wrap: wrap; }
+    .sub-card {
+      flex: 1 1 120px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 10px;
+      padding: 0.7rem 0.9rem;
+      cursor: pointer;
+      transition: background 0.15s;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .sub-card:hover { background: rgba(255,255,255,0.12); }
+    .sub-card-emoji { font-size: 1.3rem; }
+    .sub-card-info { flex: 1; min-width: 0; }
+    .sub-card-name { font-weight: 600; font-size: 0.85rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .sub-card-pct { font-size: 0.75rem; color: var(--muted-light); }
+
+    /* Contextual country tooltip */
+    .country-detail {
+      margin: 0.8rem 0 0;
+      padding: 0.65rem 0.9rem;
+      background: rgba(255,255,255,0.05);
+      border-left: 3px solid rgba(255,255,255,0.2);
+      border-radius: 0 8px 8px 0;
+      font-size: 0.78rem;
+      color: rgba(245, 240, 232, 0.7);
+      line-height: 1.5;
+    }
+    .country-detail strong { color: var(--cream); }
+
+    /* View the Math */
+    .math-details {
+      margin-top: 0.8rem;
+    }
+    .math-details summary {
+      cursor: pointer;
+      font-size: 0.78rem;
+      color: rgba(245, 240, 232, 0.5);
+      user-select: none;
+      list-style: none;
+      display: flex; align-items: center; gap: 0.3rem;
+    }
+    .math-details summary::before { content: '▶'; font-size: 0.6rem; }
+    .math-details[open] summary::before { content: '▼'; }
+    .math-details summary::-webkit-details-marker { display: none; }
+    .math-box {
+      margin-top: 0.5rem;
+      background: rgba(0,0,0,0.25);
+      border-radius: 8px;
+      padding: 0.8rem 1rem;
+      font-family: 'Courier New', monospace;
+      font-size: 0.72rem;
+      color: rgba(245, 240, 232, 0.7);
+      line-height: 1.8;
+    }
+    .math-box .math-line { display: block; }
+    .math-box .math-result { color: var(--cream); font-weight: bold; }
 
     .header-headline h1 {
       font-family: var(--serif);
@@ -644,6 +710,88 @@
       margin-bottom: 1.25rem;
     }
 
+    /* ─── #5 Heat Map ───────────────────────────────────────────────────── */
+    .map-section {
+      padding: 2.5rem 1.5rem 1rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .map-section h2 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--dark-green);
+      margin-bottom: 0.3rem;
+    }
+    .map-section .map-sub {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-bottom: 1.2rem;
+    }
+    .map-container {
+      position: relative;
+      width: 100%;
+      line-height: 0;
+    }
+    .map-container img {
+      width: 100%;
+      height: auto;
+      opacity: 0.35;
+      display: block;
+    }
+    .map-bubbles {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+    .map-bubble {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.6rem;
+      font-weight: 700;
+      color: #fff;
+      cursor: default;
+      pointer-events: auto;
+      transition: opacity 0.15s;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+    }
+    .map-bubble:hover { opacity: 0.85; }
+    .map-bubble-tip {
+      display: none;
+      position: absolute;
+      bottom: calc(100% + 6px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(30,30,30,0.92);
+      color: #fff;
+      padding: 4px 8px;
+      border-radius: 5px;
+      font-size: 0.7rem;
+      white-space: nowrap;
+      pointer-events: none;
+      z-index: 10;
+    }
+    .map-bubble:hover .map-bubble-tip { display: block; }
+    .map-legend {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 0.8rem;
+      font-size: 0.72rem;
+      color: var(--muted);
+      align-items: center;
+    }
+    .legend-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 3px;
+    }
+
     /* ─── Footer ────────────────────────────────────────────────────────── */
     footer {
       background: var(--dark-green);
@@ -774,6 +922,28 @@
   </div>
 </div>
 
+<!-- #5 Country exposure heat map -->
+<section class="map-section" aria-labelledby="map-heading">
+  <h2 id="map-heading">Hormuz exposure by country</h2>
+  <p class="map-sub">Average crisis exposure across all foods · bubble size = average exposure · colour = severity band</p>
+  <div class="map-container" id="map-container">
+    <img
+      src="https://upload.wikimedia.org/wikipedia/commons/a/ac/Simplified_blank_world_map_without_Antartica_%28no_borders%29.svg"
+      alt="World map showing Hormuz exposure by country"
+      loading="lazy"
+      crossorigin="anonymous"
+    />
+    <div class="map-bubbles" id="map-bubbles" aria-hidden="true"></div>
+  </div>
+  <div class="map-legend">
+    <span>Severity:</span>
+    <span><span class="legend-dot" style="background:#C0392B"></span>Extreme (≥60%)</span>
+    <span><span class="legend-dot" style="background:#D4680F"></span>High (40–59%)</span>
+    <span><span class="legend-dot" style="background:#B08800"></span>Moderate (20–39%)</span>
+    <span><span class="legend-dot" style="background:#2A7A3A"></span>Low (&lt;20%)</span>
+  </div>
+</section>
+
 <!-- Footer -->
 <footer>
   <div class="footer-inner">
@@ -845,6 +1015,110 @@ const DRIVER_SOURCES = {
   shipping:      { label: 'EIA: bunker fuel & marine diesel',      url: 'https://www.eia.gov/petroleum/gasdiesel/' },
 };
 
+/* ─── #2 Substitution groups ─────────────────────────────────────────────── */
+// Maps each category to other categories considered substitutable
+const SUBS_MAP = {
+  meat:     ['seafood', 'staples', 'dairy'],
+  seafood:  ['meat', 'staples'],
+  dairy:    ['staples', 'produce'],
+  grains:   ['staples', 'produce', 'grains'],
+  produce:  ['produce', 'staples'],
+  packaged: ['produce', 'staples', 'grains'],
+  staples:  ['produce', 'grains', 'staples'],
+};
+
+function findSubstitutes(food, country, count = 2) {
+  const allowedCats = SUBS_MAP[food.category] || [];
+  return state.data.foods
+    .filter(f => f.id !== food.id && allowedCats.includes(f.category))
+    .sort((a, b) => countryExposure(a, country) - countryExposure(b, country))
+    .slice(0, count);
+}
+
+/* ─── #6 Country multiplier tooltip ─────────────────────────────────────── */
+function buildCountryTooltip(country, food) {
+  if (country.impact_multiplier === 1.0) return '';
+  const oil  = country.hormuz_oil_dependency_pct;
+  const lng  = country.hormuz_lng_dependency_pct;
+  const fert = country.hormuz_fertilizer_dependency_pct;
+  const dir  = country.impact_multiplier > 1 ? 'more' : 'less';
+  const cats = [];
+  if (oil  != null) cats.push(`<strong>${oil}%</strong> of its crude oil`);
+  if (lng  != null) cats.push(`<strong>${lng}%</strong> of its LNG`);
+  if (fert != null) cats.push(`<strong>${fert}%</strong> of its fertilizer`);
+  const sources = cats.length ? cats.join(', ') : 'a significant share of key commodities';
+  return `
+    <div class="country-detail" role="note">
+      <strong>${escHtml(country.name)}</strong> sources ${sources}
+      through the Strait of Hormuz — making it <strong>${country.impact_multiplier}× ${dir} exposed</strong>
+      than the EU baseline.
+      ${country.data_confidence !== 'high' ? `<br><em>Note: dependency figures for ${escHtml(country.name)} are estimated.</em>` : ''}
+    </div>`;
+}
+
+/* ─── Gemini#6 View the Math ─────────────────────────────────────────────── */
+function buildMathHtml(food, country) {
+  const drivers = food.drivers;
+  if (!drivers.length) return '';
+  const n = drivers.length;
+  const meanInput = drivers.reduce((s, d) => s + d.price_change_pct, 0) / n;
+  const origMean  = meanInput; // for display — we show the current driver values
+  const euPct     = food.crisis_exposure_pct;
+  const sensitivity = (euPct / Math.max(origMean, 1)).toFixed(2);
+  const rawEU     = (meanInput * parseFloat(sensitivity)).toFixed(1);
+  const adjPct    = countryExposure(food, country);
+  const mult      = country.impact_multiplier;
+
+  const driverLines = drivers.map(d =>
+    `<span class="math-line">  ${escHtml(d.input).padEnd(22)} +${String(d.price_change_pct).padStart(3)}%  (${d.category})</span>`
+  ).join('');
+
+  return `
+    <details class="math-details">
+      <summary>View the math</summary>
+      <div class="math-box" aria-label="Calculation details">
+        <span class="math-line">── Driver commodity price changes ──────────</span>
+        ${driverLines}
+        <span class="math-line"> </span>
+        <span class="math-line">Mean input change   = ${meanInput.toFixed(1)}%  (${n} drivers)</span>
+        <span class="math-line">Sensitivity factor  = EU exposure ÷ mean input</span>
+        <span class="math-line">                    = ${euPct}% ÷ ${origMean.toFixed(1)} = ${sensitivity}</span>
+        <span class="math-line">EU exposure         ≈ ${rawEU}% → <strong>${euPct}%</strong></span>
+        <span class="math-line"> </span>
+        <span class="math-line">Country multiplier  = ${mult}×  (${escHtml(country.name)})</span>
+        <span class="math-result math-line">Adjusted exposure   = ${euPct}% × ${mult} = ${adjPct}%${country.data_confidence !== 'high' ? ' *' : ''}</span>
+        ${country.data_confidence !== 'high' ? `<span class="math-line" style="opacity:0.6">* rounded for ${country.data_confidence} confidence data</span>` : ''}
+      </div>
+    </details>`;
+}
+
+/* ─── #3 Sparkline helpers ───────────────────────────────────────────────── */
+// history is populated in init() from data/history/index.json
+const historyData = {}; // { foodId: [exposure_pct, ...] } chronological
+
+function buildSparklineSvg(values, severity) {
+  if (!values || values.length < 2) {
+    // Not enough data — return a flat dim line as placeholder
+    return `<svg class="sparkline" viewBox="0 0 60 28" preserveAspectRatio="none" aria-hidden="true">
+      <line x1="0" y1="14" x2="60" y2="14" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
+    </svg>`;
+  }
+  const COLOR = { extreme: '#C0392B', high: '#D4680F', moderate: '#B08800', low: '#2A7A3A' };
+  const W = 60, H = 28, PAD = 2;
+  const min = Math.min(...values);
+  const max = Math.max(...values);
+  const range = max - min || 1;
+  const pts = values.map((v, i) => {
+    const x = PAD + (i / (values.length - 1)) * (W - PAD * 2);
+    const y = H - PAD - ((v - min) / range) * (H - PAD * 2);
+    return `${x.toFixed(1)},${y.toFixed(1)}`;
+  }).join(' ');
+  const color = COLOR[severity] || 'rgba(255,255,255,0.3)';
+  return `<svg class="sparkline" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true">
+    <polyline class="sparkline-line" points="${pts}" stroke="${color}" opacity="0.7"/>
+  </svg>`;
+}
+
 const LOCALE_MAP = {
   'it': 'IT', 'de': 'DE', 'de-at': 'DE', 'de-ch': 'DE',
   'en-gb': 'GB', 'en-au': 'AU',
@@ -899,9 +1173,14 @@ function formatEur(amount) {
   }).format(amount);
 }
 
-// Country-adjusted exposure: scale EU baseline by the country's impact multiplier
+// Country-adjusted exposure: scale EU baseline by the country's impact multiplier.
+// Gemini#4: round to nearest 5% for medium confidence, nearest 10% for low confidence,
+// to avoid false precision on extrapolated data.
 function countryExposure(food, country) {
-  return Math.min(99, Math.round(food.crisis_exposure_pct * country.impact_multiplier));
+  const raw = Math.min(99, Math.round(food.crisis_exposure_pct * country.impact_multiplier));
+  if (country.data_confidence === 'low')    return Math.min(99, Math.round(raw / 10) * 10) || 10;
+  if (country.data_confidence === 'medium') return Math.min(99, Math.round(raw / 5)  * 5)  || 5;
+  return raw;
 }
 
 function severityFromPct(pct) {
@@ -968,6 +1247,8 @@ function renderCard(food, country) {
         ${driversHtml}
       </div>
 
+      ${buildSparklineSvg(historyData[food.id], sev)}
+
       <div class="card-tap-hint" aria-hidden="true">Tap to see full breakdown →</div>
     </article>
   `;
@@ -1027,6 +1308,16 @@ function attachCardListeners() {
         e.preventDefault();
         openFood(card.dataset.id);
       }
+    });
+  });
+}
+
+/* ─── Sub-card listeners (wired after modal renders) ────────────────────── */
+function attachSubCardListeners() {
+  document.querySelectorAll('.sub-card').forEach(el => {
+    el.addEventListener('click', () => openFood(el.dataset.subId));
+    el.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openFood(el.dataset.subId); }
     });
   });
 }
@@ -1137,12 +1428,41 @@ function openFood(id) {
 
     <p class="section-title">Why is this?</p>
     <blockquote class="explanation">${escHtml(food.explanation)}</blockquote>
+
+    ${buildMathHtml(food, country)}
+
+    ${buildCountryTooltip(country, food)}
+
+    ${(() => {
+      const subs = findSubstitutes(food, country);
+      if (!subs.length) return '';
+      const subCards = subs.map(s => {
+        const sPct = countryExposure(s, country);
+        const sSev = severityFromPct(sPct);
+        return `<div class="sub-card" role="button" tabindex="0"
+            aria-label="Switch to ${escHtml(s.name)}, ${sPct}% exposure"
+            data-sub-id="${escHtml(s.id)}">
+          <span class="sub-card-emoji" aria-hidden="true">${s.emoji}</span>
+          <div class="sub-card-info">
+            <div class="sub-card-name">${escHtml(s.name)}</div>
+            <div class="sub-card-pct"><span class="badge badge-${sSev}" style="font-size:0.65rem;padding:1px 5px">${sSev}</span> ${sPct}%</div>
+          </div>
+        </div>`;
+      }).join('');
+      return `<div class="sub-section">
+        <p class="section-title">Lower-exposure alternatives</p>
+        <div class="sub-cards">${subCards}</div>
+      </div>`;
+    })()}
   `;
 
   const overlay = document.getElementById('modal-overlay');
   overlay.classList.add('open');
   overlay.querySelector('.modal').scrollTop = 0;
   document.body.style.overflow = 'hidden';
+
+  // Wire sub-card clicks
+  attachSubCardListeners();
 
   // Reset share button
   const shareBtn = document.getElementById('modal-share-btn');
@@ -1220,6 +1540,65 @@ function populateCountrySelector() {
   });
 }
 
+/* ─── #5 World heat map ──────────────────────────────────────────────────── */
+// Mercator-projected positions for each country (as % of image width/height).
+// Computed from latitude/longitude onto the Wikipedia SVG's 2058×1090 viewBox.
+const COUNTRY_MAP_POS = {
+  IT: { left: '53.4%', top: '37.1%' }, // Rome
+  DE: { left: '53.7%', top: '32.8%' }, // Berlin
+  GB: { left: '49.9%', top: '33.1%' }, // London
+  US: { left: '23.4%', top: '38.9%' }, // US centre
+  JP: { left: '88.8%', top: '39.3%' }, // Tokyo
+  IN: { left: '71.4%', top: '41.7%' }, // New Delhi
+  PH: { left: '83.6%', top: '45.9%' }, // Manila
+  BR: { left: '36.7%', top: '54.4%' }, // Brasília
+  AU: { left: '87.0%', top: '62.5%' }, // Canberra
+  LK: { left: '72.1%', top: '48.1%' }, // Colombo
+};
+
+const SEVERITY_COLOR = {
+  extreme: '#C0392B', high: '#D4680F', moderate: '#B08800', low: '#2A7A3A',
+};
+
+function renderMap() {
+  const bubblesEl = document.getElementById('map-bubbles');
+  if (!bubblesEl || !state.data) return;
+
+  const currentCountry = getCountry();
+  const allCountries = state.data.countries;
+
+  // Compute average exposure per country
+  const countryStats = allCountries.map(c => {
+    const exposures = state.data.foods.map(f => countryExposure(f, c));
+    const avg = Math.round(exposures.reduce((s, v) => s + v, 0) / exposures.length);
+    const sev = severityFromPct(avg);
+    return { c, avg, sev };
+  });
+
+  const maxAvg = Math.max(...countryStats.map(s => s.avg));
+
+  bubblesEl.innerHTML = countryStats.map(({ c, avg, sev }) => {
+    const pos = COUNTRY_MAP_POS[c.code];
+    if (!pos) return '';
+    // Bubble diameter: 18px (min) to 42px (max), proportional to avg exposure
+    const size = Math.round(18 + (avg / maxAvg) * 24);
+    const color = SEVERITY_COLOR[sev];
+    const isSelected = c.code === currentCountry.code;
+    const border = isSelected ? '2.5px solid #fff' : '2px solid rgba(255,255,255,0.5)';
+    return `<div class="map-bubble" style="
+        left:${pos.left}; top:${pos.top};
+        width:${size}px; height:${size}px;
+        background:${color};
+        border:${border};
+        opacity:${isSelected ? '1' : '0.72'};
+        font-size:${size < 26 ? '0.52rem' : '0.6rem'};
+      " title="${escHtml(c.name)}: ${avg}% avg exposure">
+      ${avg}%
+      <span class="map-bubble-tip">${escHtml(c.name)} · avg ${avg}% (${sev})</span>
+    </div>`;
+  }).join('');
+}
+
 /* ─── Init ───────────────────────────────────────────────────────────────── */
 async function init() {
   try {
@@ -1234,11 +1613,47 @@ async function init() {
 
   document.getElementById('loading').style.display = 'none';
 
-  // Live date
+  // Live date + Gemini#10: delayed badge if data is stale (>10 days)
   const d = new Date(state.data.last_updated);
   const dateStr = d.toLocaleDateString('en', { year: 'numeric', month: 'long', day: 'numeric' });
-  document.getElementById('live-date').textContent = `Updated ${dateStr}`;
+  const daysSince = (Date.now() - d.getTime()) / (1000 * 60 * 60 * 24);
+  const isDelayed = daysSince > 10;
+  const dot = document.querySelector('#live-badge .pulse-dot');
+  if (isDelayed) {
+    dot.classList.add('delayed');
+    dot.title = 'Data may be outdated';
+    document.getElementById('live-date').textContent = `Delayed — last updated ${dateStr}`;
+  } else {
+    document.getElementById('live-date').textContent = `Updated ${dateStr}`;
+  }
   document.getElementById('footer-date').textContent = dateStr;
+
+  // #3 Load history index for sparklines (graceful fallback — no history on first run)
+  try {
+    const hRes = await fetch('data/history/index.json');
+    if (hRes.ok) {
+      const dates = await hRes.json();
+      // Load last 12 snapshots (most recent first, then reverse for chronological display)
+      const toLoad = dates.slice(-12);
+      const snapshots = await Promise.all(
+        toLoad.map(date =>
+          fetch(`data/history/${date}.json`)
+            .then(r => r.ok ? r.json() : null)
+            .catch(() => null)
+        )
+      );
+      // Build per-food history arrays
+      snapshots.forEach(snap => {
+        if (!snap) return;
+        (snap.foods || []).forEach(({ id, crisis_exposure_pct }) => {
+          if (!historyData[id]) historyData[id] = [];
+          historyData[id].push(crisis_exposure_pct);
+        });
+      });
+    }
+  } catch {
+    // No history yet — sparklines will show flat placeholders
+  }
 
   // Detect country from browser locale
   state.country = detectCountry();
@@ -1246,6 +1661,7 @@ async function init() {
 
   // Render
   renderGrid();
+  renderMap();
 
   // Check URL hash for deep link
   if (window.location.hash) {
@@ -1261,6 +1677,7 @@ async function init() {
   document.getElementById('country-select').addEventListener('change', e => {
     state.country = e.target.value;
     renderGrid();
+    renderMap();
     if (state.activeFood) openFood(state.activeFood); // refresh modal prices
   });
 

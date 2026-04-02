@@ -30,4 +30,4 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: 'data: update food crisis prices'
-          file_pattern: 'data/foods.json'
+          file_pattern: 'data/foods.json data/history/*.json'

@@ -7,6 +7,9 @@ Updates data/foods.json with:
   - Current exchange rates from Frankfurter API (ECB, no key required)
   - Recalculated crisis_exposure_pct for each food based on current prices
 
+Also archives a snapshot to data/history/YYYY-MM-DD.json and maintains
+data/history/index.json so the frontend can draw sparklines.
+
 Run manually:  python3 scripts/fetch-data.py
 In CI:        Called by .github/workflows/update-data.yml
 
@@ -16,6 +19,7 @@ Dependencies: requests, pandas, openpyxl
 import json
 import logging
 import os
+import shutil
 import sys
 import tempfile
 from datetime import datetime, timezone
@@ -35,8 +39,9 @@ logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 log = logging.getLogger(__name__)
 
 # ─── Paths ─────────────────────────────────────────────────────────────────
-REPO_ROOT = Path(__file__).parent.parent
-DATA_FILE = REPO_ROOT / "data" / "foods.json"
+REPO_ROOT   = Path(__file__).parent.parent
+DATA_FILE   = REPO_ROOT / "data" / "foods.json"
+HISTORY_DIR = REPO_ROOT / "data" / "history"
 
 # ─── Crisis baseline date ───────────────────────────────────────────────────
 CRISIS_START = "2026-02-28"
@@ -52,20 +57,33 @@ PRE_CRISIS = {
     "methanol_usd_ton":            400.0,
 }
 
-# ─── World Bank Pink Sheet ─────────────────────────────────────────────────
-WB_URL = (
+# ─── World Bank Commodity Price Data API ──────────────────────────────────
+# Programmatic API — more stable than parsing the Excel Pink Sheet.
+# Docs: https://datahelpdesk.worldbank.org/knowledgebase/articles/889392
+#
+# The "Monthly Prices" series codes from the Commodity Markets endpoint:
+WB_API_BASE = "https://api.worldbank.org/v2/country/all/indicator"
+WB_INDICATORS = {
+    "PNRGBRENT":   "oil_brent_usd",      # Crude oil, Brent ($/bbl)
+    "PNGASEUROP":  "natural_gas_eur_mwh", # Natural gas, Europe ($/mmbtu → converted)
+    "PUREA":       "urea_usd_ton",        # Urea, E. Europe ($/mt)
+    "PMETHANOL":   "methanol_usd_ton",    # Methanol, US Gulf Coast ($/mt)
+}
+# Fallback: World Bank Pink Sheet Excel (used only if the API is unavailable)
+WB_EXCEL_URL = (
     "https://thedocs.worldbank.org/en/doc/"
     "5d903e848db1d1b83e0ec8f744e55570-0350012021/"
     "related/CMO-Historical-Data-Monthly.xlsx"
 )
-
-# World Bank series names for commodities we care about
-WB_SERIES = {
-    "Crude oil, Brent": "oil_brent_usd",
-    "Natural gas, Europe": "natural_gas_eur_mwh",
+WB_EXCEL_SERIES = {
+    "Crude oil, Brent":        "oil_brent_usd",
+    "Natural gas, Europe":     "natural_gas_eur_mwh",
     "Urea, E. Europe, bagged": "urea_usd_ton",
     "Methanol, US Gulf Coast": "methanol_usd_ton",
 }
+# Conversion: WB gas API reports $/mmbtu; 1 mmbtu ≈ 0.293 MWh → $/MWh = $/mmbtu / 0.293
+# Then EUR/MWh ≈ USD/MWh (approximate — exact conversion requires exchange rate)
+GAS_MMBTU_TO_MWH = 0.293
 
 # ─── Frankfurter (ECB) exchange rates ──────────────────────────────────────
 FRANKFURTER_URL = "https://api.frankfurter.app/latest?base=EUR"
@@ -80,11 +98,143 @@ def load_existing() -> dict[str, Any]:
         return json.load(fh)
 
 
-def fetch_wb_prices(current: dict[str, Any]) -> dict[str, float]:
+# ─── #12 API response validation ───────────────────────────────────────────
+
+def _validate_wb_row(key: str, val: Any) -> float:
     """
-    Pull the latest commodity prices from the World Bank Pink Sheet Excel file.
-    Returns a dict of {source_key: value}. Falls back to current JSON values
-    on any failure.
+    Validate a single value parsed from the World Bank Pink Sheet.
+    Raises ValueError with a descriptive message if the format is unexpected.
+    """
+    if not isinstance(val, (int, float)):
+        raise ValueError(f"World Bank {key!r}: expected numeric, got {type(val).__name__} ({val!r})")
+    if val <= 0:
+        raise ValueError(f"World Bank {key!r}: implausible value {val} (must be > 0)")
+    # Sanity-range guards (very wide — just catch format changes)
+    SANITY: dict[str, tuple[float, float]] = {
+        "oil_brent_usd":       (10.0,  500.0),
+        "natural_gas_eur_mwh": ( 5.0, 1000.0),
+        "urea_usd_ton":        (50.0, 2000.0),
+        "methanol_usd_ton":    (50.0, 3000.0),
+    }
+    if key in SANITY:
+        lo, hi = SANITY[key]
+        if not (lo <= val <= hi):
+            raise ValueError(
+                f"World Bank {key!r}: {val} outside expected range [{lo}, {hi}] — "
+                "possible sheet format change"
+            )
+    return float(val)
+
+
+def _validate_frankfurter_response(data: Any) -> dict[str, float]:
+    """
+    Validate the Frankfurter API response shape.
+    Returns the rates dict, or raises ValueError if the shape is wrong.
+    """
+    if not isinstance(data, dict):
+        raise ValueError(f"Frankfurter: expected JSON object, got {type(data).__name__}")
+    if "rates" not in data:
+        raise ValueError("Frankfurter: missing 'rates' key — API format may have changed")
+    rates = data["rates"]
+    if not isinstance(rates, dict):
+        raise ValueError(f"Frankfurter: 'rates' should be a dict, got {type(rates).__name__}")
+    validated: dict[str, float] = {}
+    for code, val in rates.items():
+        if not isinstance(val, (int, float)) or val <= 0:
+            raise ValueError(f"Frankfurter: bad rate for {code!r}: {val!r}")
+        validated[code] = float(val)
+    return validated
+
+
+# ─── Fetch functions ────────────────────────────────────────────────────────
+
+def _fetch_wb_api(prices: dict[str, float], stale: list[str]) -> bool:
+    """
+    Fetch commodity prices from the World Bank Indicators REST API.
+    Updates *prices* in-place. Returns True if at least one indicator was fetched.
+    """
+    fetched_any = False
+    for indicator, key in WB_INDICATORS.items():
+        url = f"{WB_API_BASE}/{indicator}"
+        try:
+            resp = requests.get(url, params={"format": "json", "mrv": 3, "frequency": "M"}, timeout=20)
+            resp.raise_for_status()
+            payload = resp.json()
+            # WB API returns [metadata, [data_points]]; data_points are most-recent-first
+            if not isinstance(payload, list) or len(payload) < 2:
+                raise ValueError(f"Unexpected API shape for {indicator}")
+            data_points = payload[1]
+            if not isinstance(data_points, list) or not data_points:
+                raise ValueError(f"No data points for {indicator}")
+            # Find the most recent non-null value
+            val = None
+            for dp in data_points:
+                if dp.get("value") is not None:
+                    val = dp["value"]
+                    break
+            if val is None:
+                raise ValueError(f"All values null for {indicator}")
+            # Gas: convert $/mmbtu → EUR/MWh (approximate)
+            if key == "natural_gas_eur_mwh":
+                val = float(val) / GAS_MMBTU_TO_MWH
+            prices[key] = _validate_wb_row(key, float(val))
+            log.info("  WB API %s (%s) = %.2f", indicator, key, prices[key])
+            fetched_any = True
+        except (requests.RequestException, ValueError, KeyError, TypeError) as exc:
+            log.warning("  WB API %s failed: %s", indicator, exc)
+            stale.append(f"world_bank_api_{key}")
+    return fetched_any
+
+
+def _fetch_wb_excel(prices: dict[str, float], stale: list[str]) -> None:
+    """
+    Fallback: fetch commodity prices from the World Bank Pink Sheet Excel file.
+    Updates *prices* in-place.
+    """
+    if not HAS_PANDAS:
+        log.warning("pandas/openpyxl not installed — cannot fetch Excel fallback")
+        return
+
+    log.info("Falling back to World Bank Pink Sheet Excel…")
+    try:
+        resp = requests.get(WB_EXCEL_URL, timeout=60)
+        resp.raise_for_status()
+    except requests.RequestException as exc:
+        log.warning("Pink Sheet download failed: %s", exc)
+        stale.append("world_bank_pink_sheet_excel")
+        return
+
+    try:
+        with tempfile.NamedTemporaryFile(suffix=".xlsx", delete=False) as tmp:
+            tmp.write(resp.content)
+            tmp_path = tmp.name
+
+        df = pd.read_excel(tmp_path, sheet_name="Monthly Prices", header=None)
+        os.unlink(tmp_path)
+        last_col = df.iloc[0].last_valid_index()
+
+        for _idx, row in df.iterrows():
+            series_name = str(row.iloc[0]).strip()
+            if series_name in WB_EXCEL_SERIES:
+                key = WB_EXCEL_SERIES[series_name]
+                raw_val = row[last_col]
+                if pd.isna(raw_val):
+                    continue
+                try:
+                    prices[key] = _validate_wb_row(key, raw_val)
+                    log.info("  Excel %s = %.2f", key, prices[key])
+                except ValueError as ve:
+                    log.warning("  Excel validation error — %s", ve)
+    except Exception as exc:
+        log.warning("Pink Sheet parse error: %s", exc)
+        stale.append("world_bank_pink_sheet_excel")
+
+
+def fetch_wb_prices(current: dict[str, Any], stale: list[str]) -> dict[str, float]:
+    """
+    Pull the latest commodity prices from the World Bank Indicators API,
+    falling back to the Pink Sheet Excel if the API is unavailable.
+    Returns a dict of {source_key: value}, falling back to current JSON on failure.
     """
     prices: dict[str, float] = {
         k: current["sources"][k]
@@ -92,51 +242,22 @@ def fetch_wb_prices(current: dict[str, Any]) -> dict[str, float]:
         if k in current["sources"]
     }
 
-    if not HAS_PANDAS:
-        log.warning("pandas/openpyxl not installed — skipping World Bank Excel fetch")
-        return prices
+    log.info("Fetching commodity prices from World Bank Indicators API…")
+    api_ok = _fetch_wb_api(prices, stale)
 
-    log.info("Fetching World Bank Pink Sheet…")
-    try:
-        resp = requests.get(WB_URL, timeout=60)
-        resp.raise_for_status()
-    except requests.RequestException as exc:
-        log.warning("World Bank fetch failed: %s — keeping existing prices", exc)
-        return prices
-
-    try:
-        # The Pink Sheet uses the "Monthly Prices" sheet; series are rows, months are columns
-        with tempfile.NamedTemporaryFile(suffix=".xlsx", delete=False) as tmp:
-            tmp.write(resp.content)
-            tmp_path = tmp.name
-
-        df = pd.read_excel(tmp_path, sheet_name="Monthly Prices", header=None)
-        os.unlink(tmp_path)
-
-        # Find the last column with data (most recent month)
-        last_col = df.iloc[0].last_valid_index()
-
-        for idx, row in df.iterrows():
-            series_name = str(row.iloc[0]).strip()
-            if series_name in WB_SERIES:
-                key = WB_SERIES[series_name]
-                val = row[last_col]
-                if pd.notna(val) and isinstance(val, (int, float)) and val > 0:
-                    prices[key] = float(val)
-                    log.info("  %s = %.2f", key, val)
-
-    except Exception as exc:
-        log.warning("Pink Sheet parse error: %s — keeping existing prices", exc)
+    if not api_ok:
+        log.warning("WB API returned nothing — trying Excel fallback")
+        _fetch_wb_excel(prices, stale)
 
     return prices
 
 
-def fetch_exchange_rates(current_rates: dict[str, float]) -> dict[str, float]:
+def fetch_exchange_rates(current_rates: dict[str, float], stale: list[str]) -> dict[str, float]:
     """
     Fetch EUR-based exchange rates from the Frankfurter API (ECB source, no key).
-    Falls back to existing rates on failure.
+    Falls back to existing rates on failure, appending 'frankfurter' to *stale*.
     """
-    rates = dict(current_rates)  # copy
+    rates = dict(current_rates)
 
     log.info("Fetching exchange rates from Frankfurter API…")
     try:
@@ -146,15 +267,16 @@ def fetch_exchange_rates(current_rates: dict[str, float]) -> dict[str, float]:
             timeout=15,
         )
         resp.raise_for_status()
-        data = resp.json()
-        for code, val in data.get("rates", {}).items():
+        validated = _validate_frankfurter_response(resp.json())
+        for code, val in validated.items():
             if code in TARGET_CURRENCIES:
-                rates[code] = float(val)
+                rates[code] = val
                 log.info("  %s = %.4f", code, val)
-    except requests.RequestException as exc:
+    except (requests.RequestException, ValueError) as exc:
         log.warning("Frankfurter API failed: %s — keeping existing rates", exc)
+        stale.append("frankfurter_exchange_rates")
 
-    rates["EUR"] = 1.0  # always pin EUR
+    rates["EUR"] = 1.0
     return rates
 
 
@@ -270,18 +392,72 @@ def write_atomic(path: Path, data: dict[str, Any]) -> None:
     log.info("Wrote %s", path)
 
 
+# ─── #13 History archiving ──────────────────────────────────────────────────
+
+def archive_snapshot(data: dict[str, Any], today: str) -> None:
+    """
+    Write a dated snapshot to data/history/YYYY-MM-DD.json and update
+    data/history/index.json with the list of available dates.
+
+    The snapshot is a compact summary (not the full JSON) to keep the
+    history directory small:
+      { "date": "...", "foods": [{"id": "...", "crisis_exposure_pct": N}, ...] }
+    """
+    HISTORY_DIR.mkdir(parents=True, exist_ok=True)
+
+    snapshot: dict[str, Any] = {
+        "date": today,
+        "sources": {
+            k: data["sources"].get(k)
+            for k in ("oil_brent_usd", "natural_gas_eur_mwh", "urea_usd_ton", "methanol_usd_ton")
+        },
+        "foods": [
+            {"id": f["id"], "crisis_exposure_pct": f["crisis_exposure_pct"]}
+            for f in data["foods"]
+        ],
+    }
+
+    snap_path = HISTORY_DIR / f"{today}.json"
+    write_atomic(snap_path, snapshot)
+    log.info("Archived snapshot → %s", snap_path)
+
+    # Update index
+    index_path = HISTORY_DIR / "index.json"
+    if index_path.exists():
+        with open(index_path, encoding="utf-8") as fh:
+            index: list[str] = json.load(fh)
+    else:
+        index = []
+
+    if today not in index:
+        index.append(today)
+        index.sort()
+
+    write_atomic(index_path, index)  # type: ignore[arg-type]
+    log.info("History index now has %d entries", len(index))
+
+
 def main() -> int:
     log.info("=== tare data refresh — %s ===", datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"))
+
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
 
     # 1. Load existing data
     current = load_existing()
 
+    # ── #13: Archive today's *current* snapshot before overwriting ──────────
+    # Archive what's currently live so we capture the point-in-time value.
+    archive_snapshot(current, current.get("last_updated", today))
+
+    # ── #19: Track which sources fell back to cached data ───────────────────
+    stale: list[str] = []
+
     # 2. Fetch commodity prices from World Bank
-    prices = fetch_wb_prices(current)
+    prices = fetch_wb_prices(current, stale)
 
     # 3. Fetch exchange rates from Frankfurter (ECB)
     current_rates = current["sources"].get("exchange_rates", {})
-    rates = fetch_exchange_rates(current_rates)
+    rates = fetch_exchange_rates(current_rates, stale)
 
     # 4. Compute commodity change percentages
     changes = compute_commodity_changes(prices)
@@ -292,32 +468,43 @@ def main() -> int:
 
     # 6. Assemble updated sources block
     sources_update = {
-        "oil_brent_usd":               prices.get("oil_brent_usd",               current["sources"]["oil_brent_usd"]),
-        "oil_brent_pre_crisis_usd":     PRE_CRISIS["oil_brent_usd"],
-        "natural_gas_eur_mwh":          prices.get("natural_gas_eur_mwh",          current["sources"]["natural_gas_eur_mwh"]),
-        "natural_gas_pre_crisis_eur_mwh": PRE_CRISIS["natural_gas_eur_mwh"],
-        "urea_usd_ton":                 prices.get("urea_usd_ton",                 current["sources"]["urea_usd_ton"]),
-        "urea_pre_crisis_usd_ton":      PRE_CRISIS["urea_usd_ton"],
-        "diesel_eur_litre":             current["sources"].get("diesel_eur_litre", 1.95),
-        "diesel_pre_crisis_eur_litre":  PRE_CRISIS["diesel_eur_litre"],
-        "methanol_usd_ton":             prices.get("methanol_usd_ton",             current["sources"].get("methanol_usd_ton", 540)),
-        "methanol_pre_crisis_usd_ton":  PRE_CRISIS["methanol_usd_ton"],
-        "exchange_rates":               rates,
+        "oil_brent_usd":                  prices.get("oil_brent_usd",               current["sources"]["oil_brent_usd"]),
+        "oil_brent_pre_crisis_usd":        PRE_CRISIS["oil_brent_usd"],
+        "natural_gas_eur_mwh":             prices.get("natural_gas_eur_mwh",          current["sources"]["natural_gas_eur_mwh"]),
+        "natural_gas_pre_crisis_eur_mwh":  PRE_CRISIS["natural_gas_eur_mwh"],
+        "urea_usd_ton":                    prices.get("urea_usd_ton",                 current["sources"]["urea_usd_ton"]),
+        "urea_pre_crisis_usd_ton":         PRE_CRISIS["urea_usd_ton"],
+        "diesel_eur_litre":                current["sources"].get("diesel_eur_litre", 1.95),
+        "diesel_pre_crisis_eur_litre":     PRE_CRISIS["diesel_eur_litre"],
+        "methanol_usd_ton":                prices.get("methanol_usd_ton",             current["sources"].get("methanol_usd_ton", 540)),
+        "methanol_pre_crisis_usd_ton":     PRE_CRISIS["methanol_usd_ton"],
+        "exchange_rates":                  rates,
     }
 
-    # 7. Build final payload
-    updated = {
-        "last_updated":  datetime.now(timezone.utc).strftime("%Y-%m-%d"),
+    # 7. Build final payload — include stale_sources so the UI can flag it
+    updated: dict[str, Any] = {
+        "last_updated":  today,
         "crisis_start":  CRISIS_START,
         "sources":       sources_update,
         "countries":     current["countries"],
         "foods":         updated_foods,
     }
+    if stale:
+        updated["stale_sources"] = sorted(set(stale))
+        log.warning("Stale sources (cached): %s", updated["stale_sources"])
+    else:
+        # Explicitly clear any previous stale flag
+        updated["stale_sources"] = []
 
-    # 8. Write atomically
+    # 8. Write main data file atomically
     write_atomic(DATA_FILE, updated)
 
+    # ── #13: Also archive the freshly-written snapshot ──────────────────────
+    archive_snapshot(updated, today)
+
     log.info("Done. %d foods updated.", len(updated_foods))
+    if stale:
+        log.warning("WARNING: %d source(s) used cached data: %s", len(stale), stale)
     return 0
 
 
