@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What's your Hormuz number? — Tare</title>
+  <meta name="description" content="Pick the foods you buy every week. Find out how much of your grocery basket is exposed to the Strait of Hormuz crisis.">
+
+  <meta property="og:title" content="What's your Hormuz number?">
+  <meta property="og:description" content="Pick your weekly groceries. Get your personal Hormuz exposure score.">
+  <meta property="og:url" content="https://prismatic-labs.github.io/tare/quiz.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Tare by Prismatic Labs">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="What's your Hormuz number?">
+  <meta name="twitter:description" content="Pick your weekly groceries. Get your personal Hormuz exposure score.">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --dark-green: #2C3E2D;
+      --mid-green:  #3d5c3f;
+      --cream:      #F5F0E8;
+      --white:      #ffffff;
+      --text:       #1a1a1a;
+      --muted:      #666;
+      --border:     #ddd6c8;
+      --extreme:    #C0392B;
+      --high:       #D4680F;
+      --moderate:   #B08800;
+      --low:        #2A7A3A;
+      --serif:      Georgia, 'Times New Roman', serif;
+      --sans:       -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    }
+    html { font-size: 16px; }
+    body { font-family: var(--sans); background: var(--cream); color: var(--text); min-height: 100vh; }
+
+    /* ── Nav ── */
+    nav {
+      background: var(--dark-green);
+      padding: 0.85rem 1.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 0.5rem;
+    }
+    .nav-wordmark {
+      font-family: var(--serif);
+      font-size: 0.9rem;
+      color: rgba(245,240,232,0.7);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+    }
+    .nav-wordmark span { color: #F5F0E8; font-style: italic; }
+    .nav-back {
+      font-size: 0.78rem;
+      color: rgba(245,240,232,0.6);
+      text-decoration: none;
+      display: flex; align-items: center; gap: 0.3rem;
+    }
+    .nav-back:hover { color: #F5F0E8; }
+
+    /* ── Hero ── */
+    .hero {
+      background: var(--dark-green);
+      color: #F5F0E8;
+      padding: 2.5rem 1.5rem 3rem;
+      text-align: center;
+    }
+    .hero h1 {
+      font-family: var(--serif);
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 400;
+      line-height: 1.25;
+      margin-bottom: 0.75rem;
+    }
+    .hero p {
+      font-size: 0.95rem;
+      color: rgba(245,240,232,0.7);
+      max-width: 480px;
+      margin: 0 auto 1.5rem;
+      line-height: 1.6;
+    }
+
+    /* ── Country selector ── */
+    .country-row {
+      display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+    .country-row label { font-size: 0.82rem; color: rgba(245,240,232,0.6); }
+    .country-row select {
+      font-family: var(--sans);
+      font-size: 0.82rem;
+      padding: 0.3rem 0.6rem;
+      border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.1);
+      color: #F5F0E8;
+      cursor: pointer;
+    }
+    .country-row select option { background: #2C3E2D; color: #F5F0E8; }
+
+    /* ── Sticky score bar ── */
+    .score-bar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      padding: 0.7rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    }
+    .score-label { font-size: 0.8rem; color: var(--muted); }
+    .score-number {
+      font-size: 1.6rem;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+    }
+    .score-right { display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap; }
+    .score-count { font-size: 0.78rem; color: var(--muted); }
+    .share-score-btn {
+      font-family: var(--sans);
+      font-size: 0.78rem;
+      padding: 0.35rem 0.8rem;
+      background: var(--dark-green);
+      color: #F5F0E8;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      display: none;
+    }
+    .share-score-btn.visible { display: inline-flex; align-items: center; gap: 0.3rem; }
+    .score-bar-track {
+      width: 100%;
+      height: 4px;
+      background: #e5dfd5;
+      border-radius: 2px;
+      overflow: hidden;
+      flex-basis: 100%;
+    }
+    .score-bar-fill {
+      height: 100%;
+      border-radius: 2px;
+      transition: width 0.3s ease, background 0.3s ease;
+    }
+
+    /* ── Section headings ── */
+    .section-wrap { max-width: 900px; margin: 0 auto; padding: 1.5rem 1rem; }
+    .section-wrap h2 { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 0.75rem; }
+
+    /* ── Food grid ── */
+    .food-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+      gap: 0.5rem;
+    }
+    .food-tile {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.6rem 0.3rem;
+      border-radius: 10px;
+      border: 2px solid transparent;
+      background: #fff;
+      cursor: pointer;
+      transition: all 0.15s;
+      text-align: center;
+      user-select: none;
+      position: relative;
+    }
+    .food-tile:hover { background: #f0ede6; }
+    .food-tile.selected {
+      border-color: var(--dark-green);
+      background: rgba(44, 62, 45, 0.07);
+    }
+    .food-tile.selected::after {
+      content: '✓';
+      position: absolute;
+      top: 3px; right: 6px;
+      font-size: 0.6rem;
+      color: var(--dark-green);
+      font-weight: 700;
+    }
+    .food-tile-emoji { font-size: 1.6rem; line-height: 1; }
+    .food-tile-name { font-size: 0.6rem; color: var(--muted); line-height: 1.2; }
+    .food-tile-pct {
+      font-size: 0.62rem;
+      font-weight: 700;
+      padding: 1px 4px;
+      border-radius: 3px;
+      color: #fff;
+    }
+
+    /* ── Results card ── */
+    .results-section {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 1rem 2rem;
+    }
+    .result-card {
+      display: none;
+      background: var(--dark-green);
+      color: #F5F0E8;
+      border-radius: 14px;
+      padding: 1.5rem;
+    }
+    .result-card.visible { display: block; }
+    .result-headline {
+      font-family: var(--serif);
+      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+      font-weight: 400;
+      margin-bottom: 1rem;
+      line-height: 1.35;
+    }
+    .result-big {
+      font-size: 3.5rem;
+      font-weight: 900;
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+    .result-band {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      opacity: 0.7;
+      margin-bottom: 1.2rem;
+    }
+    .result-breakdown {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin-bottom: 1.2rem;
+    }
+    .result-row {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.82rem;
+    }
+    .result-row-emoji { font-size: 1rem; width: 1.4rem; text-align: center; }
+    .result-row-name { flex: 1; }
+    .result-row-pct { font-weight: 700; font-size: 0.85rem; }
+    .result-row-bar { flex: 2; height: 5px; background: rgba(255,255,255,0.15); border-radius: 3px; overflow: hidden; }
+    .result-row-fill { height: 100%; border-radius: 3px; }
+    .result-cta {
+      display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 0.5rem;
+    }
+    .result-btn {
+      font-family: var(--sans);
+      font-size: 0.78rem;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex; align-items: center; gap: 0.35rem;
+      font-weight: 600;
+    }
+    .result-btn-primary { background: #F5F0E8; color: var(--dark-green); }
+    .result-btn-secondary { background: rgba(255,255,255,0.12); color: #F5F0E8; border: 1px solid rgba(255,255,255,0.25); }
+    .result-btn-secondary:hover { background: rgba(255,255,255,0.2); }
+
+    /* ── Share overlay ── */
+    .share-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 200;
+      align-items: flex-end; justify-content: center;
+      padding: 1rem;
+    }
+    .share-overlay.open { display: flex; }
+    @media (min-width: 600px) { .share-overlay { align-items: center; } }
+    .share-panel {
+      background: #fff;
+      border-radius: 14px;
+      padding: 1.25rem 1.5rem;
+      width: 100%;
+      max-width: 400px;
+    }
+    .share-panel h3 { font-size: 0.9rem; margin-bottom: 1rem; }
+    .share-options { display: flex; flex-direction: column; gap: 0.5rem; }
+    .share-opt {
+      display: flex; align-items: center; gap: 0.7rem;
+      padding: 0.6rem 0.8rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      font-size: 0.85rem;
+      color: var(--text);
+      text-decoration: none;
+      cursor: pointer;
+      background: none;
+      font-family: var(--sans);
+      width: 100%;
+      transition: background 0.12s;
+    }
+    .share-opt:hover { background: #f5f0e8; }
+    .share-opt-icon { font-size: 1.1rem; width: 1.4rem; text-align: center; }
+    .share-cancel {
+      margin-top: 0.75rem;
+      width: 100%;
+      padding: 0.5rem;
+      font-size: 0.82rem;
+      color: var(--muted);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: var(--sans);
+    }
+
+    /* ── Empty state ── */
+    .empty-hint {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.82rem;
+      padding: 2rem 1rem;
+    }
+
+    /* ── Footer ── */
+    footer {
+      background: var(--dark-green);
+      color: rgba(245,240,232,0.5);
+      padding: 1.25rem 1.5rem;
+      font-size: 0.75rem;
+      text-align: center;
+    }
+    footer a { color: rgba(245,240,232,0.6); }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-wordmark">Prismatic Labs / <span>tare</span></a>
+  <a href="index.html" class="nav-back">← All foods</a>
+</nav>
+
+<div class="hero">
+  <h1>What's your Hormuz number?</h1>
+  <p>Pick the foods you buy most weeks. We'll calculate what share of your grocery basket is exposed to the Strait of Hormuz crisis.</p>
+  <div class="country-row">
+    <label for="quiz-country">Your country:</label>
+    <select id="quiz-country"></select>
+  </div>
+</div>
+
+<div class="score-bar" id="score-bar">
+  <div>
+    <div class="score-label">Your basket exposure</div>
+    <div class="score-number" id="score-number" style="color:#aaa">—</div>
+  </div>
+  <div class="score-right">
+    <span class="score-count" id="score-count">Select foods below</span>
+    <button class="share-score-btn" id="share-score-btn">Share my number</button>
+  </div>
+  <div class="score-bar-track">
+    <div class="score-bar-fill" id="score-bar-fill" style="width:0%"></div>
+  </div>
+</div>
+
+<div class="results-section" id="results-section">
+  <div class="result-card" id="result-card">
+    <div class="result-headline" id="result-headline"></div>
+    <div class="result-big" id="result-big"></div>
+    <div class="result-band" id="result-band"></div>
+    <div class="result-breakdown" id="result-breakdown"></div>
+    <div class="result-cta">
+      <a href="index.html" class="result-btn result-btn-primary">See all 59 foods →</a>
+      <button class="result-btn result-btn-secondary" id="result-share-btn">Share my number</button>
+    </div>
+  </div>
+  <div class="empty-hint" id="empty-hint">Pick at least 3 foods to see your score</div>
+</div>
+
+<div id="food-sections"></div>
+
+<div class="share-overlay" id="share-overlay">
+  <div class="share-panel">
+    <h3>Share your Hormuz number</h3>
+    <div class="share-options">
+      <a class="share-opt" id="sq-x" href="#" target="_blank" rel="noopener">
+        <span class="share-opt-icon">𝕏</span> Post on X
+      </a>
+      <a class="share-opt" id="sq-linkedin" href="#" target="_blank" rel="noopener">
+        <span class="share-opt-icon">in</span> Share on LinkedIn
+      </a>
+      <a class="share-opt" id="sq-whatsapp" href="#" target="_blank" rel="noopener">
+        <span class="share-opt-icon">💬</span> Send on WhatsApp
+      </a>
+      <button class="share-opt" id="sq-copy">
+        <span class="share-opt-icon">🔗</span> <span id="sq-copy-label">Copy link</span>
+      </button>
+    </div>
+    <button class="share-cancel" id="share-cancel">Cancel</button>
+  </div>
+</div>
+
+<footer>
+  <a href="index.html">← Full dashboard</a> · <a href="methodology.html">How it's calculated</a> · <a href="https://github.com/prismatic-labs/tare" target="_blank" rel="noopener">GitHub</a>
+</footer>
+
+<script>
+const DATA_URL = 'data/foods.json';
+const QUIZ_URL = 'https://prismatic-labs.github.io/tare/quiz.html';
+
+const SEV_COLOR = { extreme: '#C0392B', high: '#D4680F', moderate: '#B08800', low: '#2A7A3A' };
+const SEV_LABELS = { extreme: 'Extreme exposure', high: 'High exposure', moderate: 'Moderate exposure', low: 'Low exposure' };
+const CATEGORIES = ['meat', 'seafood', 'dairy', 'grains', 'produce', 'packaged', 'staples'];
+const CAT_LABELS  = { meat:'Meat', seafood:'Seafood', dairy:'Dairy & Eggs', grains:'Grains & Bread', produce:'Fresh Produce', packaged:'Packaged & Drinks', staples:'Pulses & Staples' };
+
+let data = null;
+let selected = new Set();
+let countryCode = 'IT';
+
+const LOCALE_MAP = {
+  'it':'IT','de':'DE','de-at':'DE','de-ch':'DE','en-gb':'GB','en-au':'AU',
+  'ja':'JP','fil':'PH','tl':'PH','en-us':'US','en-ca':'US','hi':'IN','bn':'IN',
+  'pt-br':'BR','si':'LK','ta':'LK',
+};
+const CONFIDENCE_LABEL = {
+  high:'', medium:'⚠️ ', low:'⚠️⚠️ '
+};
+
+function detectCountry() {
+  const lang = (navigator.language || 'en').toLowerCase();
+  return LOCALE_MAP[lang] || LOCALE_MAP[lang.split('-')[0]] || 'IT';
+}
+
+function getCountry() {
+  return data.countries.find(c => c.code === countryCode) || data.countries[0];
+}
+
+function countryExposure(food, country) {
+  const raw = Math.min(99, Math.round(food.crisis_exposure_pct * country.impact_multiplier));
+  if (country.data_confidence === 'low')    return Math.min(99, Math.round(raw / 10) * 10) || 10;
+  if (country.data_confidence === 'medium') return Math.min(99, Math.round(raw / 5)  * 5)  || 5;
+  return raw;
+}
+
+function severityFromPct(pct) {
+  if (pct >= 60) return 'extreme';
+  if (pct >= 40) return 'high';
+  if (pct >= 20) return 'moderate';
+  return 'low';
+}
+
+function computeScore() {
+  if (selected.size === 0) return null;
+  const country = getCountry();
+  const foods = [...selected].map(id => data.foods.find(f => f.id === id)).filter(Boolean);
+  const avg = Math.round(foods.reduce((s, f) => s + countryExposure(f, country), 0) / foods.length);
+  return { avg, sev: severityFromPct(avg), foods };
+}
+
+function updateScore() {
+  const result = computeScore();
+  const numEl  = document.getElementById('score-number');
+  const fillEl = document.getElementById('score-bar-fill');
+  const countEl = document.getElementById('score-count');
+  const shareBtn = document.getElementById('share-score-btn');
+  const card   = document.getElementById('result-card');
+  const hint   = document.getElementById('empty-hint');
+
+  if (!result) {
+    numEl.textContent = '—';
+    numEl.style.color = '#aaa';
+    fillEl.style.width = '0%';
+    countEl.textContent = 'Select foods below';
+    shareBtn.classList.remove('visible');
+    card.classList.remove('visible');
+    hint.style.display = '';
+    return;
+  }
+
+  const { avg, sev, foods } = result;
+  const color = SEV_COLOR[sev];
+
+  numEl.textContent = avg + '%';
+  numEl.style.color = color;
+  fillEl.style.width = avg + '%';
+  fillEl.style.background = color;
+  countEl.textContent = `${selected.size} food${selected.size !== 1 ? 's' : ''} selected`;
+  shareBtn.classList.toggle('visible', selected.size >= 3);
+
+  if (selected.size >= 3) {
+    hint.style.display = 'none';
+    card.classList.add('visible');
+    renderResultCard(result);
+  } else {
+    hint.style.display = '';
+    card.classList.remove('visible');
+  }
+}
+
+function renderResultCard({ avg, sev, foods }) {
+  const country = getCountry();
+  const color = SEV_COLOR[sev];
+
+  document.getElementById('result-headline').textContent =
+    `Your weekly basket in ${country.name}`;
+  document.getElementById('result-big').textContent = avg + '%';
+  document.getElementById('result-big').style.color = color;
+  document.getElementById('result-band').textContent = SEV_LABELS[sev];
+
+  const sorted = [...foods].sort((a, b) => countryExposure(b, country) - countryExposure(a, country));
+  document.getElementById('result-breakdown').innerHTML = sorted.map(f => {
+    const pct = countryExposure(f, country);
+    const c   = SEV_COLOR[severityFromPct(pct)];
+    return `
+      <div class="result-row">
+        <span class="result-row-emoji">${f.emoji}</span>
+        <span class="result-row-name">${f.name}</span>
+        <div class="result-row-bar"><div class="result-row-fill" style="width:${pct}%;background:${c}"></div></div>
+        <span class="result-row-pct" style="color:${c}">${pct}%</span>
+      </div>`;
+  }).join('');
+}
+
+function buildShareText(score) {
+  const country = getCountry();
+  const names = [...selected].map(id => data.foods.find(f => f.id === id)?.name).filter(Boolean).join(', ');
+  const url = QUIZ_URL;
+  return {
+    text: `My grocery basket is ${score.avg}% exposed to the Strait of Hormuz crisis (${country.name}). Foods: ${names}. What's your number? ${url} #tare #Hormuz`,
+    url,
+  };
+}
+
+function openShareOverlay() {
+  const result = computeScore();
+  if (!result) return;
+  const { text, url } = buildShareText(result);
+
+  document.getElementById('sq-x').href =
+    `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
+  document.getElementById('sq-linkedin').href =
+    `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
+  document.getElementById('sq-whatsapp').href =
+    `https://wa.me/?text=${encodeURIComponent(text)}`;
+
+  document.getElementById('share-overlay').classList.add('open');
+}
+
+function closeShareOverlay() {
+  document.getElementById('share-overlay').classList.remove('open');
+  document.getElementById('sq-copy-label').textContent = 'Copy link';
+}
+
+function renderFoodSections() {
+  const country = getCountry();
+  const wrap = document.getElementById('food-sections');
+  wrap.innerHTML = CATEGORIES.map(cat => {
+    const foods = data.foods.filter(f => f.category === cat);
+    if (!foods.length) return '';
+    const tiles = foods.map(f => {
+      const pct   = countryExposure(f, country);
+      const sev   = severityFromPct(pct);
+      const color = SEV_COLOR[sev];
+      const sel   = selected.has(f.id) ? 'selected' : '';
+      return `<div class="food-tile ${sel}" data-id="${f.id}" tabindex="0" role="checkbox" aria-checked="${selected.has(f.id)}" aria-label="${f.name}, ${pct}% exposure">
+        <span class="food-tile-emoji">${f.emoji}</span>
+        <span class="food-tile-name">${f.name}</span>
+        <span class="food-tile-pct" style="background:${color}">${pct}%</span>
+      </div>`;
+    }).join('');
+    return `<div class="section-wrap">
+      <h2>${CAT_LABELS[cat] || cat}</h2>
+      <div class="food-grid">${tiles}</div>
+    </div>`;
+  }).join('');
+
+  // Attach listeners
+  wrap.querySelectorAll('.food-tile').forEach(el => {
+    el.addEventListener('click', () => toggleFood(el.dataset.id));
+    el.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleFood(el.dataset.id); }
+    });
+  });
+}
+
+function toggleFood(id) {
+  if (selected.has(id)) {
+    selected.delete(id);
+  } else {
+    selected.add(id);
+  }
+  // Re-render just the tile states without full rebuild
+  document.querySelectorAll(`.food-tile[data-id="${id}"]`).forEach(el => {
+    el.classList.toggle('selected', selected.has(id));
+    el.setAttribute('aria-checked', selected.has(id));
+  });
+  updateScore();
+}
+
+function populateCountrySelector() {
+  const sel = document.getElementById('quiz-country');
+  sel.innerHTML = '';
+  data.countries.forEach(c => {
+    const conf = CONFIDENCE_LABEL[c.data_confidence] || '';
+    const opt  = document.createElement('option');
+    opt.value  = c.code;
+    opt.textContent = `${conf}${c.name}`;
+    if (c.code === countryCode) opt.selected = true;
+    sel.appendChild(opt);
+  });
+}
+
+async function init() {
+  try {
+    const res = await fetch(DATA_URL);
+    if (!res.ok) throw new Error('fetch failed');
+    data = await res.json();
+  } catch {
+    document.getElementById('food-sections').innerHTML =
+      '<p style="text-align:center;padding:2rem;color:#666">Failed to load data. <a href="index.html">Return to dashboard</a></p>';
+    return;
+  }
+
+  countryCode = detectCountry();
+  populateCountrySelector();
+  renderFoodSections();
+  updateScore();
+
+  document.getElementById('quiz-country').addEventListener('change', e => {
+    countryCode = e.target.value;
+    renderFoodSections(); // re-render tiles with new pcts
+    updateScore();
+  });
+
+  ['share-score-btn', 'result-share-btn'].forEach(id => {
+    document.getElementById(id).addEventListener('click', openShareOverlay);
+  });
+  document.getElementById('share-cancel').addEventListener('click', closeShareOverlay);
+  document.getElementById('share-overlay').addEventListener('click', e => {
+    if (e.target === document.getElementById('share-overlay')) closeShareOverlay();
+  });
+  document.getElementById('sq-copy').addEventListener('click', () => {
+    const result = computeScore();
+    if (!result) return;
+    const { url } = buildShareText(result);
+    const label = document.getElementById('sq-copy-label');
+    const doCopy = () => { label.textContent = 'Copied!'; setTimeout(() => { label.textContent = 'Copy link'; closeShareOverlay(); }, 1800); };
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(url).then(doCopy).catch(() => { _fb(url); doCopy(); });
+    } else { _fb(url); doCopy(); }
+  });
+}
+
+function _fb(text) {
+  const ta = document.createElement('textarea');
+  ta.value = text; ta.style.cssText = 'position:fixed;opacity:0';
+  document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+}
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

@@ -792,7 +792,8 @@
       transition: opacity 0.15s;
       box-shadow: 0 1px 4px rgba(0,0,0,0.3);
     }
-    .map-bubble:hover { opacity: 0.85; }
+    .map-bubble { z-index: 1; }
+    .map-bubble:hover { opacity: 0.85; z-index: 100; }
     .map-bubble-tip {
       display: none;
       position: absolute;
@@ -806,7 +807,7 @@
       font-size: 0.7rem;
       white-space: nowrap;
       pointer-events: none;
-      z-index: 10;
+      z-index: 101;
     }
     .map-bubble:hover .map-bubble-tip { display: block; }
     .map-legend {
@@ -1025,6 +1026,10 @@
         <a href="https://fred.stlouisfed.org/" target="_blank" rel="noopener">FRED (St. Louis Fed)</a>
       </p>
       <p style="margin-top:0.75rem">
+        <a href="quiz.html">What's your Hormuz number? →</a> ·
+        <a href="methodology.html">How it's calculated →</a>
+      </p>
+      <p style="margin-top:0.5rem">
         <a href="https://prismaticlabs.ai" target="_blank" rel="noopener">Built by Prismatic Labs</a> ·
         <a href="https://github.com/prismatic-labs/tare" target="_blank" rel="noopener">Open source on GitHub</a>
       </p>
@@ -1666,20 +1671,21 @@ function populateCountrySelector() {
 // Equirectangular positions for each country (as % of SVG width/height).
 // Formula: x = (lon + 180) / 360 * 100
 //          y = (83 - lat) / 148 * 100   (map spans ~83°N to ~-65°S = 148°)
-// Equirectangular base positions + manual nudges to prevent overlap
-// Formula: x=(lon+180)/360*100, y=(83-lat)/148*100
-// European countries (IT/DE/GB) are geographically close — nudged apart
+// Equirectangular positions using formula:
+//   x = 2% + (lon + 180) / 360 * 96%   (2% padding each side)
+//   y = 3% + (90 - lat) / 180 * 94%    (3% padding top/bottom)
+// EU countries nudged apart — they share similar lat/lon and would overlap.
 const COUNTRY_MAP_POS = {
-  IT: { left: '55.5%', top: '31.5%' }, // Rome   — nudged right+down from DE/GB
-  DE: { left: '53.7%', top: '22.5%' }, // Berlin — nudged slightly down
-  GB: { left: '48.5%', top: '24.0%' }, // London — nudged left
-  US: { left: '22.7%', top: '30.1%' }, // US centre
-  JP: { left: '88.8%', top: '32.0%' }, // Tokyo
-  IN: { left: '71.4%', top: '36.8%' }, // New Delhi
-  PH: { left: '84.5%', top: '46.2%' }, // Manila
-  BR: { left: '36.7%', top: '66.8%' }, // Brasília
-  AU: { left: '85.5%', top: '71.0%' }, // Centre AUS
-  LK: { left: '73.5%', top: '52.5%' }, // Colombo
+  GB: { left: '46.0%', top: '21.0%' }, // London  51.5°N   0°E  — nudged left
+  DE: { left: '56.0%', top: '20.0%' }, // Berlin  52.5°N  13°E  — nudged right
+  IT: { left: '53.5%', top: '29.5%' }, // Rome    41.9°N  12°E  — naturally south of DE/GB
+  US: { left: '23.8%', top: '29.9%' }, // Centre  38.5°N  98°W
+  JP: { left: '87.3%', top: '31.4%' }, // Tokyo   35.7°N 140°E
+  IN: { left: '70.6%', top: '34.8%' }, // Delhi   28.6°N  77°E
+  PH: { left: '82.3%', top: '42.4%' }, // Manila  14.6°N 121°E
+  BR: { left: '37.2%', top: '58.2%' }, // Brasília 15.8°S  48°W
+  AU: { left: '85.5%', top: '68.3%' }, // Centre  25.0°S 133°E
+  LK: { left: '71.3%', top: '46.4%' }, // Colombo  6.9°N  80°E
 };
 
 const SEVERITY_COLOR = {
