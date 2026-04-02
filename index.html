@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tare — The Strait of Hormuz crisis in your grocery bill</title>
+  <meta name="description" content="A data tool that maps how the 2026 Strait of Hormuz disruption flows through energy, fertilizer, and logistics into the price of 59 everyday foods.">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="The Strait of Hormuz crisis in your grocery bill">
+  <meta property="og:description" content="A data breakdown of how Hormuz supply chain disruptions affect the price of 59 everyday foods across 10 countries.">
+  <meta property="og:url" content="https://prismatic-labs.github.io/tare/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Tare by Prismatic Labs">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The Strait of Hormuz crisis in your grocery bill">
+  <meta name="twitter:description" content="Data breakdown: how Hormuz supply chain disruptions affect 59 everyday foods × 10 countries.">
+
+  <style>
+    /* ─── Reset & Base ──────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --dark-green:   #2C3E2D;
+      --mid-green:    #3d5c3f;
+      --cream:        #F5F0E8;
+      --cream-dark:   #EBE4D6;
+      --white:        #ffffff;
+      --text:         #1a1a1a;
+      --muted:        #666666;
+      --muted-light:  #999999;
+      --border:       #ddd6c8;
+
+      --extreme:      #C0392B;
+      --high:         #D4680F;
+      --moderate:     #B08800;
+      --low:          #2A7A3A;
+
+      --extreme-bg:   #fdf2f1;
+      --high-bg:      #fef5ec;
+      --moderate-bg:  #fefbe8;
+      --low-bg:       #f0f9f1;
+
+      --serif:        Georgia, 'Times New Roman', serif;
+      --sans:         -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+
+      --radius:       6px;
+      --shadow:       0 1px 4px rgba(0,0,0,0.08);
+      --shadow-lg:    0 4px 20px rgba(0,0,0,0.14);
+    }
+
+    html { font-size: 16px; scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--cream);
+      color: var(--text);
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+
+    /* ─── Header ────────────────────────────────────────────────────────── */
+    header {
+      background: var(--dark-green);
+      color: var(--cream);
+      padding: 1.25rem 1.5rem 1.5rem;
+    }
+
+    .header-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .wordmark {
+      font-family: var(--serif);
+      font-size: 0.95rem;
+      letter-spacing: 0.04em;
+      color: rgba(245, 240, 232, 0.7);
+      text-decoration: none;
+    }
+    .wordmark:hover { color: var(--cream); }
+    .wordmark span { color: var(--cream); font-style: italic; }
+
+    .live-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.75rem;
+      color: rgba(245, 240, 232, 0.65);
+      letter-spacing: 0.03em;
+    }
+    .pulse-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #5dbb6d;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    .header-headline h1 {
+      font-family: var(--serif);
+      font-size: clamp(1.4rem, 4vw, 2.1rem);
+      font-weight: normal;
+      line-height: 1.2;
+      color: var(--cream);
+      max-width: 640px;
+    }
+
+    .header-headline p {
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+      color: rgba(245, 240, 232, 0.72);
+      max-width: 560px;
+      line-height: 1.55;
+    }
+
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-top: 1.25rem;
+      flex-wrap: wrap;
+    }
+
+    .country-label {
+      font-size: 0.8rem;
+      color: rgba(245, 240, 232, 0.65);
+    }
+
+    #country-select {
+      font-family: var(--sans);
+      font-size: 0.85rem;
+      background: rgba(255,255,255,0.1);
+      color: var(--cream);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: var(--radius);
+      padding: 0.4rem 0.6rem;
+      cursor: pointer;
+      outline: none;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='rgba(245,240,232,0.6)'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.55rem center;
+      padding-right: 1.6rem;
+    }
+    #country-select option { background: var(--dark-green); color: var(--cream); }
+    #country-select:focus { border-color: rgba(255,255,255,0.4); }
+
+    /* ─── Search & Filters ──────────────────────────────────────────────── */
+    .controls-bar {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 0.9rem 1.5rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    #search-input {
+      font-family: var(--sans);
+      font-size: 0.9rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0.45rem 0.75rem 0.45rem 2.1rem;
+      outline: none;
+      background: var(--cream) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E") no-repeat 0.6rem center;
+      flex: 1;
+      min-width: 180px;
+      max-width: 300px;
+      color: var(--text);
+    }
+    #search-input::placeholder { color: var(--muted-light); }
+    #search-input:focus { border-color: var(--dark-green); }
+
+    .filter-pills {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      font-family: var(--sans);
+      font-size: 0.78rem;
+      padding: 0.3rem 0.7rem;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.15s;
+      letter-spacing: 0.01em;
+    }
+    .pill:hover { border-color: var(--dark-green); color: var(--dark-green); }
+    .pill.active {
+      background: var(--dark-green);
+      border-color: var(--dark-green);
+      color: var(--cream);
+    }
+
+    /* ─── Grid ──────────────────────────────────────────────────────────── */
+    .main-content { padding: 1.5rem; max-width: 1400px; margin: 0 auto; }
+
+    .results-meta {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+    .results-meta strong { color: var(--text); }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    @media (min-width: 560px)  { .grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 860px)  { .grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (min-width: 1200px) { .grid { grid-template-columns: repeat(4, 1fr); } }
+
+    /* ─── Card ──────────────────────────────────────────────────────────── */
+    .card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem;
+      cursor: pointer;
+      transition: box-shadow 0.15s, border-color 0.15s, transform 0.1s;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+    .card:hover {
+      box-shadow: var(--shadow-lg);
+      border-color: #bbb5a6;
+      transform: translateY(-1px);
+    }
+    .card:focus-visible { outline: 2px solid var(--dark-green); outline-offset: 2px; }
+
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+    }
+
+    .card-emoji { font-size: 1.5rem; flex-shrink: 0; line-height: 1; }
+
+    .card-meta { flex: 1; min-width: 0; }
+
+    .card-name {
+      font-family: var(--serif);
+      font-size: 1rem;
+      font-weight: normal;
+      line-height: 1.2;
+      color: var(--text);
+    }
+
+    .card-category {
+      font-size: 0.7rem;
+      color: var(--muted-light);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-top: 0.1rem;
+    }
+
+    .badge {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.45rem;
+      border-radius: 3px;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+    .badge-extreme  { background: var(--extreme-bg);  color: var(--extreme);  }
+    .badge-high     { background: var(--high-bg);     color: var(--high);     }
+    .badge-moderate { background: var(--moderate-bg); color: var(--moderate); }
+    .badge-low      { background: var(--low-bg);      color: var(--low);      }
+
+    .exposure-row {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+    }
+
+    .exposure-number {
+      font-family: var(--serif);
+      font-size: 1.9rem;
+      font-weight: normal;
+      line-height: 1;
+    }
+    .severity-extreme .exposure-number { color: var(--extreme); }
+    .severity-high    .exposure-number { color: var(--high);    }
+    .severity-moderate .exposure-number { color: var(--moderate); }
+    .severity-low     .exposure-number { color: var(--low);     }
+
+    .exposure-label {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .bar-track {
+      height: 4px;
+      background: var(--cream-dark);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .bar-fill {
+      height: 100%;
+      border-radius: 2px;
+      transition: width 0.3s ease;
+    }
+    .severity-extreme .bar-fill { background: var(--extreme);  }
+    .severity-high    .bar-fill { background: var(--high);     }
+    .severity-moderate .bar-fill { background: var(--moderate); }
+    .severity-low     .bar-fill { background: var(--low);      }
+
+    .drivers-preview {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .driver-chip {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+    .driver-icon { font-size: 0.7rem; flex-shrink: 0; }
+    .driver-name { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .driver-pct  { font-weight: 600; color: var(--text); flex-shrink: 0; }
+
+    .card-tap-hint {
+      font-size: 0.68rem;
+      color: var(--muted-light);
+      margin-top: auto;
+      text-align: right;
+    }
+
+    /* ─── Empty State ───────────────────────────────────────────────────── */
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--muted);
+    }
+    .empty-state p:first-child { font-size: 2rem; margin-bottom: 0.5rem; }
+
+    /* ─── Modal Overlay ─────────────────────────────────────────────────── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(20, 30, 20, 0.55);
+      z-index: 200;
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 1rem;
+    }
+    .modal-overlay.open { display: flex; }
+
+    @media (min-width: 700px) {
+      .modal-overlay { align-items: center; }
+    }
+
+    .modal {
+      background: var(--white);
+      border-radius: 10px 10px 0 0;
+      width: 100%;
+      max-width: 640px;
+      max-height: 92vh;
+      overflow-y: auto;
+      box-shadow: var(--shadow-lg);
+      position: relative;
+    }
+
+    @media (min-width: 700px) {
+      .modal { border-radius: 10px; max-height: 88vh; }
+    }
+
+    .modal-close {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1.25rem;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .modal-back {
+      font-size: 0.8rem;
+      color: var(--muted);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .modal-back:hover { color: var(--text); }
+
+    .modal-share-btn {
+      font-family: var(--sans);
+      font-size: 0.78rem;
+      padding: 0.35rem 0.8rem;
+      background: var(--dark-green);
+      color: var(--cream);
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .modal-share-btn:hover { background: var(--mid-green); }
+    .modal-share-btn.copied { background: #27AE60; }
+
+    .modal-body { padding: 1.25rem; }
+
+    .modal-hero {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+    .modal-emoji { font-size: 2.5rem; line-height: 1; flex-shrink: 0; }
+
+    .modal-title-block { flex: 1; }
+    .modal-title {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      font-weight: normal;
+      line-height: 1.15;
+      margin-bottom: 0.3rem;
+    }
+
+    .modal-exposure-row {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+    .modal-exposure-big {
+      font-family: var(--serif);
+      font-size: 2.5rem;
+      line-height: 1;
+      font-weight: normal;
+    }
+    .modal-exposure-label { font-size: 0.8rem; color: var(--muted); }
+
+    .modal-bar-track {
+      height: 6px;
+      background: var(--cream-dark);
+      border-radius: 3px;
+      margin: 0.6rem 0 1rem;
+      overflow: hidden;
+    }
+    .modal-bar-fill { height: 100%; border-radius: 3px; }
+
+    /* Price table */
+    .price-table {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 1.25rem;
+    }
+
+    .price-cell {
+      background: var(--white);
+      padding: 0.8rem;
+      text-align: center;
+    }
+
+    .price-cell-label {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted-light);
+      margin-bottom: 0.25rem;
+    }
+
+    .price-cell-value {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      color: var(--text);
+    }
+    .price-cell.current .price-cell-value { color: var(--high); }
+    .price-cell.projected .price-cell-value { color: var(--extreme); }
+
+    .price-cell-sub {
+      font-size: 0.65rem;
+      color: var(--muted-light);
+      margin-top: 0.15rem;
+    }
+
+    /* Drivers section */
+    .section-title {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 0.6rem;
+    }
+
+    .drivers-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .driver-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.65rem;
+      padding: 0.65rem;
+      background: var(--cream);
+      border-radius: var(--radius);
+    }
+
+    .driver-row-icon { font-size: 1rem; flex-shrink: 0; margin-top: 0.05rem; }
+
+    .driver-row-body { flex: 1; }
+    .driver-row-name { font-size: 0.85rem; font-weight: 600; color: var(--text); }
+    .driver-row-desc { font-size: 0.78rem; color: var(--muted); margin-top: 0.1rem; line-height: 1.4; }
+
+    .driver-row-pct {
+      font-family: var(--serif);
+      font-size: 1rem;
+      font-weight: normal;
+      flex-shrink: 0;
+    }
+    .cat-fertilizer  .driver-row-pct { color: var(--moderate); }
+    .cat-fuel        .driver-row-pct { color: var(--high); }
+    .cat-gas         .driver-row-pct { color: var(--extreme); }
+    .cat-petrochemical .driver-row-pct { color: #8e44ad; }
+    .cat-shipping    .driver-row-pct { color: var(--high); }
+
+    /* Explanation */
+    .explanation {
+      font-size: 0.88rem;
+      line-height: 1.65;
+      color: var(--text);
+      background: var(--cream);
+      border-left: 3px solid var(--dark-green);
+      padding: 0.75rem 0.9rem;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      margin-bottom: 1.25rem;
+    }
+
+    /* ─── Footer ────────────────────────────────────────────────────────── */
+    footer {
+      background: var(--dark-green);
+      color: rgba(245, 240, 232, 0.7);
+      padding: 2rem 1.5rem;
+      margin-top: 3rem;
+      font-size: 0.8rem;
+      line-height: 1.7;
+    }
+
+    .footer-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: grid;
+      gap: 1.5rem;
+    }
+    @media (min-width: 640px) { .footer-inner { grid-template-columns: 1fr 1fr; } }
+
+    .footer-col h3 {
+      font-family: var(--serif);
+      font-weight: normal;
+      font-size: 0.9rem;
+      color: var(--cream);
+      margin-bottom: 0.4rem;
+    }
+
+    .footer-col a { color: rgba(245, 240, 232, 0.6); }
+    .footer-col a:hover { color: var(--cream); }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(245, 240, 232, 0.15);
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: rgba(245, 240, 232, 0.45);
+    }
+
+    /* ─── Loading / Error ───────────────────────────────────────────────── */
+    #loading { text-align: center; padding: 4rem 1rem; color: var(--muted); font-size: 0.9rem; }
+    #error { display: none; text-align: center; padding: 3rem; color: var(--extreme); }
+
+    /* ─── Accessibility ─────────────────────────────────────────────────── */
+    .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; }
+    a { color: inherit; }
+    button { font-family: inherit; }
+  </style>
+</head>
+<body>
+
+<!-- Header -->
+<header>
+  <div class="header-top">
+    <a href="https://prismaticlabs.ai" class="wordmark" target="_blank" rel="noopener">
+      Prismatic Labs / <span>tare</span>
+    </a>
+    <div class="live-badge" id="live-badge" aria-label="Live data indicator">
+      <div class="pulse-dot" aria-hidden="true"></div>
+      <span id="live-date">Loading…</span>
+    </div>
+  </div>
+
+  <div class="header-headline">
+    <h1>The Strait of Hormuz crisis, in your grocery bill.</h1>
+    <p>
+      Since 28 February 2026, disruptions to the Strait of Hormuz have affected an estimated
+      20% of global oil supply <a href="https://www.eia.gov/todayinenergy/detail.php?id=39932" target="_blank" rel="noopener" style="color:rgba(245,240,232,0.55);text-decoration:underline">↗ EIA</a>,
+      20% of LNG <a href="https://www.iea.org/reports/the-role-of-gas-in-todays-energy-transitions" target="_blank" rel="noopener" style="color:rgba(245,240,232,0.55);text-decoration:underline">↗ IEA</a>,
+      and around 30% of globally traded fertilizer <a href="https://www.ifastat.org/" target="_blank" rel="noopener" style="color:rgba(245,240,232,0.55);text-decoration:underline">↗ IFA</a>.
+      This tool maps how those supply chain shocks flow through energy, logistics, and inputs
+      into the price of 59 everyday foods.
+    </p>
+  </div>
+
+  <div class="header-controls">
+    <label for="country-select" class="country-label">Your country:</label>
+    <select id="country-select" aria-label="Select your country">
+      <!-- Populated by JS -->
+    </select>
+  </div>
+</header>
+
+<!-- Search & Filters -->
+<div class="controls-bar" role="search">
+  <input
+    type="search"
+    id="search-input"
+    placeholder="Search — bread, chicken, rice…"
+    autocomplete="off"
+    aria-label="Search foods"
+  >
+  <div class="filter-pills" role="group" aria-label="Filter by category">
+    <button class="pill active" data-filter="all">All</button>
+    <button class="pill" data-filter="grains">Grains</button>
+    <button class="pill" data-filter="meat">Meat</button>
+    <button class="pill" data-filter="dairy">Dairy</button>
+    <button class="pill" data-filter="produce">Produce</button>
+    <button class="pill" data-filter="packaged">Packaged</button>
+    <button class="pill" data-filter="seafood">Seafood</button>
+    <button class="pill" data-filter="staples">Staples</button>
+  </div>
+</div>
+
+<!-- Main Content -->
+<main class="main-content">
+  <div id="loading">Loading data…</div>
+  <div id="error" role="alert">Failed to load food data. Please refresh the page.</div>
+  <p class="results-meta" id="results-meta" style="display:none"></p>
+  <div class="grid" id="grid" role="list" aria-label="Food items"></div>
+</main>
+
+<!-- Detail Modal -->
+<div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal" id="modal">
+    <div class="modal-close">
+      <button class="modal-back" id="modal-back-btn" aria-label="Close detail view">
+        ← All foods
+      </button>
+      <button class="modal-share-btn" id="modal-share-btn" aria-live="polite">Share</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h3>About</h3>
+      <p>
+        <strong style="color:rgba(245,240,232,0.9)">Tare</strong> is a data tool that maps supply chain
+        exposure. In measurement, tare is the weight of the container — what you subtract to find
+        the true weight of the contents.
+      </p>
+      <p style="margin-top:0.5rem">
+        Crisis exposure scores are computed from
+        <a href="https://www.ers.usda.gov/topics/farm-economy/farm-sector-income-finances/cost-of-production/" target="_blank" rel="noopener">USDA cost-of-production data</a>,
+        <a href="https://www.fao.org/worldfoodsituation/foodpricesindex/en/" target="_blank" rel="noopener">FAO food price indices</a>,
+        and country-level Hormuz import dependency estimates from
+        <a href="https://comtradeplus.un.org/" target="_blank" rel="noopener">UN Comtrade</a>.
+        Commodity baselines use
+        <a href="https://www.worldbank.org/en/research/commodity-markets" target="_blank" rel="noopener">World Bank Pink Sheet</a> prices for Feb 2026.
+        Exchange rates via <a href="https://www.frankfurter.app/" target="_blank" rel="noopener">Frankfurter (ECB)</a>. Updated weekly.
+      </p>
+    </div>
+    <div class="footer-col">
+      <h3>Data Sources</h3>
+      <p>
+        <a href="https://www.worldbank.org/en/research/commodity-markets" target="_blank" rel="noopener">World Bank Commodity Prices</a> ·
+        <a href="https://www.fao.org/worldfoodsituation/foodpricesindex/en/" target="_blank" rel="noopener">FAO Food Price Index</a> ·
+        <a href="https://www.eia.gov/opendata/" target="_blank" rel="noopener">US EIA Petroleum</a> ·
+        <a href="https://ec.europa.eu/eurostat" target="_blank" rel="noopener">Eurostat</a> ·
+        <a href="https://fred.stlouisfed.org/" target="_blank" rel="noopener">FRED (St. Louis Fed)</a>
+      </p>
+      <p style="margin-top:0.75rem">
+        <a href="https://prismaticlabs.ai" target="_blank" rel="noopener">Built by Prismatic Labs</a> ·
+        <a href="https://github.com/prismatic-labs/tare" target="_blank" rel="noopener">Open source on GitHub</a>
+      </p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>Data last updated: <span id="footer-date">—</span></span>
+    <span>Crisis baseline: February 28, 2026</span>
+    <span>Apache 2.0 License</span>
+  </div>
+</footer>
+
+<script>
+/* ─── State ──────────────────────────────────────────────────────────────── */
+const state = {
+  data: null,
+  country: 'IT',
+  filter: 'all',
+  query: '',
+  activeFood: null,
+};
+
+/* ─── Category icons ─────────────────────────────────────────────────────── */
+const DRIVER_ICONS = {
+  fertilizer:   '🌱',
+  fuel:         '⛽',
+  gas:          '🔥',
+  petrochemical:'⚗️',
+  shipping:     '🚢',
+};
+
+const LOCALE_MAP = {
+  'it': 'IT', 'de': 'DE', 'de-at': 'DE', 'de-ch': 'DE',
+  'en-gb': 'GB', 'en-au': 'AU',
+  'ja': 'JP',
+  'fil': 'PH', 'tl': 'PH',
+  'en-us': 'US', 'en-ca': 'US',
+  'hi': 'IN', 'bn': 'IN',
+  'pt-br': 'BR',
+  'si': 'LK', 'ta': 'LK',
+};
+
+const CURRENCY_LOCALES = {
+  EUR: 'de-DE', GBP: 'en-GB', JPY: 'ja-JP',
+  PHP: 'fil-PH', USD: 'en-US', INR: 'hi-IN',
+  BRL: 'pt-BR', AUD: 'en-AU', LKR: 'si-LK',
+};
+
+/* ─── Helpers ────────────────────────────────────────────────────────────── */
+function detectCountry() {
+  const lang = (navigator.language || 'en').toLowerCase();
+  return LOCALE_MAP[lang] || LOCALE_MAP[lang.split('-')[0]] || 'IT';
+}
+
+function getCountry() {
+  return state.data.countries.find(c => c.code === state.country) ||
+         state.data.countries[0];
+}
+
+function formatPrice(eur, country) {
+  const rates = state.data.sources.exchange_rates;
+  const currency = country.currency;
+  const rate = rates[currency] || 1;
+  const amount = eur * rate;
+  const decimals = currency === 'JPY' || currency === 'LKR' ? 0 : 2;
+  try {
+    return new Intl.NumberFormat(CURRENCY_LOCALES[currency] || 'en', {
+      style: 'currency',
+      currency,
+      maximumFractionDigits: decimals,
+      minimumFractionDigits: decimals,
+    }).format(amount);
+  } catch {
+    return `${currency} ${amount.toFixed(decimals)}`;
+  }
+}
+
+function adjustedPrice(food, priceEur, country) {
+  const base = food.base_price_eur_kg;
+  const delta = priceEur - base;
+  return base + delta * country.impact_multiplier;
+}
+
+function severityClass(s) {
+  return `severity-${s}`;
+}
+
+function driverIcon(cat) {
+  return DRIVER_ICONS[cat] || '📦';
+}
+
+function escHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+/* ─── Render Card ────────────────────────────────────────────────────────── */
+function renderCard(food) {
+  const driversHtml = food.drivers.slice(0, 3).map(d => `
+    <div class="driver-chip">
+      <span class="driver-icon" aria-hidden="true">${driverIcon(d.category)}</span>
+      <span class="driver-name">${escHtml(d.input)}</span>
+      <span class="driver-pct">+${d.price_change_pct}%</span>
+    </div>
+  `).join('');
+
+  const sev = food.severity;
+
+  return `
+    <article
+      class="card ${severityClass(sev)}"
+      data-id="${escHtml(food.id)}"
+      data-category="${escHtml(food.category)}"
+      data-exposure="${food.crisis_exposure_pct}"
+      role="listitem"
+      tabindex="0"
+      aria-label="${escHtml(food.name)}, ${food.crisis_exposure_pct}% crisis exposure, ${sev}"
+    >
+      <div class="card-header">
+        <span class="card-emoji" aria-hidden="true">${food.emoji}</span>
+        <div class="card-meta">
+          <h3 class="card-name">${escHtml(food.name)}</h3>
+          <div class="card-category">${escHtml(food.category)}</div>
+        </div>
+        <span class="badge badge-${sev}">${sev}</span>
+      </div>
+
+      <div class="exposure-row">
+        <div class="exposure-number">${food.crisis_exposure_pct}%</div>
+        <div class="exposure-label">crisis<br>exposure</div>
+      </div>
+
+      <div class="bar-track" aria-hidden="true">
+        <div class="bar-fill" style="width:${food.crisis_exposure_pct}%"></div>
+      </div>
+
+      <div class="drivers-preview" aria-label="Main cost drivers">
+        ${driversHtml}
+      </div>
+
+      <div class="card-tap-hint" aria-hidden="true">Tap to see full breakdown →</div>
+    </article>
+  `;
+}
+
+/* ─── Render Grid ────────────────────────────────────────────────────────── */
+function renderGrid() {
+  const { data, filter, query } = state;
+  if (!data) return;
+
+  let foods = [...data.foods];
+
+  // Filter by category
+  if (filter !== 'all') {
+    foods = foods.filter(f => f.category === filter);
+  }
+
+  // Filter by search query
+  if (query.trim()) {
+    const q = query.toLowerCase().trim();
+    foods = foods.filter(f =>
+      f.name.toLowerCase().includes(q) ||
+      f.category.toLowerCase().includes(q) ||
+      f.drivers.some(d => d.input.toLowerCase().includes(q))
+    );
+  }
+
+  // Sort by exposure descending
+  foods.sort((a, b) => b.crisis_exposure_pct - a.crisis_exposure_pct);
+
+  const grid = document.getElementById('grid');
+  const meta = document.getElementById('results-meta');
+
+  if (foods.length === 0) {
+    grid.innerHTML = `<div class="empty-state"><p>🔍</p><p>No foods match "${escHtml(query)}"</p></div>`;
+    meta.textContent = '0 results';
+  } else {
+    grid.innerHTML = foods.map(renderCard).join('');
+    const total = data.foods.length;
+    meta.innerHTML = foods.length === total
+      ? `Showing all <strong>${total}</strong> foods — sorted by crisis exposure`
+      : `Showing <strong>${foods.length}</strong> of ${total} foods`;
+  }
+
+  meta.style.display = '';
+  attachCardListeners();
+}
+
+/* ─── Card click/keyboard ────────────────────────────────────────────────── */
+function attachCardListeners() {
+  document.querySelectorAll('.card').forEach(card => {
+    card.addEventListener('click', () => openFood(card.dataset.id));
+    card.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openFood(card.dataset.id);
+      }
+    });
+  });
+}
+
+/* ─── Modal: Open Food ───────────────────────────────────────────────────── */
+function openFood(id) {
+  const food = state.data.foods.find(f => f.id === id);
+  if (!food) return;
+
+  state.activeFood = id;
+  window.location.hash = id;
+
+  const country = getCountry();
+  const sev = food.severity;
+
+  const baseAdj     = adjustedPrice(food, food.base_price_eur_kg, country);
+  const currentAdj  = adjustedPrice(food, food.current_price_eur_kg, country);
+  const projAdj     = adjustedPrice(food, food.projected_price_eur_kg, country);
+
+  const driversHtml = food.drivers.map(d => `
+    <div class="driver-row cat-${escHtml(d.category)}">
+      <div class="driver-row-icon" aria-hidden="true">${driverIcon(d.category)}</div>
+      <div class="driver-row-body">
+        <div class="driver-row-name">${escHtml(d.input)}</div>
+        <div class="driver-row-desc">${escHtml(d.description)}</div>
+      </div>
+      <div class="driver-row-pct">+${d.price_change_pct}%</div>
+    </div>
+  `).join('');
+
+  const barColors = {
+    extreme: '#C0392B', high: '#D4680F', moderate: '#B08800', low: '#2A7A3A'
+  };
+
+  document.getElementById('modal-body').innerHTML = `
+    <div class="modal-hero">
+      <div class="modal-emoji" aria-hidden="true">${food.emoji}</div>
+      <div class="modal-title-block">
+        <h2 class="modal-title" id="modal-title">${escHtml(food.name)}</h2>
+        <span class="badge badge-${sev}">${sev} crisis exposure</span>
+        <div class="modal-exposure-row">
+          <div class="modal-exposure-big severity-${sev}" style="color:${barColors[sev]}">${food.crisis_exposure_pct}%</div>
+          <div class="modal-exposure-label">of retail price<br>driven by the crisis</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-bar-track" aria-hidden="true">
+      <div class="modal-bar-fill" style="width:${food.crisis_exposure_pct}%; background:${barColors[sev]}"></div>
+    </div>
+
+    <p class="section-title">Price per kg — ${country.name} (${country.currency})</p>
+    <div class="price-table" role="table" aria-label="Price comparison">
+      <div class="price-cell" role="cell">
+        <div class="price-cell-label">Before crisis</div>
+        <div class="price-cell-value">${formatPrice(baseAdj, country)}</div>
+        <div class="price-cell-sub">pre Feb 2026</div>
+      </div>
+      <div class="price-cell current" role="cell">
+        <div class="price-cell-label">Now</div>
+        <div class="price-cell-value">${formatPrice(currentAdj, country)}</div>
+        <div class="price-cell-sub">April 2026</div>
+      </div>
+      <div class="price-cell projected" role="cell">
+        <div class="price-cell-label">Projected</div>
+        <div class="price-cell-value">${formatPrice(projAdj, country)}</div>
+        <div class="price-cell-sub">if crisis persists</div>
+      </div>
+    </div>
+
+    <p class="section-title">Supply chain cost drivers</p>
+    <div class="drivers-list" aria-label="Cost drivers">${driversHtml}</div>
+
+    <p class="section-title">Why is this?</p>
+    <blockquote class="explanation">${escHtml(food.explanation)}</blockquote>
+  `;
+
+  const overlay = document.getElementById('modal-overlay');
+  overlay.classList.add('open');
+  overlay.querySelector('.modal').scrollTop = 0;
+  document.body.style.overflow = 'hidden';
+
+  // Reset share button
+  const shareBtn = document.getElementById('modal-share-btn');
+  shareBtn.textContent = 'Share';
+  shareBtn.classList.remove('copied');
+  shareBtn.dataset.foodId = id;
+}
+
+function closeFood() {
+  state.activeFood = null;
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+  history.pushState('', document.title, window.location.pathname + window.location.search);
+}
+
+/* ─── Share ──────────────────────────────────────────────────────────────── */
+function shareFood(id) {
+  const food = state.data.foods.find(f => f.id === id);
+  if (!food) return;
+
+  const url = `https://prismatic-labs.github.io/tare/#${id}`;
+  const text = `${food.crisis_exposure_pct}% of ${food.name.toLowerCase()}'s retail price is linked to Hormuz supply chain disruptions. Full breakdown: ${url} #tare #Hormuz`;
+
+  const btn = document.getElementById('modal-share-btn');
+
+  if (navigator.share) {
+    navigator.share({ title: `Tare — ${food.name}`, text, url }).catch(() => {});
+    return;
+  }
+
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'Share'; btn.classList.remove('copied'); }, 2200);
+    }).catch(() => fallbackCopy(text, btn));
+  } else {
+    fallbackCopy(text, btn);
+  }
+}
+
+function fallbackCopy(text, btn) {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.position = 'fixed';
+  ta.style.opacity = '0';
+  document.body.appendChild(ta);
+  ta.select();
+  document.execCommand('copy');
+  document.body.removeChild(ta);
+  btn.textContent = 'Copied!';
+  btn.classList.add('copied');
+  setTimeout(() => { btn.textContent = 'Share'; btn.classList.remove('copied'); }, 2200);
+}
+
+/* ─── Country selector ───────────────────────────────────────────────────── */
+function populateCountrySelector() {
+  const sel = document.getElementById('country-select');
+  state.data.countries.forEach(c => {
+    const opt = document.createElement('option');
+    opt.value = c.code;
+    opt.textContent = `${c.name} (${c.currency})`;
+    if (c.code === state.country) opt.selected = true;
+    sel.appendChild(opt);
+  });
+}
+
+/* ─── Init ───────────────────────────────────────────────────────────────── */
+async function init() {
+  try {
+    const res = await fetch('data/foods.json');
+    if (!res.ok) throw new Error('Network response not ok');
+    state.data = await res.json();
+  } catch (e) {
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('error').style.display = 'block';
+    return;
+  }
+
+  document.getElementById('loading').style.display = 'none';
+
+  // Live date
+  const d = new Date(state.data.last_updated);
+  const dateStr = d.toLocaleDateString('en', { year: 'numeric', month: 'long', day: 'numeric' });
+  document.getElementById('live-date').textContent = `Updated ${dateStr}`;
+  document.getElementById('footer-date').textContent = dateStr;
+
+  // Detect country from browser locale
+  state.country = detectCountry();
+  populateCountrySelector();
+
+  // Render
+  renderGrid();
+
+  // Check URL hash for deep link
+  if (window.location.hash) {
+    const id = window.location.hash.slice(1);
+    if (state.data.foods.some(f => f.id === id)) {
+      openFood(id);
+    }
+  }
+
+  /* ── Event listeners ── */
+
+  // Country selector
+  document.getElementById('country-select').addEventListener('change', e => {
+    state.country = e.target.value;
+    renderGrid();
+    if (state.activeFood) openFood(state.activeFood); // refresh modal prices
+  });
+
+  // Search
+  let searchTimer;
+  document.getElementById('search-input').addEventListener('input', e => {
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(() => {
+      state.query = e.target.value;
+      renderGrid();
+    }, 200);
+  });
+
+  // Category pills
+  document.querySelectorAll('.pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      state.filter = pill.dataset.filter;
+      renderGrid();
+    });
+  });
+
+  // Modal close
+  document.getElementById('modal-back-btn').addEventListener('click', closeFood);
+  document.getElementById('modal-overlay').addEventListener('click', e => {
+    if (e.target === document.getElementById('modal-overlay')) closeFood();
+  });
+
+  // Share button
+  document.getElementById('modal-share-btn').addEventListener('click', e => {
+    shareFood(e.currentTarget.dataset.foodId);
+  });
+
+  // Keyboard: Esc to close modal
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && state.activeFood) closeFood();
+  });
+
+  // Hash change (browser back/forward)
+  window.addEventListener('hashchange', () => {
+    if (!window.location.hash) {
+      if (state.activeFood) closeFood();
+    } else {
+      const id = window.location.hash.slice(1);
+      if (state.data.foods.some(f => f.id === id)) openFood(id);
+    }
+  });
+}
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
