@@ -117,32 +117,33 @@
     .sub-cards { display: flex; gap: 0.7rem; flex-wrap: wrap; }
     .sub-card {
       flex: 1 1 120px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.12);
+      background: #f5f0e8;
+      border: 1px solid #ddd8ce;
       border-radius: 10px;
       padding: 0.7rem 0.9rem;
       cursor: pointer;
       transition: background 0.15s;
       display: flex; align-items: center; gap: 0.5rem;
     }
-    .sub-card:hover { background: rgba(255,255,255,0.12); }
+    .sub-card:hover { background: #ede8df; }
     .sub-card-emoji { font-size: 1.3rem; }
     .sub-card-info { flex: 1; min-width: 0; }
     .sub-card-name { font-weight: 600; font-size: 0.85rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .sub-card-pct { font-size: 0.75rem; color: var(--muted-light); }
 
-    /* Contextual country tooltip */
+    /* Contextual country tooltip — light modal background */
     .country-detail {
       margin: 0.8rem 0 0;
       padding: 0.65rem 0.9rem;
-      background: rgba(255,255,255,0.05);
-      border-left: 3px solid rgba(255,255,255,0.2);
+      background: rgba(44, 62, 45, 0.06);
+      border-left: 3px solid rgba(44, 62, 45, 0.25);
       border-radius: 0 8px 8px 0;
       font-size: 0.78rem;
-      color: rgba(245, 240, 232, 0.7);
+      color: var(--muted);
       line-height: 1.5;
     }
-    .country-detail strong { color: var(--cream); }
+    .country-detail strong { color: var(--text); }
+    .country-detail em { font-style: italic; color: var(--muted); }
 
     /* View the Math */
     .math-details {
@@ -151,7 +152,7 @@
     .math-details summary {
       cursor: pointer;
       font-size: 0.78rem;
-      color: rgba(245, 240, 232, 0.5);
+      color: var(--muted);
       user-select: none;
       list-style: none;
       display: flex; align-items: center; gap: 0.3rem;
@@ -161,16 +162,16 @@
     .math-details summary::-webkit-details-marker { display: none; }
     .math-box {
       margin-top: 0.5rem;
-      background: rgba(0,0,0,0.25);
+      background: #f0ede6;
       border-radius: 8px;
       padding: 0.8rem 1rem;
       font-family: 'Courier New', monospace;
       font-size: 0.72rem;
-      color: rgba(245, 240, 232, 0.7);
+      color: #444;
       line-height: 1.8;
     }
     .math-box .math-line { display: block; }
-    .math-box .math-result { color: var(--cream); font-weight: bold; }
+    .math-box .math-result { color: var(--dark-green); font-weight: bold; }
 
     .header-headline h1 {
       font-family: var(--serif);
@@ -1016,23 +1017,42 @@ const DRIVER_SOURCES = {
 };
 
 /* ─── #2 Substitution groups ─────────────────────────────────────────────── */
-// Maps each category to other categories considered substitutable
+// Each category maps to the categories of plausible functional substitutes.
+// Deliberately narrow: chicken alternatives are other proteins, not lettuce.
 const SUBS_MAP = {
-  meat:     ['seafood', 'staples', 'dairy'],
-  seafood:  ['meat', 'staples'],
-  dairy:    ['staples', 'produce'],
-  grains:   ['staples', 'produce', 'grains'],
-  produce:  ['produce', 'staples'],
-  packaged: ['produce', 'staples', 'grains'],
-  staples:  ['produce', 'grains', 'staples'],
+  meat:     ['meat', 'seafood'],
+  seafood:  ['seafood', 'meat'],
+  dairy:    ['dairy'],
+  grains:   ['grains', 'staples'],
+  produce:  ['produce'],
+  packaged: ['packaged', 'grains'],
+  staples:  ['staples', 'grains'],
 };
 
 function findSubstitutes(food, country, count = 2) {
-  const allowedCats = SUBS_MAP[food.category] || [];
-  return state.data.foods
+  const thisPct = countryExposure(food, country);
+  const allowedCats = SUBS_MAP[food.category] || [food.category];
+  // Only suggest foods with lower exposure than the current one;
+  // prefer same category first, then related categories
+  const candidates = state.data.foods
     .filter(f => f.id !== food.id && allowedCats.includes(f.category))
-    .sort((a, b) => countryExposure(a, country) - countryExposure(b, country))
-    .slice(0, count);
+    .filter(f => countryExposure(f, country) < thisPct)
+    .sort((a, b) => {
+      // Same category first
+      const aCat = a.category === food.category ? 0 : 1;
+      const bCat = b.category === food.category ? 0 : 1;
+      if (aCat !== bCat) return aCat - bCat;
+      return countryExposure(a, country) - countryExposure(b, country);
+    });
+  // If we can't find enough same-group alternatives, fall back to any lower-exposure food
+  if (candidates.length < count) {
+    const fallback = state.data.foods
+      .filter(f => f.id !== food.id && !allowedCats.includes(f.category))
+      .filter(f => countryExposure(f, country) < thisPct)
+      .sort((a, b) => countryExposure(a, country) - countryExposure(b, country));
+    return [...candidates, ...fallback].slice(0, count);
+  }
+  return candidates.slice(0, count);
 }
 
 /* ─── #6 Country multiplier tooltip ─────────────────────────────────────── */
@@ -1541,19 +1561,20 @@ function populateCountrySelector() {
 }
 
 /* ─── #5 World heat map ──────────────────────────────────────────────────── */
-// Mercator-projected positions for each country (as % of image width/height).
-// Computed from latitude/longitude onto the Wikipedia SVG's 2058×1090 viewBox.
+// Equirectangular positions for each country (as % of SVG width/height).
+// Formula: x = (lon + 180) / 360 * 100
+//          y = (83 - lat) / 148 * 100   (map spans ~83°N to ~-65°S = 148°)
 const COUNTRY_MAP_POS = {
-  IT: { left: '53.4%', top: '37.1%' }, // Rome
-  DE: { left: '53.7%', top: '32.8%' }, // Berlin
-  GB: { left: '49.9%', top: '33.1%' }, // London
-  US: { left: '23.4%', top: '38.9%' }, // US centre
-  JP: { left: '88.8%', top: '39.3%' }, // Tokyo
-  IN: { left: '71.4%', top: '41.7%' }, // New Delhi
-  PH: { left: '83.6%', top: '45.9%' }, // Manila
-  BR: { left: '36.7%', top: '54.4%' }, // Brasília
-  AU: { left: '87.0%', top: '62.5%' }, // Canberra
-  LK: { left: '72.1%', top: '48.1%' }, // Colombo
+  IT: { left: '53.5%', top: '28.3%' }, // Rome        41.9°N  12.5°E
+  DE: { left: '53.7%', top: '20.6%' }, // Berlin      52.5°N  13.4°E
+  GB: { left: '49.7%', top: '21.3%' }, // London      51.5°N  -0.1°E
+  US: { left: '22.7%', top: '30.1%' }, // US centre   38.5°N  98.4°W
+  JP: { left: '88.8%', top: '32.0%' }, // Tokyo       35.7°N  139.7°E
+  IN: { left: '71.4%', top: '36.8%' }, // New Delhi   28.6°N  77.2°E
+  PH: { left: '83.6%', top: '46.2%' }, // Manila      14.6°N  121.0°E
+  BR: { left: '36.7%', top: '66.8%' }, // Brasília    15.8°S  47.9°W
+  AU: { left: '87.5%', top: '73.0%' }, // Centre AUS  25.0°S  135.0°E
+  LK: { left: '72.2%', top: '51.4%' }, // Colombo     6.9°N   79.9°E
 };
 
 const SEVERITY_COLOR = {
