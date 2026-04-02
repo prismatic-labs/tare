@@ -1083,30 +1083,74 @@ const SUBS_MAP = {
   staples:  ['staples', 'grains'],
 };
 
+// Functional groups — foods that serve the same role in a diet.
+// Substitutions are constrained to the same group first.
+// Foods not listed here fall back to category-level matching.
+const FUNCTIONAL_GROUP = {
+  // Proteins
+  chicken: 'protein', beef: 'protein', pork: 'protein', lamb: 'protein',
+  turkey: 'protein', sausages: 'protein', salmon: 'protein', shrimp: 'protein',
+  cod: 'protein', canned_tuna: 'protein', canned_sardines: 'protein',
+  eggs: 'protein', tofu: 'protein', lentils: 'protein', chickpeas: 'protein',
+  beans: 'protein', peanut_butter: 'protein',
+  // Fats & spreads
+  butter: 'fat', cooking_oil: 'fat', cream: 'fat',
+  // Liquid dairy
+  milk: 'liquid_dairy', yoghurt: 'liquid_dairy',
+  // Solid dairy
+  cheese: 'solid_dairy',
+  // Starchy staples
+  bread: 'starchy_staple', pasta: 'starchy_staple', rice: 'starchy_staple',
+  flour: 'starchy_staple', oats: 'starchy_staple', couscous: 'starchy_staple',
+  noodles: 'starchy_staple', corn_tortillas: 'starchy_staple', quinoa: 'starchy_staple',
+  instant_noodles: 'starchy_staple',
+  // Sweeteners / confectionery
+  sugar: 'sweet', chocolate: 'sweet', biscuits: 'sweet',
+  // Drinks
+  soft_drinks: 'drink', beer: 'drink', coffee: 'drink',
+  // Snacks
+  crisps: 'snack', frozen_pizza: 'snack',
+  // Fresh vegetables
+  tomatoes: 'fresh_veg', potatoes: 'fresh_veg', onions: 'fresh_veg',
+  lettuce: 'fresh_veg', peppers: 'fresh_veg', carrots: 'fresh_veg', garlic: 'fresh_veg',
+  // Fresh fruit
+  bananas: 'fresh_fruit', apples: 'fresh_fruit', oranges: 'fresh_fruit', avocado: 'fresh_fruit',
+};
+
 function findSubstitutes(food, country, count = 2) {
   const thisPct = countryExposure(food, country);
+  const thisGroup = FUNCTIONAL_GROUP[food.id];
   const allowedCats = SUBS_MAP[food.category] || [food.category];
-  // Only suggest foods with lower exposure than the current one;
-  // prefer same category first, then related categories
-  const candidates = state.data.foods
+
+  const lowerExposure = f => countryExposure(f, country) < thisPct;
+
+  // Tier 1: same functional group, strictly lower exposure
+  const tier1 = state.data.foods
+    .filter(f => f.id !== food.id && FUNCTIONAL_GROUP[f.id] === thisGroup && thisGroup)
+    .filter(lowerExposure)
+    .sort((a, b) => countryExposure(a, country) - countryExposure(b, country));
+
+  if (tier1.length >= count) return tier1.slice(0, count);
+
+  // Tier 2: same category (but not conflicting functional group), lower exposure
+  const tier2 = state.data.foods
     .filter(f => f.id !== food.id && allowedCats.includes(f.category))
-    .filter(f => countryExposure(f, country) < thisPct)
-    .sort((a, b) => {
-      // Same category first
-      const aCat = a.category === food.category ? 0 : 1;
-      const bCat = b.category === food.category ? 0 : 1;
-      if (aCat !== bCat) return aCat - bCat;
-      return countryExposure(a, country) - countryExposure(b, country);
-    });
-  // If we can't find enough same-group alternatives, fall back to any lower-exposure food
-  if (candidates.length < count) {
-    const fallback = state.data.foods
-      .filter(f => f.id !== food.id && !allowedCats.includes(f.category))
-      .filter(f => countryExposure(f, country) < thisPct)
-      .sort((a, b) => countryExposure(a, country) - countryExposure(b, country));
-    return [...candidates, ...fallback].slice(0, count);
-  }
-  return candidates.slice(0, count);
+    .filter(f => FUNCTIONAL_GROUP[f.id] === thisGroup || !thisGroup)
+    .filter(lowerExposure)
+    .filter(f => !tier1.includes(f))
+    .sort((a, b) => countryExposure(a, country) - countryExposure(b, country));
+
+  const combined = [...tier1, ...tier2].slice(0, count);
+  if (combined.length >= count) return combined;
+
+  // Tier 3: any lower-exposure food in allowed categories (last resort)
+  const tier3 = state.data.foods
+    .filter(f => f.id !== food.id && allowedCats.includes(f.category))
+    .filter(lowerExposure)
+    .filter(f => !combined.includes(f))
+    .sort((a, b) => countryExposure(a, country) - countryExposure(b, country));
+
+  return [...combined, ...tier3].slice(0, count);
 }
 
 /* ─── #6 Country multiplier tooltip ─────────────────────────────────────── */
