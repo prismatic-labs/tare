@@ -1769,13 +1769,9 @@ function renderCard(food, country) {
 
       <div class="exposure-row">
         <div class="exposure-number">${adjPct}%</div>
-        <div style="position:relative">
+        <div>
           <div class="exposure-label">
             Hormuz<br>Exposure Index
-            <button class="exposure-info-btn" onclick="toggleTooltip(event, 'tip-${escHtml(food.id)}')">i</button>
-          </div>
-          <div class="tooltip-popover" id="tip-${escHtml(food.id)}">
-            The percentage of the total shelf price directly derived from fuel, gas, and fertilizer inputs passing through the Strait of Hormuz.
           </div>
           ${food.exposure_low != null && food.exposure_high != null && food.exposure_high > food.exposure_low
             ? `<div class="exposure-band" title="80% model confidence interval">${Math.round(food.exposure_low * country.impact_multiplier)}–${Math.round(food.exposure_high * country.impact_multiplier)}%</div>`
@@ -1986,11 +1982,6 @@ function openFood(id) {
           <div class="modal-exposure-big severity-${sev}" style="color:${barColors[sev]}">${adjPct}%${scarcityFlag}</div>
           <div class="modal-exposure-label">
             Hormuz Exposure Index
-            <button class="exposure-info-btn" id="exposure-info-btn" aria-label="More information" onclick="toggleTooltip(event)">i</button>
-            <div class="tooltip-popover" id="exposure-tooltip">
-              The percentage of the total shelf price directly derived from fuel, gas, and fertilizer inputs 
-              passing through the Strait of Hormuz.
-            </div>
             ${euRefHtml}
           </div>
         </div>
@@ -2102,25 +2093,6 @@ function closeFood() {
   document.getElementById('modal-overlay').classList.remove('open');
   document.body.style.overflow = '';
   history.pushState('', document.title, window.location.pathname + window.location.search);
-}
-
-/* ─── Persistent Tooltips ────────────────────────────────────────────────── */
-function toggleTooltip(e) {
-  e.stopPropagation();
-  const tip = document.getElementById('exposure-tooltip');
-  tip.classList.toggle('open');
-  
-  // Position above the button
-  const btn = e.currentTarget;
-  const rect = btn.getBoundingClientRect();
-  tip.style.bottom = `${window.innerHeight - rect.top + 8}px`;
-  tip.style.left = `${rect.left + rect.width/2}px`;
-  tip.style.transform = 'translateX(-50%)';
-  tip.style.position = 'fixed';
-}
-
-function closeAllTooltips() {
-  document.querySelectorAll('.tooltip-popover').forEach(t => t.classList.remove('open'));
 }
 
 /* ─── Share menu ─────────────────────────────────────────────────────────── */
@@ -2510,10 +2482,9 @@ async function init() {
   document.getElementById('share-copy').addEventListener('click', () => {
     copyShareLink(document.getElementById('share-wrap').dataset.foodId);
   });
-  // Close share menu and tooltips when clicking outside
+  // Close share menu when clicking outside
   document.addEventListener('click', e => {
     if (!document.getElementById('share-wrap').contains(e.target)) closeShareMenu();
-    closeAllTooltips();
   });
 
   // Keyboard: Esc to close modal
