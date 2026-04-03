@@ -515,7 +515,66 @@
     .exposure-label {
       font-size: 0.75rem;
       color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
     }
+    .exposure-info-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.08);
+      color: var(--muted);
+      font-size: 0.6rem;
+      font-weight: bold;
+      cursor: help;
+      border: none;
+      vertical-align: middle;
+      margin-left: 1px;
+    }
+
+    /* ─── Risk Bar (Sensitive vs Stable) ───────────────────────────────── */
+    .risk-bar-wrap {
+      margin: 1.25rem 0;
+      padding: 1rem;
+      background: rgba(0,0,0,0.02);
+      border-radius: var(--radius);
+    }
+    .risk-bar-labels {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .risk-bar-track {
+      height: 8px;
+      display: flex;
+      border-radius: 20px;
+      overflow: hidden;
+      background: var(--border);
+    }
+    .risk-bar-sensitive {
+      height: 100%;
+      background: var(--dark-green);
+      transition: width 0.3s ease;
+    }
+    .risk-bar-stable {
+      flex: 1;
+      height: 100%;
+      background: rgba(0,0,0,0.06);
+    }
+    .risk-description {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 0.75rem;
+      line-height: 1.5;
+    }
+    .risk-description strong { color: var(--text); }
     /* Uncertainty band on card */
     .exposure-band {
       font-size: 0.62rem;
@@ -1609,7 +1668,10 @@ function renderCard(food, country) {
       <div class="exposure-row">
         <div class="exposure-number">${adjPct}%</div>
         <div>
-          <div class="exposure-label">crisis<br>exposure</div>
+          <div class="exposure-label">
+            Hormuz<br>Exposure Index
+            <span class="exposure-info-btn" title="The percentage of the total shelf price directly derived from fuel, gas, and fertilizer inputs passing through the Strait of Hormuz.">i</span>
+          </div>
           ${food.exposure_low != null && food.exposure_high != null && food.exposure_high > food.exposure_low
             ? `<div class="exposure-band">${Math.round(food.exposure_low * country.impact_multiplier)}–${Math.round(food.exposure_high * country.impact_multiplier)}%</div>`
             : ''}
@@ -1792,23 +1854,49 @@ function openFood(id) {
     extreme: '#C0392B', high: '#D4680F', moderate: '#B08800', low: '#2A7A3A'
   };
 
+  // Dollar context logic
+  const rates = state.data.sources.exchange_rates;
+  const currency = country.currency;
+  const rate = rates[currency] || 1;
+  const sensitivityAmt = (adjPct / 100) * 1.0;
+  const formattedSensitive = new Intl.NumberFormat(CURRENCY_LOCALES[currency] || 'en', {
+    style: 'currency', currency,
+  }).format(sensitivityAmt);
+  const currencySymbol = formattedSensitive.replace(/[0-9.,\s]/g, '') || currency;
+
   document.getElementById('modal-body').innerHTML = `
     <div class="modal-hero">
       <div class="modal-emoji" aria-hidden="true">${food.emoji}</div>
       <div class="modal-title-block">
         <h2 class="modal-title" id="modal-title">${escHtml(food.name)}</h2>
-        <span class="badge badge-${sev}">${sev} crisis exposure</span>
+        <span class="badge badge-${sev}">${sev} exposure</span>
         <div class="modal-exposure-row">
           <div class="modal-exposure-big severity-${sev}" style="color:${barColors[sev]}">${adjPct}%${scarcityFlag}</div>
-          <div class="modal-exposure-label">of retail price<br>linked to Hormuz inputs${euRefHtml}</div>
+          <div class="modal-exposure-label">
+            Hormuz Exposure Index
+            <span class="exposure-info-btn" title="The percentage of the total shelf price directly derived from fuel, gas, and fertilizer inputs passing through the Strait of Hormuz.">i</span>
+            ${euRefHtml}
+          </div>
         </div>
         ${bandHtml}
         ${stickinessHtml}
       </div>
     </div>
 
-    <div class="modal-bar-track" aria-hidden="true">
-      <div class="modal-bar-fill" style="width:${adjPct}%; background:${barColors[sev]}"></div>
+    <div class="risk-bar-wrap">
+      <div class="risk-bar-labels">
+        <span>Crisis-Sensitive Inputs</span>
+        <span>Stable Local Base</span>
+      </div>
+      <div class="risk-bar-track">
+        <div class="risk-bar-sensitive" style="width:${adjPct}%; background:${barColors[sev]}"></div>
+        <div class="risk-bar-stable"></div>
+      </div>
+      <p class="risk-description">
+        For every <strong>${currencySymbol}1.00</strong> spent on this ${food.name.toLowerCase()},
+        roughly <strong>${formattedSensitive}</strong> is currently vulnerable to Hormuz supply chain shocks.
+        The remaining <strong>${(100-adjPct).toFixed(0)}%</strong> is comprised of stable local costs (labour, land, rent).
+      </p>
     </div>
 
     <p class="section-title">⚠️ Estimated crisis impact per kg — ${escHtml(country.name)}</p>
