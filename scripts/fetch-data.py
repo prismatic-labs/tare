@@ -18,7 +18,9 @@ Dependencies: requests, pandas, openpyxl
 
 import json
 import logging
+import math
 import os
+import random
 import shutil
 import sys
 import tempfile
@@ -45,6 +47,11 @@ HISTORY_DIR = REPO_ROOT / "data" / "history"
 
 # ─── Crisis baseline date ───────────────────────────────────────────────────
 CRISIS_START = "2026-02-28"
+
+# ─── Model constants ────────────────────────────────────────────────────────
+MONTE_CARLO_RUNS    = 500   # iterations for uncertainty band
+WEIGHT_NOISE        = 0.15  # ±15% uniform noise on driver weights
+UREA_TIPPING_POINT  = 600.0 # $/ton — above this, flag scarcity inflation risk
 
 # ─── Pre-crisis baselines (from foods.json sources block) ──────────────────
 # These are used as the denominator when computing % change.
@@ -324,20 +331,60 @@ def recalc_driver_pct(driver: dict[str, Any], changes: dict[str, float]) -> dict
     """Update a single driver's price_change_pct using current commodity changes."""
     cat = driver.get("category", "fuel")
     new_pct = changes.get(cat)
-
     if new_pct is not None and new_pct > 0:
         driver = dict(driver)
         driver["price_change_pct"] = int(round(new_pct))
     return driver
 
 
+def _weighted_exposure(drivers: list[dict[str, Any]], changes: dict[str, float],
+                       sensitivity: float, floor: float,
+                       weight_noise: float = 0.0) -> float:
+    """
+    Compute crisis_exposure_pct for a single set of drivers using weighted sum.
+
+    Each driver contributes: weight * commodity_change_pct * sensitivity
+    The local cost floor caps the maximum possible exposure.
+
+    weight_noise > 0 perturbs weights for Monte Carlo runs (±noise uniform).
+    """
+    if not drivers:
+        return 0.0
+
+    weighted_sum = 0.0
+    weight_total = 0.0
+    for d in drivers:
+        cat  = d.get("category", "fuel")
+        chg  = changes.get(cat, 0.0)
+        w    = d.get("weight", 1.0 / len(drivers))
+        if weight_noise:
+            # ±noise uniform perturbation, clamp to (0, 2)
+            w = max(0.001, w * (1.0 + random.uniform(-weight_noise, weight_noise)))
+        weighted_sum  += w * chg
+        weight_total  += w
+
+    if weight_total <= 0:
+        return 0.0
+
+    normalised_input_chg = weighted_sum / weight_total
+    raw_exposure = normalised_input_chg * sensitivity
+
+    # Apply local cost floor: crisis can only affect the non-floor fraction
+    max_exposure = 100.0 - floor
+    clamped = max(1.0, min(max_exposure, raw_exposure))
+    return clamped
+
+
 def recalc_food_exposure(food: dict[str, Any], changes: dict[str, float]) -> dict[str, Any]:
     """
-    Recalculate a food's crisis_exposure_pct from updated driver price changes.
+    Recalculate a food's crisis_exposure_pct using weighted driver inputs.
 
-    Method: weighted average of driver price changes, normalised to the
-    food's number of drivers. Then scaled to the food's pre-crisis sensitivity
-    ratio so that items with fewer direct inputs don't appear over-exposed.
+    Improvements over the naive mean:
+      - Driver weights (from USDA cost-of-production data) replace equal weighting
+      - Local cost floor prevents crisis exposure from exceeding (100 - floor)%
+      - Monte Carlo uncertainty band (500 runs ±15% weight noise) → exposure_low/high
+      - Pass-through coefficient (λ) stored but not applied here — UI uses it for
+        display only (shelf price ≠ cost-chain exposure)
     """
     food = dict(food)
     drivers = food.get("drivers", [])
@@ -345,27 +392,37 @@ def recalc_food_exposure(food: dict[str, Any], changes: dict[str, float]) -> dic
     if not drivers:
         return food
 
-    # Recalculate individual driver pcts
+    # Update driver price_change_pct from current commodity prices
     updated_drivers = [recalc_driver_pct(d, changes) for d in drivers]
 
-    # Weighted mean of driver pct changes
-    total_pct = sum(d["price_change_pct"] for d in updated_drivers)
-    mean_input_chg = total_pct / len(updated_drivers)
-
-    # Scale to crisis exposure using a sensitivity factor derived from the
-    # original ratio between exposure and mean input change (pre-crisis calibration)
-    original_drivers = food.get("drivers", [])
-    original_mean = (
-        sum(d["price_change_pct"] for d in original_drivers) / len(original_drivers)
-        if original_drivers else 1
-    )
+    # Sensitivity: ratio of calibrated EU exposure to mean unweighted input change.
+    # Kept from pre-crisis calibration so the scale stays anchored.
     original_exposure = food.get("crisis_exposure_pct", 30)
-    sensitivity = original_exposure / max(original_mean, 1)
+    original_drivers  = food.get("drivers", updated_drivers)
+    unweighted_mean   = (
+        sum(d["price_change_pct"] for d in original_drivers) / len(original_drivers)
+        if original_drivers else 1.0
+    )
+    sensitivity = original_exposure / max(unweighted_mean, 1.0)
 
-    new_exposure = round(mean_input_chg * sensitivity)
-    new_exposure = max(1, min(99, new_exposure))  # clamp to 1-99
+    floor = food.get("local_cost_floor_pct", 45) / 100.0 * 100.0  # convert % to raw
 
-    # Determine severity
+    # Point estimate using proper weights
+    new_exposure = round(_weighted_exposure(updated_drivers, changes, sensitivity, floor))
+
+    # ── Monte Carlo uncertainty band ────────────────────────────────────────
+    mc_results = sorted([
+        _weighted_exposure(updated_drivers, changes, sensitivity, floor,
+                           weight_noise=WEIGHT_NOISE)
+        for _ in range(MONTE_CARLO_RUNS)
+    ])
+    # 10th–90th percentile band (80% confidence interval)
+    p10 = mc_results[int(MONTE_CARLO_RUNS * 0.10)]
+    p90 = mc_results[int(MONTE_CARLO_RUNS * 0.90)]
+    exposure_low  = max(1, round(p10))
+    exposure_high = min(99, round(p90))
+
+    # Severity based on point estimate
     if new_exposure >= 60:
         severity = "extreme"
     elif new_exposure >= 40:
@@ -375,11 +432,37 @@ def recalc_food_exposure(food: dict[str, Any], changes: dict[str, float]) -> dic
     else:
         severity = "low"
 
-    food["drivers"] = updated_drivers
+    food["drivers"]          = updated_drivers
     food["crisis_exposure_pct"] = new_exposure
-    food["severity"] = severity
+    food["exposure_low"]     = exposure_low
+    food["exposure_high"]    = exposure_high
+    food["severity"]         = severity
 
     return food
+
+
+def check_tipping_points(prices: dict[str, float]) -> dict[str, Any]:
+    """
+    Check commodity prices against known non-linear tipping points.
+    Returns a dict of active flags to be stored in the sources block.
+
+    Cambridge: if urea > $600/t, signal shifts from cost-push to scarcity inflation.
+    """
+    flags: dict[str, Any] = {}
+
+    urea = prices.get("urea_usd_ton", 0.0)
+    if urea >= UREA_TIPPING_POINT:
+        flags["urea_scarcity_risk"] = True
+        flags["urea_scarcity_threshold_usd_ton"] = UREA_TIPPING_POINT
+        flags["urea_current_usd_ton"] = round(urea, 1)
+        log.warning(
+            "TIPPING POINT: Urea at $%.0f/t ≥ threshold $%.0f/t — "
+            "scarcity inflation risk active", urea, UREA_TIPPING_POINT
+        )
+    else:
+        flags["urea_scarcity_risk"] = False
+
+    return flags
 
 
 def write_atomic(path: Path, data: dict[str, Any]) -> None:
@@ -466,6 +549,9 @@ def main() -> int:
     # 5. Recalculate food exposures
     updated_foods = [recalc_food_exposure(f, changes) for f in current["foods"]]
 
+    # 5b. Check tipping points
+    tipping = check_tipping_points(prices)
+
     # 6. Assemble updated sources block
     sources_update = {
         "oil_brent_usd":                  prices.get("oil_brent_usd",               current["sources"]["oil_brent_usd"]),
@@ -479,6 +565,7 @@ def main() -> int:
         "methanol_usd_ton":                prices.get("methanol_usd_ton",             current["sources"].get("methanol_usd_ton", 540)),
         "methanol_pre_crisis_usd_ton":     PRE_CRISIS["methanol_usd_ton"],
         "exchange_rates":                  rates,
+        "tipping_points":                  tipping,
     }
 
     # 7. Build final payload — include stale_sources so the UI can flag it

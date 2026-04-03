@@ -152,28 +152,34 @@
           "input": "Nitrogen fertilizer",
           "description": "Grows the corn and soy that feed the birds",
           "category": "fertilizer",
-          "price_change_pct": 50
+          "price_change_pct": 50,
+          "weight": 0.4706
         },
         {
           "input": "Diesel fuel",
           "description": "Powers tractors, feed trucks, slaughterhouse transport",
           "category": "fuel",
-          "price_change_pct": 52
+          "price_change_pct": 52,
+          "weight": 0.2353
         },
         {
           "input": "Natural gas",
           "description": "Heats poultry houses and processing plants",
           "category": "gas",
-          "price_change_pct": 70
+          "price_change_pct": 70,
+          "weight": 0.2353
         },
         {
           "input": "Plastic packaging",
           "description": "Petroleum-derived trays, wrapping, and labels",
           "category": "petrochemical",
-          "price_change_pct": 22
+          "price_change_pct": 22,
+          "weight": 0.0588
         }
       ],
-      "explanation": "Chickens eat ~2kg of grain per 1kg of meat produced. That grain requires fertilizer (30% Hormuz-sourced) and diesel to grow and transport. Every link in the chain amplifies the crisis."
+      "explanation": "Chickens eat ~2kg of grain per 1kg of meat produced. That grain requires fertilizer (30% Hormuz-sourced) and diesel to grow and transport. Every link in the chain amplifies the crisis.",
+      "pass_through_30d": 0.5,
+      "local_cost_floor_pct": 40
     },
     {
       "id": "bread",
@@ -190,22 +196,27 @@
           "input": "Wheat farming",
           "description": "Fertilizer and diesel for large-scale grain cultivation",
           "category": "fertilizer",
-          "price_change_pct": 45
+          "price_change_pct": 45,
+          "weight": 0.4
         },
         {
           "input": "Industrial baking",
           "description": "High energy demand for continuous-run gas ovens",
           "category": "gas",
-          "price_change_pct": 70
+          "price_change_pct": 70,
+          "weight": 0.5333
         },
         {
           "input": "Plastic packaging",
           "description": "Polyethylene bags are petroleum-derived",
           "category": "petrochemical",
-          "price_change_pct": 22
+          "price_change_pct": 22,
+          "weight": 0.0667
         }
       ],
-      "explanation": "Wheat production is fertilizer-intensive. Industrial bakeries run on natural gas around the clock, directly linking supermarket bread to Hormuz energy flows."
+      "explanation": "Wheat production is fertilizer-intensive. Industrial bakeries run on natural gas around the clock, directly linking supermarket bread to Hormuz energy flows.",
+      "pass_through_30d": 0.15,
+      "local_cost_floor_pct": 55
     },
     {
       "id": "tomatoes",
@@ -222,22 +233,27 @@
           "input": "Greenhouse heating",
           "description": "Natural gas maintains growing temperatures in winter",
           "category": "gas",
-          "price_change_pct": 70
+          "price_change_pct": 70,
+          "weight": 0.2381
         },
         {
           "input": "Nitrogen fertilizer",
           "description": "High fertilizer application for intensive horticulture",
           "category": "fertilizer",
-          "price_change_pct": 50
+          "price_change_pct": 50,
+          "weight": 0.127
         },
         {
           "input": "Refrigerated transport",
           "description": "Diesel-powered cold-chain logistics",
           "category": "fuel",
-          "price_change_pct": 52
+          "price_change_pct": 52,
+          "weight": 0.6349
         }
       ],
-      "explanation": "Out-of-season tomatoes depend on heated greenhouses and refrigerated logistics year-round — both tightly coupled to Hormuz energy prices."
+      "explanation": "Out-of-season tomatoes depend on heated greenhouses and refrigerated logistics year-round — both tightly coupled to Hormuz energy prices.",
+      "pass_through_30d": 0.7,
+      "local_cost_floor_pct": 45
     },
     {
       "id": "salmon",
@@ -254,28 +270,34 @@
           "input": "Fish feed",
           "description": "Soy and fishmeal production requires fertilizer and fuel",
           "category": "fertilizer",
-          "price_change_pct": 50
+          "price_change_pct": 50,
+          "weight": 0.0133
         },
         {
           "input": "Global shipping",
           "description": "Air and sea freight for freshness-critical supply chains",
           "category": "fuel",
-          "price_change_pct": 60
+          "price_change_pct": 60,
+          "weight": 0.9333
         },
         {
           "input": "Aquaculture energy",
           "description": "Pumps, oxygenation, and cold storage at fish farms",
           "category": "gas",
-          "price_change_pct": 70
+          "price_change_pct": 70,
+          "weight": 0.04
         },
         {
           "input": "Plastic packaging",
           "description": "Vacuum trays and modified atmosphere packaging",
           "category": "petrochemical",
-          "price_change_pct": 22
+          "price_change_pct": 22,
+          "weight": 0.0134
         }
       ],
-      "explanation": "Farmed salmon is one of the most energy-intensive proteins. Feed production, cold storage, and long-haul freight combine to create exceptional Hormuz exposure."
+      "explanation": "Farmed salmon is one of the most energy-intensive proteins. Feed production, cold storage, and long-haul freight combine to create exceptional Hormuz exposure.",
+      "pass_through_30d": 0.8,
+      "local_cost_floor_pct": 30
     },
     {
       "id": "rice",
@@ -292,22 +314,27 @@
           "input": "Urea fertilizer",
           "description": "Paddy rice is one of the highest urea-consuming crops",
           "category": "fertilizer",
-          "price_change_pct": 50
+          "price_change_pct": 50,
+          "weight": 0.4286
         },
         {
           "input": "Diesel for irrigation",
           "description": "Pumped irrigation dominates rice paddy water management",
           "category": "fuel",
-          "price_change_pct": 52
+          "price_change_pct": 52,
+          "weight": 0.2857
         },
         {
           "input": "Maritime shipping",
           "description": "Most global rice trade moves by sea through Hormuz-adjacent routes",
           "category": "fuel",
-          "price_change_pct": 60
+          "price_change_pct": 60,
+          "weight": 0.2857
         }
       ],
-      "explanation": "Rice paddies require heavy urea inputs and diesel-powered irrigation. Combined with global shipping disruption, supply is tightening even in traditionally surplus regions."
+      "explanation": "Rice paddies require heavy urea inputs and diesel-powered irrigation. Combined with global shipping disruption, supply is tightening even in traditionally surplus regions.",
+      "pass_through_30d": 0.2,
+      "local_cost_floor_pct": 55
     },
     {
       "id": "pasta",
@@ -324,22 +351,27 @@
           "input": "Durum wheat farming",
           "description": "High-nitrogen crop requiring significant fertilizer input",
           "category": "fertilizer",
-          "price_change_pct": 50
+          "price_change_pct": 50,
+          "weight": 0.3333
         },
         {
           "input": "Pasta extrusion",
           "description": "Energy-intensive industrial drying and pressing",
           "category": "gas",
-          "price_change_pct": 70
+          "price_change_pct": 70,
+          "weight": 0.4444
         },
         {
           "input": "Diesel transport",
           "description": "Bulk grain and finished product haulage",
           "category": "fuel",
-          "price_change_pct": 52
+          "price_change_pct": 52,
+          "weight": 0.2223
         }
       ],
-      "explanation": "Durum wheat is a fertilizer-hungry crop, and pasta manufacturing requires substantial thermal energy for drying. Italy's dependence on North African and Eastern European durum adds a Hormuz-adjacent shipping component."
+      "explanation": "Durum wheat is a fertilizer-hungry crop, and pasta manufacturing requires substantial thermal energy for drying. Italy's dependence on North African and Eastern European durum adds a Hormuz-adjacent shipping component.",
+      "pass_through_30d": 0.2,
+      "local_cost_floor_pct": 55
     },
     {
       "id": "flour",
@@ -356,22 +388,27 @@
           "input": "Wheat fertilizer",
           "description": "Nitrogen inputs account for ~20% of wheat production cost",
           "category": "fertilizer",
-          "price_change_pct": 50
+          "price_change_pct": 50,
+          "weight": 0.3333
         },
         {
           "input": "Milling energy",
           "description": "Roller mills and conditioning use significant electricity and gas",
           "category": "gas",
-          "price_change_pct": 70
+          "price_change_pct": 70,
+          "weight": 0.4444
         },
         {
           "input": "Diesel haulage",
           "description": "Grain to mill and flour to bakeries and retailers",
           "category": "fuel",
-          "price_change_pct": 52
+          "price_change_pct": 52,
+          "weight": 0.2223
         }
       ],
-      "explanation": "Flour sits at the base of the food chain. Its crisis exposure flows directly through wheat farming costs and the energy used to run mills — two channels where Hormuz prices are highly visible."
+      "explanation": "Flour sits at the base of the food chain. Its crisis exposure flows directly through wheat farming costs and the energy used to run mills — two channels where Hormuz prices are highly visible.",
+      "pass_through_30d": 0.2,
+      "local_cost_floor_pct": 55
     },
     {
       "id": "oats",
@@ -388,16 +425,20 @@
           "input": "Fertilizer",
           "description": "Oats need less nitrogen than wheat or corn",
           "category": "fertilizer",
-          "price_change_pct": 50
+          "price_change_pct": 50,
+          "weight": 0.4286
         },
         {
           "input": "Processing energy",
           "description": "Rolling and flaking require moderate energy",
           "category": "gas",
-          "price_change_pct": 70
+          "price_change_pct": 70,
+          "weight": 0.5714
         }
       ],
-      "explanation": "Oats are among the least Hormuz-exposed staple grains. They require less fertilizer than wheat or corn and are largely grown and consumed in northern Europe and North America, limiting maritime shipping exposure."
+      "explanation": "Oats are among the least Hormuz-exposed staple grains. They require less fertilizer than wheat or corn and are largely grown and consumed in northern Europe and North America, limiting maritime shipping exposure.",
+      "pass_through_30d": 0.2,
+      "local_cost_floor_pct": 55
     },
     {
       "id": "cornflakes",
@@ -414,22 +455,27 @@
           "input": "Corn farming",
           "description": "Maize is one of the most nitrogen-intensive crops",
           "category": "fertilizer",
-          "price_change_pct": 50
+          "price_change_pct": 50,
+          "weight": 0.4
         },
         {
           "input": "Cereal manufacturing",
           "description": "Extrusion, toasting, and coating require sustained gas heat",
           "category": "gas",
-          "price_change_pct": 70
+          "price_change_pct": 70,
+          "weight": 0.5333
         },
         {
           "input": "Plastic packaging",
           "description": "Lined cardboard boxes and inner bags",
           "category": "petrochemical",
-          "price_change_pct": 22
+          "price_change_pct": 22,
+          "weight": 0.0667
         }
       ],
-      "explanation": "Corn is exceptionally nitrogen-hungry — fertilizer costs represent a significant share of maize production. The industrial cereal manufacturing process adds further energy exposure."
+      "explanation": "Corn is exceptionally nitrogen-hungry — fertilizer costs represent a significant share of maize production. The industrial cereal manufacturing process adds further energy exposure.",
+      "pass_through_30d": 0.2,
+      "local_cost_floor_pct": 55
     },
     {
       "id": "couscous",
@@ -446,22 +492,27 @@
           "input": "Durum wheat farming",
           "description": "Origin region (North Africa) relies heavily on Hormuz-linked fertilizer",
           "category": "fertilizer",
-          "price_change_pct": 50
+          "price_change_pct": 50,
+          "weight": 0.3333
         },
         {
           "input": "Steaming and drying",
           "description": "Couscous manufacturing is a steam-intensive process",
           "category": "gas",
-          "price_change_pct": 70
+          "price_change_pct": 70,
+          "weight": 0.4444
         },
         {
           "input": "Mediterranean shipping",
           "description": "Most couscous is produced in North Africa and shipped to Europe",
           "category": "fuel",
-          "price_change_pct": 60
+          "price_change_pct": 60,
+          "weight": 0.2223
         }
       ],
-      "explanation": "North African couscous production is squeezed on two sides: fertilizer supply and shipping costs have both surged since February. European consumers see the price impact within weeks."
+      "explanation": "North African couscous production is squeezed on two sides: fertilizer supply and shipping costs have both surged since February. European consumers see the price impact within weeks.",
+      "pass_through_30d": 0.2,
+      "local_cost_floor_pct": 55
     },
     {
       "id": "noodles",
@@ -478,28 +529,34 @@
           "input": "Wheat and palm oil",
           "description": "Deep-fried noodles use palm oil refined with petrochemical solvents",
           "category": "petrochemical",
-          "price_change_pct": 25
+          "price_change_pct": 25,
+          "weight": 0.0625
         },
         {
           "input": "Fertilizer for wheat",
           "description": "Asian wheat production is fertilizer-dependent",
           "category": "fertilizer",
-          "price_change_pct": 50
+          "price_change_pct": 50,
+          "weight": 0.375
         },
         {
           "input": "Natural gas",
           "description": "Manufacturing and frying requires sustained high heat",
           "category": "gas",
-          "price_change_pct": 70
+          "price_change_pct": 70,
+          "weight": 0.5
         },
         {
           "input": "Packaging",
           "description": "Multi-layer foil/plastic sachets and cups",
           "category": "petrochemical",
-          "price_change_pct": 25
+          "price_change_pct": 25,
+          "weight": 0.0625
         }
       ],
-      "explanation": "Instant noodles are a Hormuz pressure point hiding in plain sight. Palm oil refining, wheat fertilizer, and multi-layer plastic packaging all draw on Hormuz-disrupted supply chains."
+      "explanation": "Instant noodles are a Hormuz pressure point hiding in plain sight. Palm oil refining, wheat fertilizer, and multi-layer plastic packaging all draw on Hormuz-disrupted supply chains.",
+      "pass_through_30d": 0.2,
+      "local_cost_floor_pct": 55
     },
     {
       "id": "crackers",
@@ -516,22 +573,27 @@
           "input": "Wheat farming",
           "description": "Nitrogen fertilizer for biscuit-grade wheat",
           "category": "fertilizer",
-          "price_change_pct": 50
+          "price_change_pct": 50,
+          "weight": 0.4
         },
         {
           "input": "Baking energy",
           "description": "Continuous tunnel ovens run on natural gas",
           "category": "gas",
-          "price_change_pct": 70
+          "price_change_pct": 70,
+          "weight": 0.5333
         },
         {
           "input": "Plastic wrapping",
           "description": "Individual and outer pack wrapping is petroleum-derived",
           "category": "petrochemical",
-          "price_change_pct": 22
+          "price_change_pct": 22,
+          "weight": 0.0667
         }
       ],
-      "explanation": "Crackers are a lower-exposure grain product, but industrial baking energy and packaging costs add meaningful Hormuz exposure on top of fertilizer-linked wheat prices."
+      "explanation": "Crackers are a lower-exposure grain product, but industrial baking energy and packaging costs add meaningful Hormuz exposure on top of fertilizer-linked wheat prices.",
+      "pass_through_30d": 0.2,
+      "local_cost_floor_pct": 55
     },
     {
       "id": "beef",
@@ -548,28 +610,34 @@
           "input": "Feed grain costs",
           "description": "Cattle consume 7-8kg of grain per 1kg of beef produced",
           "category": "fertilizer",
-          "price_change_pct": 50
+          "price_change_pct": 50,
+          "weight": 0.4706
         },
         {
           "input": "Diesel for farms",
           "description": "Machinery, feed transport, and slaughterhouse logistics",
           "category": "fuel",
-          "price_change_pct": 52
+          "price_change_pct": 52,
+          "weight": 0.2353
         },
         {
           "input": "Natural gas",
           "description": "Processing, cold storage, and refrigerated display",
           "category": "gas",
-          "price_change_pct": 70
+          "price_change_pct": 70,
+          "weight": 0.2353
         },
         {
           "input": "Plastic packaging",
           "description": "Vacuum packs, modified atmosphere trays",
           "category": "petrochemical",
-          "price_change_pct": 22
+          "price_change_pct": 22,
+          "weight": 0.0588
         }
       ],
-      "explanation": "Beef has the highest feed conversion ratio of any common protein — 7-8kg of grain per 1kg of meat. Every unit of fertilizer-driven feed price increase is multiplied several times by the time it reaches the supermarket shelf."
+      "explanation": "Beef has the highest feed conversion ratio of any common protein — 7-8kg of grain per 1kg of meat. Every unit of fertilizer-driven feed price increase is multiplied several times by the time it reaches the supermarket shelf.",
+      "pass_through_30d": 0.5,
+      "local_cost_floor_pct": 40
     },
     {
       "id": "pork",
@@ -586,22 +654,27 @@
           "input": "Feed costs",
           "description": "Pigs eat ~3kg grain per 1kg of pork — better than beef, still significant",
           "category": "fertilizer",
-          "price_change_pct": 50
+          "price_change_pct": 50,
+          "weight": 0.5
         },
         {
           "input": "Diesel logistics",
           "description": "Pig farms, abattoirs, and distribution centres",
           "category": "fuel",
-          "price_change_pct": 52
+          "price_change_pct": 52,
+          "weight": 0.25
         },
         {
           "input": "Natural gas",
           "description": "Heating intensive pig barns, scalding tanks in processing",
           "category": "gas",
-          "price_change_pct": 70
+          "price_change_pct": 70,
+          "weight": 0.25
         }
       ],
-      "explanation": "Pork's feed conversion is better than beef but still substantial. European industrial pig farms are also large consumers of natural gas for barn climate control, adding another Hormuz channel."
+      "explanation": "Pork's feed conversion is better than beef but still substantial. European industrial pig farms are also large consumers of natural gas for barn climate control, adding another Hormuz channel.",
+      "pass_through_30d": 0.5,
+      "local_cost_floor_pct": 40
     },
     {
       "id": "lamb",
@@ -618,28 +691,34 @@
           "input": "Pasture fertilizer",
           "description": "Improved pasture for intensive lamb production requires nitrogen",
           "category": "fertilizer",
-          "price_change_pct": 50
+          "price_change_pct": 50,
+          "weight": 0.3333
         },
         {
           "input": "Supplementary feed",
           "description": "Winter and finishing feed is grain-based",
           "category": "fertilizer",
-          "price_change_pct": 50
+          "price_change_pct": 50,
+          "weight": 0.3333
         },
         {
           "input": "Long-distance shipping",
           "description": "New Zealand and Australian lamb shipped globally",
           "category": "fuel",
-          "price_change_pct": 60
+          "price_change_pct": 60,
+          "weight": 0.1667
         },
         {
           "input": "Cold-chain storage",
           "description": "Long shipping routes require energy-intensive refrigeration",
           "category": "gas",
-          "price_change_pct": 70
+          "price_change_pct": 70,
+          "weight": 0.1667
         }
       ],
-      "explanation": "Imported lamb (especially from New Zealand and Australia) is doubly exposed: long-haul refrigerated shipping and Hormuz-linked fertilizer for pasture improvement and supplementary feed."
+      "explanation": "Imported lamb (especially from New Zealand and Australia) is doubly exposed: long-haul refrigerated shipping and Hormuz-linked fertilizer for pasture improvement and supplementary feed.",
+      "pass_through_30d": 0.5,
+      "local_cost_floor_pct": 40
     },
     {
       "id": "turkey",
@@ -656,22 +735,27 @@
           "input": "Feed grain",
           "description": "Similar feed ratio to chicken — corn and soy dependence",
           "category": "fertilizer",
-          "price_change_pct": 50
+          "price_change_pct": 50,
+          "weight": 0.5
         },
         {
           "input": "Natural gas",
           "description": "Climate control for large turkey sheds",
           "category": "gas",
-          "price_change_pct": 70
+          "price_change_pct": 70,
+          "weight": 0.25
         },
         {
           "input": "Diesel transport",
           "description": "Hatchery-to-farm and farm-to-processor logistics",
           "category": "fuel",
-          "price_change_pct": 52
+          "price_change_pct": 52,
+          "weight": 0.25
         }
       ],
-      "explanation": "Turkey shares most of chicken's supply chain vulnerabilities — intensive grain feeding and gas-heated barns — but with slightly lower turnover rates, meaning feed costs accumulate longer before slaughter."
+      "explanation": "Turkey shares most of chicken's supply chain vulnerabilities — intensive grain feeding and gas-heated barns — but with slightly lower turnover rates, meaning feed costs accumulate longer before slaughter.",
+      "pass_through_30d": 0.5,
+      "local_cost_floor_pct": 40
     },
     {
       "id": "sausages",
@@ -688,28 +772,34 @@
           "input": "Pork and feed costs",
           "description": "Base meat price has risen with grain inputs",
           "category": "fertilizer",
-          "price_change_pct": 50
+          "price_change_pct": 50,
+          "weight": 0.4706
         },
         {
           "input": "Plastic casings",
           "description": "Collagen and plastic sausage casings are petroleum-derived",
           "category": "petrochemical",
-          "price_change_pct": 25
+          "price_change_pct": 25,
+          "weight": 0.0588
         },
         {
           "input": "Natural gas processing",
           "description": "Smoking, cooking, and sterilisation in industrial plants",
           "category": "gas",
-          "price_change_pct": 70
+          "price_change_pct": 70,
+          "weight": 0.2353
         },
         {
           "input": "Refrigerated logistics",
           "description": "Diesel cold-chain from factory to shelf",
           "category": "fuel",
-          "price_change_pct": 52
+          "price_change_pct": 52,
+          "weight": 0.2353
         }
       ],
-      "explanation": "Processed meat products like sausages stack multiple Hormuz exposures: the underlying meat cost, petroleum-derived casings, gas-intensive cooking, and refrigerated logistics all move together."
+      "explanation": "Processed meat products like sausages stack multiple Hormuz exposures: the underlying meat cost, petroleum-derived casings, gas-intensive cooking, and refrigerated logistics all move together.",
+      "pass_through_30d": 0.5,
+      "local_cost_floor_pct": 40
     },
     {
       "id": "milk",
@@ -726,22 +816,27 @@
           "input": "Dairy feed costs",
           "description": "Silage and concentrate feed require fertilizer and diesel",
           "category": "fertilizer",
-          "price_change_pct": 50
+          "price_change_pct": 50,
+          "weight": 0.3889
         },
         {
           "input": "Pasteurisation energy",
           "description": "Large-scale pasteurisation requires continuous thermal energy",
           "category": "gas",
-          "price_change_pct": 70
+          "price_change_pct": 70,
+          "weight": 0.3333
         },
         {
           "input": "Refrigerated distribution",
           "description": "Milk requires unbroken cold-chain from farm to shop",
           "category": "fuel",
-          "price_change_pct": 52
+          "price_change_pct": 52,
+          "weight": 0.2778
         }
       ],
-      "explanation": "Dairy farming is energy-intensive at every stage: fertilised silage fields, gas-powered pasteurisation, and a diesel-dependent cold chain. The exposure is moderate because dairy cows are efficient converters compared to beef."
+      "explanation": "Dairy farming is energy-intensive at every stage: fertilised silage fields, gas-powered pasteurisation, and a diesel-dependent cold chain. The exposure is moderate because dairy cows are efficient converters compared to beef.",
+      "pass_through_30d": 0.4,
+      "local_cost_floor_pct": 45
     },
     {
       "id": "cheese",
@@ -758,22 +853,27 @@
           "input": "Milk production costs",
           "description": "It takes ~10 litres of milk to make 1kg of hard cheese",
           "category": "fertilizer",
-          "price_change_pct": 50
+          "price_change_pct": 50,
+          "weight": 0.4795
         },
         {
           "input": "Maturation energy",
           "description": "Temperature-controlled ageing caves or cellars use constant energy",
           "category": "gas",
-          "price_change_pct": 70
+          "price_change_pct": 70,
+          "weight": 0.411
         },
         {
           "input": "Plastic packaging",
           "description": "Wax, vacuum bags, and retail wrapping",
           "category": "petrochemical",
-          "price_change_pct": 22
+          "price_change_pct": 22,
+          "weight": 0.1095
         }
       ],
-      "explanation": "Cheese concentrates milk — and its Hormuz exposure. The 10:1 conversion ratio means every euro of dairy cost increase becomes €10 of cheese cost pressure before processing even begins."
+      "explanation": "Cheese concentrates milk — and its Hormuz exposure. The 10:1 conversion ratio means every euro of dairy cost increase becomes €10 of cheese cost pressure before processing even begins.",
+      "pass_through_30d": 0.4,
+      "local_cost_floor_pct": 45
     },
     {
       "id": "butter",
@@ -790,22 +890,27 @@
           "input": "Cream and milk",
           "description": "~20 litres of milk per kg of butter — extreme input concentration",
           "category": "fertilizer",
-          "price_change_pct": 50
+          "price_change_pct": 50,
+          "weight": 0.3889
         },
         {
           "input": "Churning and processing",
           "description": "Industrial separators and churns are energy-intensive",
           "category": "gas",
-          "price_change_pct": 70
+          "price_change_pct": 70,
+          "weight": 0.3333
         },
         {
           "input": "Cold-chain transport",
           "description": "Butter requires consistent refrigeration throughout distribution",
           "category": "fuel",
-          "price_change_pct": 52
+          "price_change_pct": 52,
+          "weight": 0.2778
         }
       ],
-      "explanation": "Butter requires approximately 20 litres of milk per kilogram. With dairy inputs already squeezed by feed and energy costs, this concentration ratio makes butter one of the most crisis-exposed dairy products."
+      "explanation": "Butter requires approximately 20 litres of milk per kilogram. With dairy inputs already squeezed by feed and energy costs, this concentration ratio makes butter one of the most crisis-exposed dairy products.",
+      "pass_through_30d": 0.65,
+      "local_cost_floor_pct": 40
     },
     {
       "id": "yoghurt",
@@ -822,22 +927,27 @@
           "input": "Milk inputs",
           "description": "Milk sourcing drives the majority of yoghurt's input cost",
           "category": "fertilizer",
-          "price_change_pct": 50
+          "price_change_pct": 50,
+          "weight": 0.4795
         },
         {
           "input": "Fermentation and pasteurisation",
           "description": "Requires precise temperature control using gas or electricity",
           "category": "gas",
-          "price_change_pct": 70
+          "price_change_pct": 70,
+          "weight": 0.411
         },
         {
           "input": "Plastic pots",
           "description": "Polypropylene pots and foil lids are petroleum-derived",
           "category": "petrochemical",
-          "price_change_pct": 22
+          "price_change_pct": 22,
+          "weight": 0.1095
         }
       ],
-      "explanation": "Yoghurt's Hormuz exposure is driven primarily by milk input costs and polypropylene packaging. Unlike butter and cheese, the lower concentration ratio keeps overall exposure in the moderate band."
+      "explanation": "Yoghurt's Hormuz exposure is driven primarily by milk input costs and polypropylene packaging. Unlike butter and cheese, the lower concentration ratio keeps overall exposure in the moderate band.",
+      "pass_through_30d": 0.4,
+      "local_cost_floor_pct": 45
     },
     {
       "id": "eggs",
@@ -854,22 +964,27 @@
           "input": "Poultry feed",
           "description": "Laying hens eat grain-based feed requiring fertilizer",
           "category": "fertilizer",
-          "price_change_pct": 50
+          "price_change_pct": 50,
+          "weight": 0.3889
         },
         {
           "input": "Heating laying sheds",
           "description": "Temperature control is essential for year-round production",
           "category": "gas",
-          "price_change_pct": 70
+          "price_change_pct": 70,
+          "weight": 0.3333
         },
         {
           "input": "Diesel logistics",
           "description": "Daily collection rounds to retailers and egg processors",
           "category": "fuel",
-          "price_change_pct": 52
+          "price_change_pct": 52,
+          "weight": 0.2778
         }
       ],
-      "explanation": "Eggs share chicken's supply chain vulnerabilities — fertilizer-intensive grain feed and gas-heated facilities — without the option of delay. Production cannot be paused, so cost increases pass through immediately."
+      "explanation": "Eggs share chicken's supply chain vulnerabilities — fertilizer-intensive grain feed and gas-heated facilities — without the option of delay. Production cannot be paused, so cost increases pass through immediately.",
+      "pass_through_30d": 0.75,
+      "local_cost_floor_pct": 35
     },
     {
       "id": "cream",
@@ -886,22 +1001,27 @@
           "input": "Dairy feed",
           "description": "Cream is separated from milk — inherits all dairy input costs",
           "category": "fertilizer",
-          "price_change_pct": 50
+          "price_change_pct": 50,
+          "weight": 0.4795
         },
         {
           "input": "Separation and UHT",
           "description": "Centrifuge separation and UHT treatment are energy-intensive",
           "category": "gas",
-          "price_change_pct": 70
+          "price_change_pct": 70,
+          "weight": 0.411
         },
         {
           "input": "Cold-chain packaging",
           "description": "Tetra Pak-style packaging is petroleum-derived laminate",
           "category": "petrochemical",
-          "price_change_pct": 22
+          "price_change_pct": 22,
+          "weight": 0.1095
         }
       ],
-      "explanation": "Cream concentrates milk's Hormuz exposure through a roughly 3:1 conversion ratio. UHT treatment adds significant thermal energy costs on top of the underlying dairy cost pressures."
+      "explanation": "Cream concentrates milk's Hormuz exposure through a roughly 3:1 conversion ratio. UHT treatment adds significant thermal energy costs on top of the underlying dairy cost pressures.",
+      "pass_through_30d": 0.4,
+      "local_cost_floor_pct": 45
     },
     {
       "id": "potatoes",
@@ -918,22 +1038,27 @@
           "input": "Fertilizer",
           "description": "Potatoes are one of the highest fertilizer-consuming vegetables",
           "category": "fertilizer",
-          "price_change_pct": 50
+          "price_change_pct": 50,
+          "weight": 0.127
         },
         {
           "input": "Diesel harvesting",
           "description": "Mechanical harvesting is highly fuel-intensive",
           "category": "fuel",
-          "price_change_pct": 52
+          "price_change_pct": 52,
+          "weight": 0.6349
         },
         {
           "input": "Refrigerated storage",
           "description": "Long-term cold storage extends availability but adds energy cost",
           "category": "gas",
-          "price_change_pct": 70
+          "price_change_pct": 70,
+          "weight": 0.2381
         }
       ],
-      "explanation": "Potatoes are heavy feeders — per-hectare fertilizer requirements are among the highest of any vegetable. Diesel for mechanical harvesting adds a further layer of Hormuz sensitivity."
+      "explanation": "Potatoes are heavy feeders — per-hectare fertilizer requirements are among the highest of any vegetable. Diesel for mechanical harvesting adds a further layer of Hormuz sensitivity.",
+      "pass_through_30d": 0.7,
+      "local_cost_floor_pct": 45
     },
     {
       "id": "onions",
@@ -950,16 +1075,20 @@
           "input": "Nitrogen fertilizer",
           "description": "Bulb formation requires significant nitrogen application",
           "category": "fertilizer",
-          "price_change_pct": 50
+          "price_change_pct": 50,
+          "weight": 0.1667
         },
         {
           "input": "Diesel machinery",
           "description": "Planting and harvesting machinery runs on diesel",
           "category": "fuel",
-          "price_change_pct": 52
+          "price_change_pct": 52,
+          "weight": 0.8333
         }
       ],
-      "explanation": "Onions are a low-to-moderate exposure crop. Fertilizer and diesel for cultivation are the main Hormuz channels, partially offset by their efficient long-term storage without refrigeration."
+      "explanation": "Onions are a low-to-moderate exposure crop. Fertilizer and diesel for cultivation are the main Hormuz channels, partially offset by their efficient long-term storage without refrigeration.",
+      "pass_through_30d": 0.7,
+      "local_cost_floor_pct": 45
     },
     {
       "id": "bananas",
@@ -976,22 +1105,27 @@
           "input": "Plantation fertilizer",
           "description": "Intensive monoculture requires heavy urea and DAP application",
           "category": "fertilizer",
-          "price_change_pct": 50
+          "price_change_pct": 50,
+          "weight": 0.127
         },
         {
           "input": "Refrigerated shipping",
           "description": "Banana transport requires temperature-controlled container ships",
           "category": "fuel",
-          "price_change_pct": 60
+          "price_change_pct": 60,
+          "weight": 0.6349
         },
         {
           "input": "Ripening facilities",
           "description": "Ethylene-based ripening rooms use energy for climate control",
           "category": "gas",
-          "price_change_pct": 70
+          "price_change_pct": 70,
+          "weight": 0.2381
         }
       ],
-      "explanation": "Bananas travel further than almost any other mass-market fruit. Container shipping disruption and fertilizer costs for tropical monoculture plantations combine to push prices upward."
+      "explanation": "Bananas travel further than almost any other mass-market fruit. Container shipping disruption and fertilizer costs for tropical monoculture plantations combine to push prices upward.",
+      "pass_through_30d": 0.7,
+      "local_cost_floor_pct": 45
     },
     {
       "id": "apples",
@@ -1008,16 +1142,20 @@
           "input": "Orchard fertilizer",
           "description": "Moderate nitrogen application for fruit tree orchards",
           "category": "fertilizer",
-          "price_change_pct": 50
+          "price_change_pct": 50,
+          "weight": 0.3478
         },
         {
           "input": "Cold storage",
           "description": "Year-round availability requires controlled atmosphere storage",
           "category": "gas",
-          "price_change_pct": 70
+          "price_change_pct": 70,
+          "weight": 0.6522
         }
       ],
-      "explanation": "Domestic and European apples have limited Hormuz exposure. Orchards use modest fertilizer inputs and are mostly locally distributed. Controlled atmosphere storage adds some gas exposure for out-of-season availability."
+      "explanation": "Domestic and European apples have limited Hormuz exposure. Orchards use modest fertilizer inputs and are mostly locally distributed. Controlled atmosphere storage adds some gas exposure for out-of-season availability.",
+      "pass_through_30d": 0.7,
+      "local_cost_floor_pct": 45
     },
     {
       "id": "oranges",
@@ -1034,16 +1172,20 @@
           "input": "Orchard inputs",
           "description": "Fertilizer and pest management for citrus groves",
           "category": "fertilizer",
-          "price_change_pct": 50
+          "price_change_pct": 50,
+          "weight": 0.1667
         },
         {
           "input": "Regional transport",
           "description": "Mediterranean citrus production keeps logistics distances short",
           "category": "fuel",
-          "price_change_pct": 52
+          "price_change_pct": 52,
+          "weight": 0.8333
         }
       ],
-      "explanation": "Mediterranean-grown oranges have relatively low Hormuz exposure. Short supply chains and moderate fertilizer needs keep this fruit in the low-impact category."
+      "explanation": "Mediterranean-grown oranges have relatively low Hormuz exposure. Short supply chains and moderate fertilizer needs keep this fruit in the low-impact category.",
+      "pass_through_30d": 0.7,
+      "local_cost_floor_pct": 45
     },
     {
       "id": "lettuce",
@@ -1060,16 +1202,20 @@
           "input": "Nitrogen fertilizer",
           "description": "Leafy greens require nitrogen but at lower rates than cereals",
           "category": "fertilizer",
-          "price_change_pct": 50
+          "price_change_pct": 50,
+          "weight": 0.1667
         },
         {
           "input": "Local distribution",
           "description": "Short shelf life means local supply chains — minimal shipping",
           "category": "fuel",
-          "price_change_pct": 52
+          "price_change_pct": 52,
+          "weight": 0.8333
         }
       ],
-      "explanation": "Lettuce and leafy greens are the least Hormuz-exposed items on this list. Low fertilizer intensity, short supply chains, and minimal processing make them resilient to the current crisis."
+      "explanation": "Lettuce and leafy greens are the least Hormuz-exposed items on this list. Low fertilizer intensity, short supply chains, and minimal processing make them resilient to the current crisis.",
+      "pass_through_30d": 0.7,
+      "local_cost_floor_pct": 45
     },
     {
       "id": "peppers",
@@ -1086,22 +1232,27 @@
           "input": "Greenhouse heating",
           "description": "Peppers are grown almost exclusively in heated glasshouses",
           "category": "gas",
-          "price_change_pct": 70
+          "price_change_pct": 70,
+          "weight": 0.2381
         },
         {
           "input": "Nitrogen fertilizer",
           "description": "Intensive horticulture demands high fertilizer inputs",
           "category": "fertilizer",
-          "price_change_pct": 50
+          "price_change_pct": 50,
+          "weight": 0.127
         },
         {
           "input": "Refrigerated logistics",
           "description": "Fragile produce requires unbroken cold chain",
           "category": "fuel",
-          "price_change_pct": 52
+          "price_change_pct": 52,
+          "weight": 0.6349
         }
       ],
-      "explanation": "Greenhouse pepper production in northern Europe is almost entirely gas-dependent for heating. At current Dutch gas prices, greenhouse running costs have nearly doubled since February."
+      "explanation": "Greenhouse pepper production in northern Europe is almost entirely gas-dependent for heating. At current Dutch gas prices, greenhouse running costs have nearly doubled since February.",
+      "pass_through_30d": 0.7,
+      "local_cost_floor_pct": 45
     },
     {
       "id": "carrots",
@@ -1118,16 +1269,20 @@
           "input": "Fertilizer",
           "description": "Carrots need modest potassium and phosphate — less Hormuz-exposed",
           "category": "fertilizer",
-          "price_change_pct": 50
+          "price_change_pct": 50,
+          "weight": 0.1667
         },
         {
           "input": "Diesel harvesting",
           "description": "Root vegetable harvesting is mechanised",
           "category": "fuel",
-          "price_change_pct": 52
+          "price_change_pct": 52,
+          "weight": 0.8333
         }
       ],
-      "explanation": "Carrots are among the most Hormuz-resilient vegetables. They grow in open fields with relatively modest fertilizer needs, store well without refrigeration, and are mostly grown and consumed regionally."
+      "explanation": "Carrots are among the most Hormuz-resilient vegetables. They grow in open fields with relatively modest fertilizer needs, store well without refrigeration, and are mostly grown and consumed regionally.",
+      "pass_through_30d": 0.7,
+      "local_cost_floor_pct": 45
     },
     {
       "id": "avocado",
@@ -1144,22 +1299,27 @@
           "input": "Long-haul refrigerated freight",
           "description": "Avocados are flown or shipped from Mexico, Peru, and Kenya",
           "category": "fuel",
-          "price_change_pct": 60
+          "price_change_pct": 60,
+          "weight": 0.6349
         },
         {
           "input": "Plantation fertilizer",
           "description": "High-intensity irrigation and fertilizer for tropical orchards",
           "category": "fertilizer",
-          "price_change_pct": 50
+          "price_change_pct": 50,
+          "weight": 0.127
         },
         {
           "input": "Ripening centre energy",
           "description": "Ethylene-controlled ripening requires precise temperature management",
           "category": "gas",
-          "price_change_pct": 70
+          "price_change_pct": 70,
+          "weight": 0.2381
         }
       ],
-      "explanation": "Avocados are air-freighted or shipped long distances under refrigeration, making them highly sensitive to fuel price shocks. The shipping distance from Latin America and Africa amplifies the Hormuz effect."
+      "explanation": "Avocados are air-freighted or shipped long distances under refrigeration, making them highly sensitive to fuel price shocks. The shipping distance from Latin America and Africa amplifies the Hormuz effect.",
+      "pass_through_30d": 0.85,
+      "local_cost_floor_pct": 40
     },
     {
       "id": "garlic",
@@ -1176,16 +1336,20 @@
           "input": "Fertilizer",
           "description": "Nitrogen and potassium for bulb development",
           "category": "fertilizer",
-          "price_change_pct": 50
+          "price_change_pct": 50,
+          "weight": 0.1667
         },
         {
           "input": "Import shipping",
           "description": "Much of EU garlic is imported from China and Spain",
           "category": "fuel",
-          "price_change_pct": 60
+          "price_change_pct": 60,
+          "weight": 0.8333
         }
       ],
-      "explanation": "Garlic has low Hormuz exposure relative to most produce. Moderate fertilizer needs and good storage properties limit crisis sensitivity, though import-dependent supply chains carry some shipping cost exposure."
+      "explanation": "Garlic has low Hormuz exposure relative to most produce. Moderate fertilizer needs and good storage properties limit crisis sensitivity, though import-dependent supply chains carry some shipping cost exposure.",
+      "pass_through_30d": 0.7,
+      "local_cost_floor_pct": 45
     },
     {
       "id": "cucumber",
@@ -1202,16 +1366,20 @@
           "input": "Greenhouse gas heating",
           "description": "Cucumbers are grown in heated glasshouses year-round",
           "category": "gas",
-          "price_change_pct": 70
+          "price_change_pct": 70,
+          "weight": 0.6522
         },
         {
           "input": "Fertilizer",
           "description": "Intensive greenhouse cultivation uses high nutrient inputs",
           "category": "fertilizer",
-          "price_change_pct": 50
+          "price_change_pct": 50,
+          "weight": 0.3478
         }
       ],
-      "explanation": "Like peppers and tomatoes, cucumbers are greenhouse crops that depend heavily on natural gas for heating in northern climates, making them moderately exposed to the energy price surge."
+      "explanation": "Like peppers and tomatoes, cucumbers are greenhouse crops that depend heavily on natural gas for heating in northern climates, making them moderately exposed to the energy price surge.",
+      "pass_through_30d": 0.7,
+      "local_cost_floor_pct": 45
     },
     {
       "id": "shrimp",
@@ -1228,28 +1396,34 @@
           "input": "Shrimp feed",
           "description": "High-protein aquaculture feed uses fishmeal and soy — fertilizer-intensive",
           "category": "fertilizer",
-          "price_change_pct": 50
+          "price_change_pct": 50,
+          "weight": 0.0133
         },
         {
           "input": "Air freight",
           "description": "Fresh shrimp is largely air-freighted from Asia, highly fuel-sensitive",
           "category": "fuel",
-          "price_change_pct": 60
+          "price_change_pct": 60,
+          "weight": 0.9333
         },
         {
           "input": "Freezing and processing",
           "description": "Processing facilities in Thailand and Vietnam run on gas",
           "category": "gas",
-          "price_change_pct": 70
+          "price_change_pct": 70,
+          "weight": 0.04
         },
         {
           "input": "Packaging",
           "description": "Modified atmosphere bags and IQF plastic trays",
           "category": "petrochemical",
-          "price_change_pct": 25
+          "price_change_pct": 25,
+          "weight": 0.0134
         }
       ],
-      "explanation": "Shrimp is the highest Hormuz-exposed seafood on this list. It combines long-distance air freight from Southeast Asia with energy-intensive processing and fertilizer-heavy aquaculture feed — a perfect storm of crisis exposure."
+      "explanation": "Shrimp is the highest Hormuz-exposed seafood on this list. It combines long-distance air freight from Southeast Asia with energy-intensive processing and fertilizer-heavy aquaculture feed — a perfect storm of crisis exposure.",
+      "pass_through_30d": 0.8,
+      "local_cost_floor_pct": 35
     },
     {
       "id": "canned_sardines",
@@ -1266,22 +1440,27 @@
           "input": "Fishing vessel fuel",
           "description": "Small-scale fishing boats run on diesel",
           "category": "fuel",
-          "price_change_pct": 52
+          "price_change_pct": 52,
+          "weight": 0.9459
         },
         {
           "input": "Canning steel",
           "description": "Steel production uses coal and gas — some petrochemical exposure",
           "category": "gas",
-          "price_change_pct": 70
+          "price_change_pct": 70,
+          "weight": 0.0405
         },
         {
           "input": "Cooking oil",
           "description": "Sunflower or olive oil in the tin is itself crisis-exposed",
           "category": "petrochemical",
-          "price_change_pct": 25
+          "price_change_pct": 25,
+          "weight": 0.0136
         }
       ],
-      "explanation": "Sardines themselves are wild-caught with modest fuel use and no feed costs. The can, the oil, and processing energy push the Hormuz exposure into the moderate range."
+      "explanation": "Sardines themselves are wild-caught with modest fuel use and no feed costs. The can, the oil, and processing energy push the Hormuz exposure into the moderate range.",
+      "pass_through_30d": 0.75,
+      "local_cost_floor_pct": 35
     },
     {
       "id": "cod",
@@ -1298,22 +1477,27 @@
           "input": "Fishing and trawling fuel",
           "description": "North Sea and Atlantic trawlers consume significant diesel",
           "category": "fuel",
-          "price_change_pct": 52
+          "price_change_pct": 52,
+          "weight": 0.9459
         },
         {
           "input": "Refrigerated processing",
           "description": "Filleting plants and blast freezing use gas and electricity",
           "category": "gas",
-          "price_change_pct": 70
+          "price_change_pct": 70,
+          "weight": 0.0405
         },
         {
           "input": "Plastic packaging",
           "description": "Vacuum-packed fillets and retail trays",
           "category": "petrochemical",
-          "price_change_pct": 22
+          "price_change_pct": 22,
+          "weight": 0.0136
         }
       ],
-      "explanation": "Wild-caught cod avoids the feed-cost burden of aquaculture, but deep-sea trawling is diesel-intensive. Processing, freezing, and refrigerated distribution add gas and packaging exposure."
+      "explanation": "Wild-caught cod avoids the feed-cost burden of aquaculture, but deep-sea trawling is diesel-intensive. Processing, freezing, and refrigerated distribution add gas and packaging exposure.",
+      "pass_through_30d": 0.75,
+      "local_cost_floor_pct": 35
     },
     {
       "id": "canned_tuna",
@@ -1330,28 +1514,34 @@
           "input": "Long-range fishing fleets",
           "description": "Tuna is caught in distant Pacific and Indian Ocean waters — high fuel use",
           "category": "fuel",
-          "price_change_pct": 60
+          "price_change_pct": 60,
+          "weight": 0.0886
         },
         {
           "input": "Steel cans",
           "description": "Tin plate steel is energy-intensive to produce",
           "category": "gas",
-          "price_change_pct": 70
+          "price_change_pct": 70,
+          "weight": 0.5696
         },
         {
           "input": "Sunflower or brine filling",
           "description": "Oil-packed tuna adds a crisis-exposed cooking oil layer",
           "category": "petrochemical",
-          "price_change_pct": 25
+          "price_change_pct": 25,
+          "weight": 0.2532
         },
         {
           "input": "Refrigerated shipping",
           "description": "Frozen tuna ships from processing plants in Thailand and Ecuador",
           "category": "fuel",
-          "price_change_pct": 60
+          "price_change_pct": 60,
+          "weight": 0.0886
         }
       ],
-      "explanation": "Canned tuna is deceptive. The fish is wild-caught with no feed costs, but the fishing fleets travel tens of thousands of kilometres, and the can itself requires energy-intensive steel and oil filling. Combined exposure is extreme."
+      "explanation": "Canned tuna is deceptive. The fish is wild-caught with no feed costs, but the fishing fleets travel tens of thousands of kilometres, and the can itself requires energy-intensive steel and oil filling. Combined exposure is extreme.",
+      "pass_through_30d": 0.3,
+      "local_cost_floor_pct": 50
     },
     {
       "id": "cooking_oil",
@@ -1368,28 +1558,34 @@
           "input": "Oilseed fertilizer",
           "description": "Sunflower, rapeseed, and palm oil are fertilizer-intensive crops",
           "category": "fertilizer",
-          "price_change_pct": 50
+          "price_change_pct": 50,
+          "weight": 0.0341
         },
         {
           "input": "Solvent extraction",
           "description": "Hexane solvent for oil extraction is a petrochemical product",
           "category": "petrochemical",
-          "price_change_pct": 35
+          "price_change_pct": 35,
+          "weight": 0.2273
         },
         {
           "input": "Refinery energy",
           "description": "Deodorising, bleaching, and hydrogenation require sustained heat",
           "category": "gas",
-          "price_change_pct": 70
+          "price_change_pct": 70,
+          "weight": 0.5114
         },
         {
           "input": "Plastic bottles",
           "description": "PET bottles are made entirely from petrochemicals",
           "category": "petrochemical",
-          "price_change_pct": 25
+          "price_change_pct": 25,
+          "weight": 0.2272
         }
       ],
-      "explanation": "Vegetable oil is crisis-exposed at every step: fertilizer for oilseeds, petrochemical solvents for extraction, gas for refining, and petroleum-derived plastic bottles. It's one of the most Hormuz-sensitive items on any shopping list."
+      "explanation": "Vegetable oil is crisis-exposed at every step: fertilizer for oilseeds, petrochemical solvents for extraction, gas for refining, and petroleum-derived plastic bottles. It's one of the most Hormuz-sensitive items on any shopping list.",
+      "pass_through_30d": 0.3,
+      "local_cost_floor_pct": 50
     },
     {
       "id": "frozen_pizza",
@@ -1406,28 +1602,34 @@
           "input": "Wheat, cheese, and meat",
           "description": "All three main components carry significant Hormuz exposure",
           "category": "fertilizer",
-          "price_change_pct": 50
+          "price_change_pct": 50,
+          "weight": 0.0341
         },
         {
           "input": "Cooking oil",
           "description": "Tomato sauce and cheese use vegetable oils in processing",
           "category": "petrochemical",
-          "price_change_pct": 35
+          "price_change_pct": 35,
+          "weight": 0.2273
         },
         {
           "input": "Freezing and cold storage",
           "description": "Industrial blast freezing and continuous frozen logistics",
           "category": "gas",
-          "price_change_pct": 70
+          "price_change_pct": 70,
+          "weight": 0.5114
         },
         {
           "input": "Multi-layer packaging",
           "description": "Film-wrapped cardboard with barrier layers — petroleum-derived",
           "category": "petrochemical",
-          "price_change_pct": 25
+          "price_change_pct": 25,
+          "weight": 0.2272
         }
       ],
-      "explanation": "A frozen pizza is a study in stacked Hormuz exposure. The base (wheat), the cheese (dairy), the meat (feed costs), the tomato sauce (oil), the freezing (gas), and the box (petrochemicals) all move together under the crisis."
+      "explanation": "A frozen pizza is a study in stacked Hormuz exposure. The base (wheat), the cheese (dairy), the meat (feed costs), the tomato sauce (oil), the freezing (gas), and the box (petrochemicals) all move together under the crisis.",
+      "pass_through_30d": 0.45,
+      "local_cost_floor_pct": 45
     },
     {
       "id": "chocolate",
@@ -1444,28 +1646,34 @@
           "input": "Cocoa farming",
           "description": "West African cocoa plantations use fertilizer and diesel",
           "category": "fertilizer",
-          "price_change_pct": 50
+          "price_change_pct": 50,
+          "weight": 0.04
         },
         {
           "input": "Long-distance shipping",
           "description": "Cocoa beans shipped from West Africa and South America",
           "category": "fuel",
-          "price_change_pct": 60
+          "price_change_pct": 60,
+          "weight": 0.0933
         },
         {
           "input": "Conching and tempering",
           "description": "Chocolate manufacturing requires long-duration thermal processing",
           "category": "gas",
-          "price_change_pct": 70
+          "price_change_pct": 70,
+          "weight": 0.6
         },
         {
           "input": "Foil and plastic wrapping",
           "description": "Aluminium foil and printed shrink wrap",
           "category": "petrochemical",
-          "price_change_pct": 22
+          "price_change_pct": 22,
+          "weight": 0.2667
         }
       ],
-      "explanation": "Chocolate is a highly traded commodity with long supply chains from West Africa. Cocoa farming costs, transoceanic shipping, and energy-intensive conching and moulding all carry Hormuz exposure."
+      "explanation": "Chocolate is a highly traded commodity with long supply chains from West Africa. Cocoa farming costs, transoceanic shipping, and energy-intensive conching and moulding all carry Hormuz exposure.",
+      "pass_through_30d": 0.3,
+      "local_cost_floor_pct": 50
     },
     {
       "id": "crisps",
@@ -1482,28 +1690,34 @@
           "input": "Potato farming",
           "description": "Crisps use high-starch potatoes requiring intensive fertilizer",
           "category": "fertilizer",
-          "price_change_pct": 50
+          "price_change_pct": 50,
+          "weight": 0.0341
         },
         {
           "input": "Palm and sunflower oil",
           "description": "Frying oil is itself one of the most crisis-exposed inputs",
           "category": "petrochemical",
-          "price_change_pct": 35
+          "price_change_pct": 35,
+          "weight": 0.2273
         },
         {
           "input": "Nitrogen gas flushing",
           "description": "Bags are inflated with nitrogen — produced via energy-intensive separation",
           "category": "gas",
-          "price_change_pct": 70
+          "price_change_pct": 70,
+          "weight": 0.5114
         },
         {
           "input": "Multi-layer foil bags",
           "description": "Metallised film bags are petroleum-derived and complex to produce",
           "category": "petrochemical",
-          "price_change_pct": 25
+          "price_change_pct": 25,
+          "weight": 0.2272
         }
       ],
-      "explanation": "Crisps are among the most Hormuz-sensitive snack foods. The combination of fertilized potato farming, petroleum-based frying oil, industrial gas usage, and petrochemical packaging stacks exposure to extreme levels."
+      "explanation": "Crisps are among the most Hormuz-sensitive snack foods. The combination of fertilized potato farming, petroleum-based frying oil, industrial gas usage, and petrochemical packaging stacks exposure to extreme levels.",
+      "pass_through_30d": 0.3,
+      "local_cost_floor_pct": 50
     },
     {
       "id": "biscuits",
@@ -1520,22 +1734,27 @@
           "input": "Wheat and sugar",
           "description": "Both main ingredients require fertilizer in production",
           "category": "fertilizer",
-          "price_change_pct": 50
+          "price_change_pct": 50,
+          "weight": 0.0441
         },
         {
           "input": "Palm oil",
           "description": "Used as shortening — oil production is crisis-exposed",
           "category": "petrochemical",
-          "price_change_pct": 35
+          "price_change_pct": 35,
+          "weight": 0.2941
         },
         {
           "input": "Tunnel oven baking",
           "description": "Continuous gas-fired ovens in industrial bakeries",
           "category": "gas",
-          "price_change_pct": 70
+          "price_change_pct": 70,
+          "weight": 0.6618
         }
       ],
-      "explanation": "Industrial biscuit manufacturing depends on gas-fired tunnel ovens running continuously, palm oil shortenings, and fertilized wheat. Packaging adds a further petrochemical layer."
+      "explanation": "Industrial biscuit manufacturing depends on gas-fired tunnel ovens running continuously, palm oil shortenings, and fertilized wheat. Packaging adds a further petrochemical layer.",
+      "pass_through_30d": 0.3,
+      "local_cost_floor_pct": 50
     },
     {
       "id": "soft_drinks",
@@ -1552,22 +1771,27 @@
           "input": "Sugar or HFCS",
           "description": "Corn-derived sweeteners carry fertilizer costs; cane sugar uses diesel for transport",
           "category": "fertilizer",
-          "price_change_pct": 50
+          "price_change_pct": 50,
+          "weight": 0.0441
         },
         {
           "input": "PET bottles",
           "description": "Polyethylene terephthalate is a direct petrochemical product",
           "category": "petrochemical",
-          "price_change_pct": 25
+          "price_change_pct": 25,
+          "weight": 0.2941
         },
         {
           "input": "CO2 carbonation",
           "description": "Food-grade CO2 is a byproduct of fertilizer production — supply is constrained",
           "category": "gas",
-          "price_change_pct": 70
+          "price_change_pct": 70,
+          "weight": 0.6618
         }
       ],
-      "explanation": "The CO2 used to carbonate soft drinks is a byproduct of ammonia fertilizer plants. When fertilizer production drops due to gas costs, CO2 supply tightens too — a hidden Hormuz linkage."
+      "explanation": "The CO2 used to carbonate soft drinks is a byproduct of ammonia fertilizer plants. When fertilizer production drops due to gas costs, CO2 supply tightens too — a hidden Hormuz linkage.",
+      "pass_through_30d": 0.3,
+      "local_cost_floor_pct": 50
     },
     {
       "id": "beer",
@@ -1584,22 +1808,27 @@
           "input": "Barley and malt",
           "description": "Barley is a fertilizer-intensive crop; malting uses significant gas",
           "category": "fertilizer",
-          "price_change_pct": 50
+          "price_change_pct": 50,
+          "weight": 0.0323
         },
         {
           "input": "Brewing energy",
           "description": "Brewing, pasteurisation, and chilling are gas and electricity heavy",
           "category": "gas",
-          "price_change_pct": 70
+          "price_change_pct": 70,
+          "weight": 0.4839
         },
         {
           "input": "Aluminium cans",
           "description": "Aluminium smelting is highly energy-intensive",
           "category": "gas",
-          "price_change_pct": 70
+          "price_change_pct": 70,
+          "weight": 0.4838
         }
       ],
-      "explanation": "Beer's exposure stems from the malting and brewing process (gas-intensive) and aluminium can production (one of the most energy-intensive packaging materials). Fertilizer costs for barley add the agricultural layer."
+      "explanation": "Beer's exposure stems from the malting and brewing process (gas-intensive) and aluminium can production (one of the most energy-intensive packaging materials). Fertilizer costs for barley add the agricultural layer.",
+      "pass_through_30d": 0.3,
+      "local_cost_floor_pct": 50
     },
     {
       "id": "coffee",
@@ -1616,28 +1845,34 @@
           "input": "Plantation fertilizer",
           "description": "Coffee is a high-yield crop requiring significant nitrogen and phosphate",
           "category": "fertilizer",
-          "price_change_pct": 50
+          "price_change_pct": 50,
+          "weight": 0.04
         },
         {
           "input": "Long-haul shipping",
           "description": "Coffee originates in tropical regions far from consuming markets",
           "category": "fuel",
-          "price_change_pct": 60
+          "price_change_pct": 60,
+          "weight": 0.0933
         },
         {
           "input": "Roasting",
           "description": "Coffee roasting is a gas-intensive process",
           "category": "gas",
-          "price_change_pct": 70
+          "price_change_pct": 70,
+          "weight": 0.6
         },
         {
           "input": "Vacuum packaging",
           "description": "Pressure-sealed bags with degassing valves use complex petrochemical films",
           "category": "petrochemical",
-          "price_change_pct": 22
+          "price_change_pct": 22,
+          "weight": 0.2667
         }
       ],
-      "explanation": "Coffee is exposed at every step: fertilized tropical plantations, long transoceanic shipping, gas-intensive roasting, and speciality vacuum packaging. The high per-kg retail price amplifies the absolute cost impact."
+      "explanation": "Coffee is exposed at every step: fertilized tropical plantations, long transoceanic shipping, gas-intensive roasting, and speciality vacuum packaging. The high per-kg retail price amplifies the absolute cost impact.",
+      "pass_through_30d": 0.7,
+      "local_cost_floor_pct": 40
     },
     {
       "id": "sugar",
@@ -1654,16 +1889,20 @@
           "input": "Sugarbeet nitrogen",
           "description": "European sugar beet is heavily nitrogen-fertilized",
           "category": "fertilizer",
-          "price_change_pct": 50
+          "price_change_pct": 50,
+          "weight": 0.0625
         },
         {
           "input": "Refining energy",
           "description": "Sugar refining and crystallisation uses substantial thermal energy",
           "category": "gas",
-          "price_change_pct": 70
+          "price_change_pct": 70,
+          "weight": 0.9375
         }
       ],
-      "explanation": "European sugar beet is a domestic crop but heavily nitrogen-dependent. Refining is energy-intensive. Imported cane sugar adds a shipping dimension. Overall exposure is moderate — well below sweetened products that use sugar as an input."
+      "explanation": "European sugar beet is a domestic crop but heavily nitrogen-dependent. Refining is energy-intensive. Imported cane sugar adds a shipping dimension. Overall exposure is moderate — well below sweetened products that use sugar as an input.",
+      "pass_through_30d": 0.2,
+      "local_cost_floor_pct": 55
     },
     {
       "id": "peanut_butter",
@@ -1680,28 +1919,34 @@
           "input": "Peanut farming",
           "description": "Peanuts fix nitrogen but require phosphate and diesel for harvest",
           "category": "fertilizer",
-          "price_change_pct": 50
+          "price_change_pct": 50,
+          "weight": 0.03
         },
         {
           "input": "Long-distance shipping",
           "description": "Most peanuts are sourced from China, Argentina, or South Africa",
           "category": "fuel",
-          "price_change_pct": 60
+          "price_change_pct": 60,
+          "weight": 0.07
         },
         {
           "input": "Roasting and processing",
           "description": "Roasting and grinding require sustained gas heat",
           "category": "gas",
-          "price_change_pct": 70
+          "price_change_pct": 70,
+          "weight": 0.45
         },
         {
           "input": "Glass jar energy",
           "description": "Glass manufacturing is an energy-intensive process",
           "category": "gas",
-          "price_change_pct": 70
+          "price_change_pct": 70,
+          "weight": 0.45
         }
       ],
-      "explanation": "Peanut butter stacks long-haul shipping (peanuts are a globally traded commodity), roasting energy, and glass or plastic container production. An underappreciated crisis exposure for a pantry staple."
+      "explanation": "Peanut butter stacks long-haul shipping (peanuts are a globally traded commodity), roasting energy, and glass or plastic container production. An underappreciated crisis exposure for a pantry staple.",
+      "pass_through_30d": 0.3,
+      "local_cost_floor_pct": 50
     },
     {
       "id": "orange_juice",
@@ -1718,22 +1963,27 @@
           "input": "Brazilian orange farming",
           "description": "Brazil supplies ~75% of global OJ — fertilizer and diesel intensive",
           "category": "fertilizer",
-          "price_change_pct": 50
+          "price_change_pct": 50,
+          "weight": 0.1
         },
         {
           "input": "Refrigerated shipping",
           "description": "NFC juice shipped from Brazil requires continuous cold-chain",
           "category": "fuel",
-          "price_change_pct": 60
+          "price_change_pct": 60,
+          "weight": 0.2333
         },
         {
           "input": "Carton packaging",
           "description": "Tetra Pak-style laminated cartons use petroleum-derived layers",
           "category": "petrochemical",
-          "price_change_pct": 22
+          "price_change_pct": 22,
+          "weight": 0.6667
         }
       ],
-      "explanation": "Not from concentrate orange juice has to be refrigerated all the way from Brazilian orchards to European shelves. That cold chain is diesel-powered. Brazil's fertilizer import dependency (48% Hormuz-linked) adds to the exposure."
+      "explanation": "Not from concentrate orange juice has to be refrigerated all the way from Brazilian orchards to European shelves. That cold chain is diesel-powered. Brazil's fertilizer import dependency (48% Hormuz-linked) adds to the exposure.",
+      "pass_through_30d": 0.3,
+      "local_cost_floor_pct": 50
     },
     {
       "id": "mayonnaise",
@@ -1750,22 +2000,27 @@
           "input": "Vegetable oil",
           "description": "Oil is the dominant ingredient (~70%) — directly crisis-exposed",
           "category": "petrochemical",
-          "price_change_pct": 35
+          "price_change_pct": 35,
+          "weight": 0.4651
         },
         {
           "input": "Eggs",
           "description": "Egg yolks are the emulsifier — feed costs drive egg prices",
           "category": "fertilizer",
-          "price_change_pct": 50
+          "price_change_pct": 50,
+          "weight": 0.0698
         },
         {
           "input": "Plastic packaging",
           "description": "Squeeze bottles and jars are petroleum-derived",
           "category": "petrochemical",
-          "price_change_pct": 25
+          "price_change_pct": 25,
+          "weight": 0.4651
         }
       ],
-      "explanation": "Mayonnaise is 65-70% vegetable oil — and cooking oil is one of the most crisis-exposed items on this list. With egg costs also rising, mayonnaise carries compounded Hormuz exposure through both its main ingredients."
+      "explanation": "Mayonnaise is 65-70% vegetable oil — and cooking oil is one of the most crisis-exposed items on this list. With egg costs also rising, mayonnaise carries compounded Hormuz exposure through both its main ingredients.",
+      "pass_through_30d": 0.3,
+      "local_cost_floor_pct": 50
     },
     {
       "id": "tomato_sauce",
@@ -1782,22 +2037,27 @@
           "input": "Tomato farming",
           "description": "Processing tomatoes are field-grown with diesel and fertilizer",
           "category": "fertilizer",
-          "price_change_pct": 50
+          "price_change_pct": 50,
+          "weight": 0.0323
         },
         {
           "input": "Cooking and pasteurisation",
           "description": "Industrial tomato processing uses sustained natural gas heat",
           "category": "gas",
-          "price_change_pct": 70
+          "price_change_pct": 70,
+          "weight": 0.4839
         },
         {
           "input": "Steel cans or glass jars",
           "description": "Both packaging formats are energy-intensive to manufacture",
           "category": "gas",
-          "price_change_pct": 70
+          "price_change_pct": 70,
+          "weight": 0.4838
         }
       ],
-      "explanation": "Field-grown processing tomatoes require less energy than greenhouse varieties, but industrial cooking, packaging, and distribution all add Hormuz exposure. Sauce jars and cans are among the more energy-intensive containers."
+      "explanation": "Field-grown processing tomatoes require less energy than greenhouse varieties, but industrial cooking, packaging, and distribution all add Hormuz exposure. Sauce jars and cans are among the more energy-intensive containers.",
+      "pass_through_30d": 0.3,
+      "local_cost_floor_pct": 50
     },
     {
       "id": "baby_formula",
@@ -1814,28 +2074,34 @@
           "input": "Dairy base",
           "description": "Milk solids are the primary ingredient — all dairy Hormuz exposure applies",
           "category": "fertilizer",
-          "price_change_pct": 50
+          "price_change_pct": 50,
+          "weight": 0.0341
         },
         {
           "input": "Spray drying",
           "description": "Spray drying dairy into powder is extremely energy-intensive",
           "category": "gas",
-          "price_change_pct": 70
+          "price_change_pct": 70,
+          "weight": 0.5114
         },
         {
           "input": "Sterile packaging",
           "description": "Airtight laminated cans with hermetic seals",
           "category": "petrochemical",
-          "price_change_pct": 25
+          "price_change_pct": 25,
+          "weight": 0.2273
         },
         {
           "input": "Nutritional additives",
           "description": "DHA, ARA, and synthetic vitamins are petrochemical-derived",
           "category": "petrochemical",
-          "price_change_pct": 25
+          "price_change_pct": 25,
+          "weight": 0.2272
         }
       ],
-      "explanation": "Baby formula concentrates dairy's Hormuz exposure and adds spray-drying (one of the most energy-intensive processes in food manufacturing) and petrochemical nutritional additives. The high price-per-kg makes crisis impact particularly visible."
+      "explanation": "Baby formula concentrates dairy's Hormuz exposure and adds spray-drying (one of the most energy-intensive processes in food manufacturing) and petrochemical nutritional additives. The high price-per-kg makes crisis impact particularly visible.",
+      "pass_through_30d": 0.3,
+      "local_cost_floor_pct": 50
     },
     {
       "id": "lentils",
@@ -1852,16 +2118,20 @@
           "input": "Nitrogen fixing",
           "description": "Lentils fix their own nitrogen — dramatically lower fertilizer need",
           "category": "fertilizer",
-          "price_change_pct": 50
+          "price_change_pct": 50,
+          "weight": 0.625
         },
         {
           "input": "Diesel harvest",
           "description": "Combine harvesting and transport to processing",
           "category": "fuel",
-          "price_change_pct": 52
+          "price_change_pct": 52,
+          "weight": 0.375
         }
       ],
-      "explanation": "Legumes like lentils are the most Hormuz-resilient protein source. As nitrogen-fixing crops, they largely bypass the Hormuz fertilizer channel. Short supply chains and long shelf life keep exposure low."
+      "explanation": "Legumes like lentils are the most Hormuz-resilient protein source. As nitrogen-fixing crops, they largely bypass the Hormuz fertilizer channel. Short supply chains and long shelf life keep exposure low.",
+      "pass_through_30d": 0.25,
+      "local_cost_floor_pct": 60
     },
     {
       "id": "chickpeas",
@@ -1878,16 +2148,20 @@
           "input": "Minimal fertilizer",
           "description": "Chickpeas fix nitrogen — very low fertilizer cost",
           "category": "fertilizer",
-          "price_change_pct": 50
+          "price_change_pct": 50,
+          "weight": 0.625
         },
         {
           "input": "Dry shipping",
           "description": "Dried chickpeas ship in bulk without refrigeration",
           "category": "fuel",
-          "price_change_pct": 60
+          "price_change_pct": 60,
+          "weight": 0.375
         }
       ],
-      "explanation": "Chickpeas represent the low end of Hormuz exposure in the food system. Their nitrogen-fixing ability and long shelf life make them a crisis-resilient protein source."
+      "explanation": "Chickpeas represent the low end of Hormuz exposure in the food system. Their nitrogen-fixing ability and long shelf life make them a crisis-resilient protein source.",
+      "pass_through_30d": 0.25,
+      "local_cost_floor_pct": 60
     },
     {
       "id": "tofu",
@@ -1904,22 +2178,27 @@
           "input": "Soybean farming",
           "description": "Soybeans require moderate fertilizer, though less than cereals",
           "category": "fertilizer",
-          "price_change_pct": 50
+          "price_change_pct": 50,
+          "weight": 0.7812
         },
         {
           "input": "Processing energy",
           "description": "Soy soaking, grinding, and coagulation require thermal energy",
           "category": "gas",
-          "price_change_pct": 70
+          "price_change_pct": 70,
+          "weight": 0.1875
         },
         {
           "input": "Plastic packaging",
           "description": "Water-filled plastic tubs are petroleum-derived",
           "category": "petrochemical",
-          "price_change_pct": 22
+          "price_change_pct": 22,
+          "weight": 0.0313
         }
       ],
-      "explanation": "Tofu is a moderately exposed plant protein. Soy is less fertilizer-intensive than cereals, and the processing footprint is lower than meat — but gas-heated production and plastic packaging add exposure."
+      "explanation": "Tofu is a moderately exposed plant protein. Soy is less fertilizer-intensive than cereals, and the processing footprint is lower than meat — but gas-heated production and plastic packaging add exposure.",
+      "pass_through_30d": 0.25,
+      "local_cost_floor_pct": 60
     },
     {
       "id": "beans",
@@ -1936,16 +2215,20 @@
           "input": "Nitrogen fixing",
           "description": "Beans fix nitrogen — minimal fertilizer input",
           "category": "fertilizer",
-          "price_change_pct": 50
+          "price_change_pct": 50,
+          "weight": 0.625
         },
         {
           "input": "Bulk shipping",
           "description": "Dry beans ship efficiently in bulk without refrigeration",
           "category": "fuel",
-          "price_change_pct": 60
+          "price_change_pct": 60,
+          "weight": 0.375
         }
       ],
-      "explanation": "Dried beans are the most crisis-resilient item on this list. Nitrogen fixation, long shelf life, bulk shipping without refrigeration, and minimal processing make them a genuine Hormuz hedge."
+      "explanation": "Dried beans are the most crisis-resilient item on this list. Nitrogen fixation, long shelf life, bulk shipping without refrigeration, and minimal processing make them a genuine Hormuz hedge.",
+      "pass_through_30d": 0.25,
+      "local_cost_floor_pct": 60
     },
     {
       "id": "quinoa",
@@ -1962,22 +2245,27 @@
           "input": "Andean farming",
           "description": "Grown at altitude in Peru and Bolivia — moderate fertilizer use",
           "category": "fertilizer",
-          "price_change_pct": 50
+          "price_change_pct": 50,
+          "weight": 0.5435
         },
         {
           "input": "Long-haul shipping",
           "description": "Exported from South America to Europe and North America",
           "category": "fuel",
-          "price_change_pct": 60
+          "price_change_pct": 60,
+          "weight": 0.3261
         },
         {
           "input": "Saponin washing",
           "description": "Industrial washing and drying uses gas energy",
           "category": "gas",
-          "price_change_pct": 70
+          "price_change_pct": 70,
+          "weight": 0.1304
         }
       ],
-      "explanation": "Quinoa's main Hormuz channel is transoceanic shipping from the Andes. Moderate fertilizer use and processing energy push it into the moderate range — higher than most legumes due to its long supply chain."
+      "explanation": "Quinoa's main Hormuz channel is transoceanic shipping from the Andes. Moderate fertilizer use and processing energy push it into the moderate range — higher than most legumes due to its long supply chain.",
+      "pass_through_30d": 0.25,
+      "local_cost_floor_pct": 60
     },
     {
       "id": "olive_oil",
@@ -1994,28 +2282,34 @@
           "input": "Grove fertilizer",
           "description": "Olive trees require less fertilizer than annual crops but inputs are rising",
           "category": "fertilizer",
-          "price_change_pct": 50
+          "price_change_pct": 50,
+          "weight": 0.4808
         },
         {
           "input": "Cold pressing energy",
           "description": "Extraction mills and cooling systems use electricity and gas",
           "category": "gas",
-          "price_change_pct": 70
+          "price_change_pct": 70,
+          "weight": 0.1154
         },
         {
           "input": "Glass bottle production",
           "description": "Glass manufacturing requires very high kiln temperatures (gas-fired)",
           "category": "gas",
-          "price_change_pct": 70
+          "price_change_pct": 70,
+          "weight": 0.1154
         },
         {
           "input": "Diesel distribution",
           "description": "Mediterranean production region to global retail",
           "category": "fuel",
-          "price_change_pct": 52
+          "price_change_pct": 52,
+          "weight": 0.2884
         }
       ],
-      "explanation": "Olive oil's moderate exposure is largely driven by the energy cost of glass bottle production and distribution. Olive groves themselves are relatively low-input perennial crops — but the packaging tells a different story."
+      "explanation": "Olive oil's moderate exposure is largely driven by the energy cost of glass bottle production and distribution. Olive groves themselves are relatively low-input perennial crops — but the packaging tells a different story.",
+      "pass_through_30d": 0.25,
+      "local_cost_floor_pct": 60
     },
     {
       "id": "frozen_peas",
@@ -2032,22 +2326,27 @@
           "input": "Fertilizer",
           "description": "Peas fix some nitrogen but benefit from phosphate inputs",
           "category": "fertilizer",
-          "price_change_pct": 50
+          "price_change_pct": 50,
+          "weight": 0.127
         },
         {
           "input": "Blanching and blast freezing",
           "description": "Industrial blanching uses gas; blast freezing uses significant electricity",
           "category": "gas",
-          "price_change_pct": 70
+          "price_change_pct": 70,
+          "weight": 0.2381
         },
         {
           "input": "Frozen logistics",
           "description": "Continuous frozen distribution from factory to freezer",
           "category": "fuel",
-          "price_change_pct": 52
+          "price_change_pct": 52,
+          "weight": 0.6349
         }
       ],
-      "explanation": "Frozen peas' Hormuz exposure is moderate. Peas partially fix nitrogen, reducing fertilizer sensitivity. But industrial blanching and the frozen cold chain add meaningful gas and diesel exposure."
+      "explanation": "Frozen peas' Hormuz exposure is moderate. Peas partially fix nitrogen, reducing fertilizer sensitivity. But industrial blanching and the frozen cold chain add meaningful gas and diesel exposure.",
+      "pass_through_30d": 0.7,
+      "local_cost_floor_pct": 45
     }
   ]
 }

@@ -388,6 +388,60 @@
       font-size: 0.75rem;
       color: var(--muted);
     }
+    /* Uncertainty band on card */
+    .exposure-band {
+      font-size: 0.62rem;
+      color: var(--muted-light);
+      font-variant-numeric: tabular-nums;
+    }
+    /* Tipping point flag */
+    .scarcity-flag {
+      display: inline-block;
+      font-size: 0.6rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 1px 5px;
+      border-radius: 3px;
+      background: #C0392B;
+      color: #fff;
+      margin-left: 0.3rem;
+      vertical-align: middle;
+    }
+    /* Stickiness label in modal */
+    .stickiness-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+      font-size: 0.76rem;
+      color: var(--muted);
+    }
+    .stickiness-bar-track {
+      flex: 1;
+      height: 4px;
+      background: #e5dfd5;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .stickiness-bar-fill { height: 100%; border-radius: 2px; background: var(--dark-green); }
+    /* Uncertainty band in modal */
+    .uncertainty-note {
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-top: 0.25rem;
+      font-style: italic;
+    }
+    /* Driver weight bar */
+    .driver-weight-bar {
+      display: inline-block;
+      height: 3px;
+      background: currentColor;
+      opacity: 0.35;
+      border-radius: 2px;
+      vertical-align: middle;
+      margin-left: 0.3rem;
+    }
 
     .bar-track {
       height: 4px;
@@ -1201,34 +1255,51 @@ function buildCountryTooltip(country, food) {
 function buildMathHtml(food, country) {
   const drivers = food.drivers;
   if (!drivers.length) return '';
-  const n = drivers.length;
-  const meanInput = drivers.reduce((s, d) => s + d.price_change_pct, 0) / n;
-  const origMean  = meanInput; // for display — we show the current driver values
-  const euPct     = food.crisis_exposure_pct;
-  const sensitivity = (euPct / Math.max(origMean, 1)).toFixed(2);
-  const rawEU     = (meanInput * parseFloat(sensitivity)).toFixed(1);
-  const adjPct    = countryExposure(food, country);
-  const mult      = country.impact_multiplier;
+  const euPct    = food.crisis_exposure_pct;
+  const adjPct   = countryExposure(food, country);
+  const mult     = country.impact_multiplier;
+  const floor    = food.local_cost_floor_pct ?? 45;
+  const pt30     = food.pass_through_30d != null ? Math.round(food.pass_through_30d * 100) : null;
+  const hasWeights = drivers.some(d => d.weight != null);
 
-  const driverLines = drivers.map(d =>
-    `<span class="math-line">  ${escHtml(d.input).padEnd(22)} +${String(d.price_change_pct).padStart(3)}%  (${d.category})</span>`
-  ).join('');
+  // Weighted input change
+  const totalW = drivers.reduce((s, d) => s + (d.weight ?? 1 / drivers.length), 0);
+  const weightedInput = drivers.reduce((s, d) => s + (d.weight ?? 1 / drivers.length) * d.price_change_pct, 0) / totalW;
+  const unweightedInput = drivers.reduce((s, d) => s + d.price_change_pct, 0) / drivers.length;
+  const sensitivity = (euPct / Math.max(unweightedInput, 1)).toFixed(2);
+
+  const driverLines = drivers.map(d => {
+    const wPct = d.weight != null ? `w=${(d.weight * 100).toFixed(0)}%` : '';
+    return `<span class="math-line">  ${escHtml(d.input).padEnd(20)} +${String(d.price_change_pct).padStart(3)}%  ${wPct.padEnd(6)}  (${d.category})</span>`;
+  }).join('');
+
+  const bandLow  = food.exposure_low  != null ? Math.min(99, Math.round(food.exposure_low  * mult)) : null;
+  const bandHigh = food.exposure_high != null ? Math.min(99, Math.round(food.exposure_high * mult)) : null;
+  const bandLine = (bandLow != null && bandHigh != null)
+    ? `<span class="math-line" style="opacity:0.7">  80% CI: ${bandLow}%–${bandHigh}%  (Monte Carlo, 500 runs, ±15% weight noise)</span>`
+    : '';
 
   return `
     <details class="math-details">
       <summary>View the math</summary>
       <div class="math-box" aria-label="Calculation details">
-        <span class="math-line">── Driver commodity price changes ──────────</span>
+        <span class="math-line">── Drivers  (${hasWeights ? 'weighted' : 'equal'})  ────────────────────</span>
         ${driverLines}
         <span class="math-line"> </span>
-        <span class="math-line">Mean input change   = ${meanInput.toFixed(1)}%  (${n} drivers)</span>
-        <span class="math-line">Sensitivity factor  = EU exposure ÷ mean input</span>
-        <span class="math-line">                    = ${euPct}% ÷ ${origMean.toFixed(1)} = ${sensitivity}</span>
-        <span class="math-line">EU exposure         ≈ ${rawEU}% → <strong>${euPct}%</strong></span>
+        ${hasWeights
+          ? `<span class="math-line">Weighted input chg  = ${weightedInput.toFixed(1)}%  (vs unweighted ${unweightedInput.toFixed(1)}%)</span>`
+          : `<span class="math-line">Mean input change   = ${unweightedInput.toFixed(1)}%  (${drivers.length} drivers)</span>`
+        }
+        <span class="math-line">Sensitivity factor  = ${euPct}% ÷ ${unweightedInput.toFixed(1)} = ${sensitivity}</span>
+        <span class="math-line">Local cost floor    = ${floor}%  (labour + land + retail margin)</span>
+        <span class="math-line">Max exposure        = 100% − ${floor}% = ${100 - floor}%</span>
+        <span class="math-line">EU exposure         = <strong>${euPct}%</strong></span>
         <span class="math-line"> </span>
         <span class="math-line">Country multiplier  = ${mult}×  (${escHtml(country.name)})</span>
-        <span class="math-result math-line">Adjusted exposure   = ${euPct}% × ${mult} = ${adjPct}%${country.data_confidence !== 'high' ? ' *' : ''}</span>
-        ${country.data_confidence !== 'high' ? `<span class="math-line" style="opacity:0.6">* rounded for ${country.data_confidence} confidence data</span>` : ''}
+        <span class="math-result math-line">Adjusted exposure   = min(${100 - floor}, ${euPct} × ${mult}) = ${adjPct}%${country.data_confidence !== 'high' ? ' *' : ''}</span>
+        ${bandLine}
+        ${pt30 != null ? `<span class="math-line" style="opacity:0.7">  Pass-through λ: ~${pt30}% reaches shelf in 30 days</span>` : ''}
+        ${country.data_confidence !== 'high' ? `<span class="math-line" style="opacity:0.6">  * rounded for ${country.data_confidence} confidence data</span>` : ''}
       </div>
     </details>`;
 }
@@ -1377,7 +1448,12 @@ function renderCard(food, country) {
 
       <div class="exposure-row">
         <div class="exposure-number">${adjPct}%</div>
-        <div class="exposure-label">crisis<br>exposure</div>
+        <div>
+          <div class="exposure-label">crisis<br>exposure</div>
+          ${food.exposure_low != null && food.exposure_high != null && food.exposure_high > food.exposure_low
+            ? `<div class="exposure-band">${Math.round(food.exposure_low * country.impact_multiplier)}–${Math.round(food.exposure_high * country.impact_multiplier)}%</div>`
+            : ''}
+        </div>
       </div>
 
       <div class="bar-track" aria-hidden="true">
@@ -1492,21 +1568,55 @@ function openFood(id) {
 
   const isEuBaseline = country.impact_multiplier === 1.0 && country.currency === 'EUR';
 
+  // Uncertainty band (country-scaled)
+  const bandLow  = food.exposure_low  != null ? Math.min(99, Math.round(food.exposure_low  * country.impact_multiplier)) : null;
+  const bandHigh = food.exposure_high != null ? Math.min(99, Math.round(food.exposure_high * country.impact_multiplier)) : null;
+  const bandHtml = (bandLow != null && bandHigh != null && bandHigh > bandLow)
+    ? `<div class="uncertainty-note" title="80% confidence interval from Monte Carlo simulation (500 runs, ±15% driver weight variance)">
+        Model range: <strong>${bandLow}%–${bandHigh}%</strong>
+        <span style="margin-left:0.3rem;color:#bbb" title="500-run Monte Carlo, ±15% weight noise">±</span>
+      </div>`
+    : '';
+
+  // Stickiness / pass-through display
+  const pt30 = food.pass_through_30d;
+  const stickinessHtml = pt30 != null ? (() => {
+    const pct30 = Math.round(pt30 * 100);
+    const stickyPct = 100 - pct30;
+    return `<div class="stickiness-row" title="How much of the supply chain cost increase reaches the shelf price within 30 days (Harvard: menu costs + retailer contracts)">
+      <span style="white-space:nowrap">~${pct30}% passes to shelf in 30 days</span>
+      <div class="stickiness-bar-track"><div class="stickiness-bar-fill" style="width:${pct30}%"></div></div>
+      <span style="white-space:nowrap;color:var(--muted-light)">${stickyPct}% absorbed</span>
+    </div>`;
+  })() : '';
+
+  // Tipping point flag
+  const tp = state.data.sources?.tipping_points;
+  const scarcityFlag = (tp?.urea_scarcity_risk && ['meat','dairy','grains','staples'].includes(food.category))
+    ? `<span class="scarcity-flag" title="Urea at $${tp.urea_current_usd_ton}/t ≥ $${tp.urea_scarcity_threshold_usd_ton}/t — fertilizer scarcity risk">⚠ Scarcity risk</span>`
+    : '';
+
   const driversHtml = food.drivers.map(d => {
     const src = DRIVER_SOURCES[d.category];
     const srcHtml = src
       ? `<a class="driver-row-source" href="${src.url}" target="_blank" rel="noopener">↗ ${escHtml(src.label)}</a>`
       : '';
+    // Weight bar: show relative contribution width (max 48px)
+    const wPct = d.weight != null ? Math.round(d.weight * 100) : null;
+    const weightHtml = wPct != null
+      ? `<span class="driver-weight-bar" style="width:${Math.round(d.weight * 48)}px" title="${wPct}% of this food's Hormuz sensitivity"></span>`
+      : '';
     return `
     <details class="driver-row cat-${escHtml(d.category)}">
       <summary>
         <span class="driver-row-icon" aria-hidden="true">${driverIcon(d.category)}</span>
-        <span class="driver-row-name">${escHtml(d.input)}</span>
+        <span class="driver-row-name">${escHtml(d.input)}${weightHtml}</span>
         <span class="driver-row-pct">+${d.price_change_pct}%</span>
         <span class="driver-row-chevron" aria-hidden="true">▶</span>
       </summary>
       <div class="driver-row-desc">
         <p>${escHtml(d.description)}</p>
+        ${wPct != null ? `<p style="font-size:0.72rem;color:var(--muted);margin-top:0.3rem">Cost weight: <strong>${wPct}%</strong> of this food's supply chain sensitivity</p>` : ''}
         ${srcHtml}
       </div>
     </details>`;
@@ -1523,9 +1633,11 @@ function openFood(id) {
         <h2 class="modal-title" id="modal-title">${escHtml(food.name)}</h2>
         <span class="badge badge-${sev}">${sev} crisis exposure</span>
         <div class="modal-exposure-row">
-          <div class="modal-exposure-big severity-${sev}" style="color:${barColors[sev]}">${adjPct}%</div>
+          <div class="modal-exposure-big severity-${sev}" style="color:${barColors[sev]}">${adjPct}%${scarcityFlag}</div>
           <div class="modal-exposure-label">of retail price<br>linked to Hormuz inputs${euRefHtml}</div>
         </div>
+        ${bandHtml}
+        ${stickinessHtml}
       </div>
     </div>
 
