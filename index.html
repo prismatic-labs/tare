@@ -1235,11 +1235,13 @@
   <div class="pulse-header">
     <div class="pulse-title-group">
       <h2>Crisis Pulse</h2>
-      <p class="pulse-sub">Global average food exposure since Feb 28, 2026</p>
+      <p class="pulse-sub">
+        Average Hormuz crisis exposure across all 59 foods, tracked since the disruption began on Feb 28, 2026.
+        Each data point is the mean of all food exposure scores on that date, calculated from live commodity prices
+        (Brent crude, European gas, urea, methanol). Updated daily.
+      </p>
     </div>
-    <button class="pulse-share-btn" id="pulse-share-btn">
-      Share Timeline ▾
-    </button>
+    <button class="pulse-share-btn" id="pulse-share-btn">Share Timeline ▾</button>
   </div>
   <div class="pulse-graph-container" id="pulse-graph">
     <!-- SVG rendered by JS -->
@@ -1525,6 +1527,7 @@ function buildMathHtml(food, country) {
 /* ─── #3 Sparkline helpers ───────────────────────────────────────────────── */
 // history is populated in init() from data/history/index.json
 const historyData = {}; // { foodId: [exposure_pct, ...] } chronological
+const historyDates = []; // ISO date strings in order
 
 function buildSparklineSvg(values, severity) {
   if (!values || values.length < 2) {
@@ -2137,10 +2140,17 @@ function renderPulse() {
       <text class="pulse-axis-label" x="${PAD_L - 5}" y="${getY(minAvg) + 4}" text-anchor="end">${minAvg.toFixed(0)}%</text>
       <text class="pulse-axis-label" x="${PAD_L - 5}" y="${getY(maxAvg) + 4}" text-anchor="end">${maxAvg.toFixed(0)}%</text>
       
-      <!-- X-Axis Labels -->
-      <text class="pulse-axis-label" x="${getX(0)}" y="${H - 10}" text-anchor="middle">Feb 28</text>
-      <text class="pulse-axis-label" x="${W / 2 + PAD_L / 2}" y="${H - 10}" text-anchor="middle" style="font-weight:600;opacity:0.5">Timeline</text>
-      <text class="pulse-axis-label" x="${getX(snapshotCount - 1)}" y="${H - 10}" text-anchor="middle">Today</text>
+      <!-- X-Axis Labels: first, middle, last dates -->
+      ${(() => {
+        const fmt = d => { const [,m,day] = d.split('-'); return `${['','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][+m]} ${+day}`; };
+        const labels = [];
+        if (historyDates.length > 0) labels.push({ i: 0, label: fmt(historyDates[0]) });
+        if (historyDates.length > 2) labels.push({ i: Math.floor((snapshotCount-1)/2), label: fmt(historyDates[Math.floor((historyDates.length-1)/2)]) });
+        if (historyDates.length > 1) labels.push({ i: snapshotCount-1, label: 'Today' });
+        return labels.map(({i, label}) =>
+          `<text class="pulse-axis-label" x="${getX(i)}" y="${H - 10}" text-anchor="middle">${label}</text>`
+        ).join('');
+      })()}
     </svg>
   `;
 }
@@ -2163,23 +2173,21 @@ function sharePulse() {
 //   x = 2% + (lon + 180) / 360 * 96%   (2% padding each side)
 //   y = 3% + (90 - lat) / 180 * 94%    (3% padding top/bottom)
 // EU countries nudged apart — they share similar lat/lon and would overlap.
-// Calibration anchors (confirmed from user screenshots):
-//   UK (0°E, 51.5°N) → left≈43%, top≈21%
-//   SVG spans ~84°N to ~70°S (154° total latitude range)
-// x = (lon + 180) / 360 * 100 - 7
-// y = (84 - lat) / 154 * 100
+// Standard equirectangular formula calibrated to this SVG:
+//   x = (lon + 180) / 360 * 100 - 7   (7% left offset: SVG has extra Pacific space)
+//   y = (90 - lat) / 180 * 100         (90°N→90°S range; confirmed: UK 51.5°N = 21.4%)
 // GB/DE/IT nudged apart — they're within 13° of each other and would overlap.
 const COUNTRY_MAP_POS = {
-  GB: { left: '40.5%', top: '21.0%' }, // London   51.5°N   0°E — nudged west of DE
-  DE: { left: '47.0%', top: '20.5%' }, // Berlin   52.5°N  13°E — nudged east
-  IT: { left: '46.5%', top: '27.5%' }, // Rome     41.9°N  12°E
-  US: { left: '16.0%', top: '30.0%' }, // Centre   38.5°N  98°W
-  JP: { left: '82.0%', top: '31.5%' }, // Tokyo    35.7°N 140°E
-  IN: { left: '64.5%', top: '36.0%' }, // Delhi    28.6°N  77°E
-  PH: { left: '77.0%', top: '45.0%' }, // Manila   14.6°N 121°E
-  BR: { left: '30.0%', top: '65.0%' }, // Brasília 15.8°S  48°W
-  AU: { left: '80.0%', top: '71.0%' }, // Centre   25.0°S 133°E
-  LK: { left: '65.5%', top: '50.0%' }, // Colombo   6.9°N  80°E
+  GB: { left: '40.5%', top: '21.5%' }, // London   51.5°N   0°E — nudged left of DE
+  DE: { left: '47.0%', top: '21.0%' }, // Berlin   52.5°N  13°E — nudged right
+  IT: { left: '46.5%', top: '26.7%' }, // Rome     41.9°N  12°E
+  US: { left: '16.0%', top: '28.5%' }, // Centre   38.5°N  98°W
+  JP: { left: '82.0%', top: '30.0%' }, // Tokyo    35.7°N 140°E
+  IN: { left: '64.5%', top: '34.0%' }, // Delhi    28.6°N  77°E
+  PH: { left: '77.0%', top: '42.0%' }, // Manila   14.6°N 121°E
+  BR: { left: '30.0%', top: '58.8%' }, // Brasília 15.8°S  48°W
+  AU: { left: '80.0%', top: '64.0%' }, // Centre   25.0°S 133°E
+  LK: { left: '65.5%', top: '46.0%' }, // Colombo   6.9°N  80°E
 };
 
 const SEVERITY_COLOR = {
@@ -2269,8 +2277,9 @@ async function init() {
         )
       );
       // Build per-food history arrays
-      snapshots.forEach(snap => {
+      snapshots.forEach((snap, i) => {
         if (!snap) return;
+        historyDates.push(toLoad[i]);
         (snap.foods || []).forEach(({ id, crisis_exposure_pct }) => {
           if (!historyData[id]) historyData[id] = [];
           historyData[id].push(crisis_exposure_pct);
