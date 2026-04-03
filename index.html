@@ -2163,22 +2163,23 @@ function sharePulse() {
 //   x = 2% + (lon + 180) / 360 * 96%   (2% padding each side)
 //   y = 3% + (90 - lat) / 180 * 94%    (3% padding top/bottom)
 // EU countries nudged apart — they share similar lat/lon and would overlap.
-// Calibrated from user feedback: UK (0°E) correctly appears at 43%.
-// This implies the SVG has ~7% extra Pacific space left of -180°.
-// Formula: x = -7% + (lon + 180) / 360 * 100%
-// Formula: y = (90 - lat) / 180 * 100%
-// GB/DE nudged apart by ±2.5% since they share nearly identical coordinates.
+// Calibration anchors (confirmed from user screenshots):
+//   UK (0°E, 51.5°N) → left≈43%, top≈21%
+//   SVG spans ~84°N to ~70°S (154° total latitude range)
+// x = (lon + 180) / 360 * 100 - 7
+// y = (84 - lat) / 154 * 100
+// GB/DE/IT nudged apart — they're within 13° of each other and would overlap.
 const COUNTRY_MAP_POS = {
-  GB: { left: '42.0%', top: '21.0%' }, // London - shifted east (out of Atlantic)
-  DE: { left: '46.0%', top: '21.0%' }, // Berlin - shifted west
-  IT: { left: '46.5%', top: '27.0%' }, // Rome
-  US: { left: '14.0%', top: '31.0%' }, // Centre - shifted south and west (out of Great Lakes)
-  JP: { left: '82.0%', top: '30.0%' }, // Tokyo
-  IN: { left: '64.5%', top: '39.0%' }, // Delhi - shifted south
-  PH: { left: '76.5%', top: '49.0%' }, // Manila - shifted south
-  BR: { left: '28.5%', top: '60.5%' }, // Brasília - shifted west/north (inside coast)
-  AU: { left: '78.5%', top: '71.5%' }, // Centre - nudged south and west
-  LK: { left: '65.0%', top: '49.5%' }, // Colombo
+  GB: { left: '40.5%', top: '21.0%' }, // London   51.5°N   0°E — nudged west of DE
+  DE: { left: '47.0%', top: '20.5%' }, // Berlin   52.5°N  13°E — nudged east
+  IT: { left: '46.5%', top: '27.5%' }, // Rome     41.9°N  12°E
+  US: { left: '16.0%', top: '30.0%' }, // Centre   38.5°N  98°W
+  JP: { left: '82.0%', top: '31.5%' }, // Tokyo    35.7°N 140°E
+  IN: { left: '64.5%', top: '36.0%' }, // Delhi    28.6°N  77°E
+  PH: { left: '77.0%', top: '45.0%' }, // Manila   14.6°N 121°E
+  BR: { left: '30.0%', top: '65.0%' }, // Brasília 15.8°S  48°W
+  AU: { left: '80.0%', top: '71.0%' }, // Centre   25.0°S 133°E
+  LK: { left: '65.5%', top: '50.0%' }, // Colombo   6.9°N  80°E
 };
 
 const SEVERITY_COLOR = {
