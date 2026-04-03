@@ -30,7 +30,7 @@
       --white:        #ffffff;
       --text:         #1a1a1a;
       --muted:        #666666;
-      --muted-light:  #999999;
+      --muted-light:  #717171;  /* min 4.6:1 on white for WCAG AA */
       --border:       #ddd6c8;
 
       --extreme:      #C0392B;
@@ -898,7 +898,7 @@
     }
     @media (min-width: 640px) { .footer-inner { grid-template-columns: 1fr 1fr; } }
 
-    .footer-col h3 {
+    .footer-col h2 {
       font-family: var(--serif);
       font-weight: normal;
       font-size: 0.9rem;
@@ -1035,6 +1035,7 @@
     <img
       src="https://upload.wikimedia.org/wikipedia/commons/a/ac/Simplified_blank_world_map_without_Antartica_%28no_borders%29.svg"
       alt="World map showing Hormuz exposure by country"
+      width="2058" height="1095"
       loading="lazy"
       crossorigin="anonymous"
     />
@@ -1053,7 +1054,7 @@
 <footer>
   <div class="footer-inner">
     <div class="footer-col">
-      <h3>About</h3>
+      <h2>About</h2>
       <p>
         <strong style="color:rgba(245,240,232,0.9)">Tare</strong> is a data tool that maps supply chain
         exposure. In measurement, tare is the weight of the container — what you subtract to find
@@ -1071,7 +1072,7 @@
       </p>
     </div>
     <div class="footer-col">
-      <h3>Data Sources</h3>
+      <h2>Data Sources</h2>
       <p>
         <a href="https://www.worldbank.org/en/research/commodity-markets" target="_blank" rel="noopener">World Bank Commodity Prices</a> ·
         <a href="https://www.fao.org/worldfoodsituation/foodpricesindex/en/" target="_blank" rel="noopener">FAO Food Price Index</a> ·
@@ -1650,13 +1651,13 @@ function openFood(id) {
 
     <p class="section-title">⚠️ Estimated crisis impact per kg — ${escHtml(country.name)}</p>
     <div class="impact-block">
-      <div class="impact-row" role="table" aria-label="Estimated crisis price impact">
-        <div class="impact-cell" role="cell">
+      <div class="impact-row" aria-label="Estimated crisis price impact">
+        <div class="impact-cell">
           <div class="impact-cell-label">Est. crisis increase today</div>
           <div class="impact-cell-value">${formatDelta(localDeltaToday, country)}</div>
           <div class="impact-cell-sub">vs. pre-28 Feb 2026 · April 2026</div>
         </div>
-        <div class="impact-cell projected" role="cell">
+        <div class="impact-cell projected">
           <div class="impact-cell-label">Est. crisis increase (projected)</div>
           <div class="impact-cell-value">${formatDelta(localDeltaProj, country)}</div>
           <div class="impact-cell-sub">vs. pre-28 Feb 2026 · if disruption persists</div>
