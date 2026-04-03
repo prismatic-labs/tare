@@ -30,6 +30,13 @@ from typing import Any
 
 import requests
 
+# --- Try to import pydantic (used for API response validation) ---
+try:
+    from pydantic import BaseModel, ConfigDict, ValidationError, field_validator
+    HAS_PYDANTIC = True
+except ImportError:
+    HAS_PYDANTIC = False
+
 # --- Try to import pandas/openpyxl (only needed for World Bank Excel) ---
 try:
     import pandas as pd
@@ -107,37 +114,92 @@ def load_existing() -> dict[str, Any]:
 
 # ─── #12 API response validation ───────────────────────────────────────────
 
+# Pydantic models (used when pydantic is available; fallback to manual checks otherwise)
+_COMMODITY_RANGES: dict[str, tuple[float, float]] = {
+    "oil_brent_usd":       (10.0,  500.0),
+    "natural_gas_eur_mwh": ( 5.0, 1000.0),
+    "urea_usd_ton":        (50.0, 2000.0),
+    "methanol_usd_ton":    (50.0, 3000.0),
+}
+
+if HAS_PYDANTIC:
+    class _CommodityPrice(BaseModel):
+        model_config = ConfigDict(frozen=True)
+        key: str
+        value: float
+
+        @field_validator("value")
+        @classmethod
+        def value_in_range(cls, v: float, info: Any) -> float:
+            if v <= 0:
+                raise ValueError(f"must be > 0, got {v}")
+            key = info.data.get("key", "")
+            if key in _COMMODITY_RANGES:
+                lo, hi = _COMMODITY_RANGES[key]
+                if not (lo <= v <= hi):
+                    raise ValueError(
+                        f"{key!r}: {v} outside expected range [{lo}, {hi}] — "
+                        "possible feed format change"
+                    )
+            return v
+
+    class _FrankfurterResponse(BaseModel):
+        model_config = ConfigDict(extra="ignore")
+        rates: dict[str, float]
+
+        @field_validator("rates")
+        @classmethod
+        def rates_positive(cls, v: dict[str, float]) -> dict[str, float]:
+            for code, rate in v.items():
+                if rate <= 0:
+                    raise ValueError(f"bad rate for {code!r}: {rate}")
+            return v
+
+
 def _validate_wb_row(key: str, val: Any) -> float:
     """
-    Validate a single value parsed from the World Bank Pink Sheet.
-    Raises ValueError with a descriptive message if the format is unexpected.
+    Validate a single commodity value. Delegates to Pydantic when available,
+    falls back to manual checks otherwise.
+    Raises ValueError with a descriptive message if the value is unexpected.
     """
     if not isinstance(val, (int, float)):
         raise ValueError(f"World Bank {key!r}: expected numeric, got {type(val).__name__} ({val!r})")
-    if val <= 0:
-        raise ValueError(f"World Bank {key!r}: implausible value {val} (must be > 0)")
-    # Sanity-range guards (very wide — just catch format changes)
-    SANITY: dict[str, tuple[float, float]] = {
-        "oil_brent_usd":       (10.0,  500.0),
-        "natural_gas_eur_mwh": ( 5.0, 1000.0),
-        "urea_usd_ton":        (50.0, 2000.0),
-        "methanol_usd_ton":    (50.0, 3000.0),
-    }
-    if key in SANITY:
-        lo, hi = SANITY[key]
-        if not (lo <= val <= hi):
+    if HAS_PYDANTIC:
+        try:
+            return _CommodityPrice(key=key, value=float(val)).value
+        except ValidationError as exc:
+            raise ValueError(f"World Bank {key!r}: {exc.errors()[0]['msg']}") from exc
+    # Manual fallback
+    fval = float(val)
+    if fval <= 0:
+        raise ValueError(f"World Bank {key!r}: implausible value {fval} (must be > 0)")
+    if key in _COMMODITY_RANGES:
+        lo, hi = _COMMODITY_RANGES[key]
+        if not (lo <= fval <= hi):
             raise ValueError(
-                f"World Bank {key!r}: {val} outside expected range [{lo}, {hi}] — "
+                f"World Bank {key!r}: {fval} outside expected range [{lo}, {hi}] — "
                 "possible sheet format change"
             )
-    return float(val)
+    return fval
 
 
 def _validate_frankfurter_response(data: Any) -> dict[str, float]:
     """
-    Validate the Frankfurter API response shape.
+    Validate the Frankfurter API response shape. Delegates to Pydantic when
+    available, falls back to manual checks otherwise.
     Returns the rates dict, or raises ValueError if the shape is wrong.
     """
+    if HAS_PYDANTIC:
+        if not isinstance(data, dict):
+            raise ValueError(f"Frankfurter: expected JSON object, got {type(data).__name__}")
+        if "rates" not in data:
+            raise ValueError("Frankfurter: missing 'rates' key — API format may have changed")
+        try:
+            return _FrankfurterResponse(**data).rates
+        except ValidationError as exc:
+            first = exc.errors()[0]
+            raise ValueError(f"Frankfurter: bad rate for {first.get('loc', ('?',))[-1]!r}: {first['msg']}") from exc
+    # Manual fallback
     if not isinstance(data, dict):
         raise ValueError(f"Frankfurter: expected JSON object, got {type(data).__name__}")
     if "rates" not in data:
@@ -420,7 +482,7 @@ def recalc_food_exposure(food: dict[str, Any], changes: dict[str, float]) -> dic
     p10 = mc_results[int(MONTE_CARLO_RUNS * 0.10)]
     p90 = mc_results[int(MONTE_CARLO_RUNS * 0.90)]
     exposure_low  = max(1, round(p10))
-    exposure_high = min(99, round(p90))
+    exposure_high = round(p90)  # floor cap already applied inside _weighted_exposure
 
     # Severity based on point estimate
     if new_exposure >= 60:

@@ -1080,7 +1080,7 @@
         <a href="https://fred.stlouisfed.org/" target="_blank" rel="noopener">FRED (St. Louis Fed)</a>
       </p>
       <p style="margin-top:0.75rem">
-        <a href="quiz.html">What's your Hormuz number? →</a> ·
+        <a href="quiz.html">Score your basket →</a> ·
         <a href="methodology.html">How it's calculated →</a>
       </p>
       <p style="margin-top:0.5rem">
@@ -1273,8 +1273,9 @@ function buildMathHtml(food, country) {
     return `<span class="math-line">  ${escHtml(d.input).padEnd(20)} +${String(d.price_change_pct).padStart(3)}%  ${wPct.padEnd(6)}  (${d.category})</span>`;
   }).join('');
 
-  const bandLow  = food.exposure_low  != null ? Math.min(99, Math.round(food.exposure_low  * mult)) : null;
-  const bandHigh = food.exposure_high != null ? Math.min(99, Math.round(food.exposure_high * mult)) : null;
+  const _cap1    = 100 - (food.local_cost_floor_pct || 45);
+  const bandLow  = food.exposure_low  != null ? Math.min(_cap1, Math.round(food.exposure_low  * mult)) : null;
+  const bandHigh = food.exposure_high != null ? Math.min(_cap1, Math.round(food.exposure_high * mult)) : null;
   const bandLine = (bandLow != null && bandHigh != null)
     ? `<span class="math-line" style="opacity:0.7">  80% CI: ${bandLow}%–${bandHigh}%  (Monte Carlo, 500 runs, ±15% weight noise)</span>`
     : '';
@@ -1389,9 +1390,10 @@ function formatEur(amount) {
 // Gemini#4: round to nearest 5% for medium confidence, nearest 10% for low confidence,
 // to avoid false precision on extrapolated data.
 function countryExposure(food, country) {
-  const raw = Math.min(99, Math.round(food.crisis_exposure_pct * country.impact_multiplier));
-  if (country.data_confidence === 'low')    return Math.min(99, Math.round(raw / 10) * 10) || 10;
-  if (country.data_confidence === 'medium') return Math.min(99, Math.round(raw / 5)  * 5)  || 5;
+  const cap = 100 - (food.local_cost_floor_pct || 45);
+  const raw = Math.min(cap, Math.round(food.crisis_exposure_pct * country.impact_multiplier));
+  if (country.data_confidence === 'low')    return Math.min(cap, Math.round(raw / 10) * 10) || 10;
+  if (country.data_confidence === 'medium') return Math.min(cap, Math.round(raw / 5)  * 5)  || 5;
   return raw;
 }
 
@@ -1568,9 +1570,10 @@ function openFood(id) {
 
   const isEuBaseline = country.impact_multiplier === 1.0 && country.currency === 'EUR';
 
-  // Uncertainty band (country-scaled)
-  const bandLow  = food.exposure_low  != null ? Math.min(99, Math.round(food.exposure_low  * country.impact_multiplier)) : null;
-  const bandHigh = food.exposure_high != null ? Math.min(99, Math.round(food.exposure_high * country.impact_multiplier)) : null;
+  // Uncertainty band (country-scaled, capped by local cost floor)
+  const _floorCap = 100 - (food.local_cost_floor_pct || 45);
+  const bandLow  = food.exposure_low  != null ? Math.min(_floorCap, Math.round(food.exposure_low  * country.impact_multiplier)) : null;
+  const bandHigh = food.exposure_high != null ? Math.min(_floorCap, Math.round(food.exposure_high * country.impact_multiplier)) : null;
   const bandHtml = (bandLow != null && bandHigh != null && bandHigh > bandLow)
     ? `<div class="uncertainty-note" title="80% confidence interval from Monte Carlo simulation (500 runs, ±15% driver weight variance)">
         Model range: <strong>${bandLow}%–${bandHigh}%</strong>
@@ -1832,16 +1835,16 @@ function populateCountrySelector() {
 //   y = 3% + (90 - lat) / 180 * 94%    (3% padding top/bottom)
 // EU countries nudged apart — they share similar lat/lon and would overlap.
 const COUNTRY_MAP_POS = {
-  GB: { left: '46.0%', top: '21.0%' }, // London  51.5°N   0°E  — nudged left
-  DE: { left: '56.0%', top: '20.0%' }, // Berlin  52.5°N  13°E  — nudged right
-  IT: { left: '53.5%', top: '29.5%' }, // Rome    41.9°N  12°E  — naturally south of DE/GB
-  US: { left: '23.8%', top: '29.9%' }, // Centre  38.5°N  98°W
-  JP: { left: '87.3%', top: '31.4%' }, // Tokyo   35.7°N 140°E
-  IN: { left: '70.6%', top: '34.8%' }, // Delhi   28.6°N  77°E
-  PH: { left: '82.3%', top: '42.4%' }, // Manila  14.6°N 121°E
-  BR: { left: '37.2%', top: '58.2%' }, // Brasília 15.8°S  48°W
-  AU: { left: '85.5%', top: '68.3%' }, // Centre  25.0°S 133°E
-  LK: { left: '71.3%', top: '46.4%' }, // Colombo  6.9°N  80°E
+  GB: { left: '43.0%', top: '21.0%' }, // London  51.5°N   0°E  — nudged left of DE
+  DE: { left: '53.0%', top: '20.0%' }, // Berlin  52.5°N  13°E  — nudged right of GB
+  IT: { left: '50.5%', top: '29.5%' }, // Rome    41.9°N  12°E
+  US: { left: '20.8%', top: '29.9%' }, // Centre  38.5°N  98°W
+  JP: { left: '84.3%', top: '31.4%' }, // Tokyo   35.7°N 140°E
+  IN: { left: '67.6%', top: '34.8%' }, // Delhi   28.6°N  77°E
+  PH: { left: '79.3%', top: '42.4%' }, // Manila  14.6°N 121°E
+  BR: { left: '34.2%', top: '58.2%' }, // Brasília 15.8°S  48°W
+  AU: { left: '82.5%', top: '68.3%' }, // Centre  25.0°S 133°E
+  LK: { left: '68.3%', top: '46.4%' }, // Colombo  6.9°N  80°E
 };
 
 const SEVERITY_COLOR = {

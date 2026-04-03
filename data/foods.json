@@ -43,7 +43,7 @@
       "hormuz_oil_dependency_pct": 12,
       "hormuz_lng_dependency_pct": 14,
       "hormuz_fertilizer_dependency_pct": 28,
-      "impact_multiplier": 1.05,
+      "impact_multiplier": 0.90,
       "price_level_index": 1.05,
       "data_confidence": "high"
     },

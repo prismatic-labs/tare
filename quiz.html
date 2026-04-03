@@ -3,17 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>What's your Hormuz number? — Tare</title>
-  <meta name="description" content="Pick the foods you buy every week. Find out how much of your grocery basket is exposed to the Strait of Hormuz crisis.">
+  <title>Score your basket — Tare</title>
+  <meta name="description" content="Pick the foods you buy every week. Find out how much of your grocery basket is exposed to the Strait of Hormuz supply chain crisis.">
 
-  <meta property="og:title" content="What's your Hormuz number?">
-  <meta property="og:description" content="Pick your weekly groceries. Get your personal Hormuz exposure score.">
+  <meta property="og:title" content="Score your basket">
+  <meta property="og:description" content="Pick your weekly groceries. See how much of your basket is exposed to the supply chain crisis.">
   <meta property="og:url" content="https://prismatic-labs.github.io/tare/quiz.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Tare by Prismatic Labs">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="What's your Hormuz number?">
-  <meta name="twitter:description" content="Pick your weekly groceries. Get your personal Hormuz exposure score.">
+  <meta name="twitter:title" content="Score your basket">
+  <meta name="twitter:description" content="Pick your weekly groceries. See how much of your basket is exposed to the supply chain crisis.">
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -340,8 +340,8 @@
 </nav>
 
 <div class="hero">
-  <h1>What's your Hormuz number?</h1>
-  <p>Pick the foods you buy most weeks. We'll calculate what share of your grocery basket is exposed to the Strait of Hormuz crisis.</p>
+  <h1>Score your basket</h1>
+  <p>Pick the foods you buy most weeks. We'll calculate what share of your grocery basket is exposed to the Strait of Hormuz supply chain crisis.</p>
   <div class="country-row">
     <label for="quiz-country">Your country:</label>
     <select id="quiz-country"></select>
@@ -355,7 +355,7 @@
   </div>
   <div class="score-right">
     <span class="score-count" id="score-count">Select foods below</span>
-    <button class="share-score-btn" id="share-score-btn">Share my number</button>
+    <button class="share-score-btn" id="share-score-btn">Share my score</button>
   </div>
   <div class="score-bar-track">
     <div class="score-bar-fill" id="score-bar-fill" style="width:0%"></div>
@@ -370,7 +370,7 @@
     <div class="result-breakdown" id="result-breakdown"></div>
     <div class="result-cta">
       <a href="index.html" class="result-btn result-btn-primary">See all 59 foods →</a>
-      <button class="result-btn result-btn-secondary" id="result-share-btn">Share my number</button>
+      <button class="result-btn result-btn-secondary" id="result-share-btn">Share my score</button>
     </div>
   </div>
   <div class="empty-hint" id="empty-hint">Pick at least 3 foods to see your score</div>
@@ -380,7 +380,7 @@
 
 <div class="share-overlay" id="share-overlay">
   <div class="share-panel">
-    <h3>Share your Hormuz number</h3>
+    <h3>Share your basket score</h3>
     <div class="share-options">
       <a class="share-opt" id="sq-x" href="#" target="_blank" rel="noopener">
         <span class="share-opt-icon">𝕏</span> Post on X
@@ -525,7 +525,7 @@ function buildShareText(score) {
   const names = [...selected].map(id => data.foods.find(f => f.id === id)?.name).filter(Boolean).join(', ');
   const url = QUIZ_URL;
   return {
-    text: `My grocery basket is ${score.avg}% exposed to the Strait of Hormuz crisis (${country.name}). Foods: ${names}. What's your number? ${url} #tare #Hormuz`,
+    text: `My grocery basket is ${score.avg}% exposed to the Strait of Hormuz supply chain crisis (${country.name}). Foods: ${names}. Score yours: ${url} #tare`,
     url,
   };
 }

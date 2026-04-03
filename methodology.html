@@ -74,6 +74,8 @@
       font-size: 0.82rem;
       line-height: 1.9;
       color: #222;
+      white-space: pre;
+      overflow-x: auto;
     }
     .formula-block .comment { color: #888; }
     .formula-block .result { font-weight: 700; color: var(--dark-green); }
@@ -202,20 +204,19 @@
 
   <h2>The formula</h2>
 
-  <div class="formula-block">
-<span class="comment">── Per food, EU baseline ───────────────────────────────────────</span>
-mean_input_chg  = Σ driver.price_change_pct / n_drivers
+  <div class="formula-block"><span class="comment">── Per food, EU baseline ────────────────────────────────────────────────────────────</span>
+weighted_input_chg  = Σ (driver.weight × driver.price_change_pct) / Σ driver.weights
 
-sensitivity     = eu_exposure_pct / mean_input_chg    <span class="comment"># calibrated Feb 2026</span>
-eu_exposure_pct = mean_input_chg × sensitivity        <span class="comment"># clamped 1–99</span>
+max_exposure        = 100 − local_cost_floor_pct     <span class="comment"># floor = immovable local costs (labour, retail margin)</span>
+sensitivity         = eu_exposure_pct / weighted_input_chg  <span class="comment"># calibrated Feb 2026</span>
+<span class="result">eu_exposure_pct     = clamp(weighted_input_chg × sensitivity, 1, max_exposure)</span>
 
-<span class="comment">── Country adjustment ──────────────────────────────────────────</span>
-<span class="result">country_exposure = min(99, round(eu_exposure_pct × impact_multiplier))</span>
+<span class="comment">── Country adjustment ───────────────────────────────────────────────────────────────</span>
+<span class="result">country_exposure    = clamp(round(eu_exposure_pct × impact_multiplier), 1, max_exposure)</span>
 
-<span class="comment">── Precision reduction for low-quality data ────────────────────</span>
+<span class="comment">── Precision reduction for low-quality data ────────────────────────────────────────</span>
 <span class="comment">if data_confidence == 'medium': round to nearest 5%</span>
-<span class="comment">if data_confidence == 'low':    round to nearest 10%</span>
-  </div>
+<span class="comment">if data_confidence == 'low':    round to nearest 10%</span></div>
 
   <h3>Worked example — Chicken in Japan</h3>
   <div class="trace-box">
@@ -225,7 +226,7 @@ eu_exposure_pct = mean_input_chg × sensitivity        <span class="comment"># c
     <div class="trace-row"><span class="trace-arrow">→</span><span class="trace-label">Sensitivity factor:</span><span class="trace-value">73 / 28.75 ≈ 2.54</span><span class="trace-note">(EU calibration: 73% exposure at 28.75% avg input change)</span></div>
     <div class="trace-row"><span class="trace-arrow">→</span><span class="trace-label">EU exposure:</span><span class="trace-value">28.75 × 2.54 ≈ 73%</span></div>
     <div class="trace-row"><span class="trace-arrow">→</span><span class="trace-label">Japan multiplier:</span><span class="trace-value">2.1×</span><span class="trace-note">(70% oil, 25% LNG, 35% fertilizer via Hormuz)</span></div>
-    <div class="trace-row"><span class="trace-arrow">→</span><span class="trace-result">Japan exposure: min(99, round(73 × 2.1)) = 99%</span></div>
+    <div class="trace-row"><span class="trace-arrow">→</span><span class="trace-result">Japan exposure: clamp(round(73 × 2.1), 1, 60) = 60%  (floor cap: 100 − 40% meat floor)</span></div>
   </div>
 
   <h2>Commodity baselines</h2>
@@ -252,7 +253,7 @@ eu_exposure_pct = mean_input_chg × sensitivity        <span class="comment"># c
     <tbody>
       <tr><td>Italy (EU ref)</td><td>14%</td><td>12%</td><td>30%</td><td>1.0×</td><td class="conf-high">High</td></tr>
       <tr><td>Germany</td><td>10%</td><td>15%</td><td>28%</td><td>1.0×</td><td class="conf-high">High</td></tr>
-      <tr><td>United Kingdom</td><td>12%</td><td>14%</td><td>28%</td><td>1.05×</td><td class="conf-high">High</td></tr>
+      <tr><td>United Kingdom</td><td>12%</td><td>14%</td><td>28%</td><td>0.90×</td><td class="conf-high">High</td></tr>
       <tr><td>United States</td><td>5%</td><td>2%</td><td>15%</td><td>0.65×</td><td class="conf-high">High</td></tr>
       <tr><td>Japan</td><td>70%</td><td>25%</td><td>35%</td><td>2.1×</td><td class="conf-medium">Medium</td></tr>
       <tr><td>India</td><td>33%</td><td>18%</td><td>35%</td><td>1.5×</td><td class="conf-medium">Medium</td></tr>
@@ -285,7 +286,7 @@ eu_exposure_pct = mean_input_chg × sensitivity        <span class="comment"># c
 </div>
 
 <footer>
-  <a href="index.html">← Full dashboard</a> · <a href="quiz.html">What's your Hormuz number?</a> · <a href="https://github.com/prismatic-labs/tare" target="_blank" rel="noopener">GitHub</a> · Built by <a href="https://prismaticlabs.ai" target="_blank" rel="noopener">Prismatic Labs</a>
+  <a href="index.html">← Full dashboard</a> · <a href="quiz.html">Score your basket →</a> · <a href="https://github.com/prismatic-labs/tare" target="_blank" rel="noopener">GitHub</a> · Built by <a href="https://prismaticlabs.ai" target="_blank" rel="noopener">Prismatic Labs</a>
 </footer>
 
 </body>

@@ -56,7 +56,7 @@ jobs:
           python-version: '3.12'
 
       - name: Install dependencies
-        run: pip install requests pandas openpyxl pytest
+        run: pip install requests pandas openpyxl pytest pydantic
 
       - name: Run sensitivity tests
         run: python3 -m pytest tests/ -v
