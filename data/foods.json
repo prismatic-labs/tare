@@ -227,8 +227,8 @@
         "v",
         "vg"
       ],
-      "exposure_low": 41,
-      "exposure_high": 42
+      "exposure_low": 42,
+      "exposure_high": 45
     },
     {
       "id": "tomatoes",
@@ -270,8 +270,8 @@
         "v",
         "vg"
       ],
-      "exposure_low": 44,
-      "exposure_high": 45
+      "exposure_low": 43,
+      "exposure_high": 44
     },
     {
       "id": "salmon",
@@ -318,7 +318,7 @@
       "local_cost_floor_pct": 30,
       "dietary": [],
       "exposure_low": 68,
-      "exposure_high": 68
+      "exposure_high": 70
     },
     {
       "id": "rice",
@@ -404,7 +404,7 @@
         "vg"
       ],
       "exposure_low": 36,
-      "exposure_high": 37
+      "exposure_high": 38
     },
     {
       "id": "flour",
@@ -526,7 +526,7 @@
         "vg"
       ],
       "exposure_low": 35,
-      "exposure_high": 36
+      "exposure_high": 44
     },
     {
       "id": "couscous",
@@ -569,7 +569,7 @@
         "vg"
       ],
       "exposure_low": 33,
-      "exposure_high": 33
+      "exposure_high": 34
     },
     {
       "id": "noodles",
@@ -662,7 +662,7 @@
         "vg"
       ],
       "exposure_low": 30,
-      "exposure_high": 31
+      "exposure_high": 37
     },
     {
       "id": "beef",
@@ -748,7 +748,7 @@
       "pass_through_30d": 0.5,
       "local_cost_floor_pct": 40,
       "dietary": [],
-      "exposure_low": 46,
+      "exposure_low": 45,
       "exposure_high": 47
     },
     {
@@ -795,7 +795,7 @@
       "pass_through_30d": 0.5,
       "local_cost_floor_pct": 40,
       "dietary": [],
-      "exposure_low": 48,
+      "exposure_low": 47,
       "exposure_high": 49
     },
     {
@@ -835,7 +835,7 @@
       "pass_through_30d": 0.5,
       "local_cost_floor_pct": 40,
       "dietary": [],
-      "exposure_low": 43,
+      "exposure_low": 42,
       "exposure_high": 44
     },
     {
@@ -924,8 +924,8 @@
       "dietary": [
         "v"
       ],
-      "exposure_low": 35,
-      "exposure_high": 36
+      "exposure_low": 34,
+      "exposure_high": 35
     },
     {
       "id": "cheese",
@@ -967,7 +967,7 @@
         "v"
       ],
       "exposure_low": 49,
-      "exposure_high": 50
+      "exposure_high": 55
     },
     {
       "id": "butter",
@@ -1008,8 +1008,8 @@
       "dietary": [
         "v"
       ],
-      "exposure_low": 48,
-      "exposure_high": 49
+      "exposure_low": 47,
+      "exposure_high": 48
     },
     {
       "id": "yoghurt",
@@ -1050,8 +1050,8 @@
       "dietary": [
         "v"
       ],
-      "exposure_low": 44,
-      "exposure_high": 45
+      "exposure_low": 45,
+      "exposure_high": 53
     },
     {
       "id": "eggs",
@@ -1092,8 +1092,8 @@
       "dietary": [
         "v"
       ],
-      "exposure_low": 55,
-      "exposure_high": 56
+      "exposure_low": 54,
+      "exposure_high": 55
     },
     {
       "id": "cream",
@@ -1134,8 +1134,8 @@
       "dietary": [
         "v"
       ],
-      "exposure_low": 46,
-      "exposure_high": 48
+      "exposure_low": 47,
+      "exposure_high": 55
     },
     {
       "id": "potatoes",
@@ -1256,8 +1256,8 @@
         "v",
         "vg"
       ],
-      "exposure_low": 30,
-      "exposure_high": 31
+      "exposure_low": 29,
+      "exposure_high": 30
     },
     {
       "id": "apples",
@@ -1293,7 +1293,7 @@
         "vg"
       ],
       "exposure_low": 19,
-      "exposure_high": 19
+      "exposure_high": 20
     },
     {
       "id": "oranges",
@@ -1486,8 +1486,8 @@
         "v",
         "vg"
       ],
-      "exposure_low": 45,
-      "exposure_high": 46
+      "exposure_low": 44,
+      "exposure_high": 45
     },
     {
       "id": "garlic",
@@ -1559,7 +1559,7 @@
         "vg"
       ],
       "exposure_low": 40,
-      "exposure_high": 41
+      "exposure_high": 42
     },
     {
       "id": "shrimp",
@@ -1646,7 +1646,7 @@
       "local_cost_floor_pct": 35,
       "dietary": [],
       "exposure_low": 38,
-      "exposure_high": 38
+      "exposure_high": 41
     },
     {
       "id": "cod",
@@ -1686,7 +1686,7 @@
       "local_cost_floor_pct": 35,
       "dietary": [],
       "exposure_low": 42,
-      "exposure_high": 42
+      "exposure_high": 45
     },
     {
       "id": "canned_tuna",
@@ -1972,8 +1972,8 @@
       "dietary": [
         "v"
       ],
-      "exposure_low": 44,
-      "exposure_high": 47
+      "exposure_low": 46,
+      "exposure_high": 50
     },
     {
       "id": "soft_drinks",
@@ -2059,7 +2059,7 @@
         "vg"
       ],
       "exposure_low": 44,
-      "exposure_high": 44
+      "exposure_high": 48
     },
     {
       "id": "coffee",
@@ -2108,7 +2108,7 @@
         "v",
         "vg"
       ],
-      "exposure_low": 59,
+      "exposure_low": 60,
       "exposure_high": 60
     },
     {
@@ -2145,7 +2145,7 @@
         "vg"
       ],
       "exposure_low": 35,
-      "exposure_high": 35
+      "exposure_high": 40
     },
     {
       "id": "peanut_butter",
@@ -2237,8 +2237,8 @@
         "v",
         "vg"
       ],
-      "exposure_low": 24,
-      "exposure_high": 25
+      "exposure_low": 19,
+      "exposure_high": 24
     },
     {
       "id": "mayonnaise",
@@ -2279,8 +2279,8 @@
       "dietary": [
         "v"
       ],
-      "exposure_low": 34,
-      "exposure_high": 35
+      "exposure_low": 27,
+      "exposure_high": 34
     },
     {
       "id": "tomato_sauce",
@@ -2323,7 +2323,7 @@
         "vg"
       ],
       "exposure_low": 40,
-      "exposure_high": 40
+      "exposure_high": 44
     },
     {
       "id": "baby_formula",
@@ -2487,7 +2487,7 @@
         "vg"
       ],
       "exposure_low": 28,
-      "exposure_high": 28
+      "exposure_high": 31
     },
     {
       "id": "beans",
@@ -2565,7 +2565,7 @@
         "v",
         "vg"
       ],
-      "exposure_low": 25,
+      "exposure_low": 23,
       "exposure_high": 25
     },
     {
@@ -2615,7 +2615,7 @@
         "v",
         "vg"
       ],
-      "exposure_low": 35,
+      "exposure_low": 32,
       "exposure_high": 35
     },
     {

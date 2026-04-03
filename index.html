@@ -1769,10 +1769,13 @@ function renderCard(food, country) {
 
       <div class="exposure-row">
         <div class="exposure-number">${adjPct}%</div>
-        <div>
+        <div style="position:relative">
           <div class="exposure-label">
             Hormuz<br>Exposure Index
-            <span class="exposure-info-btn" title="The percentage of the total shelf price directly derived from fuel, gas, and fertilizer inputs passing through the Strait of Hormuz.">i</span>
+            <button class="exposure-info-btn" onclick="toggleTooltip(event, 'tip-${escHtml(food.id)}')">i</button>
+          </div>
+          <div class="tooltip-popover" id="tip-${escHtml(food.id)}">
+            The percentage of the total shelf price directly derived from fuel, gas, and fertilizer inputs passing through the Strait of Hormuz.
           </div>
           ${food.exposure_low != null && food.exposure_high != null && food.exposure_high > food.exposure_low
             ? `<div class="exposure-band" title="80% model confidence interval">${Math.round(food.exposure_low * country.impact_multiplier)}–${Math.round(food.exposure_high * country.impact_multiplier)}%</div>`
