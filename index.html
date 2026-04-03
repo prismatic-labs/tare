@@ -415,6 +415,37 @@
       color: var(--cream);
     }
 
+    /* ─── Info Callout (Exposure vs Price) ────────────────────────────── */
+    .info-callout {
+      background: var(--moderate-bg);
+      border: 1px solid var(--moderate);
+      border-radius: var(--radius);
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+    .info-callout-icon {
+      font-size: 1.4rem;
+      line-height: 1;
+      padding-top: 0.1rem;
+    }
+    .info-callout-text h3 {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--moderate);
+      margin-bottom: 0.3rem;
+    }
+    .info-callout-text p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .info-callout-text strong { color: var(--text); }
+
     /* ─── Grid ──────────────────────────────────────────────────────────── */
     .main-content { padding: 1.5rem; max-width: 1400px; margin: 0 auto; }
 
@@ -1196,6 +1227,19 @@
 <main class="main-content">
   <div id="loading">Loading data…</div>
   <div id="error" role="alert">Failed to load food data. Please refresh the page.</div>
+
+  <!-- Educational Callout -->
+  <div class="info-callout" id="info-callout" style="display:none">
+    <div class="info-callout-icon" aria-hidden="true">💡</div>
+    <div class="info-callout-text">
+      <h3>Exposure is Pressure, not Price</h3>
+      <p>
+        A <strong>40% exposure</strong> does not mean the price has risen by 40%. It means 40% of the cost of that food is currently 
+        under stress from global supply chain shocks. Retailers may absorb some of this, or pass it on to you over several months.
+      </p>
+    </div>
+  </div>
+
   <p class="results-meta" id="results-meta" style="display:none"></p>
   <div class="grid" id="grid" role="list" aria-label="Food items"></div>
 </main>
@@ -1902,9 +1946,9 @@ function openFood(id) {
         <div class="risk-bar-stable"></div>
       </div>
       <p class="risk-description">
-        For every <strong>${currencySymbol}1.00</strong> spent on this ${food.name.toLowerCase()},
-        roughly <strong>${formattedSensitive}</strong> is currently vulnerable to Hormuz supply chain shocks.
-        The remaining <strong>${(100-adjPct).toFixed(0)}%</strong> is comprised of stable local costs (labour, land, rent).
+        For every <strong>$1.00</strong> spent on this ${food.name.toLowerCase()},
+        roughly <strong>${adjPct}¢</strong> is currently sensitive to Hormuz supply chain shocks.
+        The remaining <strong>${(100-adjPct).toFixed(0)}¢</strong> is comprised of stable local costs (labour, land, rent).
       </p>
     </div>
 
@@ -2311,6 +2355,7 @@ async function init() {
   populateCountrySelector();
 
   // Render
+  document.getElementById('info-callout').style.display = 'flex';
   renderGrid();
   renderMap();
   renderPulse();
