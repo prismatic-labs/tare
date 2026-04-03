@@ -458,7 +458,7 @@
       line-height: 1.45;
       width: 240px;
       white-space: normal;
-      z-index: 1000;
+      z-index: 1001;
       box-shadow: var(--shadow-lg);
       border: 1px solid rgba(255,255,255,0.15);
     }
@@ -1586,8 +1586,10 @@ function buildMathHtml(food, country) {
   const _cap1    = 100 - (food.local_cost_floor_pct || 45);
   const bandLow  = food.exposure_low  != null ? Math.min(_cap1, Math.round(food.exposure_low  * mult)) : null;
   const bandHigh = food.exposure_high != null ? Math.min(_cap1, Math.round(food.exposure_high * mult)) : null;
-  const bandLine = (bandLow != null && bandHigh != null)
+  const bandLine = (bandLow != null && bandHigh != null && bandHigh > bandLow)
     ? `<span class="math-line" style="opacity:0.7">  80% CI: ${bandLow}%–${bandHigh}%  (Monte Carlo, 500 runs, ±15% weight noise)</span>`
+    : (bandLow != null && bandLow === bandHigh)
+    ? `<span class="math-line" style="opacity:0.7">  At floor cap: ${bandLow}%  (floor = ${food.local_cost_floor_pct}% local costs)</span>`
     : '';
 
   return `
@@ -1773,7 +1775,9 @@ function renderCard(food, country) {
             <span class="exposure-info-btn" title="The percentage of the total shelf price directly derived from fuel, gas, and fertilizer inputs passing through the Strait of Hormuz.">i</span>
           </div>
           ${food.exposure_low != null && food.exposure_high != null && food.exposure_high > food.exposure_low
-            ? `<div class="exposure-band">${Math.round(food.exposure_low * country.impact_multiplier)}–${Math.round(food.exposure_high * country.impact_multiplier)}%</div>`
+            ? `<div class="exposure-band" title="80% model confidence interval">${Math.round(food.exposure_low * country.impact_multiplier)}–${Math.round(food.exposure_high * country.impact_multiplier)}%</div>`
+            : food.exposure_low != null && food.exposure_low === food.exposure_high
+            ? `<div class="exposure-band" title="At local cost floor — model variance absorbed by floor cap">≈${Math.round(food.exposure_low * country.impact_multiplier)}%</div>`
             : ''}
         </div>
       </div>
@@ -1979,7 +1983,7 @@ function openFood(id) {
           <div class="modal-exposure-big severity-${sev}" style="color:${barColors[sev]}">${adjPct}%${scarcityFlag}</div>
           <div class="modal-exposure-label">
             Hormuz Exposure Index
-            <button class="exposure-info-btn" id="exposure-info-btn" aria-label="More information">i</button>
+            <button class="exposure-info-btn" id="exposure-info-btn" aria-label="More information" onclick="toggleTooltip(event)">i</button>
             <div class="tooltip-popover" id="exposure-tooltip">
               The percentage of the total shelf price directly derived from fuel, gas, and fertilizer inputs 
               passing through the Strait of Hormuz.
