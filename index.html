@@ -173,6 +173,121 @@
     .math-box .math-line { display: block; }
     .math-box .math-result { color: var(--dark-green); font-weight: bold; }
 
+    /* ─── Crisis Pulse Graph ────────────────────────────────────────────── */
+    .pulse-section {
+      padding: 2.5rem 1.5rem 1.5rem;
+      max-width: 900px;
+      margin: 0 auto;
+      background: var(--cream-dark);
+      border-radius: var(--radius);
+      margin-top: 2rem;
+      border: 1px solid var(--border);
+    }
+    .pulse-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1.5rem;
+      gap: 1rem;
+    }
+    .pulse-title-group h2 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--dark-green);
+    }
+    .pulse-sub {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 0.2rem;
+    }
+    .pulse-graph-container {
+      position: relative;
+      height: 200px;
+      width: 100%;
+      margin-top: 1rem;
+    }
+    .pulse-svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+      overflow: visible;
+    }
+    .pulse-line {
+      fill: none;
+      stroke: var(--dark-green);
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .pulse-area {
+      fill: rgba(44, 62, 45, 0.08);
+      stroke: none;
+    }
+    .pulse-marker {
+      stroke: var(--extreme);
+      stroke-width: 1.5;
+      stroke-dasharray: 4 3;
+    }
+    .pulse-marker-label {
+      font-size: 0.65rem;
+      fill: var(--extreme);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .pulse-axis-label {
+      font-size: 0.65rem;
+      fill: var(--muted-light);
+    }
+    .pulse-point {
+      fill: var(--dark-green);
+      stroke: var(--cream-dark);
+      stroke-width: 2;
+    }
+    .pulse-point:hover {
+      r: 6;
+      cursor: help;
+    }
+    .pulse-share-btn {
+      font-size: 0.75rem;
+      padding: 0.4rem 0.8rem;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      color: var(--dark-green);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.15s;
+    }
+    .pulse-share-btn:hover {
+      background: var(--dark-green);
+      color: var(--white);
+      border-color: var(--dark-green);
+    }
+
+    /* ─── Header Utility Bar ────────────────────────────────────────────── */
+    .header-utility {
+      display: flex;
+      gap: 1.25rem;
+      margin-top: 1.5rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid rgba(255,255,255,0.12);
+    }
+    .utility-link {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--cream);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: opacity 0.15s;
+    }
+    .utility-link:hover { opacity: 0.8; }
+    .utility-link span { opacity: 0.6; }
+
     .header-headline h1 {
       font-family: var(--serif);
       font-size: clamp(1.4rem, 4vw, 2.1rem);
@@ -982,6 +1097,11 @@
       ⚠️ = limited local data · ⚠️⚠️ = extrapolated only. All figures are estimates — not sourced retail prices.
     </span>
   </div>
+
+  <div class="header-utility">
+    <a href="quiz.html" class="utility-link"><span>🛒</span> Score your basket</a>
+    <a href="methodology.html" class="utility-link"><span>📄</span> How it's calculated</a>
+  </div>
 </header>
 
 <!-- Search & Filters -->
@@ -1051,6 +1171,22 @@
   </div>
 </div>
 
+<!-- #7 Crisis Pulse (Timeline) -->
+<section class="pulse-section" id="pulse-section" style="display:none">
+  <div class="pulse-header">
+    <div class="pulse-title-group">
+      <h2>Crisis Pulse</h2>
+      <p class="pulse-sub">Global average food exposure since Feb 28, 2026</p>
+    </div>
+    <button class="pulse-share-btn" id="pulse-share-btn">
+      Share Timeline ▾
+    </button>
+  </div>
+  <div class="pulse-graph-container" id="pulse-graph">
+    <!-- SVG rendered by JS -->
+  </div>
+</section>
+
 <!-- #5 Country exposure heat map -->
 <section class="map-section" aria-labelledby="map-heading">
   <h2 id="map-heading">Hormuz exposure by country</h2>
@@ -1105,10 +1241,6 @@
         <a href="https://fred.stlouisfed.org/" target="_blank" rel="noopener">FRED (St. Louis Fed)</a>
       </p>
       <p style="margin-top:0.75rem">
-        <a href="quiz.html">Score your basket →</a> ·
-        <a href="methodology.html">How it's calculated →</a>
-      </p>
-      <p style="margin-top:0.5rem">
         <a href="https://prismaticlabs.ai" target="_blank" rel="noopener">Built by Prismatic Labs</a> ·
         <a href="https://github.com/prismatic-labs/tare" target="_blank" rel="noopener">Open source on GitHub</a>
       </p>
@@ -1858,6 +1990,69 @@ function populateCountrySelector() {
   });
 }
 
+/* ─── #7 Crisis Pulse (Timeline) ───────────────────────────────────────── */
+function renderPulse() {
+  const container = document.getElementById('pulse-graph');
+  const section = document.getElementById('pulse-section');
+  if (!container || !state.data) return;
+
+  const snapshotCount = Object.values(historyData)[0]?.length || 0;
+  if (snapshotCount < 2) return;
+
+  const globalAverages = [];
+  for (let i = 0; i < snapshotCount; i++) {
+    let sum = 0, count = 0;
+    for (const foodId in historyData) {
+      const val = historyData[foodId][i];
+      if (val != null) { sum += val; count++; }
+    }
+    globalAverages.push(count > 0 ? sum / count : 0);
+  }
+
+  section.style.display = 'block';
+  const W = container.clientWidth;
+  const H = 160;
+  const PAD_L = 40, PAD_R = 20, PAD_T = 20, PAD_B = 30;
+
+  const minAvg = Math.min(...globalAverages);
+  const maxAvg = Math.max(...globalAverages, 40);
+  const range = maxAvg - minAvg || 1;
+
+  const getX = (i) => PAD_L + (i / (snapshotCount - 1)) * (W - PAD_L - PAD_R);
+  const getY = (v) => H - PAD_B - ((v - minAvg) / range) * (H - PAD_B - PAD_T);
+
+  const points = globalAverages.map((v, i) => `${getX(i).toFixed(1)},${getY(v).toFixed(1)}`).join(' ');
+  const markerX = getX(0);
+
+  container.innerHTML = `
+    <svg class="pulse-svg" viewBox="0 0 ${W} ${H}">
+      <path class="pulse-area" d="M ${getX(0)} ${H - PAD_B} L ${points} L ${getX(snapshotCount - 1)} ${H - PAD_B} Z" />
+      <line class="pulse-marker" x1="${markerX}" y1="${PAD_T}" x2="${markerX}" y2="${H - PAD_B}" />
+      <text class="pulse-marker-label" x="${markerX + 5}" y="${PAD_T + 12}">Hormuz disruption starts</text>
+      <polyline class="pulse-line" points="${points}" />
+      ${globalAverages.map((v, i) => `
+        <circle class="pulse-point" cx="${getX(i)}" cy="${getY(v)}" r="4">
+          <title>${v.toFixed(1)}% average exposure</title>
+        </circle>
+      `).join('')}
+      <text class="pulse-axis-label" x="${PAD_L - 5}" y="${getY(minAvg) + 4}" text-anchor="end">${minAvg.toFixed(0)}%</text>
+      <text class="pulse-axis-label" x="${PAD_L - 5}" y="${getY(maxAvg) + 4}" text-anchor="end">${maxAvg.toFixed(0)}%</text>
+      <text class="pulse-axis-label" x="${getX(0)}" y="${H - 10}" text-anchor="middle">Feb 28</text>
+      <text class="pulse-axis-label" x="${getX(snapshotCount - 1)}" y="${H - 10}" text-anchor="middle">Today</text>
+    </svg>
+  `;
+}
+
+function sharePulse() {
+  const url = window.location.origin + window.location.pathname;
+  const text = `The Strait of Hormuz crisis is moving fast. See the live timeline of global food exposure: ${url} #tare #supplychain`;
+  if (navigator.share) {
+    navigator.share({ title: 'Tare Crisis Pulse', text, url });
+  } else {
+    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
+  }
+}
+
 /* ─── #5 World heat map ──────────────────────────────────────────────────── */
 // Equirectangular positions for each country (as % of SVG width/height).
 // Formula: x = (lon + 180) / 360 * 100
@@ -1990,6 +2185,7 @@ async function init() {
   // Render
   renderGrid();
   renderMap();
+  renderPulse();
 
   // Check URL hash for deep link
   if (window.location.hash) {
@@ -2000,6 +2196,9 @@ async function init() {
   }
 
   /* ── Event listeners ── */
+
+  // Pulse share
+  document.getElementById('pulse-share-btn').addEventListener('click', sharePulse);
 
   // Country selector
   document.getElementById('country-select').addEventListener('change', e => {
