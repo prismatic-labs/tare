@@ -1,27 +1,30 @@
 {
-  "last_updated": "2026-04-02",
+  "last_updated": "2026-04-03",
   "crisis_start": "2026-02-28",
   "sources": {
     "oil_brent_usd": 112,
-    "oil_brent_pre_crisis_usd": 72,
+    "oil_brent_pre_crisis_usd": 72.0,
     "natural_gas_eur_mwh": 58,
-    "natural_gas_pre_crisis_eur_mwh": 34,
+    "natural_gas_pre_crisis_eur_mwh": 34.0,
     "urea_usd_ton": 480,
-    "urea_pre_crisis_usd_ton": 320,
+    "urea_pre_crisis_usd_ton": 320.0,
     "diesel_eur_litre": 1.95,
     "diesel_pre_crisis_eur_litre": 1.42,
     "methanol_usd_ton": 540,
-    "methanol_pre_crisis_usd_ton": 400,
+    "methanol_pre_crisis_usd_ton": 400.0,
     "exchange_rates": {
       "EUR": 1.0,
-      "GBP": 0.84,
-      "JPY": 162,
-      "PHP": 61,
-      "USD": 1.08,
-      "INR": 90,
-      "BRL": 5.5,
-      "AUD": 1.66,
+      "GBP": 0.87253,
+      "JPY": 183.94,
+      "PHP": 69.86,
+      "USD": 1.1525,
+      "INR": 107.3,
+      "BRL": 5.972,
+      "AUD": 1.6771,
       "LKR": 331
+    },
+    "tipping_points": {
+      "urea_scarcity_risk": false
     }
   },
   "countries": [
@@ -142,7 +145,7 @@
       "name": "Chicken",
       "category": "meat",
       "emoji": "🍗",
-      "crisis_exposure_pct": 73,
+      "crisis_exposure_pct": 60,
       "severity": "extreme",
       "base_price_eur_kg": 5.4,
       "current_price_eur_kg": 7.8,
@@ -159,36 +162,38 @@
           "input": "Diesel fuel",
           "description": "Powers tractors, feed trucks, slaughterhouse transport",
           "category": "fuel",
-          "price_change_pct": 52,
+          "price_change_pct": 53,
           "weight": 0.2353
         },
         {
           "input": "Natural gas",
           "description": "Heats poultry houses and processing plants",
           "category": "gas",
-          "price_change_pct": 70,
+          "price_change_pct": 71,
           "weight": 0.2353
         },
         {
           "input": "Plastic packaging",
           "description": "Petroleum-derived trays, wrapping, and labels",
           "category": "petrochemical",
-          "price_change_pct": 22,
+          "price_change_pct": 24,
           "weight": 0.0588
         }
       ],
       "explanation": "Chickens eat ~2kg of grain per 1kg of meat produced. That grain requires fertilizer (30% Hormuz-sourced) and diesel to grow and transport. Every link in the chain amplifies the crisis.",
       "pass_through_30d": 0.5,
       "local_cost_floor_pct": 40,
-      "dietary": []
+      "dietary": [],
+      "exposure_low": 60,
+      "exposure_high": 60
     },
     {
       "id": "bread",
       "name": "Bread",
       "category": "grains",
       "emoji": "🍞",
-      "crisis_exposure_pct": 32,
-      "severity": "moderate",
+      "crisis_exposure_pct": 42,
+      "severity": "high",
       "base_price_eur_kg": 2.1,
       "current_price_eur_kg": 2.65,
       "projected_price_eur_kg": 3.1,
@@ -197,21 +202,21 @@
           "input": "Wheat farming",
           "description": "Fertilizer and diesel for large-scale grain cultivation",
           "category": "fertilizer",
-          "price_change_pct": 45,
+          "price_change_pct": 50,
           "weight": 0.4
         },
         {
           "input": "Industrial baking",
           "description": "High energy demand for continuous-run gas ovens",
           "category": "gas",
-          "price_change_pct": 70,
+          "price_change_pct": 71,
           "weight": 0.5333
         },
         {
           "input": "Plastic packaging",
           "description": "Polyethylene bags are petroleum-derived",
           "category": "petrochemical",
-          "price_change_pct": 22,
+          "price_change_pct": 24,
           "weight": 0.0667
         }
       ],
@@ -221,14 +226,16 @@
       "dietary": [
         "v",
         "vg"
-      ]
+      ],
+      "exposure_low": 41,
+      "exposure_high": 42
     },
     {
       "id": "tomatoes",
       "name": "Tomatoes",
       "category": "produce",
       "emoji": "🍅",
-      "crisis_exposure_pct": 45,
+      "crisis_exposure_pct": 44,
       "severity": "high",
       "base_price_eur_kg": 3.2,
       "current_price_eur_kg": 4.5,
@@ -238,7 +245,7 @@
           "input": "Greenhouse heating",
           "description": "Natural gas maintains growing temperatures in winter",
           "category": "gas",
-          "price_change_pct": 70,
+          "price_change_pct": 71,
           "weight": 0.2381
         },
         {
@@ -252,7 +259,7 @@
           "input": "Refrigerated transport",
           "description": "Diesel-powered cold-chain logistics",
           "category": "fuel",
-          "price_change_pct": 52,
+          "price_change_pct": 53,
           "weight": 0.6349
         }
       ],
@@ -262,14 +269,16 @@
       "dietary": [
         "v",
         "vg"
-      ]
+      ],
+      "exposure_low": 44,
+      "exposure_high": 45
     },
     {
       "id": "salmon",
       "name": "Salmon",
       "category": "seafood",
       "emoji": "🍣",
-      "crisis_exposure_pct": 65,
+      "crisis_exposure_pct": 68,
       "severity": "extreme",
       "base_price_eur_kg": 18.5,
       "current_price_eur_kg": 26.2,
@@ -286,35 +295,37 @@
           "input": "Global shipping",
           "description": "Air and sea freight for freshness-critical supply chains",
           "category": "fuel",
-          "price_change_pct": 60,
+          "price_change_pct": 53,
           "weight": 0.9333
         },
         {
           "input": "Aquaculture energy",
           "description": "Pumps, oxygenation, and cold storage at fish farms",
           "category": "gas",
-          "price_change_pct": 70,
+          "price_change_pct": 71,
           "weight": 0.04
         },
         {
           "input": "Plastic packaging",
           "description": "Vacuum trays and modified atmosphere packaging",
           "category": "petrochemical",
-          "price_change_pct": 22,
+          "price_change_pct": 24,
           "weight": 0.0134
         }
       ],
       "explanation": "Farmed salmon is one of the most energy-intensive proteins. Feed production, cold storage, and long-haul freight combine to create exceptional Hormuz exposure.",
       "pass_through_30d": 0.8,
       "local_cost_floor_pct": 30,
-      "dietary": []
+      "dietary": [],
+      "exposure_low": 68,
+      "exposure_high": 68
     },
     {
       "id": "rice",
       "name": "Rice",
       "category": "grains",
       "emoji": "🍚",
-      "crisis_exposure_pct": 28,
+      "crisis_exposure_pct": 27,
       "severity": "moderate",
       "base_price_eur_kg": 1.8,
       "current_price_eur_kg": 2.2,
@@ -331,14 +342,14 @@
           "input": "Diesel for irrigation",
           "description": "Pumped irrigation dominates rice paddy water management",
           "category": "fuel",
-          "price_change_pct": 52,
+          "price_change_pct": 53,
           "weight": 0.2857
         },
         {
           "input": "Maritime shipping",
           "description": "Most global rice trade moves by sea through Hormuz-adjacent routes",
           "category": "fuel",
-          "price_change_pct": 60,
+          "price_change_pct": 53,
           "weight": 0.2857
         }
       ],
@@ -348,14 +359,16 @@
       "dietary": [
         "v",
         "vg"
-      ]
+      ],
+      "exposure_low": 27,
+      "exposure_high": 27
     },
     {
       "id": "pasta",
       "name": "Pasta",
       "category": "grains",
       "emoji": "🍝",
-      "crisis_exposure_pct": 35,
+      "crisis_exposure_pct": 36,
       "severity": "moderate",
       "base_price_eur_kg": 1.6,
       "current_price_eur_kg": 2.1,
@@ -372,14 +385,14 @@
           "input": "Pasta extrusion",
           "description": "Energy-intensive industrial drying and pressing",
           "category": "gas",
-          "price_change_pct": 70,
+          "price_change_pct": 71,
           "weight": 0.4444
         },
         {
           "input": "Diesel transport",
           "description": "Bulk grain and finished product haulage",
           "category": "fuel",
-          "price_change_pct": 52,
+          "price_change_pct": 53,
           "weight": 0.2223
         }
       ],
@@ -389,14 +402,16 @@
       "dietary": [
         "v",
         "vg"
-      ]
+      ],
+      "exposure_low": 36,
+      "exposure_high": 37
     },
     {
       "id": "flour",
       "name": "Flour",
       "category": "grains",
       "emoji": "🌾",
-      "crisis_exposure_pct": 30,
+      "crisis_exposure_pct": 31,
       "severity": "moderate",
       "base_price_eur_kg": 0.9,
       "current_price_eur_kg": 1.15,
@@ -413,14 +428,14 @@
           "input": "Milling energy",
           "description": "Roller mills and conditioning use significant electricity and gas",
           "category": "gas",
-          "price_change_pct": 70,
+          "price_change_pct": 71,
           "weight": 0.4444
         },
         {
           "input": "Diesel haulage",
           "description": "Grain to mill and flour to bakeries and retailers",
           "category": "fuel",
-          "price_change_pct": 52,
+          "price_change_pct": 53,
           "weight": 0.2223
         }
       ],
@@ -430,7 +445,9 @@
       "dietary": [
         "v",
         "vg"
-      ]
+      ],
+      "exposure_low": 31,
+      "exposure_high": 32
     },
     {
       "id": "oats",
@@ -454,7 +471,7 @@
           "input": "Processing energy",
           "description": "Rolling and flaking require moderate energy",
           "category": "gas",
-          "price_change_pct": 70,
+          "price_change_pct": 71,
           "weight": 0.5714
         }
       ],
@@ -464,14 +481,16 @@
       "dietary": [
         "v",
         "vg"
-      ]
+      ],
+      "exposure_low": 16,
+      "exposure_high": 17
     },
     {
       "id": "cornflakes",
       "name": "Cornflakes",
       "category": "grains",
       "emoji": "🌽",
-      "crisis_exposure_pct": 28,
+      "crisis_exposure_pct": 35,
       "severity": "moderate",
       "base_price_eur_kg": 3.2,
       "current_price_eur_kg": 3.95,
@@ -488,14 +507,14 @@
           "input": "Cereal manufacturing",
           "description": "Extrusion, toasting, and coating require sustained gas heat",
           "category": "gas",
-          "price_change_pct": 70,
+          "price_change_pct": 71,
           "weight": 0.5333
         },
         {
           "input": "Plastic packaging",
           "description": "Lined cardboard boxes and inner bags",
           "category": "petrochemical",
-          "price_change_pct": 22,
+          "price_change_pct": 24,
           "weight": 0.0667
         }
       ],
@@ -505,7 +524,9 @@
       "dietary": [
         "v",
         "vg"
-      ]
+      ],
+      "exposure_low": 35,
+      "exposure_high": 36
     },
     {
       "id": "couscous",
@@ -529,14 +550,14 @@
           "input": "Steaming and drying",
           "description": "Couscous manufacturing is a steam-intensive process",
           "category": "gas",
-          "price_change_pct": 70,
+          "price_change_pct": 71,
           "weight": 0.4444
         },
         {
           "input": "Mediterranean shipping",
           "description": "Most couscous is produced in North Africa and shipped to Europe",
           "category": "fuel",
-          "price_change_pct": 60,
+          "price_change_pct": 53,
           "weight": 0.2223
         }
       ],
@@ -546,14 +567,16 @@
       "dietary": [
         "v",
         "vg"
-      ]
+      ],
+      "exposure_low": 33,
+      "exposure_high": 33
     },
     {
       "id": "noodles",
       "name": "Instant Noodles",
       "category": "grains",
       "emoji": "🍜",
-      "crisis_exposure_pct": 58,
+      "crisis_exposure_pct": 45,
       "severity": "high",
       "base_price_eur_kg": 3.5,
       "current_price_eur_kg": 5.0,
@@ -563,7 +586,7 @@
           "input": "Wheat and palm oil",
           "description": "Deep-fried noodles use palm oil refined with petrochemical solvents",
           "category": "petrochemical",
-          "price_change_pct": 25,
+          "price_change_pct": 24,
           "weight": 0.0625
         },
         {
@@ -577,14 +600,14 @@
           "input": "Natural gas",
           "description": "Manufacturing and frying requires sustained high heat",
           "category": "gas",
-          "price_change_pct": 70,
+          "price_change_pct": 71,
           "weight": 0.5
         },
         {
           "input": "Packaging",
           "description": "Multi-layer foil/plastic sachets and cups",
           "category": "petrochemical",
-          "price_change_pct": 25,
+          "price_change_pct": 24,
           "weight": 0.0625
         }
       ],
@@ -594,14 +617,16 @@
       "dietary": [
         "v",
         "vg"
-      ]
+      ],
+      "exposure_low": 45,
+      "exposure_high": 45
     },
     {
       "id": "crackers",
       "name": "Crackers",
       "category": "grains",
       "emoji": "🍘",
-      "crisis_exposure_pct": 24,
+      "crisis_exposure_pct": 30,
       "severity": "moderate",
       "base_price_eur_kg": 3.0,
       "current_price_eur_kg": 3.65,
@@ -618,14 +643,14 @@
           "input": "Baking energy",
           "description": "Continuous tunnel ovens run on natural gas",
           "category": "gas",
-          "price_change_pct": 70,
+          "price_change_pct": 71,
           "weight": 0.5333
         },
         {
           "input": "Plastic wrapping",
           "description": "Individual and outer pack wrapping is petroleum-derived",
           "category": "petrochemical",
-          "price_change_pct": 22,
+          "price_change_pct": 24,
           "weight": 0.0667
         }
       ],
@@ -635,15 +660,17 @@
       "dietary": [
         "v",
         "vg"
-      ]
+      ],
+      "exposure_low": 30,
+      "exposure_high": 31
     },
     {
       "id": "beef",
       "name": "Beef",
       "category": "meat",
       "emoji": "🥩",
-      "crisis_exposure_pct": 55,
-      "severity": "high",
+      "crisis_exposure_pct": 60,
+      "severity": "extreme",
       "base_price_eur_kg": 12.0,
       "current_price_eur_kg": 16.5,
       "projected_price_eur_kg": 20.0,
@@ -659,35 +686,37 @@
           "input": "Diesel for farms",
           "description": "Machinery, feed transport, and slaughterhouse logistics",
           "category": "fuel",
-          "price_change_pct": 52,
+          "price_change_pct": 53,
           "weight": 0.2353
         },
         {
           "input": "Natural gas",
           "description": "Processing, cold storage, and refrigerated display",
           "category": "gas",
-          "price_change_pct": 70,
+          "price_change_pct": 71,
           "weight": 0.2353
         },
         {
           "input": "Plastic packaging",
           "description": "Vacuum packs, modified atmosphere trays",
           "category": "petrochemical",
-          "price_change_pct": 22,
+          "price_change_pct": 24,
           "weight": 0.0588
         }
       ],
       "explanation": "Beef has the highest feed conversion ratio of any common protein — 7-8kg of grain per 1kg of meat. Every unit of fertilizer-driven feed price increase is multiplied several times by the time it reaches the supermarket shelf.",
       "pass_through_30d": 0.5,
       "local_cost_floor_pct": 40,
-      "dietary": []
+      "dietary": [],
+      "exposure_low": 60,
+      "exposure_high": 60
     },
     {
       "id": "pork",
       "name": "Pork",
       "category": "meat",
       "emoji": "🥓",
-      "crisis_exposure_pct": 48,
+      "crisis_exposure_pct": 47,
       "severity": "high",
       "base_price_eur_kg": 6.5,
       "current_price_eur_kg": 8.8,
@@ -704,28 +733,30 @@
           "input": "Diesel logistics",
           "description": "Pig farms, abattoirs, and distribution centres",
           "category": "fuel",
-          "price_change_pct": 52,
+          "price_change_pct": 53,
           "weight": 0.25
         },
         {
           "input": "Natural gas",
           "description": "Heating intensive pig barns, scalding tanks in processing",
           "category": "gas",
-          "price_change_pct": 70,
+          "price_change_pct": 71,
           "weight": 0.25
         }
       ],
       "explanation": "Pork's feed conversion is better than beef but still substantial. European industrial pig farms are also large consumers of natural gas for barn climate control, adding another Hormuz channel.",
       "pass_through_30d": 0.5,
       "local_cost_floor_pct": 40,
-      "dietary": []
+      "dietary": [],
+      "exposure_low": 46,
+      "exposure_high": 47
     },
     {
       "id": "lamb",
       "name": "Lamb",
       "category": "meat",
       "emoji": "🍖",
-      "crisis_exposure_pct": 52,
+      "crisis_exposure_pct": 49,
       "severity": "high",
       "base_price_eur_kg": 14.0,
       "current_price_eur_kg": 18.5,
@@ -749,28 +780,30 @@
           "input": "Long-distance shipping",
           "description": "New Zealand and Australian lamb shipped globally",
           "category": "fuel",
-          "price_change_pct": 60,
+          "price_change_pct": 53,
           "weight": 0.1667
         },
         {
           "input": "Cold-chain storage",
           "description": "Long shipping routes require energy-intensive refrigeration",
           "category": "gas",
-          "price_change_pct": 70,
+          "price_change_pct": 71,
           "weight": 0.1667
         }
       ],
       "explanation": "Imported lamb (especially from New Zealand and Australia) is doubly exposed: long-haul refrigerated shipping and Hormuz-linked fertilizer for pasture improvement and supplementary feed.",
       "pass_through_30d": 0.5,
       "local_cost_floor_pct": 40,
-      "dietary": []
+      "dietary": [],
+      "exposure_low": 48,
+      "exposure_high": 49
     },
     {
       "id": "turkey",
       "name": "Turkey",
       "category": "meat",
       "emoji": "🦃",
-      "crisis_exposure_pct": 45,
+      "crisis_exposure_pct": 44,
       "severity": "high",
       "base_price_eur_kg": 7.0,
       "current_price_eur_kg": 9.5,
@@ -787,29 +820,31 @@
           "input": "Natural gas",
           "description": "Climate control for large turkey sheds",
           "category": "gas",
-          "price_change_pct": 70,
+          "price_change_pct": 71,
           "weight": 0.25
         },
         {
           "input": "Diesel transport",
           "description": "Hatchery-to-farm and farm-to-processor logistics",
           "category": "fuel",
-          "price_change_pct": 52,
+          "price_change_pct": 53,
           "weight": 0.25
         }
       ],
       "explanation": "Turkey shares most of chicken's supply chain vulnerabilities — intensive grain feeding and gas-heated barns — but with slightly lower turnover rates, meaning feed costs accumulate longer before slaughter.",
       "pass_through_30d": 0.5,
       "local_cost_floor_pct": 40,
-      "dietary": []
+      "dietary": [],
+      "exposure_low": 43,
+      "exposure_high": 44
     },
     {
       "id": "sausages",
       "name": "Sausages",
       "category": "meat",
       "emoji": "🌭",
-      "crisis_exposure_pct": 58,
-      "severity": "high",
+      "crisis_exposure_pct": 60,
+      "severity": "extreme",
       "base_price_eur_kg": 5.5,
       "current_price_eur_kg": 7.8,
       "projected_price_eur_kg": 9.5,
@@ -825,28 +860,30 @@
           "input": "Plastic casings",
           "description": "Collagen and plastic sausage casings are petroleum-derived",
           "category": "petrochemical",
-          "price_change_pct": 25,
+          "price_change_pct": 24,
           "weight": 0.0588
         },
         {
           "input": "Natural gas processing",
           "description": "Smoking, cooking, and sterilisation in industrial plants",
           "category": "gas",
-          "price_change_pct": 70,
+          "price_change_pct": 71,
           "weight": 0.2353
         },
         {
           "input": "Refrigerated logistics",
           "description": "Diesel cold-chain from factory to shelf",
           "category": "fuel",
-          "price_change_pct": 52,
+          "price_change_pct": 53,
           "weight": 0.2353
         }
       ],
       "explanation": "Processed meat products like sausages stack multiple Hormuz exposures: the underlying meat cost, petroleum-derived casings, gas-intensive cooking, and refrigerated logistics all move together.",
       "pass_through_30d": 0.5,
       "local_cost_floor_pct": 40,
-      "dietary": []
+      "dietary": [],
+      "exposure_low": 60,
+      "exposure_high": 60
     },
     {
       "id": "milk",
@@ -870,14 +907,14 @@
           "input": "Pasteurisation energy",
           "description": "Large-scale pasteurisation requires continuous thermal energy",
           "category": "gas",
-          "price_change_pct": 70,
+          "price_change_pct": 71,
           "weight": 0.3333
         },
         {
           "input": "Refrigerated distribution",
           "description": "Milk requires unbroken cold-chain from farm to shop",
           "category": "fuel",
-          "price_change_pct": 52,
+          "price_change_pct": 53,
           "weight": 0.2778
         }
       ],
@@ -886,14 +923,16 @@
       "local_cost_floor_pct": 45,
       "dietary": [
         "v"
-      ]
+      ],
+      "exposure_low": 35,
+      "exposure_high": 36
     },
     {
       "id": "cheese",
       "name": "Cheese",
       "category": "dairy",
       "emoji": "🧀",
-      "crisis_exposure_pct": 42,
+      "crisis_exposure_pct": 49,
       "severity": "high",
       "base_price_eur_kg": 8.5,
       "current_price_eur_kg": 12.0,
@@ -910,14 +949,14 @@
           "input": "Maturation energy",
           "description": "Temperature-controlled ageing caves or cellars use constant energy",
           "category": "gas",
-          "price_change_pct": 70,
+          "price_change_pct": 71,
           "weight": 0.411
         },
         {
           "input": "Plastic packaging",
           "description": "Wax, vacuum bags, and retail wrapping",
           "category": "petrochemical",
-          "price_change_pct": 22,
+          "price_change_pct": 24,
           "weight": 0.1095
         }
       ],
@@ -926,7 +965,9 @@
       "local_cost_floor_pct": 45,
       "dietary": [
         "v"
-      ]
+      ],
+      "exposure_low": 49,
+      "exposure_high": 50
     },
     {
       "id": "butter",
@@ -950,14 +991,14 @@
           "input": "Churning and processing",
           "description": "Industrial separators and churns are energy-intensive",
           "category": "gas",
-          "price_change_pct": 70,
+          "price_change_pct": 71,
           "weight": 0.3333
         },
         {
           "input": "Cold-chain transport",
           "description": "Butter requires consistent refrigeration throughout distribution",
           "category": "fuel",
-          "price_change_pct": 52,
+          "price_change_pct": 53,
           "weight": 0.2778
         }
       ],
@@ -966,15 +1007,17 @@
       "local_cost_floor_pct": 40,
       "dietary": [
         "v"
-      ]
+      ],
+      "exposure_low": 48,
+      "exposure_high": 49
     },
     {
       "id": "yoghurt",
       "name": "Yoghurt",
       "category": "dairy",
       "emoji": "🫙",
-      "crisis_exposure_pct": 38,
-      "severity": "moderate",
+      "crisis_exposure_pct": 45,
+      "severity": "high",
       "base_price_eur_kg": 1.8,
       "current_price_eur_kg": 2.35,
       "projected_price_eur_kg": 2.85,
@@ -990,14 +1033,14 @@
           "input": "Fermentation and pasteurisation",
           "description": "Requires precise temperature control using gas or electricity",
           "category": "gas",
-          "price_change_pct": 70,
+          "price_change_pct": 71,
           "weight": 0.411
         },
         {
           "input": "Plastic pots",
           "description": "Polypropylene pots and foil lids are petroleum-derived",
           "category": "petrochemical",
-          "price_change_pct": 22,
+          "price_change_pct": 24,
           "weight": 0.1095
         }
       ],
@@ -1006,7 +1049,9 @@
       "local_cost_floor_pct": 45,
       "dietary": [
         "v"
-      ]
+      ],
+      "exposure_low": 44,
+      "exposure_high": 45
     },
     {
       "id": "eggs",
@@ -1030,14 +1075,14 @@
           "input": "Heating laying sheds",
           "description": "Temperature control is essential for year-round production",
           "category": "gas",
-          "price_change_pct": 70,
+          "price_change_pct": 71,
           "weight": 0.3333
         },
         {
           "input": "Diesel logistics",
           "description": "Daily collection rounds to retailers and egg processors",
           "category": "fuel",
-          "price_change_pct": 52,
+          "price_change_pct": 53,
           "weight": 0.2778
         }
       ],
@@ -1046,14 +1091,16 @@
       "local_cost_floor_pct": 35,
       "dietary": [
         "v"
-      ]
+      ],
+      "exposure_low": 55,
+      "exposure_high": 56
     },
     {
       "id": "cream",
       "name": "Cream",
       "category": "dairy",
       "emoji": "🍦",
-      "crisis_exposure_pct": 40,
+      "crisis_exposure_pct": 47,
       "severity": "high",
       "base_price_eur_kg": 4.0,
       "current_price_eur_kg": 5.5,
@@ -1070,14 +1117,14 @@
           "input": "Separation and UHT",
           "description": "Centrifuge separation and UHT treatment are energy-intensive",
           "category": "gas",
-          "price_change_pct": 70,
+          "price_change_pct": 71,
           "weight": 0.411
         },
         {
           "input": "Cold-chain packaging",
           "description": "Tetra Pak-style packaging is petroleum-derived laminate",
           "category": "petrochemical",
-          "price_change_pct": 22,
+          "price_change_pct": 24,
           "weight": 0.1095
         }
       ],
@@ -1086,7 +1133,9 @@
       "local_cost_floor_pct": 45,
       "dietary": [
         "v"
-      ]
+      ],
+      "exposure_low": 46,
+      "exposure_high": 48
     },
     {
       "id": "potatoes",
@@ -1110,14 +1159,14 @@
           "input": "Diesel harvesting",
           "description": "Mechanical harvesting is highly fuel-intensive",
           "category": "fuel",
-          "price_change_pct": 52,
+          "price_change_pct": 53,
           "weight": 0.6349
         },
         {
           "input": "Refrigerated storage",
           "description": "Long-term cold storage extends availability but adds energy cost",
           "category": "gas",
-          "price_change_pct": 70,
+          "price_change_pct": 71,
           "weight": 0.2381
         }
       ],
@@ -1127,14 +1176,16 @@
       "dietary": [
         "v",
         "vg"
-      ]
+      ],
+      "exposure_low": 27,
+      "exposure_high": 28
     },
     {
       "id": "onions",
       "name": "Onions",
       "category": "produce",
       "emoji": "🧅",
-      "crisis_exposure_pct": 22,
+      "crisis_exposure_pct": 23,
       "severity": "moderate",
       "base_price_eur_kg": 0.8,
       "current_price_eur_kg": 0.98,
@@ -1151,7 +1202,7 @@
           "input": "Diesel machinery",
           "description": "Planting and harvesting machinery runs on diesel",
           "category": "fuel",
-          "price_change_pct": 52,
+          "price_change_pct": 53,
           "weight": 0.8333
         }
       ],
@@ -1161,14 +1212,16 @@
       "dietary": [
         "v",
         "vg"
-      ]
+      ],
+      "exposure_low": 23,
+      "exposure_high": 23
     },
     {
       "id": "bananas",
       "name": "Bananas",
       "category": "produce",
       "emoji": "🍌",
-      "crisis_exposure_pct": 32,
+      "crisis_exposure_pct": 30,
       "severity": "moderate",
       "base_price_eur_kg": 1.4,
       "current_price_eur_kg": 1.8,
@@ -1185,14 +1238,14 @@
           "input": "Refrigerated shipping",
           "description": "Banana transport requires temperature-controlled container ships",
           "category": "fuel",
-          "price_change_pct": 60,
+          "price_change_pct": 53,
           "weight": 0.6349
         },
         {
           "input": "Ripening facilities",
           "description": "Ethylene-based ripening rooms use energy for climate control",
           "category": "gas",
-          "price_change_pct": 70,
+          "price_change_pct": 71,
           "weight": 0.2381
         }
       ],
@@ -1202,14 +1255,16 @@
       "dietary": [
         "v",
         "vg"
-      ]
+      ],
+      "exposure_low": 30,
+      "exposure_high": 31
     },
     {
       "id": "apples",
       "name": "Apples",
       "category": "produce",
       "emoji": "🍎",
-      "crisis_exposure_pct": 18,
+      "crisis_exposure_pct": 19,
       "severity": "low",
       "base_price_eur_kg": 1.8,
       "current_price_eur_kg": 2.08,
@@ -1226,7 +1281,7 @@
           "input": "Cold storage",
           "description": "Year-round availability requires controlled atmosphere storage",
           "category": "gas",
-          "price_change_pct": 70,
+          "price_change_pct": 71,
           "weight": 0.6522
         }
       ],
@@ -1236,7 +1291,9 @@
       "dietary": [
         "v",
         "vg"
-      ]
+      ],
+      "exposure_low": 19,
+      "exposure_high": 19
     },
     {
       "id": "oranges",
@@ -1260,7 +1317,7 @@
           "input": "Regional transport",
           "description": "Mediterranean citrus production keeps logistics distances short",
           "category": "fuel",
-          "price_change_pct": 52,
+          "price_change_pct": 53,
           "weight": 0.8333
         }
       ],
@@ -1270,7 +1327,9 @@
       "dietary": [
         "v",
         "vg"
-      ]
+      ],
+      "exposure_low": 16,
+      "exposure_high": 16
     },
     {
       "id": "lettuce",
@@ -1294,7 +1353,7 @@
           "input": "Local distribution",
           "description": "Short shelf life means local supply chains — minimal shipping",
           "category": "fuel",
-          "price_change_pct": 52,
+          "price_change_pct": 53,
           "weight": 0.8333
         }
       ],
@@ -1304,7 +1363,9 @@
       "dietary": [
         "v",
         "vg"
-      ]
+      ],
+      "exposure_low": 12,
+      "exposure_high": 12
     },
     {
       "id": "peppers",
@@ -1321,7 +1382,7 @@
           "input": "Greenhouse heating",
           "description": "Peppers are grown almost exclusively in heated glasshouses",
           "category": "gas",
-          "price_change_pct": 70,
+          "price_change_pct": 71,
           "weight": 0.2381
         },
         {
@@ -1335,7 +1396,7 @@
           "input": "Refrigerated logistics",
           "description": "Fragile produce requires unbroken cold chain",
           "category": "fuel",
-          "price_change_pct": 52,
+          "price_change_pct": 53,
           "weight": 0.6349
         }
       ],
@@ -1345,7 +1406,9 @@
       "dietary": [
         "v",
         "vg"
-      ]
+      ],
+      "exposure_low": 41,
+      "exposure_high": 42
     },
     {
       "id": "carrots",
@@ -1369,7 +1432,7 @@
           "input": "Diesel harvesting",
           "description": "Root vegetable harvesting is mechanised",
           "category": "fuel",
-          "price_change_pct": 52,
+          "price_change_pct": 53,
           "weight": 0.8333
         }
       ],
@@ -1379,14 +1442,16 @@
       "dietary": [
         "v",
         "vg"
-      ]
+      ],
+      "exposure_low": 14,
+      "exposure_high": 14
     },
     {
       "id": "avocado",
       "name": "Avocado",
       "category": "produce",
       "emoji": "🥑",
-      "crisis_exposure_pct": 48,
+      "crisis_exposure_pct": 45,
       "severity": "high",
       "base_price_eur_kg": 2.5,
       "current_price_eur_kg": 3.6,
@@ -1396,7 +1461,7 @@
           "input": "Long-haul refrigerated freight",
           "description": "Avocados are flown or shipped from Mexico, Peru, and Kenya",
           "category": "fuel",
-          "price_change_pct": 60,
+          "price_change_pct": 53,
           "weight": 0.6349
         },
         {
@@ -1410,7 +1475,7 @@
           "input": "Ripening centre energy",
           "description": "Ethylene-controlled ripening requires precise temperature management",
           "category": "gas",
-          "price_change_pct": 70,
+          "price_change_pct": 71,
           "weight": 0.2381
         }
       ],
@@ -1420,14 +1485,16 @@
       "dietary": [
         "v",
         "vg"
-      ]
+      ],
+      "exposure_low": 45,
+      "exposure_high": 46
     },
     {
       "id": "garlic",
       "name": "Garlic",
       "category": "produce",
       "emoji": "🧄",
-      "crisis_exposure_pct": 16,
+      "crisis_exposure_pct": 15,
       "severity": "low",
       "base_price_eur_kg": 4.0,
       "current_price_eur_kg": 4.65,
@@ -1444,7 +1511,7 @@
           "input": "Import shipping",
           "description": "Much of EU garlic is imported from China and Spain",
           "category": "fuel",
-          "price_change_pct": 60,
+          "price_change_pct": 53,
           "weight": 0.8333
         }
       ],
@@ -1454,15 +1521,17 @@
       "dietary": [
         "v",
         "vg"
-      ]
+      ],
+      "exposure_low": 15,
+      "exposure_high": 15
     },
     {
       "id": "cucumber",
       "name": "Cucumber",
       "category": "produce",
       "emoji": "🥒",
-      "crisis_exposure_pct": 38,
-      "severity": "moderate",
+      "crisis_exposure_pct": 40,
+      "severity": "high",
       "base_price_eur_kg": 1.2,
       "current_price_eur_kg": 1.55,
       "projected_price_eur_kg": 1.9,
@@ -1471,7 +1540,7 @@
           "input": "Greenhouse gas heating",
           "description": "Cucumbers are grown in heated glasshouses year-round",
           "category": "gas",
-          "price_change_pct": 70,
+          "price_change_pct": 71,
           "weight": 0.6522
         },
         {
@@ -1488,14 +1557,16 @@
       "dietary": [
         "v",
         "vg"
-      ]
+      ],
+      "exposure_low": 40,
+      "exposure_high": 41
     },
     {
       "id": "shrimp",
       "name": "Shrimp",
       "category": "seafood",
       "emoji": "🦐",
-      "crisis_exposure_pct": 68,
+      "crisis_exposure_pct": 65,
       "severity": "extreme",
       "base_price_eur_kg": 15.0,
       "current_price_eur_kg": 22.0,
@@ -1512,35 +1583,37 @@
           "input": "Air freight",
           "description": "Fresh shrimp is largely air-freighted from Asia, highly fuel-sensitive",
           "category": "fuel",
-          "price_change_pct": 60,
+          "price_change_pct": 53,
           "weight": 0.9333
         },
         {
           "input": "Freezing and processing",
           "description": "Processing facilities in Thailand and Vietnam run on gas",
           "category": "gas",
-          "price_change_pct": 70,
+          "price_change_pct": 71,
           "weight": 0.04
         },
         {
           "input": "Packaging",
           "description": "Modified atmosphere bags and IQF plastic trays",
           "category": "petrochemical",
-          "price_change_pct": 25,
+          "price_change_pct": 24,
           "weight": 0.0134
         }
       ],
       "explanation": "Shrimp is the highest Hormuz-exposed seafood on this list. It combines long-distance air freight from Southeast Asia with energy-intensive processing and fertilizer-heavy aquaculture feed — a perfect storm of crisis exposure.",
       "pass_through_30d": 0.8,
       "local_cost_floor_pct": 35,
-      "dietary": []
+      "dietary": [],
+      "exposure_low": 65,
+      "exposure_high": 65
     },
     {
       "id": "canned_sardines",
       "name": "Canned Sardines",
       "category": "seafood",
       "emoji": "🐟",
-      "crisis_exposure_pct": 35,
+      "crisis_exposure_pct": 38,
       "severity": "moderate",
       "base_price_eur_kg": 4.5,
       "current_price_eur_kg": 5.8,
@@ -1550,36 +1623,38 @@
           "input": "Fishing vessel fuel",
           "description": "Small-scale fishing boats run on diesel",
           "category": "fuel",
-          "price_change_pct": 52,
+          "price_change_pct": 53,
           "weight": 0.9459
         },
         {
           "input": "Canning steel",
           "description": "Steel production uses coal and gas — some petrochemical exposure",
           "category": "gas",
-          "price_change_pct": 70,
+          "price_change_pct": 71,
           "weight": 0.0405
         },
         {
           "input": "Cooking oil",
           "description": "Sunflower or olive oil in the tin is itself crisis-exposed",
           "category": "petrochemical",
-          "price_change_pct": 25,
+          "price_change_pct": 24,
           "weight": 0.0136
         }
       ],
       "explanation": "Sardines themselves are wild-caught with modest fuel use and no feed costs. The can, the oil, and processing energy push the Hormuz exposure into the moderate range.",
       "pass_through_30d": 0.75,
       "local_cost_floor_pct": 35,
-      "dietary": []
+      "dietary": [],
+      "exposure_low": 38,
+      "exposure_high": 38
     },
     {
       "id": "cod",
       "name": "Cod",
       "category": "seafood",
       "emoji": "🐠",
-      "crisis_exposure_pct": 38,
-      "severity": "moderate",
+      "crisis_exposure_pct": 42,
+      "severity": "high",
       "base_price_eur_kg": 12.0,
       "current_price_eur_kg": 15.5,
       "projected_price_eur_kg": 18.5,
@@ -1588,36 +1663,38 @@
           "input": "Fishing and trawling fuel",
           "description": "North Sea and Atlantic trawlers consume significant diesel",
           "category": "fuel",
-          "price_change_pct": 52,
+          "price_change_pct": 53,
           "weight": 0.9459
         },
         {
           "input": "Refrigerated processing",
           "description": "Filleting plants and blast freezing use gas and electricity",
           "category": "gas",
-          "price_change_pct": 70,
+          "price_change_pct": 71,
           "weight": 0.0405
         },
         {
           "input": "Plastic packaging",
           "description": "Vacuum-packed fillets and retail trays",
           "category": "petrochemical",
-          "price_change_pct": 22,
+          "price_change_pct": 24,
           "weight": 0.0136
         }
       ],
       "explanation": "Wild-caught cod avoids the feed-cost burden of aquaculture, but deep-sea trawling is diesel-intensive. Processing, freezing, and refrigerated distribution add gas and packaging exposure.",
       "pass_through_30d": 0.75,
       "local_cost_floor_pct": 35,
-      "dietary": []
+      "dietary": [],
+      "exposure_low": 42,
+      "exposure_high": 42
     },
     {
       "id": "canned_tuna",
       "name": "Canned Tuna",
-      "category": "packaged",
+      "category": "seafood",
       "emoji": "🥫",
-      "crisis_exposure_pct": 62,
-      "severity": "extreme",
+      "crisis_exposure_pct": 50,
+      "severity": "high",
       "base_price_eur_kg": 4.0,
       "current_price_eur_kg": 5.8,
       "projected_price_eur_kg": 7.2,
@@ -1626,43 +1703,45 @@
           "input": "Long-range fishing fleets",
           "description": "Tuna is caught in distant Pacific and Indian Ocean waters — high fuel use",
           "category": "fuel",
-          "price_change_pct": 60,
+          "price_change_pct": 53,
           "weight": 0.0886
         },
         {
           "input": "Steel cans",
           "description": "Tin plate steel is energy-intensive to produce",
           "category": "gas",
-          "price_change_pct": 70,
+          "price_change_pct": 71,
           "weight": 0.5696
         },
         {
           "input": "Sunflower or brine filling",
           "description": "Oil-packed tuna adds a crisis-exposed cooking oil layer",
           "category": "petrochemical",
-          "price_change_pct": 25,
+          "price_change_pct": 24,
           "weight": 0.2532
         },
         {
           "input": "Refrigerated shipping",
           "description": "Frozen tuna ships from processing plants in Thailand and Ecuador",
           "category": "fuel",
-          "price_change_pct": 60,
+          "price_change_pct": 53,
           "weight": 0.0886
         }
       ],
       "explanation": "Canned tuna is deceptive. The fish is wild-caught with no feed costs, but the fishing fleets travel tens of thousands of kilometres, and the can itself requires energy-intensive steel and oil filling. Combined exposure is extreme.",
       "pass_through_30d": 0.3,
       "local_cost_floor_pct": 50,
-      "dietary": []
+      "dietary": [],
+      "exposure_low": 50,
+      "exposure_high": 50
     },
     {
       "id": "cooking_oil",
       "name": "Cooking Oil",
       "category": "packaged",
       "emoji": "🫙",
-      "crisis_exposure_pct": 72,
-      "severity": "extreme",
+      "crisis_exposure_pct": 50,
+      "severity": "high",
       "base_price_eur_kg": 2.5,
       "current_price_eur_kg": 4.2,
       "projected_price_eur_kg": 5.8,
@@ -1678,21 +1757,21 @@
           "input": "Solvent extraction",
           "description": "Hexane solvent for oil extraction is a petrochemical product",
           "category": "petrochemical",
-          "price_change_pct": 35,
+          "price_change_pct": 24,
           "weight": 0.2273
         },
         {
           "input": "Refinery energy",
           "description": "Deodorising, bleaching, and hydrogenation require sustained heat",
           "category": "gas",
-          "price_change_pct": 70,
+          "price_change_pct": 71,
           "weight": 0.5114
         },
         {
           "input": "Plastic bottles",
           "description": "PET bottles are made entirely from petrochemicals",
           "category": "petrochemical",
-          "price_change_pct": 25,
+          "price_change_pct": 24,
           "weight": 0.2272
         }
       ],
@@ -1702,15 +1781,17 @@
       "dietary": [
         "v",
         "vg"
-      ]
+      ],
+      "exposure_low": 50,
+      "exposure_high": 50
     },
     {
       "id": "frozen_pizza",
       "name": "Frozen Pizza",
       "category": "packaged",
       "emoji": "🍕",
-      "crisis_exposure_pct": 75,
-      "severity": "extreme",
+      "crisis_exposure_pct": 55,
+      "severity": "high",
       "base_price_eur_kg": 4.5,
       "current_price_eur_kg": 6.5,
       "projected_price_eur_kg": 8.5,
@@ -1726,21 +1807,21 @@
           "input": "Cooking oil",
           "description": "Tomato sauce and cheese use vegetable oils in processing",
           "category": "petrochemical",
-          "price_change_pct": 35,
+          "price_change_pct": 24,
           "weight": 0.2273
         },
         {
           "input": "Freezing and cold storage",
           "description": "Industrial blast freezing and continuous frozen logistics",
           "category": "gas",
-          "price_change_pct": 70,
+          "price_change_pct": 71,
           "weight": 0.5114
         },
         {
           "input": "Multi-layer packaging",
           "description": "Film-wrapped cardboard with barrier layers — petroleum-derived",
           "category": "petrochemical",
-          "price_change_pct": 25,
+          "price_change_pct": 24,
           "weight": 0.2272
         }
       ],
@@ -1749,14 +1830,16 @@
       "local_cost_floor_pct": 45,
       "dietary": [
         "v"
-      ]
+      ],
+      "exposure_low": 55,
+      "exposure_high": 55
     },
     {
       "id": "chocolate",
       "name": "Chocolate",
       "category": "packaged",
       "emoji": "🍫",
-      "crisis_exposure_pct": 52,
+      "crisis_exposure_pct": 50,
       "severity": "high",
       "base_price_eur_kg": 8.0,
       "current_price_eur_kg": 11.5,
@@ -1773,21 +1856,21 @@
           "input": "Long-distance shipping",
           "description": "Cocoa beans shipped from West Africa and South America",
           "category": "fuel",
-          "price_change_pct": 60,
+          "price_change_pct": 53,
           "weight": 0.0933
         },
         {
           "input": "Conching and tempering",
           "description": "Chocolate manufacturing requires long-duration thermal processing",
           "category": "gas",
-          "price_change_pct": 70,
+          "price_change_pct": 71,
           "weight": 0.6
         },
         {
           "input": "Foil and plastic wrapping",
           "description": "Aluminium foil and printed shrink wrap",
           "category": "petrochemical",
-          "price_change_pct": 22,
+          "price_change_pct": 24,
           "weight": 0.2667
         }
       ],
@@ -1796,15 +1879,17 @@
       "local_cost_floor_pct": 50,
       "dietary": [
         "v"
-      ]
+      ],
+      "exposure_low": 50,
+      "exposure_high": 50
     },
     {
       "id": "crisps",
       "name": "Crisps / Chips",
       "category": "packaged",
       "emoji": "🥔",
-      "crisis_exposure_pct": 68,
-      "severity": "extreme",
+      "crisis_exposure_pct": 50,
+      "severity": "high",
       "base_price_eur_kg": 5.5,
       "current_price_eur_kg": 8.0,
       "projected_price_eur_kg": 10.5,
@@ -1820,21 +1905,21 @@
           "input": "Palm and sunflower oil",
           "description": "Frying oil is itself one of the most crisis-exposed inputs",
           "category": "petrochemical",
-          "price_change_pct": 35,
+          "price_change_pct": 24,
           "weight": 0.2273
         },
         {
           "input": "Nitrogen gas flushing",
           "description": "Bags are inflated with nitrogen — produced via energy-intensive separation",
           "category": "gas",
-          "price_change_pct": 70,
+          "price_change_pct": 71,
           "weight": 0.5114
         },
         {
           "input": "Multi-layer foil bags",
           "description": "Metallised film bags are petroleum-derived and complex to produce",
           "category": "petrochemical",
-          "price_change_pct": 25,
+          "price_change_pct": 24,
           "weight": 0.2272
         }
       ],
@@ -1844,14 +1929,16 @@
       "dietary": [
         "v",
         "vg"
-      ]
+      ],
+      "exposure_low": 50,
+      "exposure_high": 50
     },
     {
       "id": "biscuits",
       "name": "Biscuits / Cookies",
       "category": "packaged",
       "emoji": "🍪",
-      "crisis_exposure_pct": 42,
+      "crisis_exposure_pct": 46,
       "severity": "high",
       "base_price_eur_kg": 4.0,
       "current_price_eur_kg": 5.6,
@@ -1868,14 +1955,14 @@
           "input": "Palm oil",
           "description": "Used as shortening — oil production is crisis-exposed",
           "category": "petrochemical",
-          "price_change_pct": 35,
+          "price_change_pct": 24,
           "weight": 0.2941
         },
         {
           "input": "Tunnel oven baking",
           "description": "Continuous gas-fired ovens in industrial bakeries",
           "category": "gas",
-          "price_change_pct": 70,
+          "price_change_pct": 71,
           "weight": 0.6618
         }
       ],
@@ -1884,14 +1971,16 @@
       "local_cost_floor_pct": 50,
       "dietary": [
         "v"
-      ]
+      ],
+      "exposure_low": 44,
+      "exposure_high": 47
     },
     {
       "id": "soft_drinks",
       "name": "Soft Drinks",
       "category": "packaged",
       "emoji": "🥤",
-      "crisis_exposure_pct": 45,
+      "crisis_exposure_pct": 50,
       "severity": "high",
       "base_price_eur_kg": 0.8,
       "current_price_eur_kg": 1.1,
@@ -1908,14 +1997,14 @@
           "input": "PET bottles",
           "description": "Polyethylene terephthalate is a direct petrochemical product",
           "category": "petrochemical",
-          "price_change_pct": 25,
+          "price_change_pct": 24,
           "weight": 0.2941
         },
         {
           "input": "CO2 carbonation",
           "description": "Food-grade CO2 is a byproduct of fertilizer production — supply is constrained",
           "category": "gas",
-          "price_change_pct": 70,
+          "price_change_pct": 71,
           "weight": 0.6618
         }
       ],
@@ -1925,14 +2014,16 @@
       "dietary": [
         "v",
         "vg"
-      ]
+      ],
+      "exposure_low": 50,
+      "exposure_high": 50
     },
     {
       "id": "beer",
       "name": "Beer",
       "category": "packaged",
       "emoji": "🍺",
-      "crisis_exposure_pct": 40,
+      "crisis_exposure_pct": 44,
       "severity": "high",
       "base_price_eur_kg": 1.8,
       "current_price_eur_kg": 2.5,
@@ -1949,14 +2040,14 @@
           "input": "Brewing energy",
           "description": "Brewing, pasteurisation, and chilling are gas and electricity heavy",
           "category": "gas",
-          "price_change_pct": 70,
+          "price_change_pct": 71,
           "weight": 0.4839
         },
         {
           "input": "Aluminium cans",
           "description": "Aluminium smelting is highly energy-intensive",
           "category": "gas",
-          "price_change_pct": 70,
+          "price_change_pct": 71,
           "weight": 0.4838
         }
       ],
@@ -1966,15 +2057,17 @@
       "dietary": [
         "v",
         "vg"
-      ]
+      ],
+      "exposure_low": 44,
+      "exposure_high": 44
     },
     {
       "id": "coffee",
       "name": "Coffee",
       "category": "packaged",
       "emoji": "☕",
-      "crisis_exposure_pct": 55,
-      "severity": "high",
+      "crisis_exposure_pct": 60,
+      "severity": "extreme",
       "base_price_eur_kg": 12.0,
       "current_price_eur_kg": 18.0,
       "projected_price_eur_kg": 24.0,
@@ -1990,21 +2083,21 @@
           "input": "Long-haul shipping",
           "description": "Coffee originates in tropical regions far from consuming markets",
           "category": "fuel",
-          "price_change_pct": 60,
+          "price_change_pct": 53,
           "weight": 0.0933
         },
         {
           "input": "Roasting",
           "description": "Coffee roasting is a gas-intensive process",
           "category": "gas",
-          "price_change_pct": 70,
+          "price_change_pct": 71,
           "weight": 0.6
         },
         {
           "input": "Vacuum packaging",
           "description": "Pressure-sealed bags with degassing valves use complex petrochemical films",
           "category": "petrochemical",
-          "price_change_pct": 22,
+          "price_change_pct": 24,
           "weight": 0.2667
         }
       ],
@@ -2014,14 +2107,16 @@
       "dietary": [
         "v",
         "vg"
-      ]
+      ],
+      "exposure_low": 59,
+      "exposure_high": 60
     },
     {
       "id": "sugar",
       "name": "Sugar",
       "category": "packaged",
       "emoji": "🍬",
-      "crisis_exposure_pct": 30,
+      "crisis_exposure_pct": 35,
       "severity": "moderate",
       "base_price_eur_kg": 1.2,
       "current_price_eur_kg": 1.55,
@@ -2038,7 +2133,7 @@
           "input": "Refining energy",
           "description": "Sugar refining and crystallisation uses substantial thermal energy",
           "category": "gas",
-          "price_change_pct": 70,
+          "price_change_pct": 71,
           "weight": 0.9375
         }
       ],
@@ -2048,7 +2143,9 @@
       "dietary": [
         "v",
         "vg"
-      ]
+      ],
+      "exposure_low": 35,
+      "exposure_high": 35
     },
     {
       "id": "peanut_butter",
@@ -2072,21 +2169,21 @@
           "input": "Long-distance shipping",
           "description": "Most peanuts are sourced from China, Argentina, or South Africa",
           "category": "fuel",
-          "price_change_pct": 60,
+          "price_change_pct": 53,
           "weight": 0.07
         },
         {
           "input": "Roasting and processing",
           "description": "Roasting and grinding require sustained gas heat",
           "category": "gas",
-          "price_change_pct": 70,
+          "price_change_pct": 71,
           "weight": 0.45
         },
         {
           "input": "Glass jar energy",
           "description": "Glass manufacturing is an energy-intensive process",
           "category": "gas",
-          "price_change_pct": 70,
+          "price_change_pct": 71,
           "weight": 0.45
         }
       ],
@@ -2096,14 +2193,16 @@
       "dietary": [
         "v",
         "vg"
-      ]
+      ],
+      "exposure_low": 50,
+      "exposure_high": 50
     },
     {
       "id": "orange_juice",
       "name": "Orange Juice",
       "category": "packaged",
       "emoji": "🍊",
-      "crisis_exposure_pct": 32,
+      "crisis_exposure_pct": 24,
       "severity": "moderate",
       "base_price_eur_kg": 1.8,
       "current_price_eur_kg": 2.3,
@@ -2120,14 +2219,14 @@
           "input": "Refrigerated shipping",
           "description": "NFC juice shipped from Brazil requires continuous cold-chain",
           "category": "fuel",
-          "price_change_pct": 60,
+          "price_change_pct": 53,
           "weight": 0.2333
         },
         {
           "input": "Carton packaging",
           "description": "Tetra Pak-style laminated cartons use petroleum-derived layers",
           "category": "petrochemical",
-          "price_change_pct": 22,
+          "price_change_pct": 24,
           "weight": 0.6667
         }
       ],
@@ -2137,15 +2236,17 @@
       "dietary": [
         "v",
         "vg"
-      ]
+      ],
+      "exposure_low": 24,
+      "exposure_high": 25
     },
     {
       "id": "mayonnaise",
       "name": "Mayonnaise",
       "category": "packaged",
       "emoji": "🫙",
-      "crisis_exposure_pct": 48,
-      "severity": "high",
+      "crisis_exposure_pct": 34,
+      "severity": "moderate",
       "base_price_eur_kg": 4.5,
       "current_price_eur_kg": 6.5,
       "projected_price_eur_kg": 8.2,
@@ -2154,7 +2255,7 @@
           "input": "Vegetable oil",
           "description": "Oil is the dominant ingredient (~70%) — directly crisis-exposed",
           "category": "petrochemical",
-          "price_change_pct": 35,
+          "price_change_pct": 24,
           "weight": 0.4651
         },
         {
@@ -2168,7 +2269,7 @@
           "input": "Plastic packaging",
           "description": "Squeeze bottles and jars are petroleum-derived",
           "category": "petrochemical",
-          "price_change_pct": 25,
+          "price_change_pct": 24,
           "weight": 0.4651
         }
       ],
@@ -2177,15 +2278,17 @@
       "local_cost_floor_pct": 50,
       "dietary": [
         "v"
-      ]
+      ],
+      "exposure_low": 34,
+      "exposure_high": 35
     },
     {
       "id": "tomato_sauce",
       "name": "Tomato Sauce",
       "category": "packaged",
       "emoji": "🍅",
-      "crisis_exposure_pct": 36,
-      "severity": "moderate",
+      "crisis_exposure_pct": 40,
+      "severity": "high",
       "base_price_eur_kg": 2.0,
       "current_price_eur_kg": 2.6,
       "projected_price_eur_kg": 3.2,
@@ -2201,14 +2304,14 @@
           "input": "Cooking and pasteurisation",
           "description": "Industrial tomato processing uses sustained natural gas heat",
           "category": "gas",
-          "price_change_pct": 70,
+          "price_change_pct": 71,
           "weight": 0.4839
         },
         {
           "input": "Steel cans or glass jars",
           "description": "Both packaging formats are energy-intensive to manufacture",
           "category": "gas",
-          "price_change_pct": 70,
+          "price_change_pct": 71,
           "weight": 0.4838
         }
       ],
@@ -2218,15 +2321,17 @@
       "dietary": [
         "v",
         "vg"
-      ]
+      ],
+      "exposure_low": 40,
+      "exposure_high": 40
     },
     {
       "id": "baby_formula",
       "name": "Baby Formula",
       "category": "packaged",
       "emoji": "🍼",
-      "crisis_exposure_pct": 65,
-      "severity": "extreme",
+      "crisis_exposure_pct": 50,
+      "severity": "high",
       "base_price_eur_kg": 25.0,
       "current_price_eur_kg": 38.0,
       "projected_price_eur_kg": 48.0,
@@ -2242,21 +2347,21 @@
           "input": "Spray drying",
           "description": "Spray drying dairy into powder is extremely energy-intensive",
           "category": "gas",
-          "price_change_pct": 70,
+          "price_change_pct": 71,
           "weight": 0.5114
         },
         {
           "input": "Sterile packaging",
           "description": "Airtight laminated cans with hermetic seals",
           "category": "petrochemical",
-          "price_change_pct": 25,
+          "price_change_pct": 24,
           "weight": 0.2273
         },
         {
           "input": "Nutritional additives",
           "description": "DHA, ARA, and synthetic vitamins are petrochemical-derived",
           "category": "petrochemical",
-          "price_change_pct": 25,
+          "price_change_pct": 24,
           "weight": 0.2272
         }
       ],
@@ -2265,7 +2370,9 @@
       "local_cost_floor_pct": 50,
       "dietary": [
         "v"
-      ]
+      ],
+      "exposure_low": 50,
+      "exposure_high": 50
     },
     {
       "id": "lentils",
@@ -2289,7 +2396,7 @@
           "input": "Diesel harvest",
           "description": "Combine harvesting and transport to processing",
           "category": "fuel",
-          "price_change_pct": 52,
+          "price_change_pct": 53,
           "weight": 0.375
         }
       ],
@@ -2299,14 +2406,16 @@
       "dietary": [
         "v",
         "vg"
-      ]
+      ],
+      "exposure_low": 18,
+      "exposure_high": 18
     },
     {
       "id": "chickpeas",
       "name": "Chickpeas",
       "category": "staples",
       "emoji": "🫘",
-      "crisis_exposure_pct": 15,
+      "crisis_exposure_pct": 14,
       "severity": "low",
       "base_price_eur_kg": 2.0,
       "current_price_eur_kg": 2.3,
@@ -2323,7 +2432,7 @@
           "input": "Dry shipping",
           "description": "Dried chickpeas ship in bulk without refrigeration",
           "category": "fuel",
-          "price_change_pct": 60,
+          "price_change_pct": 53,
           "weight": 0.375
         }
       ],
@@ -2333,14 +2442,16 @@
       "dietary": [
         "v",
         "vg"
-      ]
+      ],
+      "exposure_low": 14,
+      "exposure_high": 14
     },
     {
       "id": "tofu",
       "name": "Tofu",
       "category": "staples",
       "emoji": "🫕",
-      "crisis_exposure_pct": 25,
+      "crisis_exposure_pct": 28,
       "severity": "moderate",
       "base_price_eur_kg": 2.8,
       "current_price_eur_kg": 3.5,
@@ -2357,14 +2468,14 @@
           "input": "Processing energy",
           "description": "Soy soaking, grinding, and coagulation require thermal energy",
           "category": "gas",
-          "price_change_pct": 70,
+          "price_change_pct": 71,
           "weight": 0.1875
         },
         {
           "input": "Plastic packaging",
           "description": "Water-filled plastic tubs are petroleum-derived",
           "category": "petrochemical",
-          "price_change_pct": 22,
+          "price_change_pct": 24,
           "weight": 0.0313
         }
       ],
@@ -2374,14 +2485,16 @@
       "dietary": [
         "v",
         "vg"
-      ]
+      ],
+      "exposure_low": 28,
+      "exposure_high": 28
     },
     {
       "id": "beans",
       "name": "Dried Beans",
       "category": "staples",
       "emoji": "🫘",
-      "crisis_exposure_pct": 12,
+      "crisis_exposure_pct": 11,
       "severity": "low",
       "base_price_eur_kg": 1.5,
       "current_price_eur_kg": 1.72,
@@ -2398,7 +2511,7 @@
           "input": "Bulk shipping",
           "description": "Dry beans ship efficiently in bulk without refrigeration",
           "category": "fuel",
-          "price_change_pct": 60,
+          "price_change_pct": 53,
           "weight": 0.375
         }
       ],
@@ -2408,14 +2521,16 @@
       "dietary": [
         "v",
         "vg"
-      ]
+      ],
+      "exposure_low": 11,
+      "exposure_high": 11
     },
     {
       "id": "quinoa",
       "name": "Quinoa",
       "category": "staples",
       "emoji": "🌾",
-      "crisis_exposure_pct": 28,
+      "crisis_exposure_pct": 25,
       "severity": "moderate",
       "base_price_eur_kg": 6.0,
       "current_price_eur_kg": 7.8,
@@ -2432,14 +2547,14 @@
           "input": "Long-haul shipping",
           "description": "Exported from South America to Europe and North America",
           "category": "fuel",
-          "price_change_pct": 60,
+          "price_change_pct": 53,
           "weight": 0.3261
         },
         {
           "input": "Saponin washing",
           "description": "Industrial washing and drying uses gas energy",
           "category": "gas",
-          "price_change_pct": 70,
+          "price_change_pct": 71,
           "weight": 0.1304
         }
       ],
@@ -2449,14 +2564,16 @@
       "dietary": [
         "v",
         "vg"
-      ]
+      ],
+      "exposure_low": 25,
+      "exposure_high": 25
     },
     {
       "id": "olive_oil",
       "name": "Olive Oil",
       "category": "staples",
       "emoji": "🫒",
-      "crisis_exposure_pct": 38,
+      "crisis_exposure_pct": 35,
       "severity": "moderate",
       "base_price_eur_kg": 9.0,
       "current_price_eur_kg": 12.0,
@@ -2473,21 +2590,21 @@
           "input": "Cold pressing energy",
           "description": "Extraction mills and cooling systems use electricity and gas",
           "category": "gas",
-          "price_change_pct": 70,
+          "price_change_pct": 71,
           "weight": 0.1154
         },
         {
           "input": "Glass bottle production",
           "description": "Glass manufacturing requires very high kiln temperatures (gas-fired)",
           "category": "gas",
-          "price_change_pct": 70,
+          "price_change_pct": 71,
           "weight": 0.1154
         },
         {
           "input": "Diesel distribution",
           "description": "Mediterranean production region to global retail",
           "category": "fuel",
-          "price_change_pct": 52,
+          "price_change_pct": 53,
           "weight": 0.2884
         }
       ],
@@ -2497,7 +2614,9 @@
       "dietary": [
         "v",
         "vg"
-      ]
+      ],
+      "exposure_low": 35,
+      "exposure_high": 35
     },
     {
       "id": "frozen_peas",
@@ -2521,14 +2640,14 @@
           "input": "Blanching and blast freezing",
           "description": "Industrial blanching uses gas; blast freezing uses significant electricity",
           "category": "gas",
-          "price_change_pct": 70,
+          "price_change_pct": 71,
           "weight": 0.2381
         },
         {
           "input": "Frozen logistics",
           "description": "Continuous frozen distribution from factory to freezer",
           "category": "fuel",
-          "price_change_pct": 52,
+          "price_change_pct": 53,
           "weight": 0.6349
         }
       ],
@@ -2538,7 +2657,15 @@
       "dietary": [
         "v",
         "vg"
-      ]
+      ],
+      "exposure_low": 27,
+      "exposure_high": 28
     }
+  ],
+  "stale_sources": [
+    "world_bank_api_methanol_usd_ton",
+    "world_bank_api_natural_gas_eur_mwh",
+    "world_bank_api_oil_brent_usd",
+    "world_bank_api_urea_usd_ton"
   ]
 }
