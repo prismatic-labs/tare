@@ -1872,16 +1872,16 @@ function populateCountrySelector() {
 // Formula: y = (90 - lat) / 180 * 100%
 // GB/DE nudged apart by ±2.5% since they share nearly identical coordinates.
 const COUNTRY_MAP_POS = {
-  GB: { left: '39.5%', top: '21.0%' }, // London  51.5°N   0°E  — nudged west
-  DE: { left: '45.5%', top: '20.0%' }, // Berlin  52.5°N  13°E  — nudged west
-  IT: { left: '46.3%', top: '26.7%' }, // Rome    41.9°N  12°E
-  US: { left: '15.0%', top: '33.0%' }, // Centre  38.5°N  98°W  — south of Great Lakes
-  JP: { left: '81.9%', top: '30.2%' }, // Tokyo   35.7°N 140°E
-  IN: { left: '64.4%', top: '37.0%' }, // Delhi   28.6°N  77°E  — nudged south
-  PH: { left: '76.6%', top: '46.5%' }, // Manila  14.6°N 121°E — nudged south
-  BR: { left: '29.7%', top: '63.5%' }, // Brasília 15.8°S  48°W  — corrected S. Hemi vertical
-  AU: { left: '79.4%', top: '71.0%' }, // Centre  25.0°S 133°E  — corrected S. Hemi vertical
-  LK: { left: '65.2%', top: '48.5%' }, // Colombo  6.9°N  80°E   — nudged south
+  GB: { left: '42.0%', top: '21.0%' }, // London - shifted east (out of Atlantic)
+  DE: { left: '46.0%', top: '21.0%' }, // Berlin - shifted west
+  IT: { left: '46.5%', top: '27.0%' }, // Rome
+  US: { left: '14.0%', top: '31.0%' }, // Centre - shifted south and west (out of Great Lakes)
+  JP: { left: '82.0%', top: '30.0%' }, // Tokyo
+  IN: { left: '64.5%', top: '39.0%' }, // Delhi - shifted south
+  PH: { left: '76.5%', top: '49.0%' }, // Manila - shifted south
+  BR: { left: '28.5%', top: '60.5%' }, // Brasília - shifted west/north (inside coast)
+  AU: { left: '79.5%', top: '67.0%' }, // Centre
+  LK: { left: '65.0%', top: '49.5%' }, // Colombo
 };
 
 const SEVERITY_COLOR = {
