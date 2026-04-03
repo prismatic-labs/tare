@@ -197,26 +197,34 @@
   <ol class="steps">
     <li><strong>Identify cost drivers per food.</strong> Each food has 2–5 supply chain drivers (e.g. diesel for transport, urea for fertilizer, natural gas for processing) sourced from USDA and FAO cost-of-production breakdowns.</li>
     <li><strong>Assign each driver a commodity category</strong> — one of: <em>fuel, gas, fertilizer, petrochemical, shipping</em> — and look up its current price change vs the pre-crisis baseline (28 Feb 2026).</li>
-    <li><strong>Compute the mean input change</strong> across a food's drivers.</li>
-    <li><strong>Apply a sensitivity factor</strong> (calibrated per food) to convert mean commodity input change into a retail price exposure percentage.</li>
+    <li><strong>Compute the weighted input change.</strong> Unlike a simple average, we apply specific cost weights (e.g., 40% for fertilizer in grain) to each driver based on its intensity in that food's production cycle.</li>
+    <li><strong>Apply a sensitivity factor</strong> (calibrated per food) to convert the weighted commodity input change into a retail price exposure percentage.</li>
+    <li><strong>Run Monte Carlo simulations.</strong> We run 500 iterations with ±15% noise on driver weights to generate an 80% confidence interval (the uncertainty band shown in the UI).</li>
     <li><strong>Multiply by the country's impact coefficient</strong> to reflect how dependent that country is on Hormuz-linked commodity flows.</li>
   </ol>
 
   <h2>The formula</h2>
 
-  <div class="formula-block"><span class="comment">── Per food, EU baseline ────────────────────────────────────────────────────────────</span>
-weighted_input_chg  = Σ (driver.weight × driver.price_change_pct) / Σ driver.weights
+  <div class="formula-block"><span class="comment">── 1. Weighted Input Calculation ────────────────────────────────────────────────────</span>
+weighted_input_chg  = Σ (driver.weight × driver.price_change_pct) / Σ driver.weight
 
-max_exposure        = 100 − local_cost_floor_pct     <span class="comment"># floor = immovable local costs (labour, retail margin)</span>
-sensitivity         = eu_exposure_pct / weighted_input_chg  <span class="comment"># calibrated Feb 2026</span>
-<span class="result">eu_exposure_pct     = clamp(weighted_input_chg × sensitivity, 1, max_exposure)</span>
+<span class="comment">── 2. EU Baseline Exposure ─────────────────────────────────────────────────────────</span>
+max_exposure        = 100 − local_cost_floor_pct     <span class="comment"># floor = local labour + land + margin</span>
+sensitivity         = baseline_exposure / baseline_weighted_input_chg
+eu_exposure_pct     = clamp(weighted_input_chg × sensitivity, 1, max_exposure)
 
-<span class="comment">── Country adjustment ───────────────────────────────────────────────────────────────</span>
-<span class="result">country_exposure    = clamp(round(eu_exposure_pct × impact_multiplier), 1, max_exposure)</span>
+<span class="comment">── 3. Uncertainty (Monte Carlo) ────────────────────────────────────────────────────</span>
+for i in 1..500:
+    w_noisy = driver.weight * (1 ± 0.15)
+    results.push(calc_exposure(w_noisy))
+<span class="result">exposure_band       = [10th_percentile, 90th_percentile]</span>
 
-<span class="comment">── Precision reduction for low-quality data ────────────────────────────────────────</span>
-<span class="comment">if data_confidence == 'medium': round to nearest 5%</span>
-<span class="comment">if data_confidence == 'low':    round to nearest 10%</span></div>
+<span class="comment">── 4. Country & Precision Adjustment ───────────────────────────────────────────────</span>
+country_exposure    = clamp(round(eu_exposure_pct × impact_multiplier), 1, max_exposure)
+<span class="comment">if confidence == 'low': round to nearest 10% to avoid false precision</span></div>
+
+  <h3>Tipping Points (Non-Linearity)</h3>
+  <p>The model includes a <strong>scarcity risk trigger</strong>. If Urea prices exceed $600/ton, the system flags a "Scarcity Risk" for fertilizer-intensive foods (grains, meat, dairy). This accounts for the point where farmers stop applying inputs, leading to a non-linear "Yield Cliff" in the next harvest cycle.</p>
 
   <h3>Worked example — Chicken in Japan</h3>
   <div class="trace-box">
@@ -276,7 +284,7 @@ sensitivity         = eu_exposure_pct / weighted_input_chg  <span class="comment
   </ul>
 
   <h2>Update cadence</h2>
-  <p>Data refreshes every Monday at 06:00 UTC via a <a href="https://github.com/prismatic-labs/tare/blob/main/.github/workflows/update-data.yml" target="_blank" rel="noopener">GitHub Actions workflow</a>. If any data source is unavailable, the previous value is retained and the <code>stale_sources</code> field in <code>data/foods.json</code> is populated. The live badge on the main dashboard turns amber if data has not been refreshed in more than 10 days.</p>
+  <p>Data refreshes <strong>daily at 06:00 UTC</strong> via a <a href="https://github.com/prismatic-labs/tare/blob/main/.github/workflows/update-data.yml" target="_blank" rel="noopener">GitHub Actions workflow</a>. If any data source is unavailable, the previous value is retained and the <code>stale_sources</code> field in <code>data/foods.json</code> is populated. The live badge on the main dashboard turns amber if data has not been refreshed in more than 10 days.</p>
 
   <h2>Open source</h2>
   <p>The full calculation pipeline — including all driver weights, baseline values, and country coefficients — is in the open-source repository at <a href="https://github.com/prismatic-labs/tare" target="_blank" rel="noopener">github.com/prismatic-labs/tare</a>. The data file at <a href="data/foods.json"><code>data/foods.json</code></a> is the single source of truth that drives the dashboard.</p>
