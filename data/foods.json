@@ -43,7 +43,7 @@
       "hormuz_oil_dependency_pct": 12,
       "hormuz_lng_dependency_pct": 14,
       "hormuz_fertilizer_dependency_pct": 28,
-      "impact_multiplier": 0.90,
+      "impact_multiplier": 0.9,
       "price_level_index": 1.05,
       "data_confidence": "high"
     },
@@ -179,7 +179,8 @@
       ],
       "explanation": "Chickens eat ~2kg of grain per 1kg of meat produced. That grain requires fertilizer (30% Hormuz-sourced) and diesel to grow and transport. Every link in the chain amplifies the crisis.",
       "pass_through_30d": 0.5,
-      "local_cost_floor_pct": 40
+      "local_cost_floor_pct": 40,
+      "dietary": []
     },
     {
       "id": "bread",
@@ -216,7 +217,11 @@
       ],
       "explanation": "Wheat production is fertilizer-intensive. Industrial bakeries run on natural gas around the clock, directly linking supermarket bread to Hormuz energy flows.",
       "pass_through_30d": 0.15,
-      "local_cost_floor_pct": 55
+      "local_cost_floor_pct": 55,
+      "dietary": [
+        "v",
+        "vg"
+      ]
     },
     {
       "id": "tomatoes",
@@ -253,7 +258,11 @@
       ],
       "explanation": "Out-of-season tomatoes depend on heated greenhouses and refrigerated logistics year-round — both tightly coupled to Hormuz energy prices.",
       "pass_through_30d": 0.7,
-      "local_cost_floor_pct": 45
+      "local_cost_floor_pct": 45,
+      "dietary": [
+        "v",
+        "vg"
+      ]
     },
     {
       "id": "salmon",
@@ -297,7 +306,8 @@
       ],
       "explanation": "Farmed salmon is one of the most energy-intensive proteins. Feed production, cold storage, and long-haul freight combine to create exceptional Hormuz exposure.",
       "pass_through_30d": 0.8,
-      "local_cost_floor_pct": 30
+      "local_cost_floor_pct": 30,
+      "dietary": []
     },
     {
       "id": "rice",
@@ -334,7 +344,11 @@
       ],
       "explanation": "Rice paddies require heavy urea inputs and diesel-powered irrigation. Combined with global shipping disruption, supply is tightening even in traditionally surplus regions.",
       "pass_through_30d": 0.2,
-      "local_cost_floor_pct": 55
+      "local_cost_floor_pct": 55,
+      "dietary": [
+        "v",
+        "vg"
+      ]
     },
     {
       "id": "pasta",
@@ -371,7 +385,11 @@
       ],
       "explanation": "Durum wheat is a fertilizer-hungry crop, and pasta manufacturing requires substantial thermal energy for drying. Italy's dependence on North African and Eastern European durum adds a Hormuz-adjacent shipping component.",
       "pass_through_30d": 0.2,
-      "local_cost_floor_pct": 55
+      "local_cost_floor_pct": 55,
+      "dietary": [
+        "v",
+        "vg"
+      ]
     },
     {
       "id": "flour",
@@ -408,7 +426,11 @@
       ],
       "explanation": "Flour sits at the base of the food chain. Its crisis exposure flows directly through wheat farming costs and the energy used to run mills — two channels where Hormuz prices are highly visible.",
       "pass_through_30d": 0.2,
-      "local_cost_floor_pct": 55
+      "local_cost_floor_pct": 55,
+      "dietary": [
+        "v",
+        "vg"
+      ]
     },
     {
       "id": "oats",
@@ -438,7 +460,11 @@
       ],
       "explanation": "Oats are among the least Hormuz-exposed staple grains. They require less fertilizer than wheat or corn and are largely grown and consumed in northern Europe and North America, limiting maritime shipping exposure.",
       "pass_through_30d": 0.2,
-      "local_cost_floor_pct": 55
+      "local_cost_floor_pct": 55,
+      "dietary": [
+        "v",
+        "vg"
+      ]
     },
     {
       "id": "cornflakes",
@@ -475,7 +501,11 @@
       ],
       "explanation": "Corn is exceptionally nitrogen-hungry — fertilizer costs represent a significant share of maize production. The industrial cereal manufacturing process adds further energy exposure.",
       "pass_through_30d": 0.2,
-      "local_cost_floor_pct": 55
+      "local_cost_floor_pct": 55,
+      "dietary": [
+        "v",
+        "vg"
+      ]
     },
     {
       "id": "couscous",
@@ -512,7 +542,11 @@
       ],
       "explanation": "North African couscous production is squeezed on two sides: fertilizer supply and shipping costs have both surged since February. European consumers see the price impact within weeks.",
       "pass_through_30d": 0.2,
-      "local_cost_floor_pct": 55
+      "local_cost_floor_pct": 55,
+      "dietary": [
+        "v",
+        "vg"
+      ]
     },
     {
       "id": "noodles",
@@ -556,7 +590,11 @@
       ],
       "explanation": "Instant noodles are a Hormuz pressure point hiding in plain sight. Palm oil refining, wheat fertilizer, and multi-layer plastic packaging all draw on Hormuz-disrupted supply chains.",
       "pass_through_30d": 0.2,
-      "local_cost_floor_pct": 55
+      "local_cost_floor_pct": 55,
+      "dietary": [
+        "v",
+        "vg"
+      ]
     },
     {
       "id": "crackers",
@@ -593,7 +631,11 @@
       ],
       "explanation": "Crackers are a lower-exposure grain product, but industrial baking energy and packaging costs add meaningful Hormuz exposure on top of fertilizer-linked wheat prices.",
       "pass_through_30d": 0.2,
-      "local_cost_floor_pct": 55
+      "local_cost_floor_pct": 55,
+      "dietary": [
+        "v",
+        "vg"
+      ]
     },
     {
       "id": "beef",
@@ -637,7 +679,8 @@
       ],
       "explanation": "Beef has the highest feed conversion ratio of any common protein — 7-8kg of grain per 1kg of meat. Every unit of fertilizer-driven feed price increase is multiplied several times by the time it reaches the supermarket shelf.",
       "pass_through_30d": 0.5,
-      "local_cost_floor_pct": 40
+      "local_cost_floor_pct": 40,
+      "dietary": []
     },
     {
       "id": "pork",
@@ -674,7 +717,8 @@
       ],
       "explanation": "Pork's feed conversion is better than beef but still substantial. European industrial pig farms are also large consumers of natural gas for barn climate control, adding another Hormuz channel.",
       "pass_through_30d": 0.5,
-      "local_cost_floor_pct": 40
+      "local_cost_floor_pct": 40,
+      "dietary": []
     },
     {
       "id": "lamb",
@@ -718,7 +762,8 @@
       ],
       "explanation": "Imported lamb (especially from New Zealand and Australia) is doubly exposed: long-haul refrigerated shipping and Hormuz-linked fertilizer for pasture improvement and supplementary feed.",
       "pass_through_30d": 0.5,
-      "local_cost_floor_pct": 40
+      "local_cost_floor_pct": 40,
+      "dietary": []
     },
     {
       "id": "turkey",
@@ -755,7 +800,8 @@
       ],
       "explanation": "Turkey shares most of chicken's supply chain vulnerabilities — intensive grain feeding and gas-heated barns — but with slightly lower turnover rates, meaning feed costs accumulate longer before slaughter.",
       "pass_through_30d": 0.5,
-      "local_cost_floor_pct": 40
+      "local_cost_floor_pct": 40,
+      "dietary": []
     },
     {
       "id": "sausages",
@@ -799,7 +845,8 @@
       ],
       "explanation": "Processed meat products like sausages stack multiple Hormuz exposures: the underlying meat cost, petroleum-derived casings, gas-intensive cooking, and refrigerated logistics all move together.",
       "pass_through_30d": 0.5,
-      "local_cost_floor_pct": 40
+      "local_cost_floor_pct": 40,
+      "dietary": []
     },
     {
       "id": "milk",
@@ -836,7 +883,10 @@
       ],
       "explanation": "Dairy farming is energy-intensive at every stage: fertilised silage fields, gas-powered pasteurisation, and a diesel-dependent cold chain. The exposure is moderate because dairy cows are efficient converters compared to beef.",
       "pass_through_30d": 0.4,
-      "local_cost_floor_pct": 45
+      "local_cost_floor_pct": 45,
+      "dietary": [
+        "v"
+      ]
     },
     {
       "id": "cheese",
@@ -873,7 +923,10 @@
       ],
       "explanation": "Cheese concentrates milk — and its Hormuz exposure. The 10:1 conversion ratio means every euro of dairy cost increase becomes €10 of cheese cost pressure before processing even begins.",
       "pass_through_30d": 0.4,
-      "local_cost_floor_pct": 45
+      "local_cost_floor_pct": 45,
+      "dietary": [
+        "v"
+      ]
     },
     {
       "id": "butter",
@@ -910,7 +963,10 @@
       ],
       "explanation": "Butter requires approximately 20 litres of milk per kilogram. With dairy inputs already squeezed by feed and energy costs, this concentration ratio makes butter one of the most crisis-exposed dairy products.",
       "pass_through_30d": 0.65,
-      "local_cost_floor_pct": 40
+      "local_cost_floor_pct": 40,
+      "dietary": [
+        "v"
+      ]
     },
     {
       "id": "yoghurt",
@@ -947,7 +1003,10 @@
       ],
       "explanation": "Yoghurt's Hormuz exposure is driven primarily by milk input costs and polypropylene packaging. Unlike butter and cheese, the lower concentration ratio keeps overall exposure in the moderate band.",
       "pass_through_30d": 0.4,
-      "local_cost_floor_pct": 45
+      "local_cost_floor_pct": 45,
+      "dietary": [
+        "v"
+      ]
     },
     {
       "id": "eggs",
@@ -984,7 +1043,10 @@
       ],
       "explanation": "Eggs share chicken's supply chain vulnerabilities — fertilizer-intensive grain feed and gas-heated facilities — without the option of delay. Production cannot be paused, so cost increases pass through immediately.",
       "pass_through_30d": 0.75,
-      "local_cost_floor_pct": 35
+      "local_cost_floor_pct": 35,
+      "dietary": [
+        "v"
+      ]
     },
     {
       "id": "cream",
@@ -1021,7 +1083,10 @@
       ],
       "explanation": "Cream concentrates milk's Hormuz exposure through a roughly 3:1 conversion ratio. UHT treatment adds significant thermal energy costs on top of the underlying dairy cost pressures.",
       "pass_through_30d": 0.4,
-      "local_cost_floor_pct": 45
+      "local_cost_floor_pct": 45,
+      "dietary": [
+        "v"
+      ]
     },
     {
       "id": "potatoes",
@@ -1058,7 +1123,11 @@
       ],
       "explanation": "Potatoes are heavy feeders — per-hectare fertilizer requirements are among the highest of any vegetable. Diesel for mechanical harvesting adds a further layer of Hormuz sensitivity.",
       "pass_through_30d": 0.7,
-      "local_cost_floor_pct": 45
+      "local_cost_floor_pct": 45,
+      "dietary": [
+        "v",
+        "vg"
+      ]
     },
     {
       "id": "onions",
@@ -1088,7 +1157,11 @@
       ],
       "explanation": "Onions are a low-to-moderate exposure crop. Fertilizer and diesel for cultivation are the main Hormuz channels, partially offset by their efficient long-term storage without refrigeration.",
       "pass_through_30d": 0.7,
-      "local_cost_floor_pct": 45
+      "local_cost_floor_pct": 45,
+      "dietary": [
+        "v",
+        "vg"
+      ]
     },
     {
       "id": "bananas",
@@ -1125,7 +1198,11 @@
       ],
       "explanation": "Bananas travel further than almost any other mass-market fruit. Container shipping disruption and fertilizer costs for tropical monoculture plantations combine to push prices upward.",
       "pass_through_30d": 0.7,
-      "local_cost_floor_pct": 45
+      "local_cost_floor_pct": 45,
+      "dietary": [
+        "v",
+        "vg"
+      ]
     },
     {
       "id": "apples",
@@ -1155,7 +1232,11 @@
       ],
       "explanation": "Domestic and European apples have limited Hormuz exposure. Orchards use modest fertilizer inputs and are mostly locally distributed. Controlled atmosphere storage adds some gas exposure for out-of-season availability.",
       "pass_through_30d": 0.7,
-      "local_cost_floor_pct": 45
+      "local_cost_floor_pct": 45,
+      "dietary": [
+        "v",
+        "vg"
+      ]
     },
     {
       "id": "oranges",
@@ -1185,7 +1266,11 @@
       ],
       "explanation": "Mediterranean-grown oranges have relatively low Hormuz exposure. Short supply chains and moderate fertilizer needs keep this fruit in the low-impact category.",
       "pass_through_30d": 0.7,
-      "local_cost_floor_pct": 45
+      "local_cost_floor_pct": 45,
+      "dietary": [
+        "v",
+        "vg"
+      ]
     },
     {
       "id": "lettuce",
@@ -1215,7 +1300,11 @@
       ],
       "explanation": "Lettuce and leafy greens are the least Hormuz-exposed items on this list. Low fertilizer intensity, short supply chains, and minimal processing make them resilient to the current crisis.",
       "pass_through_30d": 0.7,
-      "local_cost_floor_pct": 45
+      "local_cost_floor_pct": 45,
+      "dietary": [
+        "v",
+        "vg"
+      ]
     },
     {
       "id": "peppers",
@@ -1252,7 +1341,11 @@
       ],
       "explanation": "Greenhouse pepper production in northern Europe is almost entirely gas-dependent for heating. At current Dutch gas prices, greenhouse running costs have nearly doubled since February.",
       "pass_through_30d": 0.7,
-      "local_cost_floor_pct": 45
+      "local_cost_floor_pct": 45,
+      "dietary": [
+        "v",
+        "vg"
+      ]
     },
     {
       "id": "carrots",
@@ -1282,7 +1375,11 @@
       ],
       "explanation": "Carrots are among the most Hormuz-resilient vegetables. They grow in open fields with relatively modest fertilizer needs, store well without refrigeration, and are mostly grown and consumed regionally.",
       "pass_through_30d": 0.7,
-      "local_cost_floor_pct": 45
+      "local_cost_floor_pct": 45,
+      "dietary": [
+        "v",
+        "vg"
+      ]
     },
     {
       "id": "avocado",
@@ -1319,7 +1416,11 @@
       ],
       "explanation": "Avocados are air-freighted or shipped long distances under refrigeration, making them highly sensitive to fuel price shocks. The shipping distance from Latin America and Africa amplifies the Hormuz effect.",
       "pass_through_30d": 0.85,
-      "local_cost_floor_pct": 40
+      "local_cost_floor_pct": 40,
+      "dietary": [
+        "v",
+        "vg"
+      ]
     },
     {
       "id": "garlic",
@@ -1349,7 +1450,11 @@
       ],
       "explanation": "Garlic has low Hormuz exposure relative to most produce. Moderate fertilizer needs and good storage properties limit crisis sensitivity, though import-dependent supply chains carry some shipping cost exposure.",
       "pass_through_30d": 0.7,
-      "local_cost_floor_pct": 45
+      "local_cost_floor_pct": 45,
+      "dietary": [
+        "v",
+        "vg"
+      ]
     },
     {
       "id": "cucumber",
@@ -1379,7 +1484,11 @@
       ],
       "explanation": "Like peppers and tomatoes, cucumbers are greenhouse crops that depend heavily on natural gas for heating in northern climates, making them moderately exposed to the energy price surge.",
       "pass_through_30d": 0.7,
-      "local_cost_floor_pct": 45
+      "local_cost_floor_pct": 45,
+      "dietary": [
+        "v",
+        "vg"
+      ]
     },
     {
       "id": "shrimp",
@@ -1423,7 +1532,8 @@
       ],
       "explanation": "Shrimp is the highest Hormuz-exposed seafood on this list. It combines long-distance air freight from Southeast Asia with energy-intensive processing and fertilizer-heavy aquaculture feed — a perfect storm of crisis exposure.",
       "pass_through_30d": 0.8,
-      "local_cost_floor_pct": 35
+      "local_cost_floor_pct": 35,
+      "dietary": []
     },
     {
       "id": "canned_sardines",
@@ -1460,7 +1570,8 @@
       ],
       "explanation": "Sardines themselves are wild-caught with modest fuel use and no feed costs. The can, the oil, and processing energy push the Hormuz exposure into the moderate range.",
       "pass_through_30d": 0.75,
-      "local_cost_floor_pct": 35
+      "local_cost_floor_pct": 35,
+      "dietary": []
     },
     {
       "id": "cod",
@@ -1497,7 +1608,8 @@
       ],
       "explanation": "Wild-caught cod avoids the feed-cost burden of aquaculture, but deep-sea trawling is diesel-intensive. Processing, freezing, and refrigerated distribution add gas and packaging exposure.",
       "pass_through_30d": 0.75,
-      "local_cost_floor_pct": 35
+      "local_cost_floor_pct": 35,
+      "dietary": []
     },
     {
       "id": "canned_tuna",
@@ -1541,7 +1653,8 @@
       ],
       "explanation": "Canned tuna is deceptive. The fish is wild-caught with no feed costs, but the fishing fleets travel tens of thousands of kilometres, and the can itself requires energy-intensive steel and oil filling. Combined exposure is extreme.",
       "pass_through_30d": 0.3,
-      "local_cost_floor_pct": 50
+      "local_cost_floor_pct": 50,
+      "dietary": []
     },
     {
       "id": "cooking_oil",
@@ -1585,7 +1698,11 @@
       ],
       "explanation": "Vegetable oil is crisis-exposed at every step: fertilizer for oilseeds, petrochemical solvents for extraction, gas for refining, and petroleum-derived plastic bottles. It's one of the most Hormuz-sensitive items on any shopping list.",
       "pass_through_30d": 0.3,
-      "local_cost_floor_pct": 50
+      "local_cost_floor_pct": 50,
+      "dietary": [
+        "v",
+        "vg"
+      ]
     },
     {
       "id": "frozen_pizza",
@@ -1629,7 +1746,10 @@
       ],
       "explanation": "A frozen pizza is a study in stacked Hormuz exposure. The base (wheat), the cheese (dairy), the meat (feed costs), the tomato sauce (oil), the freezing (gas), and the box (petrochemicals) all move together under the crisis.",
       "pass_through_30d": 0.45,
-      "local_cost_floor_pct": 45
+      "local_cost_floor_pct": 45,
+      "dietary": [
+        "v"
+      ]
     },
     {
       "id": "chocolate",
@@ -1673,7 +1793,10 @@
       ],
       "explanation": "Chocolate is a highly traded commodity with long supply chains from West Africa. Cocoa farming costs, transoceanic shipping, and energy-intensive conching and moulding all carry Hormuz exposure.",
       "pass_through_30d": 0.3,
-      "local_cost_floor_pct": 50
+      "local_cost_floor_pct": 50,
+      "dietary": [
+        "v"
+      ]
     },
     {
       "id": "crisps",
@@ -1717,7 +1840,11 @@
       ],
       "explanation": "Crisps are among the most Hormuz-sensitive snack foods. The combination of fertilized potato farming, petroleum-based frying oil, industrial gas usage, and petrochemical packaging stacks exposure to extreme levels.",
       "pass_through_30d": 0.3,
-      "local_cost_floor_pct": 50
+      "local_cost_floor_pct": 50,
+      "dietary": [
+        "v",
+        "vg"
+      ]
     },
     {
       "id": "biscuits",
@@ -1754,7 +1881,10 @@
       ],
       "explanation": "Industrial biscuit manufacturing depends on gas-fired tunnel ovens running continuously, palm oil shortenings, and fertilized wheat. Packaging adds a further petrochemical layer.",
       "pass_through_30d": 0.3,
-      "local_cost_floor_pct": 50
+      "local_cost_floor_pct": 50,
+      "dietary": [
+        "v"
+      ]
     },
     {
       "id": "soft_drinks",
@@ -1791,7 +1921,11 @@
       ],
       "explanation": "The CO2 used to carbonate soft drinks is a byproduct of ammonia fertilizer plants. When fertilizer production drops due to gas costs, CO2 supply tightens too — a hidden Hormuz linkage.",
       "pass_through_30d": 0.3,
-      "local_cost_floor_pct": 50
+      "local_cost_floor_pct": 50,
+      "dietary": [
+        "v",
+        "vg"
+      ]
     },
     {
       "id": "beer",
@@ -1828,7 +1962,11 @@
       ],
       "explanation": "Beer's exposure stems from the malting and brewing process (gas-intensive) and aluminium can production (one of the most energy-intensive packaging materials). Fertilizer costs for barley add the agricultural layer.",
       "pass_through_30d": 0.3,
-      "local_cost_floor_pct": 50
+      "local_cost_floor_pct": 50,
+      "dietary": [
+        "v",
+        "vg"
+      ]
     },
     {
       "id": "coffee",
@@ -1872,7 +2010,11 @@
       ],
       "explanation": "Coffee is exposed at every step: fertilized tropical plantations, long transoceanic shipping, gas-intensive roasting, and speciality vacuum packaging. The high per-kg retail price amplifies the absolute cost impact.",
       "pass_through_30d": 0.7,
-      "local_cost_floor_pct": 40
+      "local_cost_floor_pct": 40,
+      "dietary": [
+        "v",
+        "vg"
+      ]
     },
     {
       "id": "sugar",
@@ -1902,7 +2044,11 @@
       ],
       "explanation": "European sugar beet is a domestic crop but heavily nitrogen-dependent. Refining is energy-intensive. Imported cane sugar adds a shipping dimension. Overall exposure is moderate — well below sweetened products that use sugar as an input.",
       "pass_through_30d": 0.2,
-      "local_cost_floor_pct": 55
+      "local_cost_floor_pct": 55,
+      "dietary": [
+        "v",
+        "vg"
+      ]
     },
     {
       "id": "peanut_butter",
@@ -1946,7 +2092,11 @@
       ],
       "explanation": "Peanut butter stacks long-haul shipping (peanuts are a globally traded commodity), roasting energy, and glass or plastic container production. An underappreciated crisis exposure for a pantry staple.",
       "pass_through_30d": 0.3,
-      "local_cost_floor_pct": 50
+      "local_cost_floor_pct": 50,
+      "dietary": [
+        "v",
+        "vg"
+      ]
     },
     {
       "id": "orange_juice",
@@ -1983,7 +2133,11 @@
       ],
       "explanation": "Not from concentrate orange juice has to be refrigerated all the way from Brazilian orchards to European shelves. That cold chain is diesel-powered. Brazil's fertilizer import dependency (48% Hormuz-linked) adds to the exposure.",
       "pass_through_30d": 0.3,
-      "local_cost_floor_pct": 50
+      "local_cost_floor_pct": 50,
+      "dietary": [
+        "v",
+        "vg"
+      ]
     },
     {
       "id": "mayonnaise",
@@ -2020,7 +2174,10 @@
       ],
       "explanation": "Mayonnaise is 65-70% vegetable oil — and cooking oil is one of the most crisis-exposed items on this list. With egg costs also rising, mayonnaise carries compounded Hormuz exposure through both its main ingredients.",
       "pass_through_30d": 0.3,
-      "local_cost_floor_pct": 50
+      "local_cost_floor_pct": 50,
+      "dietary": [
+        "v"
+      ]
     },
     {
       "id": "tomato_sauce",
@@ -2057,7 +2214,11 @@
       ],
       "explanation": "Field-grown processing tomatoes require less energy than greenhouse varieties, but industrial cooking, packaging, and distribution all add Hormuz exposure. Sauce jars and cans are among the more energy-intensive containers.",
       "pass_through_30d": 0.3,
-      "local_cost_floor_pct": 50
+      "local_cost_floor_pct": 50,
+      "dietary": [
+        "v",
+        "vg"
+      ]
     },
     {
       "id": "baby_formula",
@@ -2101,7 +2262,10 @@
       ],
       "explanation": "Baby formula concentrates dairy's Hormuz exposure and adds spray-drying (one of the most energy-intensive processes in food manufacturing) and petrochemical nutritional additives. The high price-per-kg makes crisis impact particularly visible.",
       "pass_through_30d": 0.3,
-      "local_cost_floor_pct": 50
+      "local_cost_floor_pct": 50,
+      "dietary": [
+        "v"
+      ]
     },
     {
       "id": "lentils",
@@ -2131,7 +2295,11 @@
       ],
       "explanation": "Legumes like lentils are the most Hormuz-resilient protein source. As nitrogen-fixing crops, they largely bypass the Hormuz fertilizer channel. Short supply chains and long shelf life keep exposure low.",
       "pass_through_30d": 0.25,
-      "local_cost_floor_pct": 60
+      "local_cost_floor_pct": 60,
+      "dietary": [
+        "v",
+        "vg"
+      ]
     },
     {
       "id": "chickpeas",
@@ -2161,7 +2329,11 @@
       ],
       "explanation": "Chickpeas represent the low end of Hormuz exposure in the food system. Their nitrogen-fixing ability and long shelf life make them a crisis-resilient protein source.",
       "pass_through_30d": 0.25,
-      "local_cost_floor_pct": 60
+      "local_cost_floor_pct": 60,
+      "dietary": [
+        "v",
+        "vg"
+      ]
     },
     {
       "id": "tofu",
@@ -2198,7 +2370,11 @@
       ],
       "explanation": "Tofu is a moderately exposed plant protein. Soy is less fertilizer-intensive than cereals, and the processing footprint is lower than meat — but gas-heated production and plastic packaging add exposure.",
       "pass_through_30d": 0.25,
-      "local_cost_floor_pct": 60
+      "local_cost_floor_pct": 60,
+      "dietary": [
+        "v",
+        "vg"
+      ]
     },
     {
       "id": "beans",
@@ -2228,7 +2404,11 @@
       ],
       "explanation": "Dried beans are the most crisis-resilient item on this list. Nitrogen fixation, long shelf life, bulk shipping without refrigeration, and minimal processing make them a genuine Hormuz hedge.",
       "pass_through_30d": 0.25,
-      "local_cost_floor_pct": 60
+      "local_cost_floor_pct": 60,
+      "dietary": [
+        "v",
+        "vg"
+      ]
     },
     {
       "id": "quinoa",
@@ -2265,7 +2445,11 @@
       ],
       "explanation": "Quinoa's main Hormuz channel is transoceanic shipping from the Andes. Moderate fertilizer use and processing energy push it into the moderate range — higher than most legumes due to its long supply chain.",
       "pass_through_30d": 0.25,
-      "local_cost_floor_pct": 60
+      "local_cost_floor_pct": 60,
+      "dietary": [
+        "v",
+        "vg"
+      ]
     },
     {
       "id": "olive_oil",
@@ -2309,7 +2493,11 @@
       ],
       "explanation": "Olive oil's moderate exposure is largely driven by the energy cost of glass bottle production and distribution. Olive groves themselves are relatively low-input perennial crops — but the packaging tells a different story.",
       "pass_through_30d": 0.25,
-      "local_cost_floor_pct": 60
+      "local_cost_floor_pct": 60,
+      "dietary": [
+        "v",
+        "vg"
+      ]
     },
     {
       "id": "frozen_peas",
@@ -2346,7 +2534,11 @@
       ],
       "explanation": "Frozen peas' Hormuz exposure is moderate. Peas partially fix nitrogen, reducing fertilizer sensitivity. But industrial blanching and the frozen cold chain add meaningful gas and diesel exposure.",
       "pass_through_30d": 0.7,
-      "local_cost_floor_pct": 45
+      "local_cost_floor_pct": 45,
+      "dietary": [
+        "v",
+        "vg"
+      ]
     }
   ]
 }

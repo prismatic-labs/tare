@@ -1129,15 +1129,6 @@ const state = {
   activeFood: null,
 };
 
-// Categories excluded per lifestyle. Eggs are in 'dairy' in our taxonomy —
-// vegetarians eat eggs, but we use category as a proxy; this is a known simplification.
-const LIFESTYLE_EXCLUDE = {
-  omnivore:    new Set(),
-  pescatarian: new Set(['meat']),
-  vegetarian:  new Set(['meat', 'seafood']),
-  vegan:       new Set(['meat', 'seafood', 'dairy']),
-};
-
 /* ─── Category icons ─────────────────────────────────────────────────────── */
 const DRIVER_ICONS = {
   fertilizer:   '🌱',
@@ -1517,10 +1508,13 @@ function renderGrid() {
     foods = foods.filter(f => f.category === filter);
   }
 
-  // Filter by lifestyle
-  const excluded = LIFESTYLE_EXCLUDE[state.lifestyle] || new Set();
-  if (excluded.size > 0) {
-    foods = foods.filter(f => !excluded.has(f.category));
+  // Filter by lifestyle (Gemini#20 Precision Fix)
+  if (state.lifestyle === 'pescatarian') {
+    foods = foods.filter(f => f.category !== 'meat');
+  } else if (state.lifestyle === 'vegetarian') {
+    foods = foods.filter(f => f.dietary && f.dietary.includes('v'));
+  } else if (state.lifestyle === 'vegan') {
+    foods = foods.filter(f => f.dietary && f.dietary.includes('vg'));
   }
 
   // Filter by search query
