@@ -1527,7 +1527,13 @@ function buildMathHtml(food, country) {
 /* ─── #3 Sparkline helpers ───────────────────────────────────────────────── */
 // history is populated in init() from data/history/index.json
 const historyData = {}; // { foodId: [exposure_pct, ...] } chronological
-const historyDates = []; // ISO date strings in order
+const historyDates = []; // [date1, date2, ...]
+
+// Gemini#7: Crisis Baseline (Feb 28, 2026)
+// Since we don't have a snapshot for the literal day 0, we use the pre-crisis
+// baseline (0% exposure) as the starting point for the trend line.
+const CRISIS_START_DATE = '2026-02-28';
+
 
 function buildSparklineSvg(values, severity) {
   if (!values || values.length < 2) {
@@ -2267,6 +2273,16 @@ async function init() {
     const hRes = await fetch('data/history/index.json');
     if (hRes.ok) {
       const dates = await hRes.json();
+      
+      // Gemini#7: Ensure Feb 28 is the first date in the series for the timeline
+      if (!dates.includes(CRISIS_START_DATE)) {
+        historyDates.push(CRISIS_START_DATE);
+        // Pre-crisis baseline is effectively 0% exposure
+        state.data.foods.forEach(f => {
+          historyData[f.id] = [0];
+        });
+      }
+
       // Load last 12 snapshots (most recent first, then reverse for chronological display)
       const toLoad = dates.slice(-12);
       const snapshots = await Promise.all(
