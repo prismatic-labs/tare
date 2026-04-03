@@ -236,15 +236,28 @@
     .controls-bar {
       background: var(--white);
       border-bottom: 1px solid var(--border);
-      padding: 0.9rem 1.5rem;
+      padding: 0.75rem 1.5rem 0.6rem;
       position: sticky;
       top: 0;
       z-index: 100;
       display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      align-items: flex-start;
+    }
+    .controls-top {
+      display: flex;
       gap: 0.75rem;
       flex-wrap: wrap;
       align-items: center;
+      width: 100%;
     }
+    .lifestyle-pills {
+      padding-top: 0.2rem;
+      border-top: 1px solid var(--border);
+      width: 100%;
+    }
+    .lifestyle-pill { font-size: 0.74rem; }
 
     #search-input {
       font-family: var(--sans);
@@ -970,22 +983,30 @@
 
 <!-- Search & Filters -->
 <div class="controls-bar" role="search">
-  <input
-    type="search"
-    id="search-input"
-    placeholder="Search — bread, chicken, rice…"
-    autocomplete="off"
-    aria-label="Search foods"
-  >
-  <div class="filter-pills" role="group" aria-label="Filter by category">
-    <button class="pill active" data-filter="all">All</button>
-    <button class="pill" data-filter="grains">Grains</button>
-    <button class="pill" data-filter="meat">Meat</button>
-    <button class="pill" data-filter="dairy">Dairy</button>
-    <button class="pill" data-filter="produce">Produce</button>
-    <button class="pill" data-filter="packaged">Packaged</button>
-    <button class="pill" data-filter="seafood">Seafood</button>
-    <button class="pill" data-filter="staples">Staples</button>
+  <div class="controls-top">
+    <input
+      type="search"
+      id="search-input"
+      placeholder="Search — bread, chicken, rice…"
+      autocomplete="off"
+      aria-label="Search foods"
+    >
+    <div class="filter-pills" role="group" aria-label="Filter by category">
+      <button class="pill active" data-filter="all">All</button>
+      <button class="pill" data-filter="grains">Grains</button>
+      <button class="pill" data-filter="meat">Meat</button>
+      <button class="pill" data-filter="dairy">Dairy</button>
+      <button class="pill" data-filter="produce">Produce</button>
+      <button class="pill" data-filter="packaged">Packaged</button>
+      <button class="pill" data-filter="seafood">Seafood</button>
+      <button class="pill" data-filter="staples">Staples</button>
+    </div>
+  </div>
+  <div class="filter-pills lifestyle-pills" role="group" aria-label="Filter by diet">
+    <button class="pill lifestyle-pill active" data-lifestyle="omnivore">🍖 Omnivore</button>
+    <button class="pill lifestyle-pill" data-lifestyle="pescatarian">🐟 Pescatarian</button>
+    <button class="pill lifestyle-pill" data-lifestyle="vegetarian">🥦 Vegetarian</button>
+    <button class="pill lifestyle-pill" data-lifestyle="vegan">🌱 Vegan</button>
   </div>
 </div>
 
@@ -1103,8 +1124,18 @@ const state = {
   data: null,
   country: 'IT',
   filter: 'all',
+  lifestyle: 'omnivore',
   query: '',
   activeFood: null,
+};
+
+// Categories excluded per lifestyle. Eggs are in 'dairy' in our taxonomy —
+// vegetarians eat eggs, but we use category as a proxy; this is a known simplification.
+const LIFESTYLE_EXCLUDE = {
+  omnivore:    new Set(),
+  pescatarian: new Set(['meat']),
+  vegetarian:  new Set(['meat', 'seafood']),
+  vegan:       new Set(['meat', 'seafood', 'dairy']),
 };
 
 /* ─── Category icons ─────────────────────────────────────────────────────── */
@@ -1486,6 +1517,12 @@ function renderGrid() {
     foods = foods.filter(f => f.category === filter);
   }
 
+  // Filter by lifestyle
+  const excluded = LIFESTYLE_EXCLUDE[state.lifestyle] || new Set();
+  if (excluded.size > 0) {
+    foods = foods.filter(f => !excluded.has(f.category));
+  }
+
   // Filter by search query
   if (query.trim()) {
     const q = query.toLowerCase().trim();
@@ -1605,16 +1642,12 @@ function openFood(id) {
     const srcHtml = src
       ? `<a class="driver-row-source" href="${src.url}" target="_blank" rel="noopener">↗ ${escHtml(src.label)}</a>`
       : '';
-    // Weight bar: show relative contribution width (max 48px)
     const wPct = d.weight != null ? Math.round(d.weight * 100) : null;
-    const weightHtml = wPct != null
-      ? `<span class="driver-weight-bar" style="width:${Math.round(d.weight * 48)}px" title="${wPct}% of this food's Hormuz sensitivity"></span>`
-      : '';
     return `
     <details class="driver-row cat-${escHtml(d.category)}">
       <summary>
         <span class="driver-row-icon" aria-hidden="true">${driverIcon(d.category)}</span>
-        <span class="driver-row-name">${escHtml(d.input)}${weightHtml}</span>
+        <span class="driver-row-name">${escHtml(d.input)}</span>
         <span class="driver-row-pct">+${d.price_change_pct}%</span>
         <span class="driver-row-chevron" aria-hidden="true">▶</span>
       </summary>
@@ -1708,6 +1741,7 @@ function openFood(id) {
       }).join('');
       return `<div class="sub-section">
         <p class="section-title">Lower-exposure alternatives</p>
+        <p style="font-size:0.75rem;color:var(--muted);margin:-0.3rem 0 0.6rem">Similar foods with less Hormuz exposure — same function, lower supply chain risk.</p>
         <div class="sub-cards">${subCards}</div>
       </div>`;
     })()}
@@ -1835,17 +1869,22 @@ function populateCountrySelector() {
 //   x = 2% + (lon + 180) / 360 * 96%   (2% padding each side)
 //   y = 3% + (90 - lat) / 180 * 94%    (3% padding top/bottom)
 // EU countries nudged apart — they share similar lat/lon and would overlap.
+// Calibrated from user feedback: UK (0°E) correctly appears at 43%.
+// This implies the SVG has ~7% extra Pacific space left of -180°.
+// Formula: x = -7% + (lon + 180) / 360 * 100%
+// Formula: y = (90 - lat) / 180 * 100%
+// GB/DE nudged apart by ±2.5% since they share nearly identical coordinates.
 const COUNTRY_MAP_POS = {
-  GB: { left: '43.0%', top: '21.0%' }, // London  51.5°N   0°E  — nudged left of DE
-  DE: { left: '53.0%', top: '20.0%' }, // Berlin  52.5°N  13°E  — nudged right of GB
-  IT: { left: '50.5%', top: '29.5%' }, // Rome    41.9°N  12°E
-  US: { left: '20.8%', top: '29.9%' }, // Centre  38.5°N  98°W
-  JP: { left: '84.3%', top: '31.4%' }, // Tokyo   35.7°N 140°E
-  IN: { left: '67.6%', top: '34.8%' }, // Delhi   28.6°N  77°E
-  PH: { left: '79.3%', top: '42.4%' }, // Manila  14.6°N 121°E
-  BR: { left: '34.2%', top: '58.2%' }, // Brasília 15.8°S  48°W
-  AU: { left: '82.5%', top: '68.3%' }, // Centre  25.0°S 133°E
-  LK: { left: '68.3%', top: '46.4%' }, // Colombo  6.9°N  80°E
+  GB: { left: '41.0%', top: '21.0%' }, // London  51.5°N   0°E  — nudged left
+  DE: { left: '48.0%', top: '20.0%' }, // Berlin  52.5°N  13°E  — nudged right
+  IT: { left: '46.3%', top: '26.7%' }, // Rome    41.9°N  12°E
+  US: { left: '15.8%', top: '28.6%' }, // Centre  38.5°N  98°W
+  JP: { left: '81.9%', top: '30.2%' }, // Tokyo   35.7°N 140°E
+  IN: { left: '64.4%', top: '34.1%' }, // Delhi   28.6°N  77°E
+  PH: { left: '76.6%', top: '41.9%' }, // Manila  14.6°N 121°E
+  BR: { left: '29.7%', top: '58.8%' }, // Brasília 15.8°S  48°W
+  AU: { left: '79.4%', top: '63.9%' }, // Centre  25.0°S 133°E
+  LK: { left: '65.2%', top: '46.2%' }, // Colombo  6.9°N  80°E
 };
 
 const SEVERITY_COLOR = {
@@ -1984,11 +2023,25 @@ async function init() {
   });
 
   // Category pills
-  document.querySelectorAll('.pill').forEach(pill => {
+  document.querySelectorAll('.filter-pills:not(.lifestyle-pills) .pill').forEach(pill => {
     pill.addEventListener('click', () => {
-      document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.filter-pills:not(.lifestyle-pills) .pill').forEach(p => p.classList.remove('active'));
       pill.classList.add('active');
       state.filter = pill.dataset.filter;
+      renderGrid();
+    });
+  });
+
+  // Lifestyle pills
+  document.querySelectorAll('.lifestyle-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      document.querySelectorAll('.lifestyle-pill').forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      state.lifestyle = pill.dataset.lifestyle;
+      // Reset category filter to 'all' when switching lifestyle to avoid empty grid
+      state.filter = 'all';
+      document.querySelectorAll('.filter-pills:not(.lifestyle-pills) .pill').forEach(p => p.classList.remove('active'));
+      document.querySelector('.filter-pills:not(.lifestyle-pills) .pill[data-filter="all"]').classList.add('active');
       renderGrid();
     });
   });
