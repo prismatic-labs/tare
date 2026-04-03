@@ -446,6 +446,54 @@
     }
     .info-callout-text strong { color: var(--text); }
 
+    /* ─── Persistent Tooltips ───────────────────────────────────────────── */
+    .tooltip-popover {
+      display: none;
+      position: absolute;
+      background: #1a1a1a;
+      color: #fff;
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius);
+      font-size: 0.78rem;
+      line-height: 1.45;
+      width: 240px;
+      white-space: normal;
+      z-index: 1000;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+    .tooltip-popover.open { display: block; }
+    .tooltip-popover::after {
+      content: '';
+      position: absolute;
+      bottom: -6px; left: 50%;
+      transform: translateX(-50%);
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      border-top: 6px solid #1a1a1a;
+    }
+
+    /* ─── Impact Block (Refactored to Pressure %) ─────────────────────── */
+    .impact-row-value {
+      font-family: var(--serif);
+      font-size: 1.6rem;
+      color: var(--text);
+      font-weight: 400;
+    }
+    .impact-row-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted-light);
+      font-weight: 700;
+      margin-bottom: 0.2rem;
+    }
+    .impact-row-sub {
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-top: 0.15rem;
+    }
+
     /* ─── Grid ──────────────────────────────────────────────────────────── */
     .main-content { padding: 1.5rem; max-width: 1400px; margin: 0 auto; }
 
@@ -1917,6 +1965,11 @@ function openFood(id) {
   }).format(sensitivityAmt);
   const currencySymbol = formattedSensitive.replace(/[0-9.,\s]/g, '') || currency;
 
+  // Pressure percentages (relative to baseline)
+  // localDelta / baseline shelf price proxy (we use food.base_price_eur_kg as proxy)
+  const pressureToday = Math.round((euDeltaToday / food.base_price_eur_kg) * 100 * country.impact_multiplier);
+  const pressureProj  = Math.round((euDeltaProj  / food.base_price_eur_kg) * 100 * country.impact_multiplier);
+
   document.getElementById('modal-body').innerHTML = `
     <div class="modal-hero">
       <div class="modal-emoji" aria-hidden="true">${food.emoji}</div>
@@ -1927,7 +1980,11 @@ function openFood(id) {
           <div class="modal-exposure-big severity-${sev}" style="color:${barColors[sev]}">${adjPct}%${scarcityFlag}</div>
           <div class="modal-exposure-label">
             Hormuz Exposure Index
-            <span class="exposure-info-btn" title="The percentage of the total shelf price directly derived from fuel, gas, and fertilizer inputs passing through the Strait of Hormuz.">i</span>
+            <button class="exposure-info-btn" id="exposure-info-btn" aria-label="More information">i</button>
+            <div class="tooltip-popover" id="exposure-tooltip">
+              The percentage of the total shelf price directly derived from fuel, gas, and fertilizer inputs 
+              passing through the Strait of Hormuz.
+            </div>
             ${euRefHtml}
           </div>
         </div>
@@ -1952,34 +2009,34 @@ function openFood(id) {
       </p>
     </div>
 
-    <p class="section-title">⚠️ Estimated crisis impact per kg — ${escHtml(country.name)}</p>
+    <p class="section-title">⚠️ Estimated crisis impact — ${escHtml(country.name)}</p>
     <div class="impact-block">
       <div class="impact-row" aria-label="Estimated crisis price impact">
         <div class="impact-cell">
-          <div class="impact-cell-label">Est. crisis increase today</div>
-          <div class="impact-cell-value">${formatDelta(localDeltaToday, country)}</div>
-          <div class="impact-cell-sub">vs. pre-28 Feb 2026 · April 2026</div>
+          <div class="impact-cell-label">Est. price pressure today</div>
+          <div class="impact-cell-value">+${pressureToday}%</div>
+          <div class="impact-cell-sub">vs. pre-28 Feb 2026 baseline</div>
         </div>
         <div class="impact-cell projected">
-          <div class="impact-cell-label">Est. crisis increase (projected)</div>
-          <div class="impact-cell-value">${formatDelta(localDeltaProj, country)}</div>
-          <div class="impact-cell-sub">vs. pre-28 Feb 2026 · if disruption persists</div>
+          <div class="impact-cell-label">Est. pressure (projected)</div>
+          <div class="impact-cell-value">+${pressureProj}%</div>
+          <div class="impact-cell-sub">if current disruption persists</div>
         </div>
       </div>
       ${!isEuBaseline ? `
       <div class="impact-eu-ref" aria-label="EU reference for comparison">
         <span>EU reference:</span>
-        <span>today <strong>${formatEur(euDeltaToday)}/kg</strong></span>
+        <span>today <strong>+${Math.round((euDeltaToday / food.base_price_eur_kg)*100)}%</strong> pressure</span>
         <span>·</span>
-        <span>projected <strong>${formatEur(euDeltaProj)}/kg</strong></span>
+        <span>projected <strong>+${Math.round((euDeltaProj / food.base_price_eur_kg)*100)}%</strong> pressure</span>
         <span>·</span>
         <span>${escHtml(country.name)} has <strong>${country.impact_multiplier}×</strong> the EU's Hormuz exposure</span>
       </div>` : ''}
       <div class="impact-disclaimer">
-        <strong>⚠️ Estimates only.</strong> These figures show the crisis-driven increase in supply chain costs,
+        <strong>⚠️ Estimates only.</strong> These figures show the crisis-driven increase in <strong>supply chain costs</strong>,
         not absolute retail prices. Calculated from European cost-of-production data (FAO/USDA)
         scaled by ${escHtml(country.name)}'s Hormuz import dependency coefficient.
-        Actual shelf prices vary by country, region, retailer, and market conditions.
+        Retailers may absorb some cost pressure or delay increases via inventory buffers.
       </div>
     </div>
 
@@ -2039,6 +2096,25 @@ function closeFood() {
   document.getElementById('modal-overlay').classList.remove('open');
   document.body.style.overflow = '';
   history.pushState('', document.title, window.location.pathname + window.location.search);
+}
+
+/* ─── Persistent Tooltips ────────────────────────────────────────────────── */
+function toggleTooltip(e) {
+  e.stopPropagation();
+  const tip = document.getElementById('exposure-tooltip');
+  tip.classList.toggle('open');
+  
+  // Position above the button
+  const btn = e.currentTarget;
+  const rect = btn.getBoundingClientRect();
+  tip.style.bottom = `${window.innerHeight - rect.top + 8}px`;
+  tip.style.left = `${rect.left + rect.width/2}px`;
+  tip.style.transform = 'translateX(-50%)';
+  tip.style.position = 'fixed';
+}
+
+function closeAllTooltips() {
+  document.querySelectorAll('.tooltip-popover').forEach(t => t.classList.remove('open'));
 }
 
 /* ─── Share menu ─────────────────────────────────────────────────────────── */
@@ -2428,9 +2504,10 @@ async function init() {
   document.getElementById('share-copy').addEventListener('click', () => {
     copyShareLink(document.getElementById('share-wrap').dataset.foodId);
   });
-  // Close share menu when clicking outside
+  // Close share menu and tooltips when clicking outside
   document.addEventListener('click', e => {
     if (!document.getElementById('share-wrap').contains(e.target)) closeShareMenu();
+    closeAllTooltips();
   });
 
   // Keyboard: Esc to close modal
