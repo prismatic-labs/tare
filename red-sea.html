@@ -1881,6 +1881,9 @@ function renderCard(food, country) {
         <div>
           <div class="exposure-label">
             Red Sea<br>Freight Index
+            ${(food.drivers.some(d => d.category === 'freight' && d.weight >= 0.5) && state.data.sources?.tipping_points?.port_congestion_risk)
+              ? `<span style="margin-left:0.3rem;cursor:help" title="Port Congestion Risk: High container reliance during active bottleneck">⚓</span>`
+              : ''}
           </div>
           ${food.exposure_low != null && food.exposure_high != null && food.exposure_high > food.exposure_low
             ? `<div class="exposure-band" title="80% model confidence interval">${Math.round(food.exposure_low * country.impact_multiplier)}–${Math.round(food.exposure_high * country.impact_multiplier)}%</div>`
@@ -2040,6 +2043,13 @@ function openFood(id) {
     ? `<span class="scarcity-flag" title="${escHtml(tp.port_congestion_note || 'Port congestion risk active')}">⚠ Port congestion</span>`
     : '';
 
+  const congestionNote = (food.drivers.some(d => d.category === 'freight' && d.weight >= 0.5) && tp?.port_congestion_risk)
+    ? `<div class="uncertainty-note" style="color:var(--high);font-weight:600;margin-top:0.5rem">
+        ⚓ Port Congestion Alert: High container reliance during active bottleneck. 
+        Expect delays and potential inventory surcharges.
+      </div>`
+    : '';
+
   const driversHtml = food.drivers.map(d => {
     const src = DRIVER_SOURCES[d.category];
     const srcHtml = src
@@ -2090,12 +2100,14 @@ function openFood(id) {
         <div class="modal-exposure-row">
           <div class="modal-exposure-big severity-${sev}" style="color:${barColors[sev]}">${adjPct}%${scarcityFlag}</div>
           <div class="modal-exposure-label">
-            Red Sea Freight Index
+            Red Sea Exposure Index
             ${euRefHtml}
           </div>
         </div>
         ${bandHtml}
+        ${congestionNote}
         ${stickinessHtml}
+
       </div>
     </div>
 
@@ -2300,26 +2312,37 @@ function renderPulse() {
   const section = document.getElementById('pulse-section');
   if (!container || !state.data) return;
 
+  const country = getCountry();
   const snapshotCount = Object.values(historyData)[0]?.length || 0;
   if (snapshotCount < 2) return;
 
-  const globalAverages = [];
+  // Gemini#20: Context-aware averages (weighted by country multiplier)
+  const countryAverages = [];
   for (let i = 0; i < snapshotCount; i++) {
     let sum = 0, count = 0;
     for (const foodId in historyData) {
       const val = historyData[foodId][i];
-      if (val != null) { sum += val; count++; }
+      if (val != null) { 
+        // Scale by country multiplier to show regional reality
+        const adjVal = Math.round(val * country.impact_multiplier);
+        sum += adjVal; 
+        count++; 
+      }
     }
-    globalAverages.push(count > 0 ? sum / count : 0);
+    countryAverages.push(count > 0 ? sum / count : 0);
   }
 
   section.style.display = 'block';
+  // Update subtitle to reflect country context
+  section.querySelector('.pulse-sub').innerHTML = 
+    `Average Red Sea freight exposure in <strong>${escHtml(country.name)}</strong> since Nov 19, 2023.`;
+
   const W = container.clientWidth;
   const H = 160;
   const PAD_L = 40, PAD_R = 20, PAD_T = 20, PAD_B = 30;
 
-  const minAvg = Math.min(...globalAverages);
-  const maxAvg = Math.max(...globalAverages, 15); // Baseline 15 for Red Sea (lower than Hormuz)
+  const minAvg = Math.min(...countryAverages);
+  const maxAvg = Math.max(...countryAverages, 15);
   const range = maxAvg - minAvg || 1;
 
   // Calendar-proportional x-spacing
@@ -2335,7 +2358,7 @@ function renderPulse() {
   };
   const getY = (v) => H - PAD_B - ((v - minAvg) / range) * (H - PAD_B - PAD_T);
 
-  const points = globalAverages.map((v, i) => `${getX(i).toFixed(1)},${getY(v).toFixed(1)}`).join(' ');
+  const points = countryAverages.map((v, i) => `${getX(i).toFixed(1)},${getY(v).toFixed(1)}`).join(' ');
   const markerX = getX(0);
 
   const fmt = (d, showYear) => {
