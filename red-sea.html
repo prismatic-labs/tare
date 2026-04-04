@@ -509,6 +509,99 @@
       margin-top: 0.15rem;
     }
 
+    /* ─── Info Callout (Exposure vs Price) ────────────────────────────── */
+    .info-callout {
+      background: var(--moderate-bg);
+      border: 1px solid var(--moderate);
+      border-radius: var(--radius);
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+    .info-callout-icon {
+      font-size: 1.4rem;
+      line-height: 1;
+      padding-top: 0.1rem;
+    }
+    .info-callout-text h3 {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--moderate);
+      margin-bottom: 0.3rem;
+    }
+    .info-callout-text p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .info-callout-text strong { color: var(--text); }
+
+    /* ─── Risk Bar (Sensitive vs Stable) ───────────────────────────────── */
+    .risk-bar-wrap {
+      margin: 1.25rem 0;
+      padding: 1rem;
+      background: rgba(0,0,0,0.02);
+      border-radius: var(--radius);
+    }
+    .risk-bar-labels {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .risk-bar-track {
+      height: 8px;
+      display: flex;
+      border-radius: 20px;
+      overflow: hidden;
+      background: var(--border);
+    }
+    .risk-bar-sensitive {
+      height: 100%;
+      background: var(--dark-green);
+      transition: width 0.3s ease;
+    }
+    .risk-bar-stable {
+      flex: 1;
+      height: 100%;
+      background: rgba(0,0,0,0.06);
+    }
+    .risk-description {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 0.75rem;
+      line-height: 1.5;
+    }
+    .risk-description strong { color: var(--text); }
+
+    /* ─── Impact Block (Refactored to Pressure %) ─────────────────────── */
+    .impact-row-value {
+      font-family: var(--serif);
+      font-size: 1.6rem;
+      color: var(--text);
+      font-weight: 400;
+    }
+    .impact-row-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted-light);
+      font-weight: 700;
+      margin-bottom: 0.2rem;
+    }
+    .impact-row-sub {
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-top: 0.15rem;
+    }
+
     /* ─── Grid ──────────────────────────────────────────────────────────── */
     .main-content { padding: 1.5rem; max-width: 1400px; margin: 0 auto; }
 
@@ -2229,13 +2322,31 @@ function renderPulse() {
   const maxAvg = Math.max(...globalAverages, 40);
   const range = maxAvg - minAvg || 1;
 
-  const getX = (i) => PAD_L + (i / (snapshotCount - 1)) * (W - PAD_L - PAD_R);
+  // Calendar-proportional x-spacing
+  const dateToMs = d => d ? new Date(d).getTime() : 0;
+  const allMs = historyDates.map(dateToMs);
+  const msMin = allMs[0] || 0;
+  const msMax = allMs[allMs.length - 1] || 1;
+  const msRange = msMax - msMin || 1;
+  
+  const getX = (i) => {
+    const t = allMs[i] || msMin;
+    return PAD_L + ((t - msMin) / msRange) * (W - PAD_L - PAD_R);
+  };
   const getY = (v) => H - PAD_B - ((v - minAvg) / range) * (H - PAD_B - PAD_T);
 
   const points = globalAverages.map((v, i) => `${getX(i).toFixed(1)},${getY(v).toFixed(1)}`).join(' ');
   const markerX = getX(0);
 
+  const fmt = (d, showYear) => {
+    if (!d) return '';
+    const date = new Date(d);
+    const m = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][date.getMonth()];
+    return `${m} ${date.getDate()}${showYear ? ` '${String(date.getFullYear()).slice(2)}` : ''}`;
+  };
+
   container.innerHTML = `
+    <div class="pulse-tooltip" id="pulse-tooltip"></div>
     <svg class="pulse-svg" viewBox="0 0 ${W} ${H}">
       <!-- Y-Axis Label -->
       <text class="pulse-axis-label" x="10" y="${PAD_T - 5}" text-anchor="start" style="font-weight:600">Avg. Exposure %</text>
@@ -2251,28 +2362,39 @@ function renderPulse() {
       <polyline class="pulse-line" points="${points}" />
       
       ${globalAverages.map((v, i) => `
-        <circle class="pulse-point" cx="${getX(i)}" cy="${getY(v)}" r="4">
-          <title>${v.toFixed(1)}% average exposure</title>
-        </circle>
+        <circle class="pulse-point" 
+          cx="${getX(i)}" cy="${getY(v)}" r="4"
+          data-val="${v.toFixed(1)}%"
+          data-date="${fmt(historyDates[i], true)}"
+        ></circle>
       `).join('')}
       
       <!-- Labels -->
       <text class="pulse-axis-label" x="${PAD_L - 5}" y="${getY(minAvg) + 4}" text-anchor="end">${minAvg.toFixed(0)}%</text>
       <text class="pulse-axis-label" x="${PAD_L - 5}" y="${getY(maxAvg) + 4}" text-anchor="end">${maxAvg.toFixed(0)}%</text>
       
-      <!-- X-Axis Labels: first, middle, last dates -->
-      ${(() => {
-        const fmt = d => { const [,m,day] = d.split('-'); return `${['','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][+m]} ${+day}`; };
-        const labels = [];
-        if (historyDates.length > 0) labels.push({ i: 0, label: fmt(historyDates[0]) });
-        if (historyDates.length > 2) labels.push({ i: Math.floor((snapshotCount-1)/2), label: fmt(historyDates[Math.floor((historyDates.length-1)/2)]) });
-        if (historyDates.length > 1) labels.push({ i: snapshotCount-1, label: 'Today' });
-        return labels.map(({i, label}) =>
-          `<text class="pulse-axis-label" x="${getX(i)}" y="${H - 10}" text-anchor="middle">${label}</text>`
-        ).join('');
-      })()}
+      <!-- X-Axis Labels -->
+      <text class="pulse-axis-label" x="${getX(0)}" y="${H - 10}" text-anchor="middle">Nov '23</text>
+      <text class="pulse-axis-label" x="${W / 2 + PAD_L / 2}" y="${H - 10}" text-anchor="middle" style="font-weight:600;opacity:0.5">Timeline</text>
+      <text class="pulse-axis-label" x="${getX(snapshotCount - 1)}" y="${H - 10}" text-anchor="middle">Today</text>
     </svg>
   `;
+
+  // Wire tooltips
+  const tip = document.getElementById('pulse-tooltip');
+  container.querySelectorAll('.pulse-point').forEach(p => {
+    p.addEventListener('mouseenter', () => {
+      tip.style.display = 'block';
+      tip.innerHTML = `<strong>${p.dataset.date}</strong><br>${p.dataset.val} exposure`;
+    });
+    p.addEventListener('mousemove', (e) => {
+      tip.style.left = `${e.clientX}px`;
+      tip.style.top = `${e.clientY}px`;
+    });
+    p.addEventListener('mouseleave', () => {
+      tip.style.display = 'none';
+    });
+  });
 }
 
 function sharePulse() {
@@ -2382,8 +2504,43 @@ async function init() {
   }
   document.getElementById('footer-date').textContent = dateStr;
 
-  // No Red Sea history snapshots yet — Crisis Pulse hidden, sparklines flat.
-  // History will accumulate in data/red-sea-history/ once the daily job runs.
+  // #3 Load history index for sparklines (graceful fallback — no history on first run)
+  try {
+    const hRes = await fetch('data/red-sea-history/index.json');
+    if (hRes.ok) {
+      const dates = await hRes.json();
+      
+      // Ensure the timeline reflects the pre-crisis baseline (Feb 28, 2026 or 2023 start)
+      // For Red Sea, we start at 0% on 2023-11-19 (not Feb 28 which is Hormuz)
+      const CRISIS_START = '2023-11-19';
+      if (!dates.includes(CRISIS_START)) {
+        historyDates.push(CRISIS_START);
+        state.data.foods.forEach(f => {
+          historyData[f.id] = [0];
+        });
+      }
+
+      // Load all snapshots for Red Sea history
+      const snapshots = await Promise.all(
+        dates.map(date =>
+          fetch(`data/red-sea-history/${date}.json`)
+            .then(r => r.ok ? r.json() : null)
+            .catch(() => null)
+        )
+      );
+      // Build per-food history arrays
+      snapshots.forEach((snap, i) => {
+        if (!snap) return;
+        historyDates.push(dates[i]);
+        (snap.foods || []).forEach(({ id, crisis_exposure_pct }) => {
+          if (!historyData[id]) historyData[id] = [];
+          historyData[id].push(crisis_exposure_pct);
+        });
+      });
+    }
+  } catch (e) {
+    console.error("Failed to load Red Sea history:", e);
+  }
 
   // Detect country from browser locale
   state.country = detectCountry();
