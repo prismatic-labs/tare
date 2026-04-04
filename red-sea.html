@@ -2384,7 +2384,7 @@ function renderPulse() {
       <!-- Path -->
       <polyline class="pulse-line" points="${points}" />
       
-      ${globalAverages.map((v, i) => `
+      ${countryAverages.map((v, i) => `
         <circle class="pulse-point" 
           cx="${getX(i)}" cy="${getY(v)}" r="4"
           data-val="${v.toFixed(1)}%"
