@@ -241,12 +241,27 @@
     }
     .pulse-point {
       fill: var(--dark-green);
-      stroke: var(--cream-dark);
+      stroke: var(--white);
       stroke-width: 2;
+      transition: r 0.1s ease;
+      cursor: pointer;
     }
     .pulse-point:hover {
       r: 6;
-      cursor: help;
+    }
+    .pulse-tooltip {
+      position: fixed;
+      display: none;
+      background: rgba(26, 26, 26, 0.98);
+      color: #fff;
+      padding: 6px 10px;
+      border-radius: 4px;
+      font-size: 0.72rem;
+      pointer-events: none;
+      z-index: 2000;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid rgba(255,255,255,0.1);
+      transform: translate(-50%, -120%);
     }
     .pulse-share-btn {
       font-size: 0.75rem;
@@ -2219,7 +2234,14 @@ function renderPulse() {
   const points = globalAverages.map((v, i) => `${getX(i).toFixed(1)},${getY(v).toFixed(1)}`).join(' ');
   const markerX = getX(0);
 
+  const fmt = d => { 
+    if (!d) return '';
+    const [,m,day] = d.split('-'); 
+    return `${['','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][+m]} ${+day}`; 
+  };
+
   container.innerHTML = `
+    <div class="pulse-tooltip" id="pulse-tooltip"></div>
     <svg class="pulse-svg" viewBox="0 0 ${W} ${H}">
       <!-- Y-Axis Label -->
       <text class="pulse-axis-label" x="10" y="${PAD_T - 5}" text-anchor="start" style="font-weight:600">Avg. Exposure %</text>
@@ -2235,20 +2257,21 @@ function renderPulse() {
       <polyline class="pulse-line" points="${points}" />
       
       ${globalAverages.map((v, i) => `
-        <circle class="pulse-point" cx="${getX(i)}" cy="${getY(v)}" r="4">
-          <title>${v.toFixed(1)}% average exposure</title>
-        </circle>
+        <circle class="pulse-point" 
+          cx="${getX(i)}" cy="${getY(v)}" r="4"
+          data-val="${v.toFixed(1)}%"
+          data-date="${fmt(historyDates[i]) || 'Feb 28'}"
+        ></circle>
       `).join('')}
       
       <!-- Labels -->
       <text class="pulse-axis-label" x="${PAD_L - 5}" y="${getY(minAvg) + 4}" text-anchor="end">${minAvg.toFixed(0)}%</text>
       <text class="pulse-axis-label" x="${PAD_L - 5}" y="${getY(maxAvg) + 4}" text-anchor="end">${maxAvg.toFixed(0)}%</text>
       
-      <!-- X-Axis Labels: first, middle, last dates -->
+      <!-- X-Axis Labels -->
       ${(() => {
-        const fmt = d => { const [,m,day] = d.split('-'); return `${['','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][+m]} ${+day}`; };
         const labels = [];
-        if (historyDates.length > 0) labels.push({ i: 0, label: fmt(historyDates[0]) });
+        if (historyDates.length > 0) labels.push({ i: 0, label: fmt(historyDates[0]) || 'Feb 28' });
         if (historyDates.length > 2) labels.push({ i: Math.floor((snapshotCount-1)/2), label: fmt(historyDates[Math.floor((historyDates.length-1)/2)]) });
         if (historyDates.length > 1) labels.push({ i: snapshotCount-1, label: 'Today' });
         return labels.map(({i, label}) =>
@@ -2257,6 +2280,22 @@ function renderPulse() {
       })()}
     </svg>
   `;
+
+  // Wire tooltips
+  const tip = document.getElementById('pulse-tooltip');
+  container.querySelectorAll('.pulse-point').forEach(p => {
+    p.addEventListener('mouseenter', () => {
+      tip.style.display = 'block';
+      tip.innerHTML = `<strong>${p.dataset.date}</strong><br>${p.dataset.val} exposure`;
+    });
+    p.addEventListener('mousemove', (e) => {
+      tip.style.left = `${e.clientX}px`;
+      tip.style.top = `${e.clientY}px`;
+    });
+    p.addEventListener('mouseleave', () => {
+      tip.style.display = 'none';
+    });
+  });
 }
 
 function sharePulse() {
