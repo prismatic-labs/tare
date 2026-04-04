@@ -2319,7 +2319,7 @@ function renderPulse() {
   const PAD_L = 40, PAD_R = 20, PAD_T = 20, PAD_B = 30;
 
   const minAvg = Math.min(...globalAverages);
-  const maxAvg = Math.max(...globalAverages, 40);
+  const maxAvg = Math.max(...globalAverages, 15); // Baseline 15 for Red Sea (lower than Hormuz)
   const range = maxAvg - minAvg || 1;
 
   // Calendar-proportional x-spacing
