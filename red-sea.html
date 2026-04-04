@@ -3,20 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tare — The Strait of Hormuz crisis in your grocery bill</title>
-  <meta name="description" content="A data tool that maps how the 2026 Strait of Hormuz disruption flows through energy, fertilizer, and logistics into the price of 59 everyday foods.">
+  <title>Tare — The Red Sea shipping crisis in your grocery bill</title>
+  <meta name="description" content="A data tool that maps how Houthi attacks on Red Sea shipping since Nov 2023 have pushed container freight costs into the price of 59 everyday foods.">
 
   <!-- Open Graph -->
-  <meta property="og:title" content="The Strait of Hormuz crisis in your grocery bill">
-  <meta property="og:description" content="A data breakdown of how Hormuz supply chain disruptions affect the price of 59 everyday foods across 10 countries.">
-  <meta property="og:url" content="https://prismatic-labs.github.io/tare/">
+  <meta property="og:title" content="The Red Sea shipping crisis in your grocery bill">
+  <meta property="og:description" content="A data breakdown of how Red Sea / Bab-el-Mandeb disruptions affect container freight costs and the price of 59 everyday foods across 10 countries.">
+  <meta property="og:url" content="https://prismatic-labs.github.io/tare/red-sea.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Tare by Prismatic Labs">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="The Strait of Hormuz crisis in your grocery bill">
-  <meta name="twitter:description" content="Data breakdown: how Hormuz supply chain disruptions affect 59 everyday foods × 10 countries.">
+  <meta name="twitter:title" content="The Red Sea shipping crisis in your grocery bill">
+  <meta name="twitter:description" content="Data breakdown: how Red Sea container freight disruptions affect 59 everyday foods × 10 countries.">
 
   <style>
     /* ─── Reset & Base ──────────────────────────────────────────────────── */
@@ -1038,6 +1038,9 @@
     .cat-gas         .driver-row-pct { color: var(--extreme); }
     .cat-petrochemical .driver-row-pct { color: #8e44ad; }
     .cat-shipping    .driver-row-pct { color: var(--high); }
+    .cat-freight     .driver-row-pct { color: var(--high); }
+    .cat-insurance   .driver-row-pct { color: #8e44ad; }
+    .cat-rerouting   .driver-row-pct { color: var(--moderate); }
 
     .driver-row-chevron {
       font-size: 0.65rem;
@@ -1230,14 +1233,13 @@
   </div>
 
   <div class="header-headline">
-    <h1>The Strait of Hormuz crisis, in your grocery bill.</h1>
+    <h1>The Red Sea shipping crisis, in your grocery bill.</h1>
     <p>
-      Since 28 February 2026, disruptions to the Strait of Hormuz have affected an estimated
-      20% of global oil supply <a href="https://www.eia.gov/todayinenergy/detail.php?id=39932" target="_blank" rel="noopener" style="color:rgba(245,240,232,0.55);text-decoration:underline">↗ EIA</a>,
-      20% of LNG <a href="https://www.iea.org/reports/the-role-of-gas-in-todays-energy-transitions" target="_blank" rel="noopener" style="color:rgba(245,240,232,0.55);text-decoration:underline">↗ IEA</a>,
-      and around 30% of globally traded fertilizer <a href="https://www.ifastat.org/" target="_blank" rel="noopener" style="color:rgba(245,240,232,0.55);text-decoration:underline">↗ IFA</a>.
-      This tool maps how those supply chain shocks flow through energy, logistics, and inputs
-      into the price of 59 everyday foods.
+      Since November 2023, Houthi attacks on commercial vessels in the Red Sea have forced ships
+      to reroute around the Cape of Good Hope — adding 10–14 days and
+      <a href="https://www.drewry.co.uk/supply-chain-advisors/supply-chain-expertise/world-container-index-assessed-by-drewry" target="_blank" rel="noopener" style="color:rgba(245,240,232,0.55);text-decoration:underline">↗ $3,000+ per container</a>
+      to shipping costs. This tool maps how those freight and insurance cost shocks flow through
+      container supply chains into the price of 59 everyday foods.
     </p>
   </div>
 
@@ -1252,8 +1254,8 @@
   </div>
 
   <div class="header-utility">
-    <span class="utility-link" aria-current="page" style="opacity:1;cursor:default"><span>🛢️</span> Hormuz <span style="font-size:0.7rem;opacity:0.6;font-weight:normal">(active)</span></span>
-    <a href="red-sea.html" class="utility-link"><span>🚢</span> Red Sea crisis</a>
+    <a href="index.html" class="utility-link"><span>🛢️</span> Hormuz crisis</a>
+    <span class="utility-link" aria-current="page" style="opacity:1;cursor:default"><span>🚢</span> Red Sea <span style="font-size:0.7rem;opacity:0.6;font-weight:normal">(active)</span></span>
     <a href="quiz.html" class="utility-link" style="margin-left:auto"><span>🛒</span> Score your basket</a>
     <a href="methodology.html" class="utility-link"><span>📄</span> How it's calculated</a>
   </div>
@@ -1345,7 +1347,7 @@
     <div class="pulse-title-group">
       <h2>Crisis Pulse</h2>
       <p class="pulse-sub">
-        Average Hormuz crisis exposure across all 59 foods, tracked since the disruption began on Feb 28, 2026.
+        Average Red Sea freight exposure across all 59 foods, tracked since the disruption began on Nov 19, 2023.
         <em>(Suggested by Marco B. Ricciardiello)</em>
       </p>
     </div>
@@ -1358,12 +1360,12 @@
 
 <!-- #5 Country exposure heat map -->
 <section class="map-section" aria-labelledby="map-heading">
-  <h2 id="map-heading">Hormuz exposure by country</h2>
-  <p class="map-sub">Average crisis exposure across all foods · bubble size = average exposure · colour = severity band</p>
+  <h2 id="map-heading">Red Sea freight exposure by country</h2>
+  <p class="map-sub">Average freight exposure across all foods · bubble size = average exposure · colour = severity band · driven by Suez route dependency</p>
   <div class="map-container" id="map-container">
     <img
       src="https://upload.wikimedia.org/wikipedia/commons/a/ac/Simplified_blank_world_map_without_Antartica_%28no_borders%29.svg"
-      alt="World map showing Hormuz exposure by country"
+      alt="World map showing Red Sea freight exposure by country"
       width="2058" height="1095"
       loading="lazy"
       crossorigin="anonymous"
@@ -1390,24 +1392,22 @@
         the true weight of the contents.
       </p>
       <p style="margin-top:0.5rem">
-        Crisis exposure scores are computed from
-        <a href="https://www.ers.usda.gov/topics/farm-economy/farm-sector-income-finances/cost-of-production/" target="_blank" rel="noopener">USDA cost-of-production data</a>,
-        <a href="https://www.fao.org/worldfoodsituation/foodpricesindex/en/" target="_blank" rel="noopener">FAO food price indices</a>,
-        and country-level Hormuz import dependency estimates from
+        Freight exposure scores are computed from
+        <a href="https://www.drewry.co.uk/supply-chain-advisors/supply-chain-expertise/world-container-index-assessed-by-drewry" target="_blank" rel="noopener">Drewry World Container Index</a>,
+        <a href="https://fbx.freightos.com/" target="_blank" rel="noopener">Freightos Baltic Index (FBX)</a>,
+        and country-level Suez route dependency estimates from
         <a href="https://comtradeplus.un.org/" target="_blank" rel="noopener">UN Comtrade</a>.
-        Commodity baselines use
-        <a href="https://www.worldbank.org/en/research/commodity-markets" target="_blank" rel="noopener">World Bank Pink Sheet</a> prices for Feb 2026.
         Exchange rates via <a href="https://www.frankfurter.app/" target="_blank" rel="noopener">Frankfurter (ECB)</a>. Updated daily.
       </p>
     </div>
     <div class="footer-col">
       <h2>Data Sources</h2>
       <p>
-        <a href="https://www.worldbank.org/en/research/commodity-markets" target="_blank" rel="noopener">World Bank Commodity Prices</a> ·
-        <a href="https://www.fao.org/worldfoodsituation/foodpricesindex/en/" target="_blank" rel="noopener">FAO Food Price Index</a> ·
-        <a href="https://www.eia.gov/opendata/" target="_blank" rel="noopener">US EIA Petroleum</a> ·
-        <a href="https://ec.europa.eu/eurostat" target="_blank" rel="noopener">Eurostat</a> ·
-        <a href="https://fred.stlouisfed.org/" target="_blank" rel="noopener">FRED (St. Louis Fed)</a>
+        <a href="https://www.drewry.co.uk/supply-chain-advisors/supply-chain-expertise/world-container-index-assessed-by-drewry" target="_blank" rel="noopener">Drewry WCI</a> ·
+        <a href="https://fbx.freightos.com/" target="_blank" rel="noopener">Freightos FBX</a> ·
+        <a href="https://comtradeplus.un.org/" target="_blank" rel="noopener">UN Comtrade</a> ·
+        <a href="https://www.lloydslist.com/" target="_blank" rel="noopener">Lloyd's List (war-risk)</a> ·
+        <a href="https://www.fao.org/worldfoodsituation/foodpricesindex/en/" target="_blank" rel="noopener">FAO Food Price Index</a>
       </p>
       <p style="margin-top:0.75rem">
         <a href="https://prismaticlabs.ai" target="_blank" rel="noopener">Built by Prismatic Labs</a> ·
@@ -1417,7 +1417,7 @@
   </div>
   <div class="footer-bottom">
     <span>Data last updated: <span id="footer-date">—</span></span>
-    <span>Crisis baseline: February 28, 2026</span>
+    <span>Crisis baseline: November 19, 2023</span>
     <span>Apache 2.0 License</span>
   </div>
 </footer>
@@ -1435,6 +1435,9 @@ const state = {
 
 /* ─── Category icons ─────────────────────────────────────────────────────── */
 const DRIVER_ICONS = {
+  freight:      '🚢',
+  insurance:    '🛡️',
+  rerouting:    '🔄',
   fertilizer:   '🌱',
   fuel:         '⛽',
   gas:          '🔥',
@@ -1444,11 +1447,14 @@ const DRIVER_ICONS = {
 
 /* ─── Per-category data source references ────────────────────────────────── */
 const DRIVER_SOURCES = {
-  fertilizer:    { label: 'World Bank: urea & fertilizer prices',  url: 'https://www.worldbank.org/en/research/commodity-markets' },
-  fuel:          { label: 'EIA: diesel & petroleum retail prices', url: 'https://www.eia.gov/petroleum/gasdiesel/' },
-  gas:           { label: 'IEA: natural gas market data',          url: 'https://www.iea.org/data-and-statistics/data-product/monthly-natural-gas-data' },
-  petrochemical: { label: 'World Bank: methanol & chemical prices',url: 'https://www.worldbank.org/en/research/commodity-markets' },
-  shipping:      { label: 'EIA: bunker fuel & marine diesel',      url: 'https://www.eia.gov/petroleum/gasdiesel/' },
+  freight:       { label: 'Drewry World Container Index (WCI)',      url: 'https://www.drewry.co.uk/supply-chain-advisors/supply-chain-expertise/world-container-index-assessed-by-drewry' },
+  insurance:     { label: 'Lloyd\'s: war-risk insurance premiums',   url: 'https://www.lloydslist.com/' },
+  rerouting:     { label: 'Freightos Baltic Index: Cape route costs',url: 'https://fbx.freightos.com/' },
+  fertilizer:    { label: 'World Bank: urea & fertilizer prices',    url: 'https://www.worldbank.org/en/research/commodity-markets' },
+  fuel:          { label: 'EIA: diesel & petroleum retail prices',   url: 'https://www.eia.gov/petroleum/gasdiesel/' },
+  gas:           { label: 'IEA: natural gas market data',            url: 'https://www.iea.org/data-and-statistics/data-product/monthly-natural-gas-data' },
+  petrochemical: { label: 'World Bank: methanol & chemical prices',  url: 'https://www.worldbank.org/en/research/commodity-markets' },
+  shipping:      { label: 'EIA: bunker fuel & marine diesel',        url: 'https://www.eia.gov/petroleum/gasdiesel/' },
 };
 
 /* ─── #2 Substitution groups ─────────────────────────────────────────────── */
@@ -1538,40 +1544,28 @@ function findSubstitutes(food, country, count = 2) {
 function buildCountryTooltip(country, food) {
   if (country.impact_multiplier === 1.0) return '';
 
-  // EU reference country (IT, multiplier = 1.0) for comparison
+  // EU reference country (IT/DE, multiplier = 1.0) for comparison
   const euRef = state.data.countries.find(c => c.impact_multiplier === 1.0 && c.code === 'IT')
              || state.data.countries.find(c => c.impact_multiplier === 1.0);
 
-  const oil  = country.hormuz_oil_dependency_pct;
-  const lng  = country.hormuz_lng_dependency_pct;
-  const fert = country.hormuz_fertilizer_dependency_pct;
+  const suez = country.suez_dependency_pct;
   const mult = country.impact_multiplier;
   const dir  = mult > 1 ? 'above' : 'below';
   const pctDiff = Math.abs(Math.round((mult - 1) * 100));
 
-  // Build a comparison row for each dimension where we have EU reference data
   const rows = [];
-  if (oil  != null && euRef?.hormuz_oil_dependency_pct  != null) {
-    const arrow = oil  > euRef.hormuz_oil_dependency_pct  ? '↑' : oil  < euRef.hormuz_oil_dependency_pct  ? '↓' : '≈';
-    rows.push(`Crude oil: <strong>${oil}%</strong> ${arrow} EU ${euRef.hormuz_oil_dependency_pct}%`);
-  }
-  if (lng  != null && euRef?.hormuz_lng_dependency_pct  != null) {
-    const arrow = lng  > euRef.hormuz_lng_dependency_pct  ? '↑' : lng  < euRef.hormuz_lng_dependency_pct  ? '↓' : '≈';
-    rows.push(`LNG: <strong>${lng}%</strong> ${arrow} EU ${euRef.hormuz_lng_dependency_pct}%`);
-  }
-  if (fert != null && euRef?.hormuz_fertilizer_dependency_pct != null) {
-    const arrow = fert > euRef.hormuz_fertilizer_dependency_pct ? '↑' : fert < euRef.hormuz_fertilizer_dependency_pct ? '↓' : '≈';
-    rows.push(`Fertilizer: <strong>${fert}%</strong> ${arrow} EU ${euRef.hormuz_fertilizer_dependency_pct}%`);
+  if (suez != null && euRef?.suez_dependency_pct != null) {
+    const arrow = suez > euRef.suez_dependency_pct ? '↑' : suez < euRef.suez_dependency_pct ? '↓' : '≈';
+    rows.push(`Suez route dependency: <strong>${suez}%</strong> ${arrow} EU ${euRef.suez_dependency_pct}%`);
   }
 
-  // Explain how the multiplier is computed
   const multExplain = mult === 1.0
     ? 'on par with the EU baseline'
-    : `<strong>${mult}× the EU baseline</strong> — ${pctDiff}% ${dir} average. Oil carries the largest weight because it affects transport, heating, and packaging costs across every food category.`;
+    : `<strong>${mult}× the EU baseline</strong> — ${pctDiff}% ${dir} average. Countries whose imports route predominantly via the Suez Canal are most exposed.`;
 
   return `
     <div class="country-detail" role="note">
-      <strong>${escHtml(country.name)}</strong>'s Hormuz import dependency, vs the EU reference:
+      <strong>${escHtml(country.name)}</strong>'s Suez/Red Sea route dependency, vs the EU reference:
       <br><span style="font-size:0.75rem;line-height:2;display:inline-block;margin-top:0.2rem">${rows.join(' &nbsp;·&nbsp; ')}</span>
       <br>Combined exposure index: ${multExplain}
       ${country.data_confidence !== 'high' ? `<br><em style="font-size:0.72rem">Figures for ${escHtml(country.name)} are estimated — treat as indicative.</em>` : ''}
@@ -1639,10 +1633,9 @@ function buildMathHtml(food, country) {
 const historyData = {}; // { foodId: [exposure_pct, ...] } chronological
 const historyDates = []; // [date1, date2, ...]
 
-// Gemini#7: Crisis Baseline (Feb 28, 2026)
-// Since we don't have a snapshot for the literal day 0, we use the pre-crisis
-// baseline (0% exposure) as the starting point for the trend line.
-const CRISIS_START_DATE = '2026-02-28';
+// Red Sea crisis baseline (Nov 19, 2023 — first Houthi ship seizure)
+// We use the pre-crisis baseline (0% exposure) as the starting point for the trend line.
+const CRISIS_START_DATE = '2023-11-19';
 
 
 function buildSparklineSvg(values, severity) {
@@ -1788,7 +1781,7 @@ function renderCard(food, country) {
         <div class="exposure-number">${adjPct}%</div>
         <div>
           <div class="exposure-label">
-            Hormuz<br>Exposure Index
+            Red Sea<br>Freight Index
           </div>
           ${food.exposure_low != null && food.exposure_high != null && food.exposure_high > food.exposure_low
             ? `<div class="exposure-band" title="80% model confidence interval">${Math.round(food.exposure_low * country.impact_multiplier)}–${Math.round(food.exposure_high * country.impact_multiplier)}%</div>`
@@ -1913,7 +1906,7 @@ function openFood(id) {
   const euDeltaToday = food.current_price_eur_kg   - food.base_price_eur_kg;
   const euDeltaProj  = food.projected_price_eur_kg - food.base_price_eur_kg;
 
-  // Country-scaled deltas: multiply by how exposed this country is to Hormuz
+  // Country-scaled deltas: multiply by how exposed this country is to Red Sea freight
   const localDeltaToday = euDeltaToday * country.impact_multiplier;
   const localDeltaProj  = euDeltaProj  * country.impact_multiplier;
 
@@ -1944,8 +1937,8 @@ function openFood(id) {
 
   // Tipping point flag
   const tp = state.data.sources?.tipping_points;
-  const scarcityFlag = (tp?.urea_scarcity_risk && ['meat','dairy','grains','staples'].includes(food.category))
-    ? `<span class="scarcity-flag" title="Urea at $${tp.urea_current_usd_ton}/t ≥ $${tp.urea_scarcity_threshold_usd_ton}/t — fertilizer scarcity risk">⚠ Scarcity risk</span>`
+  const scarcityFlag = (tp?.port_congestion_risk && ['packaged','seafood'].includes(food.category))
+    ? `<span class="scarcity-flag" title="${escHtml(tp.port_congestion_note || 'Port congestion risk active')}">⚠ Port congestion</span>`
     : '';
 
   const driversHtml = food.drivers.map(d => {
@@ -1998,7 +1991,7 @@ function openFood(id) {
         <div class="modal-exposure-row">
           <div class="modal-exposure-big severity-${sev}" style="color:${barColors[sev]}">${adjPct}%${scarcityFlag}</div>
           <div class="modal-exposure-label">
-            Hormuz Exposure Index
+            Red Sea Freight Index
             ${euRefHtml}
           </div>
         </div>
@@ -2018,18 +2011,18 @@ function openFood(id) {
       </div>
       <p class="risk-description">
         For every <strong>$1.00</strong> spent on this ${food.name.toLowerCase()},
-        roughly <strong>${adjPct}¢</strong> is currently sensitive to Hormuz supply chain shocks.
+        roughly <strong>${adjPct}¢</strong> is currently sensitive to Red Sea freight disruption.
         The remaining <strong>${(100-adjPct).toFixed(0)}¢</strong> is comprised of stable local costs (labour, land, rent).
       </p>
     </div>
 
-    <p class="section-title">⚠️ Estimated crisis impact — ${escHtml(country.name)}</p>
+    <p class="section-title">⚠️ Estimated freight impact — ${escHtml(country.name)}</p>
     <div class="impact-block">
       <div class="impact-row" aria-label="Estimated crisis price impact">
         <div class="impact-cell">
           <div class="impact-cell-label">Est. price pressure today</div>
           <div class="impact-cell-value">+${pressureToday}%</div>
-          <div class="impact-cell-sub">vs. pre-28 Feb 2026 baseline</div>
+          <div class="impact-cell-sub">vs. pre-Nov 2023 baseline</div>
         </div>
         <div class="impact-cell projected">
           <div class="impact-cell-label">Est. pressure (projected)</div>
@@ -2044,12 +2037,12 @@ function openFood(id) {
         <span>·</span>
         <span>projected <strong>+${Math.round((euDeltaProj / food.base_price_eur_kg)*100)}%</strong> pressure</span>
         <span>·</span>
-        <span>${escHtml(country.name)} has <strong>${country.impact_multiplier}×</strong> the EU's Hormuz exposure</span>
+        <span>${escHtml(country.name)} has <strong>${country.impact_multiplier}×</strong> the EU's Suez route exposure</span>
       </div>` : ''}
       <div class="impact-disclaimer">
-        <strong>⚠️ Estimates only.</strong> These figures show the crisis-driven increase in <strong>supply chain costs</strong>,
-        not absolute retail prices. Calculated from European cost-of-production data (FAO/USDA)
-        scaled by ${escHtml(country.name)}'s Hormuz import dependency coefficient.
+        <strong>⚠️ Estimates only.</strong> These figures show the crisis-driven increase in <strong>container freight costs</strong>,
+        not absolute retail prices. Calculated from Drewry WCI freight index data scaled by
+        ${escHtml(country.name)}'s Suez route dependency coefficient.
         Retailers may absorb some cost pressure or delay increases via inventory buffers.
       </div>
     </div>
@@ -2082,7 +2075,7 @@ function openFood(id) {
       }).join('');
       return `<div class="sub-section">
         <p class="section-title">Lower-exposure alternatives</p>
-        <p style="font-size:0.75rem;color:var(--muted);margin:-0.3rem 0 0.6rem">Similar foods with less Hormuz exposure — same function, lower supply chain risk.</p>
+        <p style="font-size:0.75rem;color:var(--muted);margin:-0.3rem 0 0.6rem">Similar foods with less Red Sea freight exposure — same function, lower supply chain risk.</p>
         <div class="sub-cards">${subCards}</div>
       </div>`;
     })()}
@@ -2118,11 +2111,11 @@ let _shareState = { id: null };
 function buildShareContent(id) {
   const food = state.data.foods.find(f => f.id === id);
   if (!food) return null;
-  const url     = `https://prismatic-labs.github.io/tare/#${id}`;
+  const url     = `https://prismatic-labs.github.io/tare/red-sea.html#${id}`;
   const country = getCountry();
   const pct     = countryExposure(food, country);
-  const short   = `${pct}% of ${food.name.toLowerCase()}'s retail price is exposed to the Hormuz crisis (${country.name}).`;
-  const xText   = `${short} Full breakdown: ${url} #tare #Hormuz`;
+  const short   = `${pct}% of ${food.name.toLowerCase()}'s retail price is exposed to the Red Sea shipping crisis (${country.name}).`;
+  const xText   = `${short} Full breakdown: ${url} #tare #RedSea`;
   const waText  = `${short}\n${url}`;
   return { url, xText, waText, short };
 }
@@ -2236,14 +2229,7 @@ function renderPulse() {
   const points = globalAverages.map((v, i) => `${getX(i).toFixed(1)},${getY(v).toFixed(1)}`).join(' ');
   const markerX = getX(0);
 
-  const fmt = d => { 
-    if (!d) return '';
-    const [,m,day] = d.split('-'); 
-    return `${['','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][+m]} ${+day}`; 
-  };
-
   container.innerHTML = `
-    <div class="pulse-tooltip" id="pulse-tooltip"></div>
     <svg class="pulse-svg" viewBox="0 0 ${W} ${H}">
       <!-- Y-Axis Label -->
       <text class="pulse-axis-label" x="10" y="${PAD_T - 5}" text-anchor="start" style="font-weight:600">Avg. Exposure %</text>
@@ -2253,27 +2239,26 @@ function renderPulse() {
       
       <!-- Marker for Crisis Start -->
       <line class="pulse-marker" x1="${markerX}" y1="${PAD_T}" x2="${markerX}" y2="${H - PAD_B}" />
-      <text class="pulse-marker-label" x="${markerX + 5}" y="${PAD_T + 12}">Hormuz disruption starts</text>
+      <text class="pulse-marker-label" x="${markerX + 5}" y="${PAD_T + 12}">Red Sea crisis begins</text>
       
       <!-- Path -->
       <polyline class="pulse-line" points="${points}" />
       
       ${globalAverages.map((v, i) => `
-        <circle class="pulse-point" 
-          cx="${getX(i)}" cy="${getY(v)}" r="4"
-          data-val="${v.toFixed(1)}%"
-          data-date="${fmt(historyDates[i]) || 'Feb 28'}"
-        ></circle>
+        <circle class="pulse-point" cx="${getX(i)}" cy="${getY(v)}" r="4">
+          <title>${v.toFixed(1)}% average exposure</title>
+        </circle>
       `).join('')}
       
       <!-- Labels -->
       <text class="pulse-axis-label" x="${PAD_L - 5}" y="${getY(minAvg) + 4}" text-anchor="end">${minAvg.toFixed(0)}%</text>
       <text class="pulse-axis-label" x="${PAD_L - 5}" y="${getY(maxAvg) + 4}" text-anchor="end">${maxAvg.toFixed(0)}%</text>
       
-      <!-- X-Axis Labels -->
+      <!-- X-Axis Labels: first, middle, last dates -->
       ${(() => {
+        const fmt = d => { const [,m,day] = d.split('-'); return `${['','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][+m]} ${+day}`; };
         const labels = [];
-        if (historyDates.length > 0) labels.push({ i: 0, label: fmt(historyDates[0]) || 'Feb 28' });
+        if (historyDates.length > 0) labels.push({ i: 0, label: fmt(historyDates[0]) });
         if (historyDates.length > 2) labels.push({ i: Math.floor((snapshotCount-1)/2), label: fmt(historyDates[Math.floor((historyDates.length-1)/2)]) });
         if (historyDates.length > 1) labels.push({ i: snapshotCount-1, label: 'Today' });
         return labels.map(({i, label}) =>
@@ -2282,27 +2267,11 @@ function renderPulse() {
       })()}
     </svg>
   `;
-
-  // Wire tooltips
-  const tip = document.getElementById('pulse-tooltip');
-  container.querySelectorAll('.pulse-point').forEach(p => {
-    p.addEventListener('mouseenter', () => {
-      tip.style.display = 'block';
-      tip.innerHTML = `<strong>${p.dataset.date}</strong><br>${p.dataset.val} exposure`;
-    });
-    p.addEventListener('mousemove', (e) => {
-      tip.style.left = `${e.clientX}px`;
-      tip.style.top = `${e.clientY}px`;
-    });
-    p.addEventListener('mouseleave', () => {
-      tip.style.display = 'none';
-    });
-  });
 }
 
 function sharePulse() {
   const url = window.location.origin + window.location.pathname;
-  const text = `The Strait of Hormuz crisis is moving fast. See the live timeline of global food exposure: ${url} #tare #supplychain`;
+  const text = `The Red Sea shipping crisis is reshaping global food supply chains. See the live timeline of freight exposure: ${url} #tare #RedSea #supplychain`;
   if (navigator.share) {
     navigator.share({ title: 'Tare Crisis Pulse', text, url });
   } else {
@@ -2381,7 +2350,7 @@ function renderMap() {
 /* ─── Init ───────────────────────────────────────────────────────────────── */
 async function init() {
   try {
-    const res = await fetch('data/foods.json');
+    const res = await fetch('data/red-sea.json');
     if (!res.ok) throw new Error('Network response not ok');
     state.data = await res.json();
   } catch (e) {

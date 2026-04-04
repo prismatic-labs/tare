@@ -23,11 +23,14 @@ jobs:
       - name: Install dependencies
         run: pip install requests pandas openpyxl pydantic
 
-      - name: Fetch latest data
+      - name: Fetch Hormuz data
         run: python3 scripts/fetch-data.py
+
+      - name: Fetch Red Sea data
+        run: python3 scripts/fetch-red-sea.py
 
       - name: Commit updated data
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: 'data: daily update'
-          file_pattern: 'data/foods.json data/history/*.json'
+          file_pattern: 'data/foods.json data/red-sea.json data/history/*.json'
