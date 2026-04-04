@@ -1247,7 +1247,7 @@
       <!-- Populated by JS -->
     </select>
     <span class="country-caveat" aria-label="Note on data confidence">
-      ⚠️ = limited local data · ⚠️⚠️ = extrapolated only. All figures are estimates — not sourced retail prices.
+      ⚠️ = limited local data · ⚠️⚠️ = extrapolated only. All figures are modelled estimates from cost-of-production data — not actual shop prices.
     </span>
   </div>
 
@@ -2230,16 +2230,27 @@ function renderPulse() {
   const maxAvg = Math.max(...globalAverages, 40);
   const range = maxAvg - minAvg || 1;
 
-  const getX = (i) => PAD_L + (i / (snapshotCount - 1)) * (W - PAD_L - PAD_R);
+  // Calendar-proportional x-spacing: map dates to timestamps so gaps are real
+  const MONTHS = ['','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const dateToMs = d => d ? new Date(d).getTime() : 0;
+  const allMs = historyDates.map(dateToMs);
+  const msMin = allMs[0] || 0;
+  const msMax = allMs[allMs.length - 1] || 1;
+  const msRange = msMax - msMin || 1;
+  const getX = (i) => {
+    const t = allMs[i] || msMin;
+    return PAD_L + ((t - msMin) / msRange) * (W - PAD_L - PAD_R);
+  };
   const getY = (v) => H - PAD_B - ((v - minAvg) / range) * (H - PAD_B - PAD_T);
 
   const points = globalAverages.map((v, i) => `${getX(i).toFixed(1)},${getY(v).toFixed(1)}`).join(' ');
   const markerX = getX(0);
 
-  const fmt = d => { 
+  const fmt = (d, showYear) => {
     if (!d) return '';
-    const [,m,day] = d.split('-'); 
-    return `${['','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][+m]} ${+day}`; 
+    const [y,m,day] = d.split('-');
+    const label = `${MONTHS[+m]} ${+day}`;
+    return showYear ? `${label} '${y.slice(2)}` : label;
   };
 
   container.innerHTML = `
@@ -2262,7 +2273,7 @@ function renderPulse() {
         <circle class="pulse-point" 
           cx="${getX(i)}" cy="${getY(v)}" r="4"
           data-val="${v.toFixed(1)}%"
-          data-date="${fmt(historyDates[i]) || 'Feb 28'}"
+          data-date="${fmt(historyDates[i], true) || 'Feb 28 \'26'}"
         ></circle>
       `).join('')}
       
@@ -2273,8 +2284,8 @@ function renderPulse() {
       <!-- X-Axis Labels -->
       ${(() => {
         const labels = [];
-        if (historyDates.length > 0) labels.push({ i: 0, label: fmt(historyDates[0]) || 'Feb 28' });
-        if (historyDates.length > 2) labels.push({ i: Math.floor((snapshotCount-1)/2), label: fmt(historyDates[Math.floor((historyDates.length-1)/2)]) });
+        if (historyDates.length > 0) labels.push({ i: 0, label: fmt(historyDates[0], true) || 'Feb 28 \'26' });
+        if (historyDates.length > 3) labels.push({ i: Math.floor((snapshotCount-1)/2), label: fmt(historyDates[Math.floor((historyDates.length-1)/2)]) });
         if (historyDates.length > 1) labels.push({ i: snapshotCount-1, label: 'Today' });
         return labels.map(({i, label}) =>
           `<text class="pulse-axis-label" x="${getX(i)}" y="${H - 10}" text-anchor="middle">${label}</text>`

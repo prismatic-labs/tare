@@ -8,6 +8,81 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).parent.parent
 
+# ── Red Sea local cost floor overrides ──────────────────────────────────────
+# In the Hormuz model, local_cost_floor_pct reflects what fraction of food cost
+# is NOT affected by energy/fertilizer prices (typically 40–60%).
+# In the Red Sea model, the sensitive element is container FREIGHT only —
+# which is 5–18% of retail price for the most import-dependent goods, and
+# <2% for locally produced foods. So floors here are 82–99%.
+RED_SEA_FLOORS = {
+    # Seafood — container routes from SE Asia / Indian Ocean
+    "shrimp":          82,   # max 18% — SE Asian reefer containers
+    "canned_tuna":     82,   # max 18% — Thai canneries, 100% containerised
+    "canned_sardines": 88,   # max 12% — N. African cans + Suez insurance
+    "cod":             95,   # max  5% — N. Atlantic, reefer spot rate spillover
+    "salmon":          94,   # max  6% — mostly intra-European; some supply reallocation
+    # Meat
+    "chicken":         98,   # max  2% — local feed, local slaughter
+    "beef":            98,   # max  2% — same
+    "pork":            98,   # max  2% — same
+    "lamb":            93,   # max  7% — NZ imports via former Suez route
+    "turkey":          98,   # max  2% — domestic
+    "sausages":        93,   # max  7% — spice/casing imports from Asia/E. Africa
+    # Dairy
+    "milk":            99,   # max  1% — local
+    "cheese":          98,   # max  2% — local + packaging
+    "butter":          93,   # max  7% — NZ/AU butter imports rerouted via Cape
+    "yoghurt":         99,   # max  1% — local
+    "eggs":            99,   # max  1% — local
+    "cream":           99,   # max  1% — local
+    # Grains
+    "bread":           99,   # max  1% — EU wheat, local bakeries
+    "rice":            87,   # max 13% — Asian basmati/jasmine via Bab-el-Mandeb
+    "pasta":           96,   # max  4% — EU durum wheat, packaging component only
+    "flour":           99,   # max  1% — EU wheat
+    "oats":            98,   # max  2% — EU/N. America, Atlantic routes
+    "cornflakes":      95,   # max  5% — corn syrup / vitamins from Asia
+    "couscous":        92,   # max  8% — N. African exports, Suez-adjacent
+    "noodles":         85,   # max 15% — SE Asian instant noodles, full Suez route
+    "crackers":        95,   # max  5% — palm oil ingredient from SE Asia
+    # Produce
+    "tomatoes":        99,   # max  1% — EU greenhouse or N. Africa short route
+    "potatoes":        99,   # max  1% — local
+    "onions":          99,   # max  1% — local / N. Africa
+    "bananas":         94,   # max  6% — E. African blended with Latin American supply
+    "apples":          99,   # max  1% — EU orchards
+    "oranges":         93,   # max  7% — S. African citrus via former Suez lane
+    "lettuce":         99,   # max  1% — local perishable
+    "peppers":         99,   # max  1% — EU greenhouse
+    "carrots":         99,   # max  1% — local
+    "avocado":         90,   # max 10% — E. African exports (Kenya/Tanzania) via Red Sea
+    "garlic":          85,   # max 15% — China ~75% of global supply, full Suez route
+    "cucumber":        99,   # max  1% — EU greenhouse
+    "frozen_peas":     92,   # max  8% — Indian frozen veg via Bab-el-Mandeb
+    # Packaged goods
+    "cooking_oil":     83,   # max 17% — Malaysian/Indonesian palm oil via Suez
+    "frozen_pizza":    90,   # max 10% — palm oil + imported ingredients
+    "chocolate":       90,   # max 10% — SE Asian cocoa butter + Asian confectionery
+    "crisps":          88,   # max 12% — palm oil frying ingredient
+    "biscuits":        90,   # max 10% — palm oil + cocoa imports
+    "soft_drinks":     94,   # max  6% — concentrates from Asia/Middle East
+    "beer":            95,   # max  5% — specialty hops from NZ/AU; craft imports
+    "coffee":          87,   # max 13% — E. African & Vietnamese beans via Red Sea
+    "sugar":           92,   # max  8% — Indian/Pakistani cane sugar via Suez
+    "peanut_butter":   88,   # max 12% — Chinese peanuts, full Suez route
+    "orange_juice":    93,   # max  7% — S. African / Indian OJ concentrate
+    "mayonnaise":      93,   # max  7% — soy oil + egg powder imports
+    "tomato_sauce":    94,   # max  6% — N. African concentrate + packaging
+    "baby_formula":    86,   # max 14% — NZ/AU whey + Asian manufacturing
+    # Staples
+    "lentils":         96,   # max  4% — Canadian (Atlantic) + Indian (Suez) blend
+    "chickpeas":       96,   # max  4% — Australian (Pacific) + Indian (Suez) blend
+    "tofu":            92,   # max  8% — Chinese soy protein via Suez
+    "beans":           97,   # max  3% — mostly domestic / Americas
+    "quinoa":          96,   # max  4% — Peru/Bolivia Atlantic route; market spillover
+    "olive_oil":       99,   # max  1% — Mediterranean short route
+}
+
 # ── Red Sea driver price changes (from Drewry WCI data) ────────────────────
 # WCI: $1380 → $4200 per 40ft container (+204%)
 # Insurance: 0.05 bps → 0.75 bps war-risk premium (+1400% but small absolute cost)
@@ -369,8 +444,9 @@ def severity(pct: int) -> str:
 
 def make_food(food_id: str, exposure_pct: int, pass_through: float,
               drivers_spec: list, explanation: str,
-              base_food: dict) -> dict:
-    floor = base_food["local_cost_floor_pct"]
+              base_food: dict, floor_override: int = None) -> dict:
+    # Use Red Sea-specific floor if provided; fall back to Hormuz floor
+    floor = floor_override if floor_override is not None else base_food["local_cost_floor_pct"]
     cap = 100 - floor
     # Clamp exposure to floor cap
     exposure = min(cap, exposure_pct)
@@ -433,7 +509,8 @@ for (food_id, exposure_pct, pass_through, drivers_spec, explanation) in FOODS_SP
     if food_id not in base_by_id:
         raise ValueError(f"Unknown food id: {food_id}")
     foods.append(make_food(food_id, exposure_pct, pass_through,
-                           drivers_spec, explanation, base_by_id[food_id]))
+                           drivers_spec, explanation, base_by_id[food_id],
+                           floor_override=RED_SEA_FLOORS.get(food_id)))
 
 # Verify all 59 foods are present
 spec_ids = {s[0] for s in FOODS_SPEC}

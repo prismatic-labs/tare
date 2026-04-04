@@ -1254,15 +1254,16 @@
       <!-- Populated by JS -->
     </select>
     <span class="country-caveat" aria-label="Note on data confidence">
-      ⚠️ = limited local data · ⚠️⚠️ = extrapolated only. All figures are estimates — not sourced retail prices.
+      ⚠️ = limited local data · ⚠️⚠️ = extrapolated only. All figures are modelled estimates from cost-of-production data — not actual shop prices.
     </span>
   </div>
 
   <div class="header-utility">
     <a href="index.html" class="utility-link"><span>🛢️</span> Hormuz crisis</a>
     <span class="utility-link" aria-current="page" style="opacity:1;cursor:default"><span>🚢</span> Red Sea <span style="font-size:0.7rem;opacity:0.6;font-weight:normal">(active)</span></span>
-    <a href="quiz.html" class="utility-link" style="margin-left:auto"><span>🛒</span> Score your basket</a>
-    <a href="methodology.html" class="utility-link"><span>📄</span> How it's calculated</a>
+    <a href="quiz.html" class="utility-link" style="margin-left:auto" title="Hormuz crisis quiz"><span>🛒</span> Score your basket</a>
+    <a href="methodology.html" class="utility-link" title="Hormuz methodology"><span>📄</span> How it's calculated</a>
+    <span class="utility-link" style="opacity:0.4;cursor:default;font-size:0.75rem" title="Quiz and methodology pages cover the Hormuz crisis — Red Sea equivalents coming soon">↑ Hormuz only</span>
   </div>
 </header>
 
@@ -2381,43 +2382,8 @@ async function init() {
   }
   document.getElementById('footer-date').textContent = dateStr;
 
-  // #3 Load history index for sparklines (graceful fallback — no history on first run)
-  try {
-    const hRes = await fetch('data/history/index.json');
-    if (hRes.ok) {
-      const dates = await hRes.json();
-      
-      // Gemini#7: Ensure Feb 28 is the first date in the series for the timeline
-      if (!dates.includes(CRISIS_START_DATE)) {
-        historyDates.push(CRISIS_START_DATE);
-        // Pre-crisis baseline is effectively 0% exposure
-        state.data.foods.forEach(f => {
-          historyData[f.id] = [0];
-        });
-      }
-
-      // Load last 12 snapshots (most recent first, then reverse for chronological display)
-      const toLoad = dates.slice(-12);
-      const snapshots = await Promise.all(
-        toLoad.map(date =>
-          fetch(`data/history/${date}.json`)
-            .then(r => r.ok ? r.json() : null)
-            .catch(() => null)
-        )
-      );
-      // Build per-food history arrays
-      snapshots.forEach((snap, i) => {
-        if (!snap) return;
-        historyDates.push(toLoad[i]);
-        (snap.foods || []).forEach(({ id, crisis_exposure_pct }) => {
-          if (!historyData[id]) historyData[id] = [];
-          historyData[id].push(crisis_exposure_pct);
-        });
-      });
-    }
-  } catch {
-    // No history yet — sparklines will show flat placeholders
-  }
+  // No Red Sea history snapshots yet — Crisis Pulse hidden, sparklines flat.
+  // History will accumulate in data/red-sea-history/ once the daily job runs.
 
   // Detect country from browser locale
   state.country = detectCountry();
