@@ -286,6 +286,26 @@ country_exposure    = clamp(round(eu_exposure_pct × impact_multiplier), 1, max_
   <h2>Update cadence</h2>
   <p>Data refreshes <strong>daily at 06:00 UTC</strong> via a <a href="https://github.com/prismatic-labs/tare/blob/main/.github/workflows/update-data.yml" target="_blank" rel="noopener">GitHub Actions workflow</a>. If any data source is unavailable, the previous value is retained and the <code>stale_sources</code> field in <code>data/foods.json</code> is populated. The live badge on the main dashboard turns amber if data has not been refreshed in more than 10 days.</p>
 
+  <h2>Frequently asked questions</h2>
+
+  <h3>Why don't you use retail prices directly?</h3>
+  <p>Retail prices are "noisy." They include local taxes, temporary store promotions, and branding premiums. By modeling "Exposure" via supply chain inputs, we isolate the specific impact of the Hormuz crisis from general inflation or local market quirks. We show the <em>pressure</em> on the price, not just the sticker on the shelf.</p>
+
+  <h3>Why not use custom/import data for real-time tracking?</h3>
+  <p>While customs data (like UN Comtrade) is extremely accurate, it typically suffers from a 2–4 month reporting lag. During a fast-moving crisis, we need high-velocity data. We use commodity benchmarks (World Bank API) as "leading indicators" to estimate today’s impact, using customs data primarily for back-testing and calibrating our country-level dependency scores.</p>
+
+  <h3>Does 40% exposure mean the price has risen by 40%?</h3>
+  <p>No. It means 40% of that food’s cost structure is tied to inputs (like fuel and fertilizer) currently disrupted by the crisis. The actual price increase depends on the <strong>Pass-Through Rate</strong>—how much of that cost increase the retailer decides to pass on to you versus absorbing it into their own profit margins.</p>
+
+  <h3>What are "cost weights" and how are they determined?</h3>
+  <p>Each food reacts differently to commodity shocks. For bread, fertilizer is a massive indirect cost (growing the wheat), while for fresh produce, shipping and fuel are the primary drivers. We use <strong>USDA and FAO Cost of Production</strong> tables to determine these weights (e.g., assigning a 40% weight to fertilizer for grains). This ensures the model accurately reflects the "Economic DNA" of each food item.</p>
+
+  <h3>How do you account for countries that produce their own oil?</h3>
+  <p>Even energy-independent nations are affected. Oil is a global commodity; if the price spikes in London (Brent), it usually spikes everywhere. However, our <strong>Country Multiplier</strong> accounts for the <em>physical</em> risk of the Strait. A country that relies on physical tankers passing through Hormuz gets a higher risk score than a country that produces its own energy locally.</p>
+
+  <h3>Why is there a gap between a commodity spike and my grocery bill?</h3>
+  <p>This is the <strong>Inventory Lag.</strong> Most of the grain in your bread today was grown with fertilizer bought months ago. Our model tracks "Current Exposure," which reflects the pressure on the <em>next</em> harvest or the current processing cycle. We use a temporal decay function to estimate when these "upstream" shocks will actually hit the retail shelf.</p>
+
   <h2>Open source</h2>
   <p>The full calculation pipeline — including all driver weights, baseline values, and country coefficients — is in the open-source repository at <a href="https://github.com/prismatic-labs/tare" target="_blank" rel="noopener">github.com/prismatic-labs/tare</a>. The data file at <a href="data/foods.json"><code>data/foods.json</code></a> is the single source of truth that drives the dashboard.</p>
 
