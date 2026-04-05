@@ -1749,6 +1749,8 @@ const LOCALE_MAP = {
   'hi': 'IN', 'bn': 'IN',
   'pt-br': 'BR',
   'si': 'LK', 'ta': 'LK',
+  'zh': 'CN', 'ko': 'KR', 'fr': 'FR', 'ar-lb': 'LB', 'ar': 'LB',
+  'en-sg': 'SG', 'zh-tw': 'TW', 'th': 'TH',
 };
 
 const CURRENCY_LOCALES = {
@@ -2322,6 +2324,7 @@ const CONFIDENCE_LABEL = {
 
 function populateCountrySelector() {
   const sel = document.getElementById('country-select');
+  sel.innerHTML = ''; // Clear existing
   state.data.countries.forEach(c => {
     const conf = CONFIDENCE_LABEL[c.data_confidence] || CONFIDENCE_LABEL.medium;
     const opt = document.createElement('option');
