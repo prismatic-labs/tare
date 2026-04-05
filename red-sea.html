@@ -602,6 +602,70 @@
       margin-top: 0.15rem;
     }
 
+    /* ─── Tabs ──────────────────────────────────────────────────────────── */
+    .main-tabs {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+      padding: 0 0.5rem;
+    }
+    .tab-btn {
+      background: none;
+      border: none;
+      padding: 0.75rem 0.25rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--muted);
+      cursor: pointer;
+      position: relative;
+      transition: color 0.2s;
+    }
+    .tab-btn:hover { color: var(--text); }
+    .tab-btn.active { color: var(--dark-green); }
+    .tab-btn.active::after {
+      content: "";
+      position: absolute;
+      bottom: -1px; left: 0; right: 0;
+      height: 3px;
+      background: var(--dark-green);
+      border-radius: 3px 3px 0 0;
+    }
+
+    /* ─── Country List ─────────────────────────────────────────────────── */
+    .country-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      max-width: 650px;
+      margin: 0 auto;
+    }
+    .country-row {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      padding: 1.25rem 1.5rem;
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid transparent;
+      transition: transform 0.15s, border-color 0.15s;
+    }
+    .country-row:hover { transform: translateY(-1px); border-color: var(--border); }
+    .country-rank { font-weight: 800; font-size: 1.3rem; color: var(--muted-light); min-width: 2.2rem; }
+    .country-info { flex: 1; display: flex; flex-direction: column; gap: 0.2rem; }
+    .country-row-top { display: flex; align-items: baseline; justify-content: space-between; }
+    .country-name { font-weight: 700; font-size: 1.1rem; color: var(--dark-green); }
+    .country-exposure-val {
+      font-size: 1.4rem;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+      padding: 0.1rem 0.5rem;
+      border-radius: 4px;
+    }
+    .country-meta-grid { font-size: 0.78rem; color: var(--muted); display: grid; grid-template-columns: auto auto auto; gap: 0.4rem 1rem; margin-top: 0.5rem; }
+    .country-meta-item strong { color: var(--text); }
+
     /* ─── Grid ──────────────────────────────────────────────────────────── */
     .main-content { padding: 1.5rem; max-width: 1400px; margin: 0 auto; }
 
@@ -1391,6 +1455,12 @@
 
 <!-- Main Content -->
 <main class="main-content">
+  <!-- Tabs Navigation -->
+  <nav class="main-tabs" role="tablist">
+    <button class="tab-btn active" id="tab-foods" role="tab" aria-selected="true" aria-controls="grid-view">Food Items</button>
+    <button class="tab-btn" id="tab-countries" role="tab" aria-selected="false" aria-controls="country-view">Most Affected Countries</button>
+  </nav>
+
   <div id="loading">Loading data…</div>
   <div id="error" role="alert">Failed to load food data. Please refresh the page.</div>
 
@@ -1408,6 +1478,7 @@
 
   <p class="results-meta" id="results-meta" style="display:none"></p>
   <div class="grid" id="grid" role="list" aria-label="Food items"></div>
+  <div id="country-view" class="country-list" style="display:none" role="tabpanel" aria-labelledby="tab-countries"></div>
 </main>
 
 <!-- Detail Modal -->
@@ -1530,6 +1601,7 @@ const state = {
   lifestyle: 'omnivore',
   query: '',
   activeFood: null,
+  activeTab: 'foods',
 };
 
 /* ─── Category icons ─────────────────────────────────────────────────────── */
@@ -1881,9 +1953,6 @@ function renderCard(food, country) {
         <div>
           <div class="exposure-label">
             Red Sea<br>Freight Index
-            ${(food.drivers.some(d => d.category === 'freight' && d.weight >= 0.5) && state.data.sources?.tipping_points?.port_congestion_risk)
-              ? `<span style="margin-left:0.3rem;cursor:help" title="Port Congestion Risk: High container reliance during active bottleneck">⚓</span>`
-              : ''}
           </div>
           ${food.exposure_low != null && food.exposure_high != null && food.exposure_high > food.exposure_low
             ? `<div class="exposure-band" title="80% model confidence interval">${Math.round(food.exposure_low * country.impact_multiplier)}–${Math.round(food.exposure_high * country.impact_multiplier)}%</div>`
@@ -1908,10 +1977,33 @@ function renderCard(food, country) {
   `;
 }
 
-/* ─── Render Grid ────────────────────────────────────────────────────────── */
+/* ─── Render Grid / Content Switching ─────────────────────────────────────── */
 function renderGrid() {
-  const { data, filter, query } = state;
+  const { data, filter, query, activeTab } = state;
   if (!data) return;
+
+  const gridEl = document.getElementById('grid');
+  const metaEl = document.getElementById('results-meta');
+  const countryViewEl = document.getElementById('country-view');
+  const controlsBar = document.querySelector('.controls-bar');
+  const infoCallout = document.getElementById('info-callout');
+
+  // Switch visibility based on active tab
+  if (activeTab === 'countries') {
+    gridEl.style.display = 'none';
+    metaEl.style.display = 'none';
+    controlsBar.style.display = 'none';
+    infoCallout.style.display = 'none';
+    countryViewEl.style.display = 'flex';
+    renderCountryRankings();
+    return;
+  } else {
+    gridEl.style.display = 'grid';
+    metaEl.style.display = '';
+    controlsBar.style.display = 'block';
+    infoCallout.style.display = 'flex';
+    countryViewEl.style.display = 'none';
+  }
 
   let foods = [...data.foods];
 
@@ -1920,7 +2012,7 @@ function renderGrid() {
     foods = foods.filter(f => f.category === filter);
   }
 
-  // Filter by lifestyle (Gemini#20 Precision Fix)
+  // Filter by lifestyle
   if (state.lifestyle === 'pescatarian') {
     foods = foods.filter(f => f.category !== 'meat');
   } else if (state.lifestyle === 'vegetarian') {
@@ -1944,22 +2036,56 @@ function renderGrid() {
   // Sort by country-adjusted exposure descending
   foods.sort((a, b) => countryExposure(b, country) - countryExposure(a, country));
 
-  const grid = document.getElementById('grid');
-  const meta = document.getElementById('results-meta');
-
   if (foods.length === 0) {
-    grid.innerHTML = `<div class="empty-state"><p>🔍</p><p>No foods match "${escHtml(query)}"</p></div>`;
-    meta.textContent = '0 results';
+    gridEl.innerHTML = `<div class="empty-state"><p>🔍</p><p>No foods match "${escHtml(query)}"</p></div>`;
+    metaEl.textContent = '0 results';
   } else {
-    grid.innerHTML = foods.map(f => renderCard(f, country)).join('');
+    gridEl.innerHTML = foods.map(f => renderCard(f, country)).join('');
     const total = data.foods.length;
-    meta.innerHTML = foods.length === total
+    metaEl.innerHTML = foods.length === total
       ? `Showing all <strong>${total}</strong> foods — sorted by crisis exposure`
       : `Showing <strong>${foods.length}</strong> of ${total} foods`;
   }
 
-  meta.style.display = '';
   attachCardListeners();
+}
+
+function renderCountryRankings() {
+  const container = document.getElementById('country-view');
+  if (!container || !state.data) return;
+
+  const allCountries = state.data.countries;
+
+  // Compute average exposure per country
+  const stats = allCountries.map(c => {
+    const exposures = state.data.foods.map(f => countryExposure(f, c));
+    const avg = Math.round(exposures.reduce((s, v) => s + v, 0) / exposures.length);
+    return { c, avg };
+  });
+
+  // Sort by avg exposure descending
+  stats.sort((a, b) => b.avg - a.avg);
+
+  container.innerHTML = stats.map(({ c, avg }, i) => {
+    const sev = severityFromPct(avg);
+    const color = SEVERITY_COLOR[sev];
+    const bg = SEVERITY_BG[sev];
+
+    return `
+      <div class="country-row">
+        <div class="country-rank">#${i + 1}</div>
+        <div class="country-info">
+          <div class="country-row-top">
+            <span class="country-name">${escHtml(c.name)}</span>
+            <span class="country-exposure-val" style="background:${bg}; color:${color}">${avg}%</span>
+          </div>
+          <div class="country-meta-grid">
+            <div class="country-meta-item">Suez dependency: <strong>${c.suez_dependency_pct}%</strong></div>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
 }
 
 /* ─── Card click/keyboard ────────────────────────────────────────────────── */
@@ -2458,6 +2584,9 @@ const COUNTRY_MAP_POS = {
 const SEVERITY_COLOR = {
   extreme: '#C0392B', high: '#D4680F', moderate: '#B08800', low: '#2A7A3A',
 };
+const SEVERITY_BG = {
+  extreme: '#fdf2f1', high: '#fef5ec', moderate: '#fefbe8', low: '#f0f9f1',
+};
 
 function renderMap() {
   const bubblesEl = document.getElementById('map-bubbles');
@@ -2582,14 +2711,36 @@ async function init() {
       openFood(id);
     }
   }
+/* ── Event listeners ── */
 
-  /* ── Event listeners ── */
+// Tabs
+const tabFoods = document.getElementById('tab-foods');
+const tabCountries = document.getElementById('tab-countries');
 
-  // Pulse share
-  document.getElementById('pulse-share-btn').addEventListener('click', sharePulse);
+tabFoods.addEventListener('click', () => {
+  state.activeTab = 'foods';
+  tabFoods.classList.add('active');
+  tabFoods.setAttribute('aria-selected', 'true');
+  tabCountries.classList.remove('active');
+  tabCountries.setAttribute('aria-selected', 'false');
+  renderGrid();
+});
 
-  // Country selector
-  document.getElementById('country-select').addEventListener('change', e => {
+tabCountries.addEventListener('click', () => {
+  state.activeTab = 'countries';
+  tabCountries.classList.add('active');
+  tabCountries.setAttribute('aria-selected', 'true');
+  tabFoods.classList.remove('active');
+  tabFoods.setAttribute('aria-selected', 'false');
+  renderGrid();
+});
+
+// Pulse share
+document.getElementById('pulse-share-btn').addEventListener('click', sharePulse);
+
+// Country selector
+document.getElementById('country-select').addEventListener('change', e => {
+...
     state.country = e.target.value;
     renderGrid();
     renderMap();
