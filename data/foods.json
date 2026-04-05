@@ -137,6 +137,83 @@
       "impact_multiplier": 1.8,
       "price_level_index": 0.4,
       "data_confidence": "low"
+    },
+    {
+      "code": "CN",
+      "name": "China",
+      "currency": "USD",
+      "hormuz_oil_dependency_pct": 48,
+      "hormuz_lng_dependency_pct": 30,
+      "hormuz_fertilizer_dependency_pct": 15,
+      "impact_multiplier": 1.8,
+      "price_level_index": 0.7,
+      "data_confidence": "high"
+    },
+    {
+      "code": "KR",
+      "name": "South Korea",
+      "currency": "USD",
+      "hormuz_oil_dependency_pct": 70,
+      "hormuz_lng_dependency_pct": 25,
+      "hormuz_fertilizer_dependency_pct": 35,
+      "impact_multiplier": 2.1,
+      "price_level_index": 1.1,
+      "data_confidence": "high"
+    },
+    {
+      "code": "FR",
+      "name": "France",
+      "currency": "EUR",
+      "hormuz_oil_dependency_pct": 5,
+      "hormuz_lng_dependency_pct": 8,
+      "hormuz_fertilizer_dependency_pct": 25,
+      "impact_multiplier": 0.8,
+      "price_level_index": 1.1,
+      "data_confidence": "high"
+    },
+    {
+      "code": "LB",
+      "name": "Lebanon",
+      "currency": "USD",
+      "hormuz_oil_dependency_pct": 100,
+      "hormuz_lng_dependency_pct": 5,
+      "hormuz_fertilizer_dependency_pct": 60,
+      "impact_multiplier": 2.5,
+      "price_level_index": 0.8,
+      "data_confidence": "low"
+    },
+    {
+      "code": "SG",
+      "name": "Singapore",
+      "currency": "USD",
+      "hormuz_oil_dependency_pct": 80,
+      "hormuz_lng_dependency_pct": 35,
+      "hormuz_fertilizer_dependency_pct": 25,
+      "impact_multiplier": 2.2,
+      "price_level_index": 1.4,
+      "data_confidence": "high"
+    },
+    {
+      "code": "TW",
+      "name": "Taiwan",
+      "currency": "USD",
+      "hormuz_oil_dependency_pct": 70,
+      "hormuz_lng_dependency_pct": 30,
+      "hormuz_fertilizer_dependency_pct": 35,
+      "impact_multiplier": 2.1,
+      "price_level_index": 0.9,
+      "data_confidence": "medium"
+    },
+    {
+      "code": "TH",
+      "name": "Thailand",
+      "currency": "USD",
+      "hormuz_oil_dependency_pct": 55,
+      "hormuz_lng_dependency_pct": 20,
+      "hormuz_fertilizer_dependency_pct": 40,
+      "impact_multiplier": 1.9,
+      "price_level_index": 0.6,
+      "data_confidence": "medium"
     }
   ],
   "foods": [
