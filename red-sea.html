@@ -2655,42 +2655,20 @@ async function init() {
   }
   document.getElementById('footer-date').textContent = dateStr;
 
-  // #3 Load history index for sparklines (graceful fallback — no history on first run)
+  // #3 Load history summary for sparklines (graceful fallback)
   try {
-    const hRes = await fetch('data/red-sea-history/index.json');
+    const hRes = await fetch('data/red-sea-history-summary.json');
     if (hRes.ok) {
-      const dates = await hRes.json();
-      
-      // Ensure the timeline reflects the pre-crisis baseline (Feb 28, 2026 or 2023 start)
-      // For Red Sea, we start at 0% on 2023-11-19 (not Feb 28 which is Hormuz)
-      const CRISIS_START = '2023-11-19';
-      if (!dates.includes(CRISIS_START)) {
-        historyDates.push(CRISIS_START);
-        state.data.foods.forEach(f => {
-          historyData[f.id] = [0];
-        });
+      const summary = await hRes.json();
+      // Reset and populate history from summary
+      historyDates.length = 0;
+      historyDates.push(...summary.dates);
+      for (const [fid, vals] of Object.entries(summary.history)) {
+        historyData[fid] = vals;
       }
-
-      // Load all snapshots for Red Sea history
-      const snapshots = await Promise.all(
-        dates.map(date =>
-          fetch(`data/red-sea-history/${date}.json`)
-            .then(r => r.ok ? r.json() : null)
-            .catch(() => null)
-        )
-      );
-      // Build per-food history arrays
-      snapshots.forEach((snap, i) => {
-        if (!snap) return;
-        historyDates.push(dates[i]);
-        (snap.foods || []).forEach(({ id, crisis_exposure_pct }) => {
-          if (!historyData[id]) historyData[id] = [];
-          historyData[id].push(crisis_exposure_pct);
-        });
-      });
     }
   } catch (e) {
-    console.error("Failed to load Red Sea history:", e);
+    console.warn('Could not load history summary:', e);
   }
 
   // Detect country from browser locale
