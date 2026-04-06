@@ -106,6 +106,22 @@
       0%, 100% { opacity: 1; transform: scale(1); }
       50%       { opacity: 0.5; transform: scale(0.8); }
     }
+    #stale-banner {
+      display: none;
+      background: #fef3cd;
+      border-bottom: 2px solid #f0a500;
+      padding: 0.6rem 1.5rem;
+      font-size: 0.82rem;
+      color: #7a4a00;
+      text-align: center;
+    }
+    .pulse-explain {
+      font-size: 0.79rem;
+      color: var(--muted);
+      margin-top: 0.5rem;
+      line-height: 1.5;
+      max-width: 560px;
+    }
 
     /* Sparkline on cards */
     .sparkline { display: block; width: 100%; height: 28px; margin-top: 0.4rem; }
@@ -665,6 +681,29 @@
     }
     .country-meta-grid { font-size: 0.78rem; color: var(--muted); display: grid; grid-template-columns: auto auto auto; gap: 0.4rem 1rem; margin-top: 0.5rem; }
     .country-meta-item strong { color: var(--text); }
+    .fx-risk-tag {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: #7a4a00;
+      background: #fef3cd;
+      border: 1px solid #f0a500;
+      border-radius: 3px;
+      padding: 0.1rem 0.4rem;
+      margin-left: 0.4rem;
+      vertical-align: middle;
+    }
+    .card-swap {
+      font-size: 0.74rem;
+      color: var(--muted);
+      padding: 0.3rem 0 0;
+      border-top: 1px solid var(--border);
+      margin-top: 0.45rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .card-swap .swap-pct { color: #2e7d32; font-weight: 600; }
     .advice-view { max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; gap: 1.25rem; }
     .advice-disclaimer { background: #fffbe6; border: 1.5px solid #B08800; border-radius: var(--radius); padding: 1rem 1.25rem; display: flex; gap: 0.75rem; align-items: flex-start; }
     .advice-disclaimer-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 0.1rem; }
@@ -1479,6 +1518,7 @@
 
   <div id="loading">Loading data…</div>
   <div id="error" role="alert">Failed to load food data. Please refresh the page.</div>
+  <div id="stale-banner" role="status" aria-live="polite"></div>
 
   <!-- Educational Callout -->
   <div class="info-callout" id="info-callout" style="display:none">
@@ -1534,8 +1574,11 @@
     <div class="pulse-title-group">
       <h2>Crisis Pulse</h2>
       <p class="pulse-sub">
-        Average Red Sea freight exposure across all 59 foods, tracked since the disruption began on Nov 19, 2023.
-        <em>(Suggested by Marco B. Ricciardiello)</em>
+        <!-- text is replaced by renderPulse() with live WCI stats -->
+        Drewry World Container Index change vs. pre-crisis baseline ($1,380/40ft).
+      </p>
+      <p class="pulse-explain">
+        The <strong>Drewry World Container Index (WCI)</strong> tracks the weekly spot cost to ship a standard 40ft container across key global trade routes. Before the Houthi attacks it averaged ~$1,380. As ships rerouted around the Cape of Good Hope, costs surged to over $5,500 at the peak. This chart shows the % change from that pre-crisis baseline — a direct read on how much more expensive it has become to move goods that typically travel via the Suez Canal. Dashed sections are modelled from historical WCI data; solid sections are from live CI fetches.
       </p>
     </div>
     <button class="pulse-share-btn" id="pulse-share-btn">Share Timeline ▾</button>
@@ -1991,6 +2034,15 @@ function renderCard(food, country) {
 
       ${buildSparklineSvg(historyData[food.id], sev)}
 
+      ${(() => {
+        if (sev === 'extreme' || sev === 'high') {
+          const country = getCountry();
+          const sub = findSubstitutes(food, country, 1)[0];
+          if (sub) return `<div class="card-swap">→ Consider <strong>${escHtml(sub.name)}</strong> ${sub.emoji} <span class="swap-pct">${countryExposure(sub, country)}%</span></div>`;
+        }
+        return '';
+      })()}
+
       <div class="card-tap-hint" aria-hidden="true">Tap to see full breakdown →</div>
     </article>
   `;
@@ -2081,6 +2133,9 @@ function renderGrid() {
   attachCardListeners();
 }
 
+// Countries where EM currency depreciation amplifies commodity shocks
+const FX_RISK_COUNTRIES = new Set(['IN', 'PH', 'LB', 'LK', 'BR']);
+
 function renderCountryRankings() {
   const container = document.getElementById('country-view');
   if (!container || !state.data) return;
@@ -2119,13 +2174,16 @@ function renderCountryRankings() {
     const color = SEVERITY_COLOR[sev];
     const bg = SEVERITY_BG[sev];
     const mc = multColor(c.impact_multiplier);
+    const fxTag = FX_RISK_COUNTRIES.has(c.code)
+      ? `<span class="fx-risk-tag" title="Currency depreciation risk: a weakening local currency amplifies commodity import costs beyond the exposure score shown">FX risk</span>`
+      : '';
 
     return `
       <div class="country-row">
         <div class="country-rank">#${i + 1}</div>
         <div class="country-info">
           <div class="country-row-top">
-            <span class="country-name">${escHtml(c.name)}</span>
+            <span class="country-name">${escHtml(c.name)}${fxTag}</span>
             <span class="country-exposure-val" style="background:${bg}; color:${color}">${avg}%</span>
           </div>
           <div class="country-meta-grid">
@@ -2813,16 +2871,21 @@ async function init() {
 
   document.getElementById('loading').style.display = 'none';
 
-  // Live date + Gemini#10: delayed badge if data is stale (>10 days)
+  // Live date + stale banner if data is >5 days old
   const d = new Date(state.data.last_updated);
   const dateStr = d.toLocaleDateString('en', { year: 'numeric', month: 'long', day: 'numeric' });
   const daysSince = (Date.now() - d.getTime()) / (1000 * 60 * 60 * 24);
-  const isDelayed = daysSince > 10;
+  const isDelayed = daysSince > 5;
   const dot = document.querySelector('#live-badge .pulse-dot');
   if (isDelayed) {
     dot.classList.add('delayed');
     dot.title = 'Data may be outdated';
     document.getElementById('live-date').textContent = `Delayed — last updated ${dateStr}`;
+    const banner = document.getElementById('stale-banner');
+    if (banner) {
+      banner.textContent = `Data last updated ${dateStr} (${Math.floor(daysSince)} days ago). The daily refresh may be experiencing a delay.`;
+      banner.style.display = 'block';
+    }
   } else {
     document.getElementById('live-date').textContent = `Updated ${dateStr}`;
   }
