@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tare — The Red Sea shipping crisis in your grocery bill</title>
   <meta name="description" content="A data tool that maps how Houthi attacks on Red Sea shipping since Nov 2023 have pushed container freight costs into the price of 59 everyday foods.">
+  <meta name="theme-color" content="#2C3E2D">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚖️</text></svg>">
 
   <!-- Open Graph -->
   <meta property="og:title" content="The Red Sea shipping crisis in your grocery bill">
@@ -12,6 +14,8 @@
   <meta property="og:url" content="https://prismatic-labs.github.io/tare/red-sea.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Tare by Prismatic Labs">
+  <meta property="og:image" content="https://prismatic-labs.github.io/tare/og-image-red-sea.png">
+  <meta name="twitter:image" content="https://prismatic-labs.github.io/tare/og-image-red-sea.png">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
@@ -2520,6 +2524,7 @@ function openFood(id) {
   overlay.classList.add('open');
   overlay.querySelector('.modal').scrollTop = 0;
   document.body.style.overflow = 'hidden';
+  window.goatcounter?.count({path: `rs/modal/${food.id}`, title: `Red Sea Modal: ${food.name}`, event: true});
 
   // Wire sub-card clicks
   attachSubCardListeners();
@@ -2946,9 +2951,9 @@ function activateTab(btn, key) {
   renderGrid();
 }
 
-tabFoods.addEventListener('click', () => activateTab(tabFoods, 'foods'));
-tabCountries.addEventListener('click', () => activateTab(tabCountries, 'countries'));
-tabAdvice.addEventListener('click', () => activateTab(tabAdvice, 'advice'));
+tabFoods.addEventListener('click', () => { activateTab(tabFoods, 'foods'); window.goatcounter?.count({path: 'rs/tab/foods', title: 'Red Sea Tab: Food Items', event: true}); });
+tabCountries.addEventListener('click', () => { activateTab(tabCountries, 'countries'); window.goatcounter?.count({path: 'rs/tab/countries', title: 'Red Sea Tab: Countries', event: true}); });
+tabAdvice.addEventListener('click', () => { activateTab(tabAdvice, 'advice'); window.goatcounter?.count({path: 'rs/tab/advice', title: 'Red Sea Tab: What should I do?', event: true}); });
 
 // Pulse share
 document.getElementById('pulse-share-btn').addEventListener('click', sharePulse);

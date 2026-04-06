@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tare — The Strait of Hormuz crisis in your grocery bill</title>
   <meta name="description" content="A data tool that maps how the 2026 Strait of Hormuz disruption flows through energy, fertilizer, and logistics into the price of 59 everyday foods.">
+  <meta name="theme-color" content="#2C3E2D">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚖️</text></svg>">
 
   <!-- Open Graph -->
   <meta property="og:title" content="The Strait of Hormuz crisis in your grocery bill">
@@ -12,6 +14,8 @@
   <meta property="og:url" content="https://prismatic-labs.github.io/tare/hormuz.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Tare by Prismatic Labs">
+  <meta property="og:image" content="https://prismatic-labs.github.io/tare/og-image-hormuz.png">
+  <meta name="twitter:image" content="https://prismatic-labs.github.io/tare/og-image-hormuz.png">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
@@ -2439,6 +2443,7 @@ function openFood(id) {
   overlay.classList.add('open');
   overlay.querySelector('.modal').scrollTop = 0;
   document.body.style.overflow = 'hidden';
+  window.goatcounter?.count({path: `modal/${food.id}`, title: `Modal: ${food.name}`, event: true});
 
   // Wire sub-card clicks
   attachSubCardListeners();
@@ -2829,9 +2834,9 @@ async function init() {
     renderGrid();
   }
 
-  tabFoods.addEventListener('click', () => activateTab(tabFoods, 'foods'));
-  tabCountries.addEventListener('click', () => activateTab(tabCountries, 'countries'));
-  tabAdvice.addEventListener('click', () => activateTab(tabAdvice, 'advice'));
+  tabFoods.addEventListener('click', () => { activateTab(tabFoods, 'foods'); window.goatcounter?.count({path: 'tab/foods', title: 'Tab: Food Items', event: true}); });
+  tabCountries.addEventListener('click', () => { activateTab(tabCountries, 'countries'); window.goatcounter?.count({path: 'tab/countries', title: 'Tab: Countries', event: true}); });
+  tabAdvice.addEventListener('click', () => { activateTab(tabAdvice, 'advice'); window.goatcounter?.count({path: 'tab/advice', title: 'Tab: What should I do?', event: true}); });
 
   // Pulse share
   document.getElementById('pulse-share-btn').addEventListener('click', sharePulse);

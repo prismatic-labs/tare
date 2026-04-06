@@ -5,10 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>How it's calculated — Tare</title>
   <meta name="description" content="The full methodology behind Tare's crisis exposure scores: data sources, formulas, uncertainty, and limitations.">
+  <meta name="theme-color" content="#2C3E2D">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚖️</text></svg>">
   <meta property="og:title" content="How Tare calculates crisis exposure">
   <meta property="og:description" content="Open methodology: data sources, formulas, country multipliers, and known limitations.">
   <meta property="og:url" content="https://prismatic-labs.github.io/tare/methodology.html">
   <meta property="og:type" content="website">
+  <meta property="og:image" content="https://prismatic-labs.github.io/tare/og-image-hormuz.png">
+  <meta name="twitter:image" content="https://prismatic-labs.github.io/tare/og-image-hormuz.png">
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -35,6 +39,9 @@
     .nav-wordmark span { color: #F5F0E8; font-style: italic; }
     .nav-back { font-size: 0.78rem; color: rgba(245,240,232,0.6); text-decoration: none; }
     .nav-back:hover { color: #F5F0E8; }
+    .nav-crisis-links { display: flex; gap: 0.75rem; }
+    .nav-crisis-link { font-size: 0.78rem; color: rgba(245,240,232,0.6); text-decoration: none; }
+    .nav-crisis-link:hover { color: #F5F0E8; }
 
     .page-hero {
       background: var(--dark-green);
@@ -174,7 +181,10 @@
 
 <nav>
   <a href="hormuz.html" class="nav-wordmark">Prismatic Labs / <span>tare</span></a>
-  <a href="hormuz.html" class="nav-back">← All foods</a>
+  <div class="nav-crisis-links">
+    <a href="hormuz.html" class="nav-crisis-link">🛢️ Hormuz</a>
+    <a href="red-sea.html" class="nav-crisis-link">🚢 Red Sea</a>
+  </div>
 </nav>
 
 <div class="page-hero">

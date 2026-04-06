@@ -5,12 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Score your basket — Tare</title>
   <meta name="description" content="Pick the foods you buy every week. Find out how much of your grocery basket is exposed to the Strait of Hormuz supply chain crisis.">
+  <meta name="theme-color" content="#2C3E2D">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚖️</text></svg>">
 
   <meta property="og:title" content="Score your basket">
   <meta property="og:description" content="Pick your weekly groceries. See how much of your basket is exposed to the supply chain crisis.">
   <meta property="og:url" content="https://prismatic-labs.github.io/tare/quiz.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Tare by Prismatic Labs">
+  <meta property="og:image" content="https://prismatic-labs.github.io/tare/og-image-hormuz.png">
+  <meta name="twitter:image" content="https://prismatic-labs.github.io/tare/og-image-hormuz.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Score your basket">
   <meta name="twitter:description" content="Pick your weekly groceries. See how much of your basket is exposed to the supply chain crisis.">
@@ -57,6 +61,9 @@
       display: flex; align-items: center; gap: 0.3rem;
     }
     .nav-back:hover { color: #F5F0E8; }
+    .nav-crisis-links { display: flex; gap: 0.75rem; }
+    .nav-crisis-link { font-size: 0.78rem; color: rgba(245,240,232,0.6); text-decoration: none; }
+    .nav-crisis-link:hover { color: #F5F0E8; }
 
     /* ── Hero ── */
     .hero {
@@ -336,7 +343,10 @@
 
 <nav>
   <a href="hormuz.html" class="nav-wordmark">Prismatic Labs / <span>tare</span></a>
-  <a href="hormuz.html" class="nav-back">← All foods</a>
+  <div class="nav-crisis-links">
+    <a href="hormuz.html" class="nav-crisis-link">🛢️ Hormuz</a>
+    <a href="red-sea.html" class="nav-crisis-link">🚢 Red Sea</a>
+  </div>
 </nav>
 
 <div class="hero">
