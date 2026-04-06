@@ -2151,15 +2151,26 @@ function renderAdvice() {
   const high = sorted.filter(x => x.exp >= 10);
   const stable = sorted.filter(x => x.exp <= 2).slice(0, 10);
 
+  // Human-readable category labels
+  const CAT_LABEL = {
+    meat:     'Meat & poultry',
+    dairy:    'Dairy',
+    grains:   'Grains & bread',
+    staples:  'Oils, pulses & staples',
+    seafood:  'Seafood',
+    packaged: 'Packaged & processed',
+    produce:  'Fresh produce',
+  };
+
   // Per-category practical advice (Red Sea — freight/distribution mechanism)
   const CAT_ADVICE = {
-    seafood:  'SE Asian farmed shrimp and long-haul tinned fish are most exposed — every container transited Suez. Switch to locally-caught fresh fish where possible.',
-    packaged: 'Imported packaged goods (palm-oil snacks, Asian condiments, instant noodles) carry the highest freight burden. Look for local equivalents or cook from scratch.',
-    grains:   'Asian rice and instant noodles route fully through Bab-el-Mandeb. European-milled flour, oats, and pasta use Atlantic routes and are well insulated.',
-    produce:  'Garlic (China), avocado (East Africa), and some citrus (South Africa) face moderate exposure. EU greenhouse and North African produce is barely affected.',
-    staples:  'Palm cooking oil from Malaysia and Indonesia is the most exposed staple — it routes entirely via Suez. Sunflower and rapeseed oil from EU/Ukraine are more stable.',
-    meat:     'European meat production is largely domestic with local feed. Red Sea disruption has minimal direct effect — exposure here is packaging and spice imports only.',
-    dairy:    'Local dairy supply chains are almost entirely unaffected by the Red Sea crisis. Imported NZ/AU butter and baby formula see a small uplift from Cape rerouting.',
+    seafood:  'SE Asian farmed shrimp and long-haul tinned fish are most exposed — every container once transited Suez, now rerouting via Cape adds cost and time. Switch to locally-caught fresh fish where possible.',
+    packaged: 'Imported packaged goods (palm-oil snacks, Asian condiments, instant noodles) carry the highest freight burden. Local equivalents or home-cooked versions from raw ingredients are meaningfully cheaper to produce.',
+    grains:   'Asian rice and instant noodles route fully through Bab-el-Mandeb. European-milled flour, oats, and pasta use Atlantic routes and are well insulated — a practical swap for affected grains.',
+    produce:  'Garlic (China), avocado (East Africa), and some citrus (South Africa) face moderate exposure. EU greenhouse and North African produce is barely affected — prioritise seasonal and local.',
+    staples:  'Palm cooking oil from Malaysia and Indonesia is the most exposed staple — it routes entirely via Suez. Sunflower, rapeseed, and olive oil from EU sources are more stable substitutes right now.',
+    meat:     'European meat production is largely domestic with local feed. Red Sea disruption has minimal direct effect — any exposure here comes from imported packaging materials and specialty spice imports.',
+    dairy:    'Local dairy supply chains are almost entirely unaffected by the Red Sea crisis. The small uplift on NZ/AU butter and baby formula comes from Cape rerouting adding distance, not input costs.',
   };
 
   const foodRow = ({ f, exp }) => {
@@ -2184,8 +2195,8 @@ function renderAdvice() {
   });
 
   const catBlocks = Object.entries(catGroups).map(([cat, items]) => `
-    <div>
-      <div class="advice-section-title">${escHtml(cat)}</div>
+    <div style="margin-top:1.25rem">
+      <div class="advice-section-title">${escHtml(CAT_LABEL[cat] || cat)}</div>
       <div style="font-size:0.82rem;color:var(--muted);margin-bottom:0.5rem;padding:0.5rem 0.75rem;background:var(--cream-dark);border-radius:var(--radius)">
         ${escHtml(CAT_ADVICE[cat] || 'Monitor prices in this category.')}
       </div>
@@ -2217,11 +2228,11 @@ function renderAdvice() {
     <div class="advice-tips">
       <div class="advice-section-title">💡 General principles</div>
       <ul>
-        <li><strong>Freight costs lag retail prices by 2–4 months.</strong> The disruption that happened in January 2024 is only now fully priced into long-term contracts. Current WCI levels will reach shelves later in 2026.</li>
+        <li><strong>Freight costs lag retail prices by 2–4 months.</strong> Spot rate movements filter through to retail contracts gradually — what you see in the WCI today will start appearing on shelves in 2–4 months' time.</li>
         <li><strong>Local and fresh is your best insulation.</strong> Produce grown nearby routes through zero containers. Dairy, eggs, and bread are almost entirely domestic supply chains.</li>
         <li><strong>Don't avoid tinned goods entirely.</strong> Building a modest pantry buffer of canned beans, tomatoes, and sardines is sensible — just buy on your normal cycle, not all at once.</li>
         <li><strong>Asian imports are most exposed.</strong> Shrimp, garlic, noodles, and palm oil all route fully through Bab-el-Mandeb. European or Atlantic-sourced equivalents are more stable right now.</li>
-        <li><strong>These scores update daily</strong> as the Drewry WCI is refreshed. If a ceasefire holds, freight rates normalise quickly — the 2024 Red Sea spike unwound within 6 months.</li>
+        <li><strong>These scores update daily</strong> as the Drewry WCI is refreshed. Freight rates can soften quickly when routes reopen — the summer 2024 peak dropped over 60% within four months before partially recovering.</li>
       </ul>
     </div>
   `;
@@ -2579,13 +2590,20 @@ function renderPulse() {
       })() : null);
   if (!series || series.length < 2) return;
 
+  const fmt = (d, showYear) => {
+    if (!d) return '';
+    const date = new Date(d);
+    const m = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][date.getMonth()];
+    return `${m} ${date.getDate()}${showYear ? ` '${String(date.getFullYear()).slice(2)}` : ''}`;
+  };
+
   section.style.display = 'block';
   const peakVal = Math.max(...series);
   const peakIdx = series.indexOf(peakVal);
   const peakDate = historyDates[peakIdx] ? fmt(historyDates[peakIdx], true) : '';
   section.querySelector('.pulse-sub').innerHTML =
     `Drewry World Container Index change vs. pre-crisis baseline ($1,380/40ft). ` +
-    `Peak: <strong>+${peakVal.toFixed(0)}%</strong> (${peakDate}). Current: <strong>+${series[series.length-1].toFixed(0)}%</strong>.`;
+    `Peak: <strong>+${peakVal.toFixed(0)}%</strong> (${peakDate}). Current: <strong>+${series[series.length - 1].toFixed(0)}%</strong>.`;
 
   const W = container.clientWidth || 600;
   const H = 160;
@@ -2603,15 +2621,6 @@ function renderPulse() {
 
   const getX = i => PAD_L + ((allMs[i] - msMin) / msRange) * (W - PAD_L - PAD_R);
   const getY = v => H - PAD_B - ((v - minV) / range) * (H - PAD_B - PAD_T);
-
-  const points = series.map((v, i) => `${getX(i).toFixed(1)},${getY(v).toFixed(1)}`).join(' ');
-
-  const fmt = (d, showYear) => {
-    if (!d) return '';
-    const date = new Date(d);
-    const m = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][date.getMonth()];
-    return `${m} ${date.getDate()}${showYear ? ` '${String(date.getFullYear()).slice(2)}` : ''}`;
-  };
 
   // Y-axis ticks
   const ticks = [0, 100, 200, 300].filter(t => t <= maxV + 20);

@@ -2074,15 +2074,26 @@ function renderAdvice() {
   const high = sorted.filter(x => x.exp >= 25);
   const stable = sorted.filter(x => x.exp <= 5).slice(0, 10);
 
+  // Human-readable category labels
+  const CAT_LABEL = {
+    meat:     'Meat & poultry',
+    dairy:    'Dairy',
+    grains:   'Grains & bread',
+    staples:  'Oils, pulses & staples',
+    seafood:  'Seafood',
+    packaged: 'Packaged & processed',
+    produce:  'Fresh produce',
+  };
+
   // Per-category practical advice (Hormuz — input cost mechanism)
   const CAT_ADVICE = {
-    meat:     'Feed grain and fuel are the main drivers. Plant proteins (lentils, beans, eggs) are more stable right now.',
-    dairy:    'Processed dairy (cream, butter, yoghurt) passes through costs faster than fresh milk. Local-brand basics tend to be more insulated.',
-    grains:   'Fertilizer (urea) is the key driver. Flour, oats and pasta store well — a modest buffer buys time if prices spike.',
-    staples:  'Cooking oil has the highest exposure of any staple. Buy to your normal cycle; avoid overstocking as it drives shortages.',
-    seafood:  'Wild-caught local fish is far less exposed than imported farmed shrimp or distant-water tuna.',
-    packaged: 'Energy-intensive processing makes these most vulnerable. Home-cooked equivalents from raw ingredients are more stable.',
-    produce:  'Fresh local and seasonal produce has very low Hormuz exposure. A good time to lean into what grows nearby.',
+    meat:     'Animal feed and diesel are the main cost drivers. Plant proteins — lentils, beans, tofu — are among the least exposed foods right now and are worth leaning into.',
+    dairy:    'Processed dairy (cream, butter, yoghurt) passes through energy costs faster than fresh milk. Local-brand basics from nearby farms tend to be more insulated.',
+    grains:   'Fertilizer (urea) is the primary driver — it feeds the crops that feed us. Flour, oats, and rice store well; a few extra weeks of supply buys useful buffer time.',
+    staples:  'Cooking oil has the highest single-food exposure in this crisis. Sunflower and rapeseed from domestic or Ukrainian sources carry lower exposure than palm oil imports.',
+    seafood:  'Wild-caught local fish is far less exposed than imported farmed shrimp or distant-water tuna. Canned fish from nearby fisheries (sardines, mackerel) are a good middle ground.',
+    packaged: 'Energy-intensive processing amplifies input cost pressure. Home-cooked equivalents from raw ingredients — dried pasta, pulses, whole grains — are meaningfully more stable.',
+    produce:  'Fresh local and seasonal produce has very low Hormuz exposure. Labour and land dominate the cost, not energy. A good time to lean into what grows nearby.',
   };
 
   const foodRow = ({ f, exp }) => {
@@ -2108,8 +2119,8 @@ function renderAdvice() {
   });
 
   const catBlocks = Object.entries(catGroups).map(([cat, items]) => `
-    <div>
-      <div class="advice-section-title">${escHtml(cat)}</div>
+    <div style="margin-top:1.25rem">
+      <div class="advice-section-title">${escHtml(CAT_LABEL[cat] || cat)}</div>
       <div style="font-size:0.82rem;color:var(--muted);margin-bottom:0.5rem;padding:0.5rem 0.75rem;background:var(--cream-dark);border-radius:var(--radius)">
         ${escHtml(CAT_ADVICE[cat] || 'Monitor prices in this category.')}
       </div>
@@ -2143,7 +2154,7 @@ function renderAdvice() {
       <ul>
         <li><strong>Exposure ≠ price rise.</strong> A 40% exposure score means 40% of that food's supply chain is under stress — retailers may absorb part or all of it, or pass it through over months.</li>
         <li><strong>Local and seasonal is your best insulation.</strong> Produce grown nearby with domestic labour and energy is barely touched by either the Hormuz or Red Sea crises.</li>
-        <li><strong>Don't panic-buy.</strong> Stocking up on threatened items collectively is exactly what causes the shortages being anticipated. Buy to your normal cycle, perhaps one or two extra weeks ahead.</li>
+        <li><strong>Don't panic-buy.</strong> Stocking up on threatened items collectively is exactly what causes the shortages being anticipated. A modest buffer of shelf-stable staples — one or two weeks ahead of your normal cycle — is sensible. Bulk-buying is not.</li>
         <li><strong>Diversify protein sources.</strong> Pulses, eggs, and local legumes are among the least exposed foods and offer good nutritional value for money.</li>
         <li><strong>These scores update daily</strong> as commodity prices change. A crisis can ease as quickly as it escalated.</li>
       </ul>
