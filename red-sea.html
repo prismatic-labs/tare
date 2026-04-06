@@ -2580,9 +2580,12 @@ function renderPulse() {
   if (!series || series.length < 2) return;
 
   section.style.display = 'block';
+  const peakVal = Math.max(...series);
+  const peakIdx = series.indexOf(peakVal);
+  const peakDate = historyDates[peakIdx] ? fmt(historyDates[peakIdx], true) : '';
   section.querySelector('.pulse-sub').innerHTML =
     `Drewry World Container Index change vs. pre-crisis baseline ($1,380/40ft). ` +
-    `Peak: <strong>+298%</strong> (Mar 2024). Current: <strong>+${series[series.length-1].toFixed(0)}%</strong>.`;
+    `Peak: <strong>+${peakVal.toFixed(0)}%</strong> (${peakDate}). Current: <strong>+${series[series.length-1].toFixed(0)}%</strong>.`;
 
   const W = container.clientWidth || 600;
   const H = 160;
