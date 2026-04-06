@@ -35,9 +35,10 @@ logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 log = logging.getLogger(__name__)
 
 # ─── Paths ─────────────────────────────────────────────────────────────────
-REPO_ROOT  = Path(__file__).parent.parent
-DATA_FILE  = REPO_ROOT / "data" / "red-sea.json"
-FOODS_FILE = REPO_ROOT / "data" / "foods.json"  # for exchange rates fallback
+REPO_ROOT    = Path(__file__).parent.parent
+DATA_FILE    = REPO_ROOT / "data" / "red-sea.json"
+FOODS_FILE   = REPO_ROOT / "data" / "foods.json"  # for exchange rates fallback
+HISTORY_DIR  = REPO_ROOT / "data" / "red-sea-history"
 
 # ─── Crisis baseline ────────────────────────────────────────────────────────
 CRISIS_START = "2023-11-19"
@@ -328,6 +329,47 @@ def recalc_food_exposure(food: dict[str, Any], changes: dict[str, float]) -> dic
     return food
 
 
+# ─── Snapshot archive ────────────────────────────────────────────────────────
+def archive_snapshot(data: dict[str, Any], today: str) -> None:
+    """Write a compact daily snapshot to data/red-sea-history/YYYY-MM-DD.json
+    and update the index.json so gen-red-sea-history-summary.py can pick it up.
+
+    Format mirrors what gen-red-sea-history-summary.py expects:
+      { "date": "...", "sources": {"drewry_wci_usd_40ft": N}, "foods": [...] }
+    """
+    HISTORY_DIR.mkdir(parents=True, exist_ok=True)
+
+    snapshot: dict[str, Any] = {
+        "date": today,
+        "sources": {
+            "drewry_wci_usd_40ft": data["sources"].get("drewry_wci_usd_40ft"),
+        },
+        "foods": [
+            {"id": f["id"], "crisis_exposure_pct": f["crisis_exposure_pct"]}
+            for f in data["foods"]
+        ],
+    }
+
+    snap_path = HISTORY_DIR / f"{today}.json"
+    write_atomic(snap_path, snapshot)
+    log.info("Archived snapshot → %s", snap_path)
+
+    # Update index
+    index_path = HISTORY_DIR / "index.json"
+    if index_path.exists():
+        with open(index_path, encoding="utf-8") as fh:
+            index: list[str] = json.load(fh)
+    else:
+        index = []
+
+    if today not in index:
+        index.append(today)
+        index.sort()
+
+    write_atomic(index_path, index)  # type: ignore[arg-type]
+    log.info("Red Sea history index now has %d entries", len(index))
+
+
 # ─── Atomic write ────────────────────────────────────────────────────────────
 def write_atomic(path: Path, data: dict[str, Any]) -> None:
     tmp = path.with_suffix(".json.tmp")
@@ -400,6 +442,9 @@ def main() -> int:
 
     # 7. Write atomically
     write_atomic(DATA_FILE, updated)
+
+    # 8. Archive daily snapshot so the Crisis Pulse chart grows over time
+    archive_snapshot(updated, today)
 
     log.info("Done. %d foods updated. WCI = %.0f", len(updated_foods), wci)
     return 0
