@@ -1,16 +1,17 @@
 {
   "date": "2026-03-01",
   "sources": {
-    "drewry_wci_usd_40ft": 4090.32
+    "drewry_wci_usd_40ft": 4100,
+    "wci_pct_change": 197.1
   },
   "foods": [
     {
       "id": "shrimp",
-      "crisis_exposure_pct": 18
+      "crisis_exposure_pct": 17
     },
     {
       "id": "canned_tuna",
-      "crisis_exposure_pct": 18
+      "crisis_exposure_pct": 17
     },
     {
       "id": "salmon",
@@ -162,7 +163,7 @@
     },
     {
       "id": "cooking_oil",
-      "crisis_exposure_pct": 17
+      "crisis_exposure_pct": 16
     },
     {
       "id": "frozen_pizza",

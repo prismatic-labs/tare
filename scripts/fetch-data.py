@@ -58,7 +58,8 @@ CRISIS_START = "2026-02-28"
 # ─── Model constants ────────────────────────────────────────────────────────
 MONTE_CARLO_RUNS    = 500   # iterations for uncertainty band
 WEIGHT_NOISE        = 0.15  # ±15% uniform noise on driver weights
-UREA_TIPPING_POINT  = 600.0 # $/ton — above this, flag scarcity inflation risk
+UREA_TIPPING_POINT  = 600.0  # $/ton — above this, flag scarcity inflation risk
+BRENT_SURCHARGE_TRIGGER = 110.0  # $/bbl — above this, carriers activate non-linear bunker surcharges
 
 # ─── Pre-crisis baselines (from foods.json sources block) ──────────────────
 # These are used as the denominator when computing % change.
@@ -509,6 +510,8 @@ def check_tipping_points(prices: dict[str, float]) -> dict[str, Any]:
     Returns a dict of active flags to be stored in the sources block.
 
     Cambridge: if urea > $600/t, signal shifts from cost-push to scarcity inflation.
+    IEA/IATA: if Brent > $110/bbl, carriers trigger non-linear bunker adjustment
+    factor (BAF) surcharges — historically ±$200/container per $10/bbl beyond trigger.
     """
     flags: dict[str, Any] = {}
 
@@ -523,6 +526,18 @@ def check_tipping_points(prices: dict[str, float]) -> dict[str, Any]:
         )
     else:
         flags["urea_scarcity_risk"] = False
+
+    oil = prices.get("oil_brent_usd", 0.0)
+    if oil >= BRENT_SURCHARGE_TRIGGER:
+        flags["brent_surcharge_risk"] = True
+        flags["brent_surcharge_threshold_usd"] = BRENT_SURCHARGE_TRIGGER
+        flags["brent_current_usd"] = round(oil, 1)
+        log.warning(
+            "TIPPING POINT: Brent at $%.1f/bbl ≥ threshold $%.0f/bbl — "
+            "non-linear shipping bunker surcharges active", oil, BRENT_SURCHARGE_TRIGGER
+        )
+    else:
+        flags["brent_surcharge_risk"] = False
 
     return flags
 

@@ -573,6 +573,34 @@
     .country-meta-grid { font-size: 0.78rem; color: var(--muted); display: grid; grid-template-columns: auto auto auto; gap: 0.4rem 1rem; margin-top: 0.5rem; }
     .country-meta-item strong { color: var(--text); }
 
+    /* ─── Advice tab ─────────────────────────────────────────────────────── */
+    .advice-view { max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; gap: 1.25rem; }
+    .advice-disclaimer {
+      background: #fffbe6; border: 1.5px solid #B08800; border-radius: var(--radius);
+      padding: 1rem 1.25rem; display: flex; gap: 0.75rem; align-items: flex-start;
+    }
+    .advice-disclaimer-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 0.1rem; }
+    .advice-disclaimer p { margin: 0; font-size: 0.85rem; color: var(--text); line-height: 1.55; }
+    .advice-disclaimer strong { color: #7a5f00; }
+    .advice-section-title {
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em;
+      color: var(--muted); margin-bottom: 0.5rem;
+    }
+    .advice-food-list { display: flex; flex-direction: column; gap: 0.5rem; }
+    .advice-food-row {
+      display: flex; align-items: center; gap: 0.75rem;
+      background: var(--white); border-radius: var(--radius); padding: 0.6rem 0.9rem;
+      box-shadow: var(--shadow); font-size: 0.88rem;
+    }
+    .advice-food-emoji { font-size: 1.1rem; flex-shrink: 0; }
+    .advice-food-name { font-weight: 600; flex: 1; }
+    .advice-food-pct { font-size: 0.8rem; font-weight: 700; padding: 0.15rem 0.4rem; border-radius: 3px; flex-shrink: 0; }
+    .advice-food-note { font-size: 0.78rem; color: var(--muted); flex: 2; }
+    .advice-tips { background: var(--white); border-radius: var(--radius); padding: 1rem 1.25rem; box-shadow: var(--shadow); }
+    .advice-tips ul { margin: 0.5rem 0 0; padding-left: 1.2rem; }
+    .advice-tips li { font-size: 0.86rem; color: var(--text); margin-bottom: 0.5rem; line-height: 1.5; }
+    .advice-tips li:last-child { margin-bottom: 0; }
+
     /* ─── Grid ──────────────────────────────────────────────────────────── */
     .main-content { padding: 1.5rem; max-width: 1400px; margin: 0 auto; }
 
@@ -1358,6 +1386,7 @@
   <nav class="main-tabs" role="tablist">
     <button class="tab-btn active" id="tab-foods" role="tab" aria-selected="true" aria-controls="grid-view">Food Items</button>
     <button class="tab-btn" id="tab-countries" role="tab" aria-selected="false" aria-controls="country-view">Most Affected Countries</button>
+    <button class="tab-btn" id="tab-advice" role="tab" aria-selected="false" aria-controls="advice-view">What should I do?</button>
   </nav>
 
   <div id="loading">Loading data…</div>
@@ -1378,6 +1407,7 @@
   <p class="results-meta" id="results-meta" style="display:none"></p>
   <div class="grid" id="grid" role="list" aria-label="Food items"></div>
   <div id="country-view" class="country-list" style="display:none" role="tabpanel" aria-labelledby="tab-countries"></div>
+  <div id="advice-view" class="advice-view" style="display:none" role="tabpanel" aria-labelledby="tab-advice"></div>
 </main>
 
 <!-- Detail Modal -->
@@ -1895,6 +1925,7 @@ function renderGrid() {
   const gridEl = document.getElementById('grid');
   const metaEl = document.getElementById('results-meta');
   const countryViewEl = document.getElementById('country-view');
+  const adviceViewEl = document.getElementById('advice-view');
   const controlsBar = document.querySelector('.controls-bar');
   const infoCallout = document.getElementById('info-callout');
 
@@ -1905,7 +1936,17 @@ function renderGrid() {
     controlsBar.style.display = 'none';
     infoCallout.style.display = 'none';
     countryViewEl.style.display = 'flex';
+    adviceViewEl.style.display = 'none';
     renderCountryRankings();
+    return;
+  } else if (activeTab === 'advice') {
+    gridEl.style.display = 'none';
+    metaEl.style.display = 'none';
+    controlsBar.style.display = 'none';
+    infoCallout.style.display = 'none';
+    countryViewEl.style.display = 'none';
+    adviceViewEl.style.display = 'flex';
+    renderAdvice();
     return;
   } else {
     gridEl.style.display = 'grid';
@@ -1913,6 +1954,7 @@ function renderGrid() {
     controlsBar.style.display = 'block';
     infoCallout.style.display = 'flex';
     countryViewEl.style.display = 'none';
+    adviceViewEl.style.display = 'none';
   }
 
   let foods = [...data.foods];
@@ -1976,10 +2018,28 @@ function renderCountryRankings() {
   // Sort by avg exposure descending
   stats.sort((a, b) => b.avg - a.avg);
 
+  // Diverging color for multiplier: 0.65 (green) → 1.0 (neutral grey) → 2.3+ (red)
+  function multColor(m) {
+    if (m <= 1.0) {
+      const t = (m - 0.65) / 0.35; // 0=green, 1=neutral
+      const r = Math.round(42  + (120 - 42)  * t);
+      const g = Math.round(122 + (120 - 122) * t);
+      const b = Math.round(58  + (120 - 58)  * t);
+      return `rgb(${r},${g},${b})`;
+    } else {
+      const t = Math.min((m - 1.0) / 1.3, 1.0); // 0=neutral, 1=red
+      const r = Math.round(120 + (192 - 120) * t);
+      const g = Math.round(120 + (57  - 120) * t);
+      const b = Math.round(120 + (43  - 120) * t);
+      return `rgb(${r},${g},${b})`;
+    }
+  }
+
   container.innerHTML = stats.map(({ c, avg }, i) => {
     const sev = severityFromPct(avg);
     const color = SEVERITY_COLOR[sev];
     const bg = SEVERITY_BG[sev];
+    const mc = multColor(c.impact_multiplier);
 
     return `
       <div class="country-row">
@@ -1993,11 +2053,102 @@ function renderCountryRankings() {
             <div class="country-meta-item">Oil: <strong>${c.hormuz_oil_dependency_pct}%</strong></div>
             <div class="country-meta-item">LNG: <strong>${c.hormuz_lng_dependency_pct}%</strong></div>
             <div class="country-meta-item">Fertilizer: <strong>${c.hormuz_fertilizer_dependency_pct}%</strong></div>
+            <div class="country-meta-item" style="grid-column:1/-1">Multiplier: <strong style="color:${mc}">${c.impact_multiplier.toFixed(2)}×</strong></div>
           </div>
         </div>
       </div>
     `;
   }).join('');
+}
+
+/* ─── Advice tab ─────────────────────────────────────────────────────────── */
+function renderAdvice() {
+  const container = document.getElementById('advice-view');
+  if (!container || !state.data) return;
+
+  const country = getCountry();
+  const sorted = [...state.data.foods]
+    .map(f => ({ f, exp: countryExposure(f, country) }))
+    .sort((a, b) => b.exp - a.exp);
+
+  const high = sorted.filter(x => x.exp >= 25);
+  const stable = sorted.filter(x => x.exp <= 5).slice(0, 10);
+
+  // Per-category practical advice (Hormuz — input cost mechanism)
+  const CAT_ADVICE = {
+    meat:     'Feed grain and fuel are the main drivers. Plant proteins (lentils, beans, eggs) are more stable right now.',
+    dairy:    'Processed dairy (cream, butter, yoghurt) passes through costs faster than fresh milk. Local-brand basics tend to be more insulated.',
+    grains:   'Fertilizer (urea) is the key driver. Flour, oats and pasta store well — a modest buffer buys time if prices spike.',
+    staples:  'Cooking oil has the highest exposure of any staple. Buy to your normal cycle; avoid overstocking as it drives shortages.',
+    seafood:  'Wild-caught local fish is far less exposed than imported farmed shrimp or distant-water tuna.',
+    packaged: 'Energy-intensive processing makes these most vulnerable. Home-cooked equivalents from raw ingredients are more stable.',
+    produce:  'Fresh local and seasonal produce has very low Hormuz exposure. A good time to lean into what grows nearby.',
+  };
+
+  const foodRow = ({ f, exp }) => {
+    const sev = severityFromPct(exp);
+    const col = SEVERITY_COLOR[sev];
+    const bg  = SEVERITY_BG[sev];
+    const topDriver = f.drivers.slice().sort((a,b) => b.weight - a.weight)[0];
+    const note = topDriver ? topDriver.description.split('.')[0] : '';
+    return `
+      <div class="advice-food-row">
+        <span class="advice-food-emoji">${escHtml(f.emoji)}</span>
+        <span class="advice-food-name">${escHtml(f.name)}</span>
+        <span class="advice-food-pct" style="background:${bg};color:${col}">${exp}%</span>
+        <span class="advice-food-note">${escHtml(note)}</span>
+      </div>`;
+  };
+
+  // Group high-exposure foods by category for advice blocks
+  const catGroups = {};
+  high.forEach(({ f, exp }) => {
+    if (!catGroups[f.category]) catGroups[f.category] = [];
+    catGroups[f.category].push({ f, exp });
+  });
+
+  const catBlocks = Object.entries(catGroups).map(([cat, items]) => `
+    <div>
+      <div class="advice-section-title">${escHtml(cat)}</div>
+      <div style="font-size:0.82rem;color:var(--muted);margin-bottom:0.5rem;padding:0.5rem 0.75rem;background:var(--cream-dark);border-radius:var(--radius)">
+        ${escHtml(CAT_ADVICE[cat] || 'Monitor prices in this category.')}
+      </div>
+      <div class="advice-food-list">${items.slice(0, 4).map(foodRow).join('')}</div>
+    </div>
+  `).join('');
+
+  container.innerHTML = `
+    <div class="advice-disclaimer">
+      <div class="advice-disclaimer-icon">⚠️</div>
+      <div>
+        <p><strong>These are modelled estimates, not guarantees.</strong> Exposure scores reflect cost pressure in supply chains — not confirmed price rises at your local shop. Retailers may absorb some or all of this pressure. Local market conditions, contracts, and inventory buffers all affect what actually reaches the shelf.</p>
+        <p style="margin-top:0.5rem">Use this as a general guide for thinking about your shopping, not a precise forecast. Figures are for <strong>${escHtml(country.name)}</strong> based on current commodity prices.</p>
+      </div>
+    </div>
+
+    ${high.length > 0 ? `
+    <div>
+      <div class="advice-section-title" style="color:var(--high)">🔴 Most pressured right now — ${escHtml(country.name)}</div>
+      ${catBlocks}
+    </div>` : '<p style="color:var(--muted);font-size:0.9rem">No high-exposure foods for the selected country at current price levels.</p>'}
+
+    ${stable.length > 0 ? `
+    <div>
+      <div class="advice-section-title" style="color:var(--low)">🟢 Stable choices — low exposure</div>
+      <div class="advice-food-list">${stable.map(foodRow).join('')}</div>
+    </div>` : ''}
+
+    <div class="advice-tips">
+      <div class="advice-section-title">💡 General principles</div>
+      <ul>
+        <li><strong>Exposure ≠ price rise.</strong> A 40% exposure score means 40% of that food's supply chain is under stress — retailers may absorb part or all of it, or pass it through over months.</li>
+        <li><strong>Local and seasonal is your best insulation.</strong> Produce grown nearby with domestic labour and energy is barely touched by either the Hormuz or Red Sea crises.</li>
+        <li><strong>Don't panic-buy.</strong> Stocking up on threatened items collectively is exactly what causes the shortages being anticipated. Buy to your normal cycle, perhaps one or two extra weeks ahead.</li>
+        <li><strong>Diversify protein sources.</strong> Pulses, eggs, and local legumes are among the least exposed foods and offer good nutritional value for money.</li>
+        <li><strong>These scores update daily</strong> as commodity prices change. A crisis can ease as quickly as it escalated.</li>
+      </ul>
+    </div>
+  `;
 }
 
 /* ─── Card click/keyboard ────────────────────────────────────────────────── */
@@ -2075,10 +2226,13 @@ function openFood(id) {
     </div>`;
   })() : '';
 
-  // Tipping point flag
+  // Tipping point flags
   const tp = state.data.sources?.tipping_points;
   const scarcityFlag = (tp?.urea_scarcity_risk && ['meat','dairy','grains','staples'].includes(food.category))
     ? `<span class="scarcity-flag" title="Urea at $${tp.urea_current_usd_ton}/t ≥ $${tp.urea_scarcity_threshold_usd_ton}/t — fertilizer scarcity risk">⚠ Scarcity risk</span>`
+    : '';
+  const surchargeFlag = (tp?.brent_surcharge_risk && food.drivers.some(d => d.category === 'oil' || d.category === 'fuel'))
+    ? `<span class="scarcity-flag" title="Brent at $${tp.brent_current_usd}/bbl ≥ $${tp.brent_surcharge_threshold_usd}/bbl — non-linear shipping surcharges active">⚡ Fuel surcharge</span>`
     : '';
 
   const driversHtml = food.drivers.map(d => {
@@ -2129,7 +2283,7 @@ function openFood(id) {
         <h2 class="modal-title" id="modal-title">${escHtml(food.name)}</h2>
         <span class="badge badge-${sev}">${sev} exposure</span>
         <div class="modal-exposure-row">
-          <div class="modal-exposure-big severity-${sev}" style="color:${barColors[sev]}">${adjPct}%${scarcityFlag}</div>
+          <div class="modal-exposure-big severity-${sev}" style="color:${barColors[sev]}">${adjPct}%${scarcityFlag}${surchargeFlag}</div>
           <div class="modal-exposure-label">
             Hormuz Exposure Index
             ${euRefHtml}
@@ -2562,39 +2716,15 @@ async function init() {
   }
   document.getElementById('footer-date').textContent = dateStr;
 
-  // #3 Load history index for sparklines (graceful fallback — no history on first run)
+  // #3 Load history summary for sparklines (single fetch instead of N individual files)
   try {
-    const hRes = await fetch('data/history/index.json');
+    const hRes = await fetch('data/history-summary.json');
     if (hRes.ok) {
-      const dates = await hRes.json();
-      
-      // Gemini#7: Ensure Feb 28 is the first date in the series for the timeline
-      if (!dates.includes(CRISIS_START_DATE)) {
-        historyDates.push(CRISIS_START_DATE);
-        // Pre-crisis baseline is effectively 0% exposure
-        state.data.foods.forEach(f => {
-          historyData[f.id] = [0];
-        });
+      const summary = await hRes.json();
+      historyDates.push(...summary.dates);
+      for (const [fid, vals] of Object.entries(summary.history)) {
+        historyData[fid] = vals;
       }
-
-      // Load last 12 snapshots (most recent first, then reverse for chronological display)
-      const toLoad = dates.slice(-12);
-      const snapshots = await Promise.all(
-        toLoad.map(date =>
-          fetch(`data/history/${date}.json`)
-            .then(r => r.ok ? r.json() : null)
-            .catch(() => null)
-        )
-      );
-      // Build per-food history arrays
-      snapshots.forEach((snap, i) => {
-        if (!snap) return;
-        historyDates.push(toLoad[i]);
-        (snap.foods || []).forEach(({ id, crisis_exposure_pct }) => {
-          if (!historyData[id]) historyData[id] = [];
-          historyData[id].push(crisis_exposure_pct);
-        });
-      });
     }
   } catch {
     // No history yet — sparklines will show flat placeholders
@@ -2623,24 +2753,20 @@ async function init() {
   // Tabs
   const tabFoods = document.getElementById('tab-foods');
   const tabCountries = document.getElementById('tab-countries');
+  const tabAdvice = document.getElementById('tab-advice');
+  const allTabs = [tabFoods, tabCountries, tabAdvice];
 
-  tabFoods.addEventListener('click', () => {
-    state.activeTab = 'foods';
-    tabFoods.classList.add('active');
-    tabFoods.setAttribute('aria-selected', 'true');
-    tabCountries.classList.remove('active');
-    tabCountries.setAttribute('aria-selected', 'false');
+  function activateTab(btn, key) {
+    allTabs.forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
+    btn.classList.add('active');
+    btn.setAttribute('aria-selected', 'true');
+    state.activeTab = key;
     renderGrid();
-  });
+  }
 
-  tabCountries.addEventListener('click', () => {
-    state.activeTab = 'countries';
-    tabCountries.classList.add('active');
-    tabCountries.setAttribute('aria-selected', 'true');
-    tabFoods.classList.remove('active');
-    tabFoods.setAttribute('aria-selected', 'false');
-    renderGrid();
-  });
+  tabFoods.addEventListener('click', () => activateTab(tabFoods, 'foods'));
+  tabCountries.addEventListener('click', () => activateTab(tabCountries, 'countries'));
+  tabAdvice.addEventListener('click', () => activateTab(tabAdvice, 'advice'));
 
   // Pulse share
   document.getElementById('pulse-share-btn').addEventListener('click', sharePulse);

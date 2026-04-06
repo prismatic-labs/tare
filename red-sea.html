@@ -665,6 +665,22 @@
     }
     .country-meta-grid { font-size: 0.78rem; color: var(--muted); display: grid; grid-template-columns: auto auto auto; gap: 0.4rem 1rem; margin-top: 0.5rem; }
     .country-meta-item strong { color: var(--text); }
+    .advice-view { max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; gap: 1.25rem; }
+    .advice-disclaimer { background: #fffbe6; border: 1.5px solid #B08800; border-radius: var(--radius); padding: 1rem 1.25rem; display: flex; gap: 0.75rem; align-items: flex-start; }
+    .advice-disclaimer-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 0.1rem; }
+    .advice-disclaimer p { margin: 0; font-size: 0.85rem; color: var(--text); line-height: 1.55; }
+    .advice-disclaimer strong { color: #7a5f00; }
+    .advice-section-title { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted); margin-bottom: 0.5rem; }
+    .advice-food-list { display: flex; flex-direction: column; gap: 0.5rem; }
+    .advice-food-row { display: flex; align-items: center; gap: 0.75rem; background: var(--white); border-radius: var(--radius); padding: 0.6rem 0.9rem; box-shadow: var(--shadow); font-size: 0.88rem; }
+    .advice-food-emoji { font-size: 1.1rem; flex-shrink: 0; }
+    .advice-food-name { font-weight: 600; flex: 1; }
+    .advice-food-pct { font-size: 0.8rem; font-weight: 700; padding: 0.15rem 0.4rem; border-radius: 3px; flex-shrink: 0; }
+    .advice-food-note { font-size: 0.78rem; color: var(--muted); flex: 2; }
+    .advice-tips { background: var(--white); border-radius: var(--radius); padding: 1rem 1.25rem; box-shadow: var(--shadow); }
+    .advice-tips ul { margin: 0.5rem 0 0; padding-left: 1.2rem; }
+    .advice-tips li { font-size: 0.86rem; color: var(--text); margin-bottom: 0.5rem; line-height: 1.5; }
+    .advice-tips li:last-child { margin-bottom: 0; }
 
     /* ─── Grid ──────────────────────────────────────────────────────────── */
     .main-content { padding: 1.5rem; max-width: 1400px; margin: 0 auto; }
@@ -1458,6 +1474,7 @@
   <nav class="main-tabs" role="tablist">
     <button class="tab-btn active" id="tab-foods" role="tab" aria-selected="true" aria-controls="grid-view">Food Items</button>
     <button class="tab-btn" id="tab-countries" role="tab" aria-selected="false" aria-controls="country-view">Most Affected Countries</button>
+    <button class="tab-btn" id="tab-advice" role="tab" aria-selected="false" aria-controls="advice-view">What should I do?</button>
   </nav>
 
   <div id="loading">Loading data…</div>
@@ -1478,6 +1495,7 @@
   <p class="results-meta" id="results-meta" style="display:none"></p>
   <div class="grid" id="grid" role="list" aria-label="Food items"></div>
   <div id="country-view" class="country-list" style="display:none" role="tabpanel" aria-labelledby="tab-countries"></div>
+  <div id="advice-view" class="advice-view" style="display:none" role="tabpanel" aria-labelledby="tab-advice"></div>
 </main>
 
 <!-- Detail Modal -->
@@ -1799,9 +1817,11 @@ function buildMathHtml(food, country) {
 }
 
 /* ─── #3 Sparkline helpers ───────────────────────────────────────────────── */
-// history is populated in init() from data/history/index.json
+// history is populated in init() from data/red-sea-history-summary.json
 const historyData = {}; // { foodId: [exposure_pct, ...] } chronological
 const historyDates = []; // [date1, date2, ...]
+let wciPctSeries = []; // [wci_pct_change, ...] — used as the Crisis Pulse signal
+let seededUntil = null; // ISO date string — data up to this date is modelled, not live CI
 
 // Red Sea crisis baseline (Nov 19, 2023 — first Houthi ship seizure)
 // We use the pre-crisis baseline (0% exposure) as the starting point for the trend line.
@@ -1984,6 +2004,7 @@ function renderGrid() {
   const gridEl = document.getElementById('grid');
   const metaEl = document.getElementById('results-meta');
   const countryViewEl = document.getElementById('country-view');
+  const adviceViewEl = document.getElementById('advice-view');
   const controlsBar = document.querySelector('.controls-bar');
   const infoCallout = document.getElementById('info-callout');
 
@@ -1994,7 +2015,17 @@ function renderGrid() {
     controlsBar.style.display = 'none';
     infoCallout.style.display = 'none';
     countryViewEl.style.display = 'flex';
+    adviceViewEl.style.display = 'none';
     renderCountryRankings();
+    return;
+  } else if (activeTab === 'advice') {
+    gridEl.style.display = 'none';
+    metaEl.style.display = 'none';
+    controlsBar.style.display = 'none';
+    infoCallout.style.display = 'none';
+    countryViewEl.style.display = 'none';
+    adviceViewEl.style.display = 'flex';
+    renderAdvice();
     return;
   } else {
     gridEl.style.display = 'grid';
@@ -2002,6 +2033,7 @@ function renderGrid() {
     controlsBar.style.display = 'block';
     infoCallout.style.display = 'flex';
     countryViewEl.style.display = 'none';
+    adviceViewEl.style.display = 'none';
   }
 
   let foods = [...data.foods];
@@ -2065,10 +2097,28 @@ function renderCountryRankings() {
   // Sort by avg exposure descending
   stats.sort((a, b) => b.avg - a.avg);
 
+  // Diverging color for multiplier: 0.25 (green) → 1.0 (neutral grey) → 1.0+ (red)
+  function multColor(m) {
+    if (m <= 1.0) {
+      const t = (m - 0.25) / 0.75;
+      const r = Math.round(42  + (120 - 42)  * t);
+      const g = Math.round(122 + (120 - 122) * t);
+      const b = Math.round(58  + (120 - 58)  * t);
+      return `rgb(${r},${g},${b})`;
+    } else {
+      const t = Math.min((m - 1.0) / 0.8, 1.0);
+      const r = Math.round(120 + (192 - 120) * t);
+      const g = Math.round(120 + (57  - 120) * t);
+      const b = Math.round(120 + (43  - 120) * t);
+      return `rgb(${r},${g},${b})`;
+    }
+  }
+
   container.innerHTML = stats.map(({ c, avg }, i) => {
     const sev = severityFromPct(avg);
     const color = SEVERITY_COLOR[sev];
     const bg = SEVERITY_BG[sev];
+    const mc = multColor(c.impact_multiplier);
 
     return `
       <div class="country-row">
@@ -2080,11 +2130,101 @@ function renderCountryRankings() {
           </div>
           <div class="country-meta-grid">
             <div class="country-meta-item">Suez dependency: <strong>${c.suez_dependency_pct}%</strong></div>
+            <div class="country-meta-item">Multiplier: <strong style="color:${mc}">${c.impact_multiplier.toFixed(2)}×</strong></div>
           </div>
         </div>
       </div>
     `;
   }).join('');
+}
+
+/* ─── Advice tab ─────────────────────────────────────────────────────────── */
+function renderAdvice() {
+  const container = document.getElementById('advice-view');
+  if (!container || !state.data) return;
+
+  const country = getCountry();
+  const sorted = [...state.data.foods]
+    .map(f => ({ f, exp: countryExposure(f, country) }))
+    .sort((a, b) => b.exp - a.exp);
+
+  const high = sorted.filter(x => x.exp >= 10);
+  const stable = sorted.filter(x => x.exp <= 2).slice(0, 10);
+
+  // Per-category practical advice (Red Sea — freight/distribution mechanism)
+  const CAT_ADVICE = {
+    seafood:  'SE Asian farmed shrimp and long-haul tinned fish are most exposed — every container transited Suez. Switch to locally-caught fresh fish where possible.',
+    packaged: 'Imported packaged goods (palm-oil snacks, Asian condiments, instant noodles) carry the highest freight burden. Look for local equivalents or cook from scratch.',
+    grains:   'Asian rice and instant noodles route fully through Bab-el-Mandeb. European-milled flour, oats, and pasta use Atlantic routes and are well insulated.',
+    produce:  'Garlic (China), avocado (East Africa), and some citrus (South Africa) face moderate exposure. EU greenhouse and North African produce is barely affected.',
+    staples:  'Palm cooking oil from Malaysia and Indonesia is the most exposed staple — it routes entirely via Suez. Sunflower and rapeseed oil from EU/Ukraine are more stable.',
+    meat:     'European meat production is largely domestic with local feed. Red Sea disruption has minimal direct effect — exposure here is packaging and spice imports only.',
+    dairy:    'Local dairy supply chains are almost entirely unaffected by the Red Sea crisis. Imported NZ/AU butter and baby formula see a small uplift from Cape rerouting.',
+  };
+
+  const foodRow = ({ f, exp }) => {
+    const sev = severityFromPct(exp);
+    const col = SEVERITY_COLOR[sev];
+    const bg  = SEVERITY_BG[sev];
+    const topDriver = f.drivers.slice().sort((a, b) => b.weight - a.weight)[0];
+    const note = topDriver ? topDriver.description.split('.')[0] : '';
+    return `
+      <div class="advice-food-row">
+        <span class="advice-food-emoji">${escHtml(f.emoji)}</span>
+        <span class="advice-food-name">${escHtml(f.name)}</span>
+        <span class="advice-food-pct" style="background:${bg};color:${col}">${exp}%</span>
+        <span class="advice-food-note">${escHtml(note)}</span>
+      </div>`;
+  };
+
+  const catGroups = {};
+  high.forEach(({ f, exp }) => {
+    if (!catGroups[f.category]) catGroups[f.category] = [];
+    catGroups[f.category].push({ f, exp });
+  });
+
+  const catBlocks = Object.entries(catGroups).map(([cat, items]) => `
+    <div>
+      <div class="advice-section-title">${escHtml(cat)}</div>
+      <div style="font-size:0.82rem;color:var(--muted);margin-bottom:0.5rem;padding:0.5rem 0.75rem;background:var(--cream-dark);border-radius:var(--radius)">
+        ${escHtml(CAT_ADVICE[cat] || 'Monitor prices in this category.')}
+      </div>
+      <div class="advice-food-list">${items.slice(0, 4).map(foodRow).join('')}</div>
+    </div>
+  `).join('');
+
+  container.innerHTML = `
+    <div class="advice-disclaimer">
+      <div class="advice-disclaimer-icon">⚠️</div>
+      <div>
+        <p><strong>These are modelled estimates, not guarantees.</strong> Exposure scores reflect freight cost pressure in the supply chain — not confirmed price rises at your local shop. Retailers absorb much of this over time; shelf prices typically lag 2–4 months behind spot freight rates.</p>
+        <p style="margin-top:0.5rem">Use this as a general guide for thinking about your shopping, not a precise forecast. Figures are for <strong>${escHtml(country.name)}</strong> based on current Drewry WCI freight data.</p>
+      </div>
+    </div>
+
+    ${high.length > 0 ? `
+    <div>
+      <div class="advice-section-title" style="color:var(--high)">🔴 Most pressured right now — ${escHtml(country.name)}</div>
+      ${catBlocks}
+    </div>` : '<p style="color:var(--muted);font-size:0.9rem">No high-exposure foods for the selected country at current freight rates.</p>'}
+
+    ${stable.length > 0 ? `
+    <div>
+      <div class="advice-section-title" style="color:var(--low)">🟢 Stable choices — negligible Red Sea exposure</div>
+      <div class="advice-food-list">${stable.map(foodRow).join('')}</div>
+    </div>` : ''}
+
+    <div class="advice-tips">
+      <div class="advice-section-title">💡 General principles</div>
+      <ul>
+        <li><strong>Freight costs lag retail prices by 2–4 months.</strong> The disruption that happened in January 2024 is only now fully priced into long-term contracts. Current WCI levels will reach shelves later in 2026.</li>
+        <li><strong>Local and fresh is your best insulation.</strong> Produce grown nearby routes through zero containers. Dairy, eggs, and bread are almost entirely domestic supply chains.</li>
+        <li><strong>Don't avoid tinned goods entirely.</strong> Building a modest pantry buffer of canned beans, tomatoes, and sardines is sensible — just buy on your normal cycle, not all at once.</li>
+        <li><strong>Asian imports are most exposed.</strong> Shrimp, garlic, noodles, and palm oil all route fully through Bab-el-Mandeb. European or Atlantic-sourced equivalents are more stable right now.</li>
+        <li><strong>These scores update daily</strong> as the Drewry WCI is refreshed. If a ceasefire holds, freight rates normalise quickly — the 2024 Red Sea spike unwound within 6 months.</li>
+      </ul>
+    </div>
+  `;
 }
 
 /* ─── Card click/keyboard ────────────────────────────────────────────────── */
@@ -2162,18 +2302,8 @@ function openFood(id) {
     </div>`;
   })() : '';
 
-  // Tipping point flag
-  const tp = state.data.sources?.tipping_points;
-  const scarcityFlag = (tp?.port_congestion_risk && ['packaged','seafood'].includes(food.category))
-    ? `<span class="scarcity-flag" title="${escHtml(tp.port_congestion_note || 'Port congestion risk active')}">⚠ Port congestion</span>`
-    : '';
-
-  const congestionNote = (food.drivers.some(d => d.category === 'freight' && d.weight >= 0.5) && tp?.port_congestion_risk)
-    ? `<div class="uncertainty-note" style="color:var(--high);font-weight:600;margin-top:0.5rem">
-        ⚓ Port Congestion Alert: High container reliance during active bottleneck. 
-        Expect delays and potential inventory surcharges.
-      </div>`
-    : '';
+  const scarcityFlag = '';
+  const congestionNote = '';
 
   const driversHtml = food.drivers.map(d => {
     const src = DRIVER_SOURCES[d.category];
@@ -2437,54 +2567,41 @@ function renderPulse() {
   const section = document.getElementById('pulse-section');
   if (!container || !state.data) return;
 
-  const country = getCountry();
-  const snapshotCount = Object.values(historyData)[0]?.length || 0;
-  if (snapshotCount < 2) return;
-
-  // Gemini#20: Context-aware averages (weighted by country multiplier)
-  const countryAverages = [];
-  for (let i = 0; i < snapshotCount; i++) {
-    let sum = 0, count = 0;
-    for (const foodId in historyData) {
-      const val = historyData[foodId][i];
-      if (val != null) { 
-        // Scale by country multiplier to show regional reality
-        const adjVal = Math.round(val * country.impact_multiplier);
-        sum += adjVal; 
-        count++; 
-      }
-    }
-    countryAverages.push(count > 0 ? sum / count : 0);
-  }
+  // Use WCI % change as the pulse signal — far more dynamic than food-average
+  const series = wciPctSeries.length >= 2 ? wciPctSeries
+    : (Object.values(historyData)[0]?.length >= 2 ? (() => {
+        const n = Object.values(historyData)[0].length;
+        return Array.from({length: n}, (_, i) => {
+          let s = 0, c = 0;
+          for (const v of Object.values(historyData)) { if (v[i] != null) { s += v[i]; c++; } }
+          return c ? s / c : 0;
+        });
+      })() : null);
+  if (!series || series.length < 2) return;
 
   section.style.display = 'block';
-  // Update subtitle to reflect country context
-  section.querySelector('.pulse-sub').innerHTML = 
-    `Average Red Sea freight exposure in <strong>${escHtml(country.name)}</strong> since Nov 19, 2023.`;
+  section.querySelector('.pulse-sub').innerHTML =
+    `Drewry World Container Index change vs. pre-crisis baseline ($1,380/40ft). ` +
+    `Peak: <strong>+298%</strong> (Mar 2024). Current: <strong>+${series[series.length-1].toFixed(0)}%</strong>.`;
 
-  const W = container.clientWidth;
+  const W = container.clientWidth || 600;
   const H = 160;
-  const PAD_L = 40, PAD_R = 20, PAD_T = 20, PAD_B = 30;
+  const PAD_L = 46, PAD_R = 20, PAD_T = 20, PAD_B = 30;
 
-  const minAvg = Math.min(...countryAverages);
-  const maxAvg = Math.max(...countryAverages, 15);
-  const range = maxAvg - minAvg || 1;
+  const minV = 0;
+  const maxV = Math.max(...series, 50);
+  const range = maxV - minV || 1;
 
-  // Calendar-proportional x-spacing
   const dateToMs = d => d ? new Date(d).getTime() : 0;
   const allMs = historyDates.map(dateToMs);
   const msMin = allMs[0] || 0;
   const msMax = allMs[allMs.length - 1] || 1;
   const msRange = msMax - msMin || 1;
-  
-  const getX = (i) => {
-    const t = allMs[i] || msMin;
-    return PAD_L + ((t - msMin) / msRange) * (W - PAD_L - PAD_R);
-  };
-  const getY = (v) => H - PAD_B - ((v - minAvg) / range) * (H - PAD_B - PAD_T);
 
-  const points = countryAverages.map((v, i) => `${getX(i).toFixed(1)},${getY(v).toFixed(1)}`).join(' ');
-  const markerX = getX(0);
+  const getX = i => PAD_L + ((allMs[i] - msMin) / msRange) * (W - PAD_L - PAD_R);
+  const getY = v => H - PAD_B - ((v - minV) / range) * (H - PAD_B - PAD_T);
+
+  const points = series.map((v, i) => `${getX(i).toFixed(1)},${getY(v).toFixed(1)}`).join(' ');
 
   const fmt = (d, showYear) => {
     if (!d) return '';
@@ -2493,38 +2610,81 @@ function renderPulse() {
     return `${m} ${date.getDate()}${showYear ? ` '${String(date.getFullYear()).slice(2)}` : ''}`;
   };
 
+  // Y-axis ticks
+  const ticks = [0, 100, 200, 300].filter(t => t <= maxV + 20);
+
+  // Find split index: first date strictly after seeded_until
+  let splitIdx = series.length; // default: all seeded
+  if (seededUntil) {
+    const splitMs = new Date(seededUntil).getTime();
+    for (let i = 0; i < historyDates.length; i++) {
+      if (new Date(historyDates[i]).getTime() > splitMs) { splitIdx = i; break; }
+    }
+  }
+  const hasLive = splitIdx < series.length;
+
+  // Build point strings for each segment
+  const seededPts = series.slice(0, Math.min(splitIdx + 1, series.length))
+    .map((v, i) => `${getX(i).toFixed(1)},${getY(v).toFixed(1)}`).join(' ');
+  const livePts = splitIdx < series.length
+    ? series.slice(splitIdx).map((v, i) => `${getX(splitIdx + i).toFixed(1)},${getY(v).toFixed(1)}`).join(' ')
+    : '';
+
+  const splitX = splitIdx < series.length ? getX(splitIdx) : getX(series.length - 1);
+
   container.innerHTML = `
     <div class="pulse-tooltip" id="pulse-tooltip"></div>
     <svg class="pulse-svg" viewBox="0 0 ${W} ${H}">
-      <!-- Y-Axis Label -->
-      <text class="pulse-axis-label" x="10" y="${PAD_T - 5}" text-anchor="start" style="font-weight:600">Avg. Exposure %</text>
-      
-      <!-- Area -->
-      <path class="pulse-area" d="M ${getX(0)} ${H - PAD_B} L ${points} L ${getX(snapshotCount - 1)} ${H - PAD_B} Z" />
-      
-      <!-- Marker for Crisis Start -->
-      <line class="pulse-marker" x1="${markerX}" y1="${PAD_T}" x2="${markerX}" y2="${H - PAD_B}" />
-      <text class="pulse-marker-label" x="${markerX + 5}" y="${PAD_T + 12}">Red Sea crisis begins</text>
-      
-      <!-- Path -->
-      <polyline class="pulse-line" points="${points}" />
-      
-      ${countryAverages.map((v, i) => `
-        <circle class="pulse-point" 
-          cx="${getX(i)}" cy="${getY(v)}" r="4"
-          data-val="${v.toFixed(1)}%"
-          data-date="${fmt(historyDates[i], true)}"
-        ></circle>
+      <text class="pulse-axis-label" x="10" y="${PAD_T - 5}" text-anchor="start" style="font-weight:600">WCI change vs. pre-crisis</text>
+
+      <!-- Gridlines + Y labels -->
+      ${ticks.map(t => `
+        <line x1="${PAD_L}" y1="${getY(t).toFixed(1)}" x2="${W - PAD_R}" y2="${getY(t).toFixed(1)}"
+              stroke="rgba(0,0,0,0.06)" stroke-width="1" stroke-dasharray="3,3"/>
+        <text class="pulse-axis-label" x="${PAD_L - 4}" y="${(getY(t) + 4).toFixed(1)}" text-anchor="end">+${t}%</text>
       `).join('')}
-      
-      <!-- Labels -->
-      <text class="pulse-axis-label" x="${PAD_L - 5}" y="${getY(minAvg) + 4}" text-anchor="end">${minAvg.toFixed(0)}%</text>
-      <text class="pulse-axis-label" x="${PAD_L - 5}" y="${getY(maxAvg) + 4}" text-anchor="end">${maxAvg.toFixed(0)}%</text>
-      
+
+      <!-- Seeded area + dashed line -->
+      <path class="pulse-area" opacity="0.35"
+        d="M ${getX(0)} ${H - PAD_B} L ${seededPts} L ${getX(Math.min(splitIdx, series.length - 1))} ${H - PAD_B} Z" />
+      <polyline class="pulse-line" points="${seededPts}"
+        stroke-dasharray="5,3" opacity="0.5" />
+
+      ${hasLive ? `
+      <!-- Live area + solid line -->
+      <path class="pulse-area"
+        d="M ${splitX} ${H - PAD_B} L ${livePts} L ${getX(series.length - 1)} ${H - PAD_B} Z" />
+      <polyline class="pulse-line" points="${livePts}" />
+      ` : ''}
+
+      ${hasLive ? `
+      <!-- Boundary divider -->
+      <line x1="${splitX.toFixed(1)}" y1="${PAD_T}" x2="${splitX.toFixed(1)}" y2="${H - PAD_B}"
+            stroke="rgba(0,0,0,0.2)" stroke-width="1" stroke-dasharray="4,2"/>
+      ` : ''}
+
+      <!-- Dots — seeded muted, live full -->
+      ${series.map((v, i) => {
+        const isSeeded = i < splitIdx;
+        return `<circle class="pulse-point"
+          cx="${getX(i).toFixed(1)}" cy="${getY(v).toFixed(1)}" r="4"
+          opacity="${isSeeded ? 0.45 : 1}"
+          data-val="+${v.toFixed(0)}% WCI"
+          data-date="${fmt(historyDates[i], true)}"
+          data-seeded="${isSeeded}"
+        ></circle>`;
+      }).join('')}
+
+      <!-- Zone labels -->
+      ${splitIdx > 1 ? `<text class="pulse-axis-label" x="${(getX(0) + Math.min(splitX, getX(series.length-1))) / 2}" y="${PAD_T + 10}"
+        text-anchor="middle" opacity="0.45" font-style="italic">Modelled estimates</text>` : ''}
+      ${hasLive ? `<text class="pulse-axis-label" x="${(splitX + getX(series.length-1)) / 2}" y="${PAD_T + 10}"
+        text-anchor="middle" style="font-weight:600">Live data</text>` : ''}
+
       <!-- X-Axis Labels -->
       <text class="pulse-axis-label" x="${getX(0)}" y="${H - 10}" text-anchor="middle">Nov '23</text>
-      <text class="pulse-axis-label" x="${W / 2 + PAD_L / 2}" y="${H - 10}" text-anchor="middle" style="font-weight:600;opacity:0.5">Timeline</text>
-      <text class="pulse-axis-label" x="${getX(snapshotCount - 1)}" y="${H - 10}" text-anchor="middle">Today</text>
+      <text class="pulse-axis-label" x="${W / 2 + PAD_L / 2}" y="${H - 10}" text-anchor="middle" style="opacity:0.45">Timeline</text>
+      <text class="pulse-axis-label" x="${getX(series.length - 1)}" y="${H - 10}" text-anchor="middle">Today</text>
     </svg>
   `;
 
@@ -2533,7 +2693,8 @@ function renderPulse() {
   container.querySelectorAll('.pulse-point').forEach(p => {
     p.addEventListener('mouseenter', () => {
       tip.style.display = 'block';
-      tip.innerHTML = `<strong>${p.dataset.date}</strong><br>${p.dataset.val} exposure`;
+      const seededLabel = p.dataset.seeded === 'true' ? '<br><em style="opacity:0.6;font-size:0.85em">modelled estimate</em>' : '';
+      tip.innerHTML = `<strong>${p.dataset.date}</strong><br>${p.dataset.val}${seededLabel}`;
     });
     p.addEventListener('mousemove', (e) => {
       tip.style.left = `${e.clientX}px`;
@@ -2666,6 +2827,12 @@ async function init() {
       for (const [fid, vals] of Object.entries(summary.history)) {
         historyData[fid] = vals;
       }
+      if (summary.wci_pct_change) {
+        wciPctSeries = summary.wci_pct_change;
+      }
+      if (summary.seeded_until) {
+        seededUntil = summary.seeded_until;
+      }
     }
   } catch (e) {
     console.warn('Could not load history summary:', e);
@@ -2693,24 +2860,20 @@ async function init() {
 // Tabs
 const tabFoods = document.getElementById('tab-foods');
 const tabCountries = document.getElementById('tab-countries');
+const tabAdvice = document.getElementById('tab-advice');
+const allTabs = [tabFoods, tabCountries, tabAdvice];
 
-tabFoods.addEventListener('click', () => {
-  state.activeTab = 'foods';
-  tabFoods.classList.add('active');
-  tabFoods.setAttribute('aria-selected', 'true');
-  tabCountries.classList.remove('active');
-  tabCountries.setAttribute('aria-selected', 'false');
+function activateTab(btn, key) {
+  allTabs.forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
+  btn.classList.add('active');
+  btn.setAttribute('aria-selected', 'true');
+  state.activeTab = key;
   renderGrid();
-});
+}
 
-tabCountries.addEventListener('click', () => {
-  state.activeTab = 'countries';
-  tabCountries.classList.add('active');
-  tabCountries.setAttribute('aria-selected', 'true');
-  tabFoods.classList.remove('active');
-  tabFoods.setAttribute('aria-selected', 'false');
-  renderGrid();
-});
+tabFoods.addEventListener('click', () => activateTab(tabFoods, 'foods'));
+tabCountries.addEventListener('click', () => activateTab(tabCountries, 'countries'));
+tabAdvice.addEventListener('click', () => activateTab(tabAdvice, 'advice'));
 
 // Pulse share
 document.getElementById('pulse-share-btn').addEventListener('click', sharePulse);

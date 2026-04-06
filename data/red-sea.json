@@ -1,11 +1,11 @@
 {
-  "last_updated": "2026-04-06",
+  "last_updated": "2026-04-04",
   "crisis_start": "2023-11-19",
   "crisis_name": "Red Sea / Bab-el-Mandeb disruption",
   "crisis_mechanism": "freight",
   "sources": {
     "drewry_wci_usd_40ft": 4200,
-    "drewry_wci_pre_crisis_usd_40ft": 1380.0,
+    "drewry_wci_pre_crisis_usd_40ft": 1380,
     "insurance_premium_bps": 0.75,
     "insurance_premium_pre_crisis_bps": 0.05,
     "exchange_rates": {
@@ -21,7 +21,7 @@
     },
     "tipping_points": {
       "port_congestion_risk": true,
-      "port_congestion_note": "Rotterdam and Hamburg facing 15–25% longer dwell times due to rerouted volumes"
+      "port_congestion_note": "Rotterdam and Hamburg facing 15-25% longer dwell times due to rerouted volumes"
     }
   },
   "countries": [
@@ -139,14 +139,14 @@
           "input": "War-risk insurance",
           "description": "Red Sea transit insurance up 15× since Nov 2023",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.2
         },
         {
           "input": "Cape detour",
           "description": "Extra 10–14 days via Cape of Good Hope adds refrigeration costs",
           "category": "rerouting",
-          "price_change_pct": 123,
+          "price_change_pct": 40,
           "weight": 0.1
         }
       ],
@@ -179,14 +179,14 @@
           "input": "War-risk insurance",
           "description": "Vessel insurance for Red Sea routing has surged 15× since late 2023",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.2
         },
         {
           "input": "Cape detour",
           "description": "Cape route adds 14 days and roughly 40% extra bunker fuel per voyage",
           "category": "rerouting",
-          "price_change_pct": 123,
+          "price_change_pct": 40,
           "weight": 0.1
         }
       ],
@@ -219,7 +219,7 @@
           "input": "War-risk insurance",
           "description": "Perishable cargo commands higher war-risk premiums",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.3
         }
       ],
@@ -252,14 +252,14 @@
           "input": "War-risk insurance",
           "description": "Mediterranean-origin vessels still pay elevated war-risk premiums",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.25
         },
         {
           "input": "Route disruption",
           "description": "Suez congestion affects Mediterranean export timing",
           "category": "rerouting",
-          "price_change_pct": 123,
+          "price_change_pct": 40,
           "weight": 0.1
         }
       ],
@@ -292,7 +292,7 @@
           "input": "War-risk insurance",
           "description": "Reefer container premiums have risen with Red Sea risk",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.35
         }
       ],
@@ -325,7 +325,7 @@
           "input": "Indirect cost",
           "description": "Haulage and port handling costs rise with global freight inflation",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.45
         }
       ],
@@ -358,7 +358,7 @@
           "input": "Freight inflation",
           "description": "Global container market tightness raises even non-Suez transport costs",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.45
         }
       ],
@@ -391,7 +391,7 @@
           "input": "Freight inflation",
           "description": "Wider freight market inflation touches pork supply chain margins",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.45
         }
       ],
@@ -424,7 +424,7 @@
           "input": "War-risk premium",
           "description": "NZ lamb ships pay elevated insurance for Red Sea passage",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.45
         }
       ],
@@ -457,7 +457,7 @@
           "input": "Freight inflation",
           "description": "Elevated global container rates add indirect cost pressure",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.45
         }
       ],
@@ -490,7 +490,7 @@
           "input": "War-risk premium",
           "description": "Imported ingredient containers face higher insurance",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.35
         }
       ],
@@ -523,7 +523,7 @@
           "input": "Freight inflation",
           "description": "Wider container market inflation touches packaging supply chains",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.5
         }
       ],
@@ -558,7 +558,7 @@
           "input": "Freight inflation",
           "description": "Global container inflation adds marginal cost",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.45
         }
       ],
@@ -593,7 +593,7 @@
           "input": "War-risk insurance",
           "description": "NZ vessels pay elevated premiums for former Suez routing",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.45
         }
       ],
@@ -628,7 +628,7 @@
           "input": "Freight inflation",
           "description": "Container market tightness adds indirect cost",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.45
         }
       ],
@@ -663,7 +663,7 @@
           "input": "Freight inflation",
           "description": "Marginal cost increase from global container market",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.5
         }
       ],
@@ -698,7 +698,7 @@
           "input": "Freight inflation",
           "description": "Global container rates add marginal cost",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.45
         }
       ],
@@ -733,7 +733,7 @@
           "input": "Freight inflation",
           "description": "Global container market tightness adds indirect cost",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.45
         }
       ],
@@ -769,14 +769,14 @@
           "input": "War-risk insurance",
           "description": "Rice vessels from India, Pakistan and Thailand face elevated Red Sea insurance",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.2
         },
         {
           "input": "Cape detour",
           "description": "Cape rerouting adds 10–14 days to rice voyages from South Asia",
           "category": "rerouting",
-          "price_change_pct": 123,
+          "price_change_pct": 40,
           "weight": 0.1
         }
       ],
@@ -812,7 +812,7 @@
           "input": "War-risk premium",
           "description": "Mediterranean supply chains face elevated insurance costs",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.35
         }
       ],
@@ -848,7 +848,7 @@
           "input": "Freight inflation",
           "description": "Global freight inflation adds marginal cost",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.45
         }
       ],
@@ -884,7 +884,7 @@
           "input": "Freight inflation",
           "description": "Container market tightness adds indirect cost",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.45
         }
       ],
@@ -920,7 +920,7 @@
           "input": "War-risk premium",
           "description": "Food additive imports face elevated container insurance",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.4
         }
       ],
@@ -956,14 +956,14 @@
           "input": "War-risk insurance",
           "description": "Mediterranean exporters pay elevated insurance premiums",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.25
         },
         {
           "input": "Route disruption",
           "description": "Suez congestion affects North Africa–Europe trade timing",
           "category": "rerouting",
-          "price_change_pct": 123,
+          "price_change_pct": 40,
           "weight": 0.1
         }
       ],
@@ -999,14 +999,14 @@
           "input": "War-risk insurance",
           "description": "Asian food exporters face steeply higher Red Sea premiums",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.2
         },
         {
           "input": "Cape detour",
           "description": "Cape rerouting adds 2+ weeks to Asian noodle deliveries",
           "category": "rerouting",
-          "price_change_pct": 123,
+          "price_change_pct": 40,
           "weight": 0.1
         }
       ],
@@ -1042,7 +1042,7 @@
           "input": "War-risk premium",
           "description": "SE Asian ingredient containers face higher insurance",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.4
         }
       ],
@@ -1078,7 +1078,7 @@
           "input": "Freight inflation",
           "description": "Global container rates affect packaging cost",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.45
         }
       ],
@@ -1114,7 +1114,7 @@
           "input": "Freight inflation",
           "description": "Marginal container cost increase",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.5
         }
       ],
@@ -1150,7 +1150,7 @@
           "input": "Freight inflation",
           "description": "Marginal impact from container market",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.5
         }
       ],
@@ -1186,7 +1186,7 @@
           "input": "War-risk premium",
           "description": "Reefer vessels face elevated insurance for Red Sea-adjacent routing",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.4
         }
       ],
@@ -1222,7 +1222,7 @@
           "input": "Freight inflation",
           "description": "Marginal impact from container market",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.5
         }
       ],
@@ -1258,7 +1258,7 @@
           "input": "War-risk premium",
           "description": "Southern African reefer ships face elevated insurance",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.45
         }
       ],
@@ -1294,7 +1294,7 @@
           "input": "Freight inflation",
           "description": "Minimal indirect container cost",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.5
         }
       ],
@@ -1330,7 +1330,7 @@
           "input": "Freight inflation",
           "description": "Marginal container cost increase",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.45
         }
       ],
@@ -1366,7 +1366,7 @@
           "input": "Freight inflation",
           "description": "Negligible container market impact",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.5
         }
       ],
@@ -1402,14 +1402,14 @@
           "input": "War-risk premium",
           "description": "Reefer vessels from East Africa face elevated insurance",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.25
         },
         {
           "input": "Cape detour",
           "description": "Some Kenyan avocados rerouted around Cape, adding 10 days",
           "category": "rerouting",
-          "price_change_pct": 123,
+          "price_change_pct": 40,
           "weight": 0.1
         }
       ],
@@ -1445,14 +1445,14 @@
           "input": "War-risk insurance",
           "description": "Chinese food exports face elevated Red Sea insurance",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.2
         },
         {
           "input": "Cape detour",
           "description": "Cape rerouting from China to Europe adds 12–14 days",
           "category": "rerouting",
-          "price_change_pct": 123,
+          "price_change_pct": 40,
           "weight": 0.1
         }
       ],
@@ -1488,7 +1488,7 @@
           "input": "Freight inflation",
           "description": "Marginal container cost increase",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.5
         }
       ],
@@ -1524,14 +1524,14 @@
           "input": "War-risk premium",
           "description": "Reefer containers face elevated insurance",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.25
         },
         {
           "input": "Cape detour",
           "description": "Cape rerouting adds costs for Asian and Indian frozen pea exporters",
           "category": "rerouting",
-          "price_change_pct": 123,
+          "price_change_pct": 40,
           "weight": 0.1
         }
       ],
@@ -1567,14 +1567,14 @@
           "input": "War-risk insurance",
           "description": "Palm oil carriers face elevated Red Sea premiums",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.2
         },
         {
           "input": "Cape detour",
           "description": "Cape rerouting adds 14+ days from SE Asian palm oil ports",
           "category": "rerouting",
-          "price_change_pct": 123,
+          "price_change_pct": 40,
           "weight": 0.1
         }
       ],
@@ -1610,14 +1610,14 @@
           "input": "War-risk insurance",
           "description": "Refrigerated containers attract elevated premiums",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.2
         },
         {
           "input": "Cape detour",
           "description": "Extra transit time increases refrigeration costs",
           "category": "rerouting",
-          "price_change_pct": 123,
+          "price_change_pct": 40,
           "weight": 0.1
         }
       ],
@@ -1652,14 +1652,14 @@
           "input": "War-risk premium",
           "description": "Specialty chocolate from SE Asia and Middle East faces higher insurance",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.25
         },
         {
           "input": "Cape detour",
           "description": "Some shipping lane diversions affect ingredient timing",
           "category": "rerouting",
-          "price_change_pct": 123,
+          "price_change_pct": 40,
           "weight": 0.1
         }
       ],
@@ -1694,14 +1694,14 @@
           "input": "War-risk insurance",
           "description": "Bulk vegetable oil carriers face elevated Red Sea premiums",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.2
         },
         {
           "input": "Cape detour",
           "description": "Palm oil from Indonesia/Malaysia adds 2 weeks via Cape",
           "category": "rerouting",
-          "price_change_pct": 123,
+          "price_change_pct": 40,
           "weight": 0.1
         }
       ],
@@ -1737,14 +1737,14 @@
           "input": "War-risk premium",
           "description": "Food commodity vessels face elevated insurance",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.22
         },
         {
           "input": "Cape detour",
           "description": "SE Asian ingredient suppliers rerouted around Cape",
           "category": "rerouting",
-          "price_change_pct": 123,
+          "price_change_pct": 40,
           "weight": 0.1
         }
       ],
@@ -1779,7 +1779,7 @@
           "input": "War-risk premium",
           "description": "Container-shipped syrups and concentrates face elevated insurance",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.35
         }
       ],
@@ -1815,7 +1815,7 @@
           "input": "Freight inflation",
           "description": "Global container market tightness adds indirect cost",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.4
         }
       ],
@@ -1851,14 +1851,14 @@
           "input": "War-risk insurance",
           "description": "East African coffee exporters face highest Red Sea insurance premiums",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.2
         },
         {
           "input": "Cape detour",
           "description": "Ethiopia and Yemen exports previously used short Red Sea route",
           "category": "rerouting",
-          "price_change_pct": 123,
+          "price_change_pct": 40,
           "weight": 0.1
         }
       ],
@@ -1894,14 +1894,14 @@
           "input": "War-risk insurance",
           "description": "Sugar carriers from South Asia face elevated Red Sea premiums",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.25
         },
         {
           "input": "Cape detour",
           "description": "Indian and Pakistani sugar exports rerouted around Africa",
           "category": "rerouting",
-          "price_change_pct": 123,
+          "price_change_pct": 40,
           "weight": 0.1
         }
       ],
@@ -1937,14 +1937,14 @@
           "input": "War-risk premium",
           "description": "Commodity food vessels from Asia face elevated insurance",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.2
         },
         {
           "input": "Cape detour",
           "description": "Chinese peanut exports via Cape add 12–14 days",
           "category": "rerouting",
-          "price_change_pct": 123,
+          "price_change_pct": 40,
           "weight": 0.1
         }
       ],
@@ -1980,7 +1980,7 @@
           "input": "War-risk premium",
           "description": "OJ tankers from South Africa and India pay elevated premiums",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.4
         }
       ],
@@ -2016,7 +2016,7 @@
           "input": "War-risk premium",
           "description": "Some ingredient containers route via Suez",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.35
         }
       ],
@@ -2051,7 +2051,7 @@
           "input": "War-risk premium",
           "description": "Some ingredient containers route via Mediterranean/Suez lanes",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.35
         }
       ],
@@ -2087,14 +2087,14 @@
           "input": "War-risk premium",
           "description": "High-value food cargo commands elevated war-risk insurance",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.2
         },
         {
           "input": "Cape detour",
           "description": "NZ and Australian dairy container ships now reroute via Cape",
           "category": "rerouting",
-          "price_change_pct": 123,
+          "price_change_pct": 40,
           "weight": 0.1
         }
       ],
@@ -2129,7 +2129,7 @@
           "input": "War-risk premium",
           "description": "Indian and Turkish lentil exports face elevated Red Sea insurance",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.4
         }
       ],
@@ -2165,7 +2165,7 @@
           "input": "War-risk premium",
           "description": "Indian chickpea exports face elevated Bab-el-Mandeb premiums",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.4
         }
       ],
@@ -2201,14 +2201,14 @@
           "input": "War-risk premium",
           "description": "Chinese and SE Asian food exports face elevated insurance",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.25
         },
         {
           "input": "Cape detour",
           "description": "Chinese tofu and soy ingredients rerouted via Cape",
           "category": "rerouting",
-          "price_change_pct": 123,
+          "price_change_pct": 40,
           "weight": 0.1
         }
       ],
@@ -2244,7 +2244,7 @@
           "input": "Freight inflation",
           "description": "Container market tightness adds indirect cost",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.45
         }
       ],
@@ -2280,7 +2280,7 @@
           "input": "Freight inflation",
           "description": "Global container market tightness affects even non-Suez routes",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.45
         }
       ],
@@ -2316,7 +2316,7 @@
           "input": "Freight inflation",
           "description": "Marginal global container inflation impact",
           "category": "insurance",
-          "price_change_pct": 56,
+          "price_change_pct": 50,
           "weight": 0.5
         }
       ],
@@ -2330,9 +2330,5 @@
       "exposure_low": 1,
       "exposure_high": 1
     }
-  ],
-  "stale_sources": [
-    "drewry_wci",
-    "freightos_fbx"
   ]
 }

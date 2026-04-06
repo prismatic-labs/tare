@@ -1,7 +1,8 @@
 {
   "date": "2024-07-01",
   "sources": {
-    "drewry_wci_usd_40ft": 4278.26
+    "drewry_wci_usd_40ft": 5500,
+    "wci_pct_change": 298.6
   },
   "foods": [
     {

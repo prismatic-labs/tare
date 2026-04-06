@@ -26,11 +26,17 @@ jobs:
       - name: Fetch Hormuz data
         run: python3 scripts/fetch-data.py
 
+      - name: Regenerate Hormuz history summary
+        run: python3 scripts/gen-history-summary.py
+
       - name: Fetch Red Sea data
         run: python3 scripts/fetch-red-sea.py
+
+      - name: Regenerate Red Sea history summary
+        run: python3 scripts/gen-red-sea-history-summary.py
 
       - name: Commit updated data
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: 'data: daily update'
-          file_pattern: 'data/foods.json data/red-sea.json data/history/*.json'
+          file_pattern: 'data/foods.json data/red-sea.json data/history/*.json data/history-summary.json data/red-sea-history/*.json data/red-sea-history-summary.json'

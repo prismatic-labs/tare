@@ -223,8 +223,19 @@ for i in 1..500:
 country_exposure    = clamp(round(eu_exposure_pct × impact_multiplier), 1, max_exposure)
 <span class="comment">if confidence == 'low': round to nearest 10% to avoid false precision</span></div>
 
+  <h3>The Local Cost Floor</h3>
+  <p>Every food has a <code>local_cost_floor_pct</code> — the share of its retail price made up of costs that are <strong>immune to the crisis</strong>: local labour, land rent, retail margin, packaging overheads, and domestic distribution. These do not change because of a distant chokepoint.</p>
+  <p>The floor is subtracted from 100% to define the model's maximum possible exposure:</p>
+  <div class="formula-block">max_exposure = 100 − local_cost_floor_pct</div>
+  <p>This is the most important guard in the model. Without it, a £1 loaf of bread with 10p of imported wheat could naively be shown at 90%+ exposure — which is absurd. In practice, floors range from <strong>40% (bulk commodities like cooking oil)</strong> to <strong>85%+ (processed staples like milk, eggs, and bread)</strong> for the Hormuz crisis, where input costs are the transmission mechanism. For the Red Sea crisis, floors are even higher (82–99%) because only the distribution cost fraction is affected.</p>
+  <p>The floor is set per-food based on FAO agri-food cost-of-production data and Eurostat retail price decomposition studies. It does not vary by country — only the <code>impact_multiplier</code> scales country-level exposure.</p>
+
   <h3>Tipping Points (Non-Linearity)</h3>
-  <p>The model includes a <strong>scarcity risk trigger</strong>. If Urea prices exceed $600/ton, the system flags a "Scarcity Risk" for fertilizer-intensive foods (grains, meat, dairy). This accounts for the point where farmers stop applying inputs, leading to a non-linear "Yield Cliff" in the next harvest cycle.</p>
+  <p>The model includes two <strong>non-linear risk triggers</strong> that are not captured by the smooth cost-pass-through formula above:</p>
+  <ul>
+    <li><strong>Urea scarcity (&gt;$600/ton):</strong> Above this threshold, farmers in price-sensitive markets stop applying inputs entirely, risking a "yield cliff" in the next harvest cycle. Flagged for fertilizer-intensive categories (grains, meat, dairy).</li>
+    <li><strong>Brent bunker surcharge (&gt;$110/bbl):</strong> Above this level, shipping carriers historically activate non-linear bunker adjustment factor (BAF) surcharges — roughly $200 per container per additional $10/bbl — compounding the underlying fuel cost increase. Flagged for foods with oil or fuel drivers.</li>
+  </ul>
 
   <h3>Worked example — Chicken in Japan</h3>
   <div class="trace-box">
@@ -233,8 +244,8 @@ country_exposure    = clamp(round(eu_exposure_pct × impact_multiplier), 1, max_
     <div class="trace-row"><span class="trace-arrow">→</span><span class="trace-label">Mean input change:</span><span class="trace-value">(32+25+38+20)/4 = 28.75%</span></div>
     <div class="trace-row"><span class="trace-arrow">→</span><span class="trace-label">Sensitivity factor:</span><span class="trace-value">73 / 28.75 ≈ 2.54</span><span class="trace-note">(EU calibration: 73% exposure at 28.75% avg input change)</span></div>
     <div class="trace-row"><span class="trace-arrow">→</span><span class="trace-label">EU exposure:</span><span class="trace-value">28.75 × 2.54 ≈ 73%</span></div>
-    <div class="trace-row"><span class="trace-arrow">→</span><span class="trace-label">Japan multiplier:</span><span class="trace-value">2.1×</span><span class="trace-note">(70% oil, 25% LNG, 35% fertilizer via Hormuz)</span></div>
-    <div class="trace-row"><span class="trace-arrow">→</span><span class="trace-result">Japan exposure: clamp(round(73 × 2.1), 1, 60) = 60%  (floor cap: 100 − 40% meat floor)</span></div>
+    <div class="trace-row"><span class="trace-arrow">→</span><span class="trace-label">Japan multiplier:</span><span class="trace-value">2.3×</span><span class="trace-note">(87% oil, 20% LNG, 28% fertilizer via Hormuz)</span></div>
+    <div class="trace-row"><span class="trace-arrow">→</span><span class="trace-result">Japan exposure: clamp(round(73 × 2.3), 1, 60) = 60%  (floor cap: 100 − 40% meat floor)</span></div>
   </div>
 
   <h2>Commodity baselines</h2>
@@ -263,12 +274,19 @@ country_exposure    = clamp(round(eu_exposure_pct × impact_multiplier), 1, max_
       <tr><td>Germany</td><td>10%</td><td>15%</td><td>28%</td><td>1.0×</td><td class="conf-high">High</td></tr>
       <tr><td>United Kingdom</td><td>12%</td><td>14%</td><td>28%</td><td>0.90×</td><td class="conf-high">High</td></tr>
       <tr><td>United States</td><td>5%</td><td>2%</td><td>15%</td><td>0.65×</td><td class="conf-high">High</td></tr>
-      <tr><td>Japan</td><td>70%</td><td>25%</td><td>35%</td><td>2.1×</td><td class="conf-medium">Medium</td></tr>
-      <tr><td>India</td><td>33%</td><td>18%</td><td>35%</td><td>1.5×</td><td class="conf-medium">Medium</td></tr>
+      <tr><td>Japan</td><td>87%</td><td>20%</td><td>28%</td><td>2.3×</td><td class="conf-high">High</td></tr>
+      <tr><td>India</td><td>52%</td><td>22%</td><td>40%</td><td>1.9×</td><td class="conf-medium">Medium</td></tr>
       <tr><td>Australia</td><td>15%</td><td>5%</td><td>20%</td><td>0.7×</td><td class="conf-medium">Medium</td></tr>
-      <tr><td>Brazil</td><td>5%</td><td>3%</td><td>48%</td><td>0.9×</td><td class="conf-medium">Medium</td></tr>
-      <tr><td>Philippines</td><td>98%</td><td>10%</td><td>40%</td><td>2.8×</td><td class="conf-low">Low</td></tr>
+      <tr><td>Brazil</td><td>5%</td><td>3%</td><td>22%</td><td>0.85×</td><td class="conf-medium">Medium</td></tr>
+      <tr><td>Philippines</td><td>52%</td><td>8%</td><td>38%</td><td>1.9×</td><td class="conf-medium">Medium</td></tr>
       <tr><td>Sri Lanka</td><td>25%</td><td>12%</td><td>38%</td><td>1.8×</td><td class="conf-low">Low</td></tr>
+      <tr><td>China</td><td>38%</td><td>16%</td><td>8%</td><td>1.5×</td><td class="conf-high">High</td></tr>
+      <tr><td>South Korea</td><td>72%</td><td>32%</td><td>28%</td><td>2.2×</td><td class="conf-high">High</td></tr>
+      <tr><td>France</td><td>9%</td><td>6%</td><td>18%</td><td>0.75×</td><td class="conf-high">High</td></tr>
+      <tr><td>Singapore</td><td>88%</td><td>38%</td><td>15%</td><td>2.3×</td><td class="conf-high">High</td></tr>
+      <tr><td>Taiwan</td><td>82%</td><td>22%</td><td>22%</td><td>2.2×</td><td class="conf-medium">Medium</td></tr>
+      <tr><td>Thailand</td><td>45%</td><td>15%</td><td>35%</td><td>1.8×</td><td class="conf-medium">Medium</td></tr>
+      <tr><td>Lebanon</td><td>55%</td><td>5%</td><td>40%</td><td>1.5×</td><td class="conf-low">Low</td></tr>
     </tbody>
   </table>
 
