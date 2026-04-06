@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-04-05",
+  "last_updated": "2026-04-06",
   "crisis_start": "2026-02-28",
   "sources": {
     "oil_brent_usd": 112,
@@ -312,7 +312,7 @@
       "name": "Tomatoes",
       "category": "produce",
       "emoji": "🍅",
-      "crisis_exposure_pct": 42,
+      "crisis_exposure_pct": 41,
       "severity": "high",
       "base_price_eur_kg": 3.2,
       "current_price_eur_kg": 4.5,
@@ -347,8 +347,8 @@
         "v",
         "vg"
       ],
-      "exposure_low": 42,
-      "exposure_high": 42
+      "exposure_low": 41,
+      "exposure_high": 41
     },
     {
       "id": "salmon",
@@ -445,7 +445,7 @@
       "name": "Pasta",
       "category": "grains",
       "emoji": "🍝",
-      "crisis_exposure_pct": 38,
+      "crisis_exposure_pct": 39,
       "severity": "moderate",
       "base_price_eur_kg": 1.6,
       "current_price_eur_kg": 2.1,
@@ -480,15 +480,15 @@
         "v",
         "vg"
       ],
-      "exposure_low": 38,
-      "exposure_high": 39
+      "exposure_low": 39,
+      "exposure_high": 40
     },
     {
       "id": "flour",
       "name": "Flour",
       "category": "grains",
       "emoji": "🌾",
-      "crisis_exposure_pct": 33,
+      "crisis_exposure_pct": 34,
       "severity": "moderate",
       "base_price_eur_kg": 0.9,
       "current_price_eur_kg": 1.15,
@@ -523,8 +523,8 @@
         "v",
         "vg"
       ],
-      "exposure_low": 33,
-      "exposure_high": 33
+      "exposure_low": 34,
+      "exposure_high": 34
     },
     {
       "id": "oats",
@@ -610,7 +610,7 @@
       "name": "Couscous",
       "category": "grains",
       "emoji": "🫙",
-      "crisis_exposure_pct": 35,
+      "crisis_exposure_pct": 36,
       "severity": "moderate",
       "base_price_eur_kg": 1.9,
       "current_price_eur_kg": 2.45,
@@ -645,8 +645,8 @@
         "v",
         "vg"
       ],
-      "exposure_low": 35,
-      "exposure_high": 35
+      "exposure_low": 36,
+      "exposure_high": 36
     },
     {
       "id": "noodles",
@@ -793,7 +793,7 @@
       "name": "Pork",
       "category": "meat",
       "emoji": "🥓",
-      "crisis_exposure_pct": 43,
+      "crisis_exposure_pct": 41,
       "severity": "high",
       "base_price_eur_kg": 6.5,
       "current_price_eur_kg": 8.8,
@@ -825,15 +825,15 @@
       "pass_through_30d": 0.5,
       "local_cost_floor_pct": 40,
       "dietary": [],
-      "exposure_low": 43,
-      "exposure_high": 44
+      "exposure_low": 41,
+      "exposure_high": 42
     },
     {
       "id": "lamb",
       "name": "Lamb",
       "category": "meat",
       "emoji": "🍖",
-      "crisis_exposure_pct": 45,
+      "crisis_exposure_pct": 43,
       "severity": "high",
       "base_price_eur_kg": 14.0,
       "current_price_eur_kg": 18.5,
@@ -872,16 +872,16 @@
       "pass_through_30d": 0.5,
       "local_cost_floor_pct": 40,
       "dietary": [],
-      "exposure_low": 45,
-      "exposure_high": 46
+      "exposure_low": 43,
+      "exposure_high": 44
     },
     {
       "id": "turkey",
       "name": "Turkey",
       "category": "meat",
       "emoji": "🦃",
-      "crisis_exposure_pct": 40,
-      "severity": "high",
+      "crisis_exposure_pct": 39,
+      "severity": "moderate",
       "base_price_eur_kg": 7.0,
       "current_price_eur_kg": 9.5,
       "projected_price_eur_kg": 12.0,
@@ -912,8 +912,8 @@
       "pass_through_30d": 0.5,
       "local_cost_floor_pct": 40,
       "dietary": [],
-      "exposure_low": 40,
-      "exposure_high": 41
+      "exposure_low": 38,
+      "exposure_high": 39
     },
     {
       "id": "sausages",
@@ -1219,7 +1219,7 @@
       "name": "Potatoes",
       "category": "produce",
       "emoji": "🥔",
-      "crisis_exposure_pct": 26,
+      "crisis_exposure_pct": 25,
       "severity": "moderate",
       "base_price_eur_kg": 0.9,
       "current_price_eur_kg": 1.15,
@@ -1254,8 +1254,8 @@
         "v",
         "vg"
       ],
-      "exposure_low": 26,
-      "exposure_high": 27
+      "exposure_low": 25,
+      "exposure_high": 26
     },
     {
       "id": "onions",
@@ -1298,7 +1298,7 @@
       "name": "Bananas",
       "category": "produce",
       "emoji": "🍌",
-      "crisis_exposure_pct": 28,
+      "crisis_exposure_pct": 27,
       "severity": "moderate",
       "base_price_eur_kg": 1.4,
       "current_price_eur_kg": 1.8,
@@ -1333,15 +1333,15 @@
         "v",
         "vg"
       ],
-      "exposure_low": 28,
-      "exposure_high": 29
+      "exposure_low": 27,
+      "exposure_high": 28
     },
     {
       "id": "apples",
       "name": "Apples",
       "category": "produce",
       "emoji": "🍎",
-      "crisis_exposure_pct": 21,
+      "crisis_exposure_pct": 22,
       "severity": "moderate",
       "base_price_eur_kg": 1.8,
       "current_price_eur_kg": 2.08,
@@ -1369,8 +1369,8 @@
         "v",
         "vg"
       ],
-      "exposure_low": 21,
-      "exposure_high": 21
+      "exposure_low": 22,
+      "exposure_high": 22
     },
     {
       "id": "oranges",
@@ -1449,8 +1449,8 @@
       "name": "Bell Peppers",
       "category": "produce",
       "emoji": "🫑",
-      "crisis_exposure_pct": 40,
-      "severity": "high",
+      "crisis_exposure_pct": 39,
+      "severity": "moderate",
       "base_price_eur_kg": 2.8,
       "current_price_eur_kg": 4.0,
       "projected_price_eur_kg": 5.2,
@@ -1484,8 +1484,8 @@
         "v",
         "vg"
       ],
-      "exposure_low": 40,
-      "exposure_high": 40
+      "exposure_low": 39,
+      "exposure_high": 39
     },
     {
       "id": "carrots",
@@ -1528,7 +1528,7 @@
       "name": "Avocado",
       "category": "produce",
       "emoji": "🥑",
-      "crisis_exposure_pct": 43,
+      "crisis_exposure_pct": 42,
       "severity": "high",
       "base_price_eur_kg": 2.5,
       "current_price_eur_kg": 3.6,
@@ -1563,8 +1563,8 @@
         "v",
         "vg"
       ],
-      "exposure_low": 43,
-      "exposure_high": 43
+      "exposure_low": 42,
+      "exposure_high": 42
     },
     {
       "id": "garlic",
@@ -1607,7 +1607,7 @@
       "name": "Cucumber",
       "category": "produce",
       "emoji": "🥒",
-      "crisis_exposure_pct": 44,
+      "crisis_exposure_pct": 46,
       "severity": "high",
       "base_price_eur_kg": 1.2,
       "current_price_eur_kg": 1.55,
@@ -1635,8 +1635,8 @@
         "v",
         "vg"
       ],
-      "exposure_low": 43,
-      "exposure_high": 45
+      "exposure_low": 46,
+      "exposure_high": 47
     },
     {
       "id": "shrimp",
@@ -1690,7 +1690,7 @@
       "name": "Canned Sardines",
       "category": "seafood",
       "emoji": "🐟",
-      "crisis_exposure_pct": 44,
+      "crisis_exposure_pct": 47,
       "severity": "high",
       "base_price_eur_kg": 4.5,
       "current_price_eur_kg": 5.8,
@@ -1722,15 +1722,15 @@
       "pass_through_30d": 0.75,
       "local_cost_floor_pct": 35,
       "dietary": [],
-      "exposure_low": 44,
-      "exposure_high": 44
+      "exposure_low": 47,
+      "exposure_high": 47
     },
     {
       "id": "cod",
       "name": "Cod",
       "category": "seafood",
       "emoji": "🐠",
-      "crisis_exposure_pct": 48,
+      "crisis_exposure_pct": 52,
       "severity": "high",
       "base_price_eur_kg": 12.0,
       "current_price_eur_kg": 15.5,
@@ -1762,8 +1762,8 @@
       "pass_through_30d": 0.75,
       "local_cost_floor_pct": 35,
       "dietary": [],
-      "exposure_low": 48,
-      "exposure_high": 49
+      "exposure_low": 52,
+      "exposure_high": 52
     },
     {
       "id": "canned_tuna",
@@ -2279,7 +2279,7 @@
       "name": "Orange Juice",
       "category": "packaged",
       "emoji": "🍊",
-      "crisis_exposure_pct": 15,
+      "crisis_exposure_pct": 12,
       "severity": "low",
       "base_price_eur_kg": 1.8,
       "current_price_eur_kg": 2.3,
@@ -2314,16 +2314,16 @@
         "v",
         "vg"
       ],
-      "exposure_low": 15,
-      "exposure_high": 16
+      "exposure_low": 12,
+      "exposure_high": 12
     },
     {
       "id": "mayonnaise",
       "name": "Mayonnaise",
       "category": "packaged",
       "emoji": "🫙",
-      "crisis_exposure_pct": 22,
-      "severity": "moderate",
+      "crisis_exposure_pct": 18,
+      "severity": "low",
       "base_price_eur_kg": 4.5,
       "current_price_eur_kg": 6.5,
       "projected_price_eur_kg": 8.2,
@@ -2356,15 +2356,15 @@
       "dietary": [
         "v"
       ],
-      "exposure_low": 22,
-      "exposure_high": 22
+      "exposure_low": 18,
+      "exposure_high": 18
     },
     {
       "id": "tomato_sauce",
       "name": "Tomato Sauce",
       "category": "packaged",
       "emoji": "🍅",
-      "crisis_exposure_pct": 48,
+      "crisis_exposure_pct": 50,
       "severity": "high",
       "base_price_eur_kg": 2.0,
       "current_price_eur_kg": 2.6,
@@ -2399,8 +2399,8 @@
         "v",
         "vg"
       ],
-      "exposure_low": 48,
-      "exposure_high": 48
+      "exposure_low": 50,
+      "exposure_high": 50
     },
     {
       "id": "baby_formula",
@@ -2528,7 +2528,7 @@
       "name": "Tofu",
       "category": "staples",
       "emoji": "🫕",
-      "crisis_exposure_pct": 34,
+      "crisis_exposure_pct": 37,
       "severity": "moderate",
       "base_price_eur_kg": 2.8,
       "current_price_eur_kg": 3.5,
@@ -2563,8 +2563,8 @@
         "v",
         "vg"
       ],
-      "exposure_low": 34,
-      "exposure_high": 34
+      "exposure_low": 37,
+      "exposure_high": 38
     },
     {
       "id": "beans",
@@ -2607,8 +2607,8 @@
       "name": "Quinoa",
       "category": "staples",
       "emoji": "🌾",
-      "crisis_exposure_pct": 21,
-      "severity": "moderate",
+      "crisis_exposure_pct": 19,
+      "severity": "low",
       "base_price_eur_kg": 6.0,
       "current_price_eur_kg": 7.8,
       "projected_price_eur_kg": 9.2,
@@ -2642,15 +2642,15 @@
         "v",
         "vg"
       ],
-      "exposure_low": 21,
-      "exposure_high": 21
+      "exposure_low": 19,
+      "exposure_high": 20
     },
     {
       "id": "olive_oil",
       "name": "Olive Oil",
       "category": "staples",
       "emoji": "🫒",
-      "crisis_exposure_pct": 29,
+      "crisis_exposure_pct": 26,
       "severity": "moderate",
       "base_price_eur_kg": 9.0,
       "current_price_eur_kg": 12.0,
@@ -2692,15 +2692,15 @@
         "v",
         "vg"
       ],
-      "exposure_low": 29,
-      "exposure_high": 29
+      "exposure_low": 26,
+      "exposure_high": 27
     },
     {
       "id": "frozen_peas",
       "name": "Frozen Peas",
       "category": "produce",
       "emoji": "🟢",
-      "crisis_exposure_pct": 26,
+      "crisis_exposure_pct": 25,
       "severity": "moderate",
       "base_price_eur_kg": 1.5,
       "current_price_eur_kg": 1.9,
@@ -2735,8 +2735,8 @@
         "v",
         "vg"
       ],
-      "exposure_low": 26,
-      "exposure_high": 27
+      "exposure_low": 25,
+      "exposure_high": 26
     }
   ],
   "stale_sources": [
