@@ -1516,6 +1516,9 @@
 
 <!-- Main Content -->
 <main class="main-content">
+  <div id="stale-banner" role="status" aria-live="polite"></div>
+  <div id="crisis-level" role="status" aria-live="polite"></div>
+
   <!-- Tabs Navigation -->
   <nav class="main-tabs" role="tablist">
     <button class="tab-btn active" id="tab-foods" role="tab" aria-selected="true" aria-controls="grid-view">Food Items</button>
@@ -1525,8 +1528,6 @@
 
   <div id="loading">Loading data…</div>
   <div id="error" role="alert">Failed to load food data. Please refresh the page.</div>
-  <div id="stale-banner" role="status" aria-live="polite"></div>
-  <div id="crisis-level" role="status" aria-live="polite"></div>
 
   <!-- Educational Callout -->
   <div class="info-callout" id="info-callout" style="display:none">
@@ -2259,19 +2260,19 @@ function renderCrisisLevel() {
     el.style.color = '#fff7ed';
   } else if (tp.urea_scarcity_risk) {
     level = 3;
-    badge = '⚡ Elevated — multiple tipping points active';
+    badge = '📊 Current data · ⚡ Multiple tipping points active';
     sub   = 'Urea above scarcity threshold and Brent surcharge triggered. Fertilizer and freight costs accelerating.';
     textColor = '#fff'; bgColor = '#c2410c'; borderColor = '#ea580c';
     el.style.color = '#fff7ed';
   } else if (tp.brent_surcharge_risk) {
     level = 2;
-    badge = '⚡ Elevated — Brent surcharge threshold crossed';
+    badge = '📊 Current data · ⚡ Brent surcharge active';
     sub   = `Brent at $${oil.toFixed(0)}/bbl. Carrier bunker surcharges now active — freight costs rising faster than oil price alone.`;
     textColor = '#92400e'; bgColor = '#fef3c7'; borderColor = '#f59e0b';
     el.style.color = '#78350f';
   } else {
     level = 1;
-    badge = '📊 Active disruption';
+    badge = '📊 Current data · Active disruption';
     sub   = 'Commodity prices above pre-crisis baseline. Supply chain cost pressure building.';
     textColor = '#166534'; bgColor = '#f0fdf4'; borderColor = '#4ade80';
     el.style.color = '#14532d';
@@ -2596,9 +2597,8 @@ function openFood(id) {
         <div class="risk-bar-stable"></div>
       </div>
       <p class="risk-description">
-        For every <strong>$1.00</strong> spent on this ${food.name.toLowerCase()},
-        roughly <strong>${adjPct}¢</strong> is currently sensitive to Hormuz supply chain shocks.
-        The remaining <strong>${(100-adjPct).toFixed(0)}¢</strong> is comprised of stable local costs (labour, land, rent).
+        Roughly <strong>${adjPct}%</strong> of the cost of this ${food.name.toLowerCase()} is currently sensitive to Hormuz supply chain shocks.
+        The remaining <strong>${(100-adjPct).toFixed(0)}%</strong> is comprised of stable local costs (labour, land, rent).
       </p>
     </div>
 
