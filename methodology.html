@@ -240,7 +240,7 @@ country_exposure    = clamp(round(eu_exposure_pct × impact_multiplier), 1, max_
   <p>This is the most important guard in the model. Without it, a £1 loaf of bread with 10p of imported wheat could naively be shown at 90%+ exposure — which is absurd. In practice, floors range from <strong>40% (bulk commodities like cooking oil)</strong> to <strong>85%+ (processed staples like milk, eggs, and bread)</strong> for the Hormuz crisis, where input costs are the transmission mechanism. For the Red Sea crisis, floors are even higher (82–99%) because only the distribution cost fraction is affected.</p>
   <p>The floor is set per-food based on FAO agri-food cost-of-production data and Eurostat retail price decomposition studies. It does not vary by country — only the <code>impact_multiplier</code> scales country-level exposure.</p>
 
-  <h3>Tipping Points (Non-Linearity)</h3>
+  <h3 id="tipping-points">Tipping Points (Non-Linearity)</h3>
   <p>The model includes two <strong>non-linear risk triggers</strong> that are not captured by the smooth cost-pass-through formula above:</p>
   <ul>
     <li><strong>Urea scarcity (&gt;$600/ton):</strong> Above this threshold, farmers in price-sensitive markets stop applying inputs entirely, risking a "yield cliff" in the next harvest cycle. Flagged for fertilizer-intensive categories (grains, meat, dairy).</li>

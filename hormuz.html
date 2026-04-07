@@ -891,6 +891,12 @@
       color: #fff;
       margin-left: 0.3rem;
       vertical-align: middle;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    a.scarcity-flag:hover {
+      background: #a93226;
+      text-decoration: none;
     }
     /* Stickiness label in modal */
     .stickiness-row {
@@ -2522,10 +2528,10 @@ function openFood(id) {
   // Tipping point flags
   const tp = state.data.sources?.tipping_points;
   const scarcityFlag = (tp?.urea_scarcity_risk && ['meat','dairy','grains','staples'].includes(food.category))
-    ? `<span class="scarcity-flag" title="Urea at $${tp.urea_current_usd_ton}/t ≥ $${tp.urea_scarcity_threshold_usd_ton}/t — fertilizer scarcity risk">⚠ Scarcity risk</span>`
+    ? `<a class="scarcity-flag" href="methodology.html#tipping-points" target="_blank" rel="noopener" title="Urea at $${tp.urea_current_usd_ton}/t ≥ $${tp.urea_scarcity_threshold_usd_ton}/t — fertilizer scarcity risk. Click to read methodology.">⚠ Scarcity risk</a>`
     : '';
   const surchargeFlag = (tp?.brent_surcharge_risk && food.drivers.some(d => d.category === 'oil' || d.category === 'fuel'))
-    ? `<span class="scarcity-flag" title="Brent at $${tp.brent_current_usd}/bbl ≥ $${tp.brent_surcharge_threshold_usd}/bbl — non-linear shipping surcharges active">⚡ Fuel surcharge</span>`
+    ? `<a class="scarcity-flag" href="methodology.html#tipping-points" target="_blank" rel="noopener" title="Brent at $${tp.brent_current_usd}/bbl ≥ $${tp.brent_surcharge_threshold_usd}/bbl — carriers add non-linear bunker surcharges (~$200/container per $10/bbl). Click to read methodology.">⚡ Fuel surcharge</a>`
     : '';
 
   const driversHtml = food.drivers.map(d => {
