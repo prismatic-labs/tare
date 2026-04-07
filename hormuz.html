@@ -120,6 +120,92 @@
       text-align: center;
     }
 
+    /* ─── Crisis Level Banner ───────────────────────────────────────────── */
+    #crisis-level {
+      display: none;
+      border-bottom: 2px solid;
+      padding: 0.6rem 1.5rem;
+    }
+    .crisis-level-content {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .crisis-level-badge {
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.2rem 0.6rem;
+      border-radius: 20px;
+      white-space: nowrap;
+      letter-spacing: 0.02em;
+    }
+    .crisis-level-sub {
+      font-size: 0.78rem;
+      opacity: 0.85;
+    }
+
+    /* ─── Scenario Bar ──────────────────────────────────────────────────── */
+    .scenario-bar {
+      display: none;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 0.55rem 1.5rem;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .scenario-bar-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+    .scenario-pills { display: flex; gap: 0.35rem; }
+    .scenario-pill {
+      font-family: var(--sans);
+      font-size: 0.77rem;
+      padding: 0.28rem 0.7rem;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .scenario-pill:hover { border-color: var(--dark-green); color: var(--dark-green); }
+    .scenario-pill.active { background: var(--dark-green); border-color: var(--dark-green); color: var(--cream); }
+    .scenario-pill.active.warn { background: #c2410c; border-color: #c2410c; }
+    .scenario-pill.active.danger { background: #7f1d1d; border-color: #7f1d1d; }
+    .scenario-note {
+      font-size: 0.73rem;
+      color: var(--muted);
+      margin-left: auto;
+      font-style: italic;
+    }
+
+    /* ─── Advice time horizons ──────────────────────────────────────────── */
+    .advice-horizon { margin-top: 1.5rem; }
+    .advice-horizon-header {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+      margin-bottom: 0.4rem;
+    }
+    .advice-horizon-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .advice-horizon-sub {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
     /* Sparkline on cards */
     .sparkline { display: block; width: 100%; height: 28px; margin-top: 0.4rem; }
     .sparkline-line { fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
@@ -1388,6 +1474,17 @@
   </div>
 </header>
 
+<!-- Scenario Bar -->
+<div class="scenario-bar" id="scenario-bar" role="group" aria-label="Crisis scenario selector">
+  <span class="scenario-bar-label">Scenario</span>
+  <div class="scenario-pills">
+    <button class="scenario-pill active" data-scenario="current">📊 Current</button>
+    <button class="scenario-pill" data-scenario="escalated">⚠️ Escalated</button>
+    <button class="scenario-pill danger" data-scenario="full_closure">🚨 Full Closure</button>
+  </div>
+  <span class="scenario-note" id="scenario-note"></span>
+</div>
+
 <!-- Search & Filters -->
 <div class="controls-bar" role="search">
   <div class="controls-top">
@@ -1423,12 +1520,13 @@
   <nav class="main-tabs" role="tablist">
     <button class="tab-btn active" id="tab-foods" role="tab" aria-selected="true" aria-controls="grid-view">Food Items</button>
     <button class="tab-btn" id="tab-countries" role="tab" aria-selected="false" aria-controls="country-view">Most Affected Countries</button>
-    <button class="tab-btn" id="tab-advice" role="tab" aria-selected="false" aria-controls="advice-view">What should I do?</button>
+    <button class="tab-btn" id="tab-advice" role="tab" aria-selected="false" aria-controls="advice-view">Shopping Guide</button>
   </nav>
 
   <div id="loading">Loading data…</div>
   <div id="error" role="alert">Failed to load food data. Please refresh the page.</div>
   <div id="stale-banner" role="status" aria-live="polite"></div>
+  <div id="crisis-level" role="status" aria-live="polite"></div>
 
   <!-- Educational Callout -->
   <div class="info-callout" id="info-callout" style="display:none">
@@ -1571,6 +1669,28 @@ const state = {
   query: '',
   activeFood: null,
   activeTab: 'foods',
+  scenario: 'current',
+};
+
+/* ─── Scenario config ─────────────────────────────────────────────────────── */
+const SCENARIO_MULTIPLIERS = { current: 1.0, escalated: 1.65, full_closure: 2.5 };
+
+const SCENARIO_META = {
+  current: {
+    note: () => {
+      const src = state.data?.sources || {};
+      return `Live data — Brent $${(src.oil_brent_usd||0).toFixed(0)}/bbl · Urea $${(src.urea_usd_ton||0).toFixed(0)}/t`;
+    },
+    level: 2, // determined dynamically in renderCrisisLevel
+  },
+  escalated: {
+    note: () => 'Modelled escalation — ~$145/bbl oil, ~$580/t urea',
+    level: 3,
+  },
+  full_closure: {
+    note: () => 'Full Hormuz blockade — ~$190/bbl oil, ~$750/t urea',
+    level: 4,
+  },
 };
 
 /* ─── Category icons ─────────────────────────────────────────────────────── */
@@ -1864,12 +1984,13 @@ function formatEur(amount) {
   }).format(amount);
 }
 
-// Country-adjusted exposure: scale EU baseline by the country's impact multiplier.
-// Gemini#4: round to nearest 5% for medium confidence, nearest 10% for low confidence,
-// to avoid false precision on extrapolated data.
+// Country-adjusted exposure: scale EU baseline by country multiplier and active scenario.
+// Scenario multiplier applies before the local_cost_floor cap — the floor reflects
+// local labour/retail costs that don't change in a crisis, only commodity inputs do.
 function countryExposure(food, country) {
   const cap = 100 - (food.local_cost_floor_pct || 45);
-  const raw = Math.min(cap, Math.round(food.crisis_exposure_pct * country.impact_multiplier));
+  const scenMult = SCENARIO_MULTIPLIERS[state.scenario] || 1.0;
+  const raw = Math.min(cap, Math.round(food.crisis_exposure_pct * scenMult * country.impact_multiplier));
   if (country.data_confidence === 'low')    return Math.min(cap, Math.round(raw / 10) * 10) || 10;
   if (country.data_confidence === 'medium') return Math.min(cap, Math.round(raw / 5)  * 5)  || 5;
   return raw;
@@ -2114,39 +2235,134 @@ function renderCountryRankings() {
   }).join('');
 }
 
-/* ─── Advice tab ─────────────────────────────────────────────────────────── */
+/* ─── Crisis Level Banner ────────────────────────────────────────────────── */
+function renderCrisisLevel() {
+  const el = document.getElementById('crisis-level');
+  if (!el || !state.data) return;
+
+  const tp  = state.data.sources?.tipping_points || {};
+  const oil = state.data.sources?.oil_brent_usd  || 0;
+
+  let level, badge, sub, textColor, bgColor, borderColor;
+
+  if (state.scenario === 'full_closure') {
+    level = 4;
+    badge = '📊 Viewing: Full Closure Scenario';
+    sub   = 'Hypothetical model of a complete Hormuz blockade. For planning purposes — not a prediction.';
+    textColor = '#fff'; bgColor = '#7f1d1d'; borderColor = '#991b1b';
+    el.style.color = '#fef2f2';
+  } else if (state.scenario === 'escalated') {
+    level = 3;
+    badge = '📊 Viewing: Escalation Scenario';
+    sub   = 'Hypothetical model at ~$145/bbl oil. Shows direction of risk — not a forecast.';
+    textColor = '#fff'; bgColor = '#c2410c'; borderColor = '#ea580c';
+    el.style.color = '#fff7ed';
+  } else if (tp.urea_scarcity_risk) {
+    level = 3;
+    badge = '⚡ Elevated — multiple tipping points active';
+    sub   = 'Urea above scarcity threshold and Brent surcharge triggered. Fertilizer and freight costs accelerating.';
+    textColor = '#fff'; bgColor = '#c2410c'; borderColor = '#ea580c';
+    el.style.color = '#fff7ed';
+  } else if (tp.brent_surcharge_risk) {
+    level = 2;
+    badge = '⚡ Elevated — Brent surcharge threshold crossed';
+    sub   = `Brent at $${oil.toFixed(0)}/bbl. Carrier bunker surcharges now active — freight costs rising faster than oil price alone.`;
+    textColor = '#92400e'; bgColor = '#fef3c7'; borderColor = '#f59e0b';
+    el.style.color = '#78350f';
+  } else {
+    level = 1;
+    badge = '📊 Active disruption';
+    sub   = 'Commodity prices above pre-crisis baseline. Supply chain cost pressure building.';
+    textColor = '#166534'; bgColor = '#f0fdf4'; borderColor = '#4ade80';
+    el.style.color = '#14532d';
+  }
+
+  el.style.display = 'block';
+  el.style.background = bgColor;
+  el.style.borderColor = borderColor;
+  el.style.color = el.style.color; // set above per branch
+  el.innerHTML = `
+    <div class="crisis-level-content">
+      <span class="crisis-level-badge" style="background:${bgColor};color:${textColor};border:1px solid ${borderColor};filter:brightness(0.88)">${escHtml(badge)}</span>
+      <span class="crisis-level-sub">${escHtml(sub)}</span>
+    </div>
+  `;
+
+  // Update scenario note
+  const noteEl = document.getElementById('scenario-note');
+  if (noteEl) noteEl.textContent = SCENARIO_META[state.scenario]?.note() || '';
+}
+
+/* ─── Advice / Crisis Prep tab ───────────────────────────────────────────── */
 function renderAdvice() {
   const container = document.getElementById('advice-view');
   if (!container || !state.data) return;
 
   const country = getCountry();
+  const scenario = state.scenario;
+
   const sorted = [...state.data.foods]
     .map(f => ({ f, exp: countryExposure(f, country) }))
     .sort((a, b) => b.exp - a.exp);
 
-  const high = sorted.filter(x => x.exp >= 25);
-  const stable = sorted.filter(x => x.exp <= 5).slice(0, 10);
+  // Time horizons: use pass_through_30d to sort high-exposure foods into urgency buckets
+  // pass_through_30d ≥ 0.5 → already filtering through to shelves NOW
+  // pass_through_30d 0.2–0.49 → arriving within the next 30 days
+  // pass_through_30d < 0.2   → 1–3 month lag (inventory buffers still absorbing)
+  const highExp = sorted.filter(x => x.exp >= 20);
+  const nowFoods      = highExp.filter(x => (x.f.pass_through_30d || 0) >= 0.5);
+  const monthFoods    = highExp.filter(x => { const p = x.f.pass_through_30d || 0; return p >= 0.2 && p < 0.5; });
+  const laterFoods    = highExp.filter(x => (x.f.pass_through_30d || 0) < 0.2);
+  const stable        = sorted.filter(x => x.exp <= 5).slice(0, 10);
 
-  // Human-readable category labels
   const CAT_LABEL = {
-    meat:     'Meat & poultry',
-    dairy:    'Dairy',
-    grains:   'Grains & bread',
-    staples:  'Oils, pulses & staples',
-    seafood:  'Seafood',
-    packaged: 'Packaged & processed',
-    produce:  'Fresh produce',
+    meat: 'Meat & poultry', dairy: 'Dairy', grains: 'Grains & bread',
+    staples: 'Oils, pulses & staples', seafood: 'Seafood',
+    packaged: 'Packaged & processed', produce: 'Fresh produce',
   };
 
-  // Per-category practical advice (Hormuz — input cost mechanism)
   const CAT_ADVICE = {
-    meat:     'Animal feed and diesel are the main cost drivers. Plant proteins — lentils, beans, tofu — are among the least exposed foods right now and are worth leaning into.',
-    dairy:    'Processed dairy (cream, butter, yoghurt) passes through energy costs faster than fresh milk. Local-brand basics from nearby farms tend to be more insulated.',
-    grains:   'Fertilizer (urea) is the primary driver — it feeds the crops that feed us. Flour, oats, and rice store well; a few extra weeks of supply buys useful buffer time.',
-    staples:  'Cooking oil has the highest single-food exposure in this crisis. Sunflower and rapeseed from domestic or Ukrainian sources carry lower exposure than palm oil imports.',
-    seafood:  'Wild-caught local fish is far less exposed than imported farmed shrimp or distant-water tuna. Canned fish from nearby fisheries (sardines, mackerel) are a good middle ground.',
-    packaged: 'Energy-intensive processing amplifies input cost pressure. Home-cooked equivalents from raw ingredients — dried pasta, pulses, whole grains — are meaningfully more stable.',
-    produce:  'Fresh local and seasonal produce has very low Hormuz exposure. Labour and land dominate the cost, not energy. A good time to lean into what grows nearby.',
+    meat:     'Animal feed (corn, soy) and diesel dominate costs. Plant proteins — lentils, beans, tofu — carry far lower exposure. Consider substituting 1–2 meals per week.',
+    dairy:    'Processed dairy (butter, cream, cheese) passes through energy costs faster than fresh milk. Local-brand basics from nearby farms are more insulated.',
+    grains:   'Fertilizer (urea) is the primary driver. Flour, oats, and dried pulses store well; building a few extra weeks of supply is sensible buffer.',
+    staples:  'Cooking oil has the single highest exposure in this crisis. Sunflower and rapeseed from domestic or nearby sources carry lower exposure than imported palm oil.',
+    seafood:  'Wild-caught local fish is far less exposed than farmed shrimp or distant-water tuna. Canned fish from nearby fisheries (sardines, mackerel) are a solid middle ground.',
+    packaged: 'Energy-intensive processing compounds input cost pressure. Home-cooked from raw ingredients — dried pasta, pulses, whole grains — is meaningfully more stable.',
+    produce:  'Fresh local and seasonal produce has very low Hormuz exposure. Labour and land dominate costs here. A good time to lean into what grows nearby.',
+  };
+
+  // Scenario-specific advice overrides for the general section
+  const SCENARIO_GUIDANCE = {
+    current: {
+      title: 'Current conditions',
+      intro: `Commodity prices are above pre-crisis levels and supply chain costs are gradually being absorbed across the food system. This tab shows which food categories are under the most cost pressure and where well-insulated alternatives exist.`,
+      principles: [
+        '<strong>Exposure reflects cost pressure, not confirmed price rises.</strong> Retailers absorb some costs through margin adjustments. Changes typically filter through over 1–3 months.',
+        '<strong>Local and seasonal produce is well-insulated.</strong> Food grown nearby relies mainly on local labour and land costs, which are unaffected by Hormuz commodity prices.',
+        '<strong>Plant proteins offer good value right now.</strong> Pulses, eggs, and local legumes are among the least exposed and nutritionally comparable to more exposed protein sources.',
+        '<strong>Scores update daily</strong> as commodity prices change. The picture can improve as quickly as it deteriorates.',
+      ],
+    },
+    escalated: {
+      title: 'Escalation scenario — modelled',
+      intro: `This is a hypothetical model at ~$145/bbl oil showing the direction of cost risk if conditions worsen. It is not a forecast. Under these conditions, energy-intensive foods would see faster cost pass-through from manufacturers and distributors.`,
+      principles: [
+        '<strong>This is a model, not a prediction.</strong> Use it to understand which food categories carry more or less supply chain risk, not as a guide to immediate purchasing decisions.',
+        '<strong>Lower-exposure alternatives exist in every category.</strong> The substitution suggestions on each food card show options with less supply chain exposure.',
+        '<strong>Cooking oil tends to move early.</strong> It has the highest single-food exposure in this model — worth watching as an indicator of broader cost trends.',
+        '<strong>Fresh local and seasonal produce remains consistently well-insulated</strong> regardless of oil prices, because labour and land dominate its cost structure.',
+      ],
+    },
+    full_closure: {
+      title: 'Full closure scenario — modelled',
+      intro: `This models the arithmetic of a complete Hormuz blockade at ~$190/bbl oil. It is a planning reference, not a forecast. Governments hold strategic reserves and multiple policy levers; real outcomes would differ significantly. The purpose is to show relative risk across food categories under an extreme assumption.`,
+      principles: [
+        '<strong>This is modelled arithmetic, not a prediction.</strong> It shows which food categories are structurally more or less dependent on Hormuz-routed energy inputs.',
+        '<strong>Fresh local produce and locally-caught fish remain low-exposure</strong> under any scenario, because labour and land — not global commodity prices — dominate their costs.',
+        '<strong>Plant-based staples are consistently well-positioned:</strong> dried pulses, whole grains, and root vegetables are among the least energy-intensive foods across all scenarios.',
+        '<strong>Policy responses matter considerably.</strong> In practice, government reserves, trade agreements, and price stabilisation measures reshape outcomes in ways this model cannot capture.',
+      ],
+    },
   };
 
   const foodRow = ({ f, exp }) => {
@@ -2164,53 +2380,65 @@ function renderAdvice() {
       </div>`;
   };
 
-  // Group high-exposure foods by category for advice blocks
-  const catGroups = {};
-  high.forEach(({ f, exp }) => {
-    if (!catGroups[f.category]) catGroups[f.category] = [];
-    catGroups[f.category].push({ f, exp });
-  });
+  const horizonBlock = (icon, title, sub, items, catAdvice = true) => {
+    if (!items.length) return '';
+    const catGroups = {};
+    items.forEach(({ f, exp }) => {
+      if (!catGroups[f.category]) catGroups[f.category] = [];
+      catGroups[f.category].push({ f, exp });
+    });
+    const blocks = Object.entries(catGroups).map(([cat, its]) => `
+      <div style="margin-top:1rem">
+        <div class="advice-section-title">${escHtml(CAT_LABEL[cat] || cat)}</div>
+        ${catAdvice ? `<div style="font-size:0.81rem;color:var(--muted);margin-bottom:0.4rem;padding:0.45rem 0.7rem;background:var(--cream-dark);border-radius:var(--radius)">${escHtml(CAT_ADVICE[cat] || '')}</div>` : ''}
+        <div class="advice-food-list">${its.slice(0, 4).map(foodRow).join('')}</div>
+      </div>`).join('');
+    return `
+      <div class="advice-horizon">
+        <div class="advice-horizon-header">
+          <span class="advice-horizon-title">${icon} ${escHtml(title)}</span>
+          <span class="advice-horizon-sub">${escHtml(sub)}</span>
+        </div>
+        ${blocks}
+      </div>`;
+  };
 
-  const catBlocks = Object.entries(catGroups).map(([cat, items]) => `
-    <div style="margin-top:1.25rem">
-      <div class="advice-section-title">${escHtml(CAT_LABEL[cat] || cat)}</div>
-      <div style="font-size:0.82rem;color:var(--muted);margin-bottom:0.5rem;padding:0.5rem 0.75rem;background:var(--cream-dark);border-radius:var(--radius)">
-        ${escHtml(CAT_ADVICE[cat] || 'Monitor prices in this category.')}
-      </div>
-      <div class="advice-food-list">${items.slice(0, 4).map(foodRow).join('')}</div>
-    </div>
-  `).join('');
+  const guidance = SCENARIO_GUIDANCE[scenario] || SCENARIO_GUIDANCE.current;
+  const scenarioLabel = { current: 'Current data', escalated: 'Escalation scenario', full_closure: 'Full closure scenario' }[scenario] || '';
 
   container.innerHTML = `
     <div class="advice-disclaimer">
       <div class="advice-disclaimer-icon">⚠️</div>
       <div>
-        <p><strong>These are modelled estimates, not guarantees.</strong> Exposure scores reflect cost pressure in supply chains — not confirmed price rises at your local shop. Retailers may absorb some or all of this pressure. Local market conditions, contracts, and inventory buffers all affect what actually reaches the shelf.</p>
-        <p style="margin-top:0.5rem">Use this as a general guide for thinking about your shopping, not a precise forecast. Figures are for <strong>${escHtml(country.name)}</strong> based on current commodity prices.</p>
+        <p><strong>Modelled estimates, not guarantees.</strong> ${escHtml(guidance.intro)}</p>
+        <p style="margin-top:0.4rem;font-size:0.8rem;color:var(--muted)">Figures for <strong>${escHtml(country.name)}</strong> · ${escHtml(scenarioLabel)}</p>
       </div>
     </div>
 
-    ${high.length > 0 ? `
-    <div>
-      <div class="advice-section-title" style="color:var(--high)">🔴 Most pressured right now — ${escHtml(country.name)}</div>
-      ${catBlocks}
-    </div>` : '<p style="color:var(--muted);font-size:0.9rem">No high-exposure foods for the selected country at current price levels.</p>'}
+    ${horizonBlock('🔴', 'Already flowing through',
+      'High pass-through rate — cost changes in this category are already reaching retail prices.',
+      nowFoods)}
 
-    ${stable.length > 0 ? `
-    <div>
-      <div class="advice-section-title" style="color:var(--low)">🟢 Stable choices — low exposure</div>
+    ${horizonBlock('🟡', 'Still being absorbed (next 2–4 weeks)',
+      'Moderate lag — manufacturers are absorbing costs now; retail prices likely to adjust soon.',
+      monthFoods)}
+
+    ${horizonBlock('⏳', 'Long inventory lag (1–3 months)',
+      'Slow-moving inputs — current prices are still buffered by forward purchasing and inventory.',
+      laterFoods, false)}
+
+    ${stable.length ? `
+    <div class="advice-horizon">
+      <div class="advice-horizon-header">
+        <span class="advice-horizon-title">🟢 Stable choices</span>
+        <span class="advice-horizon-sub">Low exposure across all scenarios — lean into these.</span>
+      </div>
       <div class="advice-food-list">${stable.map(foodRow).join('')}</div>
     </div>` : ''}
 
     <div class="advice-tips">
-      <div class="advice-section-title">💡 General principles</div>
-      <ul>
-        <li><strong>Exposure ≠ price rise.</strong> A 40% exposure score means 40% of that food's supply chain is under stress — retailers may absorb part or all of it, or pass it through over months.</li>
-        <li><strong>Local and seasonal is your best insulation.</strong> Produce grown nearby with domestic labour and energy is barely touched by either the Hormuz or Red Sea crises.</li>
-        <li><strong>Don't panic-buy.</strong> Stocking up on threatened items collectively is exactly what causes the shortages being anticipated. A modest buffer of shelf-stable staples — one or two weeks ahead of your normal cycle — is sensible. Bulk-buying is not.</li>
-        <li><strong>Diversify protein sources.</strong> Pulses, eggs, and local legumes are among the least exposed foods and offer good nutritional value for money.</li>
-        <li><strong>These scores update daily</strong> as commodity prices change. A crisis can ease as quickly as it escalated.</li>
-      </ul>
+      <div class="advice-section-title">💡 ${escHtml(guidance.title)}</div>
+      <ul>${guidance.principles.map(p => `<li>${p}</li>`).join('')}</ul>
     </div>
   `;
 }
@@ -2806,6 +3034,8 @@ async function init() {
 
   // Render
   document.getElementById('info-callout').style.display = 'flex';
+  document.getElementById('scenario-bar').style.display = 'flex';
+  renderCrisisLevel();
   renderGrid();
   renderMap();
   renderPulse();
@@ -2836,7 +3066,20 @@ async function init() {
 
   tabFoods.addEventListener('click', () => { activateTab(tabFoods, 'foods'); window.goatcounter?.count({path: 'tab/foods', title: 'Tab: Food Items', event: true}); });
   tabCountries.addEventListener('click', () => { activateTab(tabCountries, 'countries'); window.goatcounter?.count({path: 'tab/countries', title: 'Tab: Countries', event: true}); });
-  tabAdvice.addEventListener('click', () => { activateTab(tabAdvice, 'advice'); window.goatcounter?.count({path: 'tab/advice', title: 'Tab: What should I do?', event: true}); });
+  tabAdvice.addEventListener('click', () => { activateTab(tabAdvice, 'advice'); window.goatcounter?.count({path: 'tab/advice', title: 'Tab: Crisis Prep', event: true}); });
+
+  // Scenario pills
+  document.querySelectorAll('.scenario-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      document.querySelectorAll('.scenario-pill').forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      state.scenario = pill.dataset.scenario;
+      renderCrisisLevel();
+      renderGrid();
+      if (state.activeFood) openFood(state.activeFood);
+      window.goatcounter?.count({path: `scenario/${state.scenario}`, title: `Scenario: ${state.scenario}`, event: true});
+    });
+  });
 
   // Pulse share
   document.getElementById('pulse-share-btn').addEventListener('click', sharePulse);
