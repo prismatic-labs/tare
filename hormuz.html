@@ -2268,19 +2268,19 @@ function renderCrisisLevel() {
     badgeBg  = '#7c2d12'; badgeText = '#fed7aa';
   } else if (tp.urea_scarcity_risk) {
     level = 3;
-    badge = '📊 Current data · ⚡ Multiple tipping points active';
+    badge = '⚡ Multiple tipping points active';
     sub   = 'Urea above scarcity threshold and Brent surcharge triggered. Fertilizer and freight costs accelerating.';
     bannerBg = '#c2410c'; bannerBorder = '#ea580c'; bannerText = '#fff7ed';
     badgeBg  = '#7c2d12'; badgeText = '#fed7aa';
   } else if (tp.brent_surcharge_risk) {
     level = 2;
-    badge = '📊 Current data · ⚡ Brent surcharge active';
+    badge = '⚡ Brent surcharge active';
     sub   = `Brent at $${oil.toFixed(0)}/bbl. Carrier bunker surcharges now active — freight costs rising faster than oil price alone.`;
     bannerBg = '#fef3c7'; bannerBorder = '#f59e0b'; bannerText = '#78350f';
     badgeBg  = '#92400e'; badgeText = '#fef9c3';
   } else {
     level = 1;
-    badge = '📊 Current data · Active disruption';
+    badge = '📊 Active disruption';
     sub   = 'Commodity prices above pre-crisis baseline. Supply chain cost pressure building.';
     bannerBg = '#f0fdf4'; bannerBorder = '#4ade80'; bannerText = '#14532d';
     badgeBg  = '#166534'; badgeText = '#dcfce7';
