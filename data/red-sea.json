@@ -1,1 +1,2338 @@
-{"last_updated": "2026-04-04", "crisis_start": "2023-11-19", "crisis_name": "Red Sea / Bab-el-Mandeb disruption", "crisis_mechanism": "freight", "sources": {"drewry_wci_usd_40ft": 4200, "drewry_wci_pre_crisis_usd_40ft": 1380, "insurance_premium_bps": 0.75, "insurance_premium_pre_crisis_bps": 0.05, "exchange_rates": {"EUR": 1.0, "GBP": 0.87253, "JPY": 183.94, "PHP": 69.86, "USD": 1.1525, "INR": 107.3, "BRL": 5.972, "AUD": 1.6771, "LKR": 331}, "tipping_points": {"port_congestion_risk": true, "port_congestion_note": "Rotterdam and Hamburg facing 15-25% longer dwell times due to rerouted volumes"}}, "countries": [{"code": "IT", "name": "Italy", "currency": "EUR", "suez_dependency_pct": 95, "impact_multiplier": 1.0, "price_level_index": 1.0, "data_confidence": "high"}, {"code": "GB", "name": "United Kingdom", "currency": "GBP", "suez_dependency_pct": 90, "impact_multiplier": 0.95, "price_level_index": 1.05, "data_confidence": "high"}, {"code": "JP", "name": "Japan", "currency": "JPY", "suez_dependency_pct": 30, "impact_multiplier": 0.3, "price_level_index": 1.0, "data_confidence": "medium"}, {"code": "PH", "name": "Philippines", "currency": "PHP", "suez_dependency_pct": 25, "impact_multiplier": 0.25, "price_level_index": 0.45, "data_confidence": "low"}, {"code": "US", "name": "United States", "currency": "USD", "suez_dependency_pct": 35, "impact_multiplier": 0.35, "price_level_index": 1.3, "data_confidence": "high"}, {"code": "DE", "name": "Germany", "currency": "EUR", "suez_dependency_pct": 95, "impact_multiplier": 1.0, "price_level_index": 0.95, "data_confidence": "high"}, {"code": "IN", "name": "India", "currency": "INR", "suez_dependency_pct": 65, "impact_multiplier": 0.65, "price_level_index": 0.45, "data_confidence": "low"}, {"code": "BR", "name": "Brazil", "currency": "BRL", "suez_dependency_pct": 45, "impact_multiplier": 0.45, "price_level_index": 0.75, "data_confidence": "medium"}, {"code": "AU", "name": "Australia", "currency": "AUD", "suez_dependency_pct": 25, "impact_multiplier": 0.25, "price_level_index": 1.25, "data_confidence": "medium"}, {"code": "LK", "name": "Sri Lanka", "currency": "LKR", "suez_dependency_pct": 80, "impact_multiplier": 0.8, "price_level_index": 0.4, "data_confidence": "low"}], "foods": [{"id": "shrimp", "name": "Shrimp", "category": "seafood", "emoji": "🦐", "crisis_exposure_pct": 18, "severity": "low", "base_price_eur_kg": 15.0, "current_price_eur_kg": 15.81, "projected_price_eur_kg": 16.42, "drivers": [{"input": "Container shipping", "description": "Farmed shrimp from SE Asia typically routes via Suez — countries that import it are most affected; local producers face lower exposure", "category": "freight", "price_change_pct": 204, "weight": 0.7}, {"input": "War-risk insurance", "description": "Red Sea transit insurance up 15× since Nov 2023", "category": "insurance", "price_change_pct": 50, "weight": 0.2}, {"input": "Cape detour", "description": "Extra 10–14 days via Cape of Good Hope adds refrigeration costs", "category": "rerouting", "price_change_pct": 40, "weight": 0.1}], "explanation": "Farmed shrimp from Vietnam and Thailand is one of the most Suez-dependent proteins for importing nations. Countries that produce their own shrimp (India, Thailand domestically) face much lower exposure than those relying on long-haul imports.", "pass_through_30d": 0.75, "local_cost_floor_pct": 82, "dietary": [], "exposure_low": 18, "exposure_high": 18}, {"id": "canned_tuna", "name": "Canned Tuna", "category": "seafood", "emoji": "🥫", "crisis_exposure_pct": 18, "severity": "low", "base_price_eur_kg": 4.0, "current_price_eur_kg": 4.2, "projected_price_eur_kg": 4.35, "drivers": [{"input": "Container shipping", "description": "Thai and Philippine canneries export exclusively in 20/40ft containers", "category": "freight", "price_change_pct": 204, "weight": 0.7}, {"input": "War-risk insurance", "description": "Vessel insurance for Red Sea routing has surged 15× since late 2023", "category": "insurance", "price_change_pct": 50, "weight": 0.2}, {"input": "Cape detour", "description": "Cape route adds 14 days and roughly 40% extra bunker fuel per voyage", "category": "rerouting", "price_change_pct": 40, "weight": 0.1}], "explanation": "Thailand processes over a third of the world's canned tuna. Every can in European stores was packed into a container that once sailed past Bab-el-Mandeb — now rerouted around Africa.", "pass_through_30d": 0.7, "local_cost_floor_pct": 82, "dietary": [], "exposure_low": 18, "exposure_high": 18}, {"id": "salmon", "name": "Salmon", "category": "seafood", "emoji": "🍣", "crisis_exposure_pct": 6, "severity": "low", "base_price_eur_kg": 18.5, "current_price_eur_kg": 18.77, "projected_price_eur_kg": 18.97, "drivers": [{"input": "Air/sea freight", "description": "Norwegian salmon to Asia routes disrupted; some supply reallocation hits Europe", "category": "freight", "price_change_pct": 204, "weight": 0.7}, {"input": "War-risk insurance", "description": "Perishable cargo commands higher war-risk premiums", "category": "insurance", "price_change_pct": 50, "weight": 0.3}], "explanation": "European farmed salmon mostly travels short intra-European routes unaffected by Suez, but global supply reallocation and higher packaging import costs add modest pressure.", "pass_through_30d": 0.6, "local_cost_floor_pct": 94, "dietary": [], "exposure_low": 6, "exposure_high": 6}, {"id": "canned_sardines", "name": "Canned Sardines", "category": "seafood", "emoji": "🐟", "crisis_exposure_pct": 12, "severity": "low", "base_price_eur_kg": 4.5, "current_price_eur_kg": 4.64, "projected_price_eur_kg": 4.75, "drivers": [{"input": "Container shipping", "description": "Moroccan and Portuguese sardines exported in steel cans, some via Suez lanes", "category": "freight", "price_change_pct": 204, "weight": 0.65}, {"input": "War-risk insurance", "description": "Mediterranean-origin vessels still pay elevated war-risk premiums", "category": "insurance", "price_change_pct": 50, "weight": 0.25}, {"input": "Route disruption", "description": "Suez congestion affects Mediterranean export timing", "category": "rerouting", "price_change_pct": 40, "weight": 0.1}], "explanation": "Moroccan sardines dominate European canned seafood imports. The Atlantic-to-Mediterranean leg is shorter, but elevated insurance and port congestion still filter through.", "pass_through_30d": 0.65, "local_cost_floor_pct": 88, "dietary": [], "exposure_low": 12, "exposure_high": 12}, {"id": "cod", "name": "Cod", "category": "seafood", "emoji": "🐠", "crisis_exposure_pct": 5, "severity": "low", "base_price_eur_kg": 12.0, "current_price_eur_kg": 12.13, "projected_price_eur_kg": 12.23, "drivers": [{"input": "Container shipping", "description": "Frozen cod from Iceland and Norway shipped in reefer containers", "category": "freight", "price_change_pct": 204, "weight": 0.65}, {"input": "War-risk insurance", "description": "Reefer container premiums have risen with Red Sea risk", "category": "insurance", "price_change_pct": 50, "weight": 0.35}], "explanation": "North Atlantic cod rarely transits Suez, but reefer container spot rates have risen globally as capacity is absorbed by rerouting around Africa.", "pass_through_30d": 0.55, "local_cost_floor_pct": 95, "dietary": [], "exposure_low": 5, "exposure_high": 5}, {"id": "chicken", "name": "Chicken", "category": "meat", "emoji": "🍗", "crisis_exposure_pct": 2, "severity": "low", "base_price_eur_kg": 5.4, "current_price_eur_kg": 5.42, "projected_price_eur_kg": 5.43, "drivers": [{"input": "Packaging imports", "description": "Polystyrene trays and plastic wrap sourced from SE Asia", "category": "freight", "price_change_pct": 204, "weight": 0.55}, {"input": "Indirect cost", "description": "Haulage and port handling costs rise with global freight inflation", "category": "insurance", "price_change_pct": 50, "weight": 0.45}], "explanation": "Chicken is mostly produced locally in Europe with domestic feed, insulating it from container shipping costs. Indirect exposure comes from imported packaging and processing equipment.", "pass_through_30d": 0.35, "local_cost_floor_pct": 98, "dietary": [], "exposure_low": 2, "exposure_high": 2}, {"id": "beef", "name": "Beef", "category": "meat", "emoji": "🥩", "crisis_exposure_pct": 2, "severity": "low", "base_price_eur_kg": 12.0, "current_price_eur_kg": 12.03, "projected_price_eur_kg": 12.05, "drivers": [{"input": "Packaging/ingredients", "description": "Some seasoning and packaging sourced via long-haul container routes", "category": "freight", "price_change_pct": 204, "weight": 0.55}, {"input": "Freight inflation", "description": "Global container market tightness raises even non-Suez transport costs", "category": "insurance", "price_change_pct": 50, "weight": 0.45}], "explanation": "European beef production is largely self-contained. The Red Sea crisis has minimal direct impact; modest cost pass-through reflects imported packaging and equipment parts.", "pass_through_30d": 0.3, "local_cost_floor_pct": 98, "dietary": [], "exposure_low": 2, "exposure_high": 2}, {"id": "pork", "name": "Pork", "category": "meat", "emoji": "🥓", "crisis_exposure_pct": 2, "severity": "low", "base_price_eur_kg": 6.5, "current_price_eur_kg": 6.52, "projected_price_eur_kg": 6.53, "drivers": [{"input": "Packaging/ingredients", "description": "Packaging and some feed additives travel in containers", "category": "freight", "price_change_pct": 204, "weight": 0.55}, {"input": "Freight inflation", "description": "Wider freight market inflation touches pork supply chain margins", "category": "insurance", "price_change_pct": 50, "weight": 0.45}], "explanation": "Pork production in Europe relies on domestic feed crops and local abattoirs. Container-route disruption has minimal direct effect.", "pass_through_30d": 0.3, "local_cost_floor_pct": 98, "dietary": [], "exposure_low": 2, "exposure_high": 2}, {"id": "lamb", "name": "Lamb", "category": "meat", "emoji": "🍖", "crisis_exposure_pct": 7, "severity": "low", "base_price_eur_kg": 14.0, "current_price_eur_kg": 14.12, "projected_price_eur_kg": 14.21, "drivers": [{"input": "Import costs", "description": "New Zealand lamb to Europe was partly routed via Suez", "category": "freight", "price_change_pct": 204, "weight": 0.55}, {"input": "War-risk premium", "description": "NZ lamb ships pay elevated insurance for Red Sea passage", "category": "insurance", "price_change_pct": 50, "weight": 0.45}], "explanation": "New Zealand lamb exports to Europe historically routed via Suez for speed; Cape rerouting adds two weeks and ~$400/container in fuel costs, partially passed on at retail.", "pass_through_30d": 0.3, "local_cost_floor_pct": 93, "dietary": [], "exposure_low": 7, "exposure_high": 7}, {"id": "turkey", "name": "Turkey", "category": "meat", "emoji": "🦃", "crisis_exposure_pct": 2, "severity": "low", "base_price_eur_kg": 7.0, "current_price_eur_kg": 7.02, "projected_price_eur_kg": 7.03, "drivers": [{"input": "Packaging imports", "description": "Plastic and film packaging sourced from Asian suppliers", "category": "freight", "price_change_pct": 204, "weight": 0.55}, {"input": "Freight inflation", "description": "Elevated global container rates add indirect cost pressure", "category": "insurance", "price_change_pct": 50, "weight": 0.45}], "explanation": "Turkey is produced domestically across Europe. Container-route disruption affects imported packaging and specialty seasoning more than the protein itself.", "pass_through_30d": 0.3, "local_cost_floor_pct": 98, "dietary": [], "exposure_low": 2, "exposure_high": 2}, {"id": "sausages", "name": "Sausages", "category": "meat", "emoji": "🌭", "crisis_exposure_pct": 7, "severity": "low", "base_price_eur_kg": 5.5, "current_price_eur_kg": 5.57, "projected_price_eur_kg": 5.62, "drivers": [{"input": "Ingredient imports", "description": "Spices, casings and specialty ingredients from Asia and East Africa", "category": "freight", "price_change_pct": 204, "weight": 0.65}, {"input": "War-risk premium", "description": "Imported ingredient containers face higher insurance", "category": "insurance", "price_change_pct": 50, "weight": 0.35}], "explanation": "Sausages contain a diverse supply chain: casings from China, spices from East Africa and Asia, all moving through or near the Bab-el-Mandeb strait.", "pass_through_30d": 0.45, "local_cost_floor_pct": 93, "dietary": [], "exposure_low": 7, "exposure_high": 7}, {"id": "milk", "name": "Milk", "category": "dairy", "emoji": "🥛", "crisis_exposure_pct": 1, "severity": "low", "base_price_eur_kg": 1.2, "current_price_eur_kg": 1.2, "projected_price_eur_kg": 1.2, "drivers": [{"input": "Packaging", "description": "Tetra Pak materials and plastics partially sourced from Asia", "category": "freight", "price_change_pct": 204, "weight": 0.5}, {"input": "Freight inflation", "description": "Wider container market inflation touches packaging supply chains", "category": "insurance", "price_change_pct": 50, "weight": 0.5}], "explanation": "Fresh milk is nearly entirely local. The Red Sea crisis reaches it only through imported Tetra Pak materials and other packaging components.", "pass_through_30d": 0.25, "local_cost_floor_pct": 99, "dietary": ["v"], "exposure_low": 1, "exposure_high": 1}, {"id": "cheese", "name": "Cheese", "category": "dairy", "emoji": "🧀", "crisis_exposure_pct": 2, "severity": "low", "base_price_eur_kg": 8.5, "current_price_eur_kg": 8.52, "projected_price_eur_kg": 8.54, "drivers": [{"input": "Packaging imports", "description": "Some specialty cheeses packaged with imported materials", "category": "freight", "price_change_pct": 204, "weight": 0.55}, {"input": "Freight inflation", "description": "Global container inflation adds marginal cost", "category": "insurance", "price_change_pct": 50, "weight": 0.45}], "explanation": "European cheese production is predominantly local with domestic milk. Minimal exposure to Red Sea disruption beyond packaging costs.", "pass_through_30d": 0.3, "local_cost_floor_pct": 98, "dietary": ["v"], "exposure_low": 2, "exposure_high": 2}, {"id": "butter", "name": "Butter", "category": "dairy", "emoji": "🧈", "crisis_exposure_pct": 7, "severity": "low", "base_price_eur_kg": 6.0, "current_price_eur_kg": 6.05, "projected_price_eur_kg": 6.09, "drivers": [{"input": "NZ butter imports", "description": "New Zealand butter exports routed Cape due to Red Sea", "category": "freight", "price_change_pct": 204, "weight": 0.55}, {"input": "War-risk insurance", "description": "NZ vessels pay elevated premiums for former Suez routing", "category": "insurance", "price_change_pct": 50, "weight": 0.45}], "explanation": "New Zealand is Europe's largest butter import source. Cape rerouting has added weeks to delivery times and elevated spot prices modestly.", "pass_through_30d": 0.3, "local_cost_floor_pct": 93, "dietary": ["v"], "exposure_low": 7, "exposure_high": 7}, {"id": "yoghurt", "name": "Yoghurt", "category": "dairy", "emoji": "🫙", "crisis_exposure_pct": 1, "severity": "low", "base_price_eur_kg": 1.8, "current_price_eur_kg": 1.8, "projected_price_eur_kg": 1.8, "drivers": [{"input": "Packaging", "description": "Polypropylene cups and lids sourced from Asian manufacturers", "category": "freight", "price_change_pct": 204, "weight": 0.55}, {"input": "Freight inflation", "description": "Container market tightness adds indirect cost", "category": "insurance", "price_change_pct": 50, "weight": 0.45}], "explanation": "Yoghurt is produced locally from domestic milk. Container disruption touches it mainly through imported pot and lid manufacturing.", "pass_through_30d": 0.3, "local_cost_floor_pct": 99, "dietary": ["v"], "exposure_low": 1, "exposure_high": 1}, {"id": "eggs", "name": "Eggs", "category": "dairy", "emoji": "🥚", "crisis_exposure_pct": 1, "severity": "low", "base_price_eur_kg": 3.5, "current_price_eur_kg": 3.5, "projected_price_eur_kg": 3.51, "drivers": [{"input": "Packaging", "description": "Cardboard trays use pulp partly sourced from SE Asian mills", "category": "freight", "price_change_pct": 204, "weight": 0.5}, {"input": "Freight inflation", "description": "Marginal cost increase from global container market", "category": "insurance", "price_change_pct": 50, "weight": 0.5}], "explanation": "Eggs are one of the most locally-produced foods in Europe. Red Sea disruption has negligible direct impact.", "pass_through_30d": 0.25, "local_cost_floor_pct": 99, "dietary": ["v"], "exposure_low": 1, "exposure_high": 1}, {"id": "cream", "name": "Cream", "category": "dairy", "emoji": "🍦", "crisis_exposure_pct": 1, "severity": "low", "base_price_eur_kg": 4.0, "current_price_eur_kg": 4.0, "projected_price_eur_kg": 4.01, "drivers": [{"input": "Packaging", "description": "UHT cream packaging materials from Asian suppliers", "category": "freight", "price_change_pct": 204, "weight": 0.55}, {"input": "Freight inflation", "description": "Global container rates add marginal cost", "category": "insurance", "price_change_pct": 50, "weight": 0.45}], "explanation": "Cream is produced from domestic milk. Container shipping costs affect mainly packaging inputs.", "pass_through_30d": 0.3, "local_cost_floor_pct": 99, "dietary": ["v"], "exposure_low": 1, "exposure_high": 1}, {"id": "bread", "name": "Bread", "category": "grains", "emoji": "🍞", "crisis_exposure_pct": 1, "severity": "low", "base_price_eur_kg": 2.1, "current_price_eur_kg": 2.1, "projected_price_eur_kg": 2.1, "drivers": [{"input": "Packaging imports", "description": "Polyethylene bags and wrapping sourced from Asian factories", "category": "freight", "price_change_pct": 204, "weight": 0.55}, {"input": "Freight inflation", "description": "Global container market tightness adds indirect cost", "category": "insurance", "price_change_pct": 50, "weight": 0.45}], "explanation": "Bread is baked locally using European wheat, largely insulating it from Suez shipping disruption. Imported packaging is the main exposure point.", "pass_through_30d": 0.25, "local_cost_floor_pct": 99, "dietary": ["v", "vg"], "exposure_low": 1, "exposure_high": 1}, {"id": "rice", "name": "Rice", "category": "grains", "emoji": "🍚", "crisis_exposure_pct": 13, "severity": "low", "base_price_eur_kg": 1.8, "current_price_eur_kg": 1.86, "projected_price_eur_kg": 1.91, "drivers": [{"input": "Container shipping", "description": "Asian rice — Thai jasmine, Indian basmati — ships entirely in containers via Suez", "category": "freight", "price_change_pct": 204, "weight": 0.7}, {"input": "War-risk insurance", "description": "Rice vessels from India, Pakistan and Thailand face elevated Red Sea insurance", "category": "insurance", "price_change_pct": 50, "weight": 0.2}, {"input": "Cape detour", "description": "Cape rerouting adds 10–14 days to rice voyages from South Asia", "category": "rerouting", "price_change_pct": 40, "weight": 0.1}], "explanation": "European rice imports are dominated by Asian varieties (basmati, jasmine) that transit the Bab-el-Mandeb. Every bag of imported rice in a supermarket crossed the Red Sea shipping corridor.", "pass_through_30d": 0.65, "local_cost_floor_pct": 87, "dietary": ["v", "vg"], "exposure_low": 13, "exposure_high": 13}, {"id": "pasta", "name": "Pasta", "category": "grains", "emoji": "🍝", "crisis_exposure_pct": 4, "severity": "low", "base_price_eur_kg": 1.6, "current_price_eur_kg": 1.61, "projected_price_eur_kg": 1.62, "drivers": [{"input": "Ingredient imports", "description": "Semolina from North Africa and packaging from Asia travel partially via Suez", "category": "freight", "price_change_pct": 204, "weight": 0.65}, {"input": "War-risk premium", "description": "Mediterranean supply chains face elevated insurance costs", "category": "insurance", "price_change_pct": 50, "weight": 0.35}], "explanation": "Italian and European pasta is made from locally grown durum wheat, but some North African semolina and Asian packaging components add modest Suez exposure.", "pass_through_30d": 0.45, "local_cost_floor_pct": 96, "dietary": ["v", "vg"], "exposure_low": 4, "exposure_high": 4}, {"id": "flour", "name": "Flour", "category": "grains", "emoji": "🌾", "crisis_exposure_pct": 1, "severity": "low", "base_price_eur_kg": 0.9, "current_price_eur_kg": 0.9, "projected_price_eur_kg": 0.9, "drivers": [{"input": "Packaging", "description": "Multi-wall paper bags partially sourced from overseas mills", "category": "freight", "price_change_pct": 204, "weight": 0.55}, {"input": "Freight inflation", "description": "Global freight inflation adds marginal cost", "category": "insurance", "price_change_pct": 50, "weight": 0.45}], "explanation": "European flour is milled from locally grown wheat. Red Sea disruption affects it mainly through imported packaging materials.", "pass_through_30d": 0.25, "local_cost_floor_pct": 99, "dietary": ["v", "vg"], "exposure_low": 1, "exposure_high": 1}, {"id": "oats", "name": "Oats", "category": "grains", "emoji": "🥣", "crisis_exposure_pct": 2, "severity": "low", "base_price_eur_kg": 1.4, "current_price_eur_kg": 1.4, "projected_price_eur_kg": 1.41, "drivers": [{"input": "Packaging", "description": "Cardboard oat packaging partially sourced from Asian mills", "category": "freight", "price_change_pct": 204, "weight": 0.55}, {"input": "Freight inflation", "description": "Container market tightness adds indirect cost", "category": "insurance", "price_change_pct": 50, "weight": 0.45}], "explanation": "Oats are grown and processed in Europe. Modest exposure comes through imported packaging and specialty oat varieties from North America.", "pass_through_30d": 0.3, "local_cost_floor_pct": 98, "dietary": ["v", "vg"], "exposure_low": 2, "exposure_high": 2}, {"id": "cornflakes", "name": "Cornflakes", "category": "grains", "emoji": "🌽", "crisis_exposure_pct": 5, "severity": "low", "base_price_eur_kg": 3.2, "current_price_eur_kg": 3.23, "projected_price_eur_kg": 3.24, "drivers": [{"input": "Import ingredients", "description": "Corn syrup, vitamins and specialty coatings often sourced from Asia", "category": "freight", "price_change_pct": 204, "weight": 0.6}, {"input": "War-risk premium", "description": "Food additive imports face elevated container insurance", "category": "insurance", "price_change_pct": 50, "weight": 0.4}], "explanation": "Cornflakes are packaged locally but rely on imported corn syrup concentrates, vitamins and food colorings that route via container through Suez.", "pass_through_30d": 0.4, "local_cost_floor_pct": 95, "dietary": ["v", "vg"], "exposure_low": 5, "exposure_high": 5}, {"id": "couscous", "name": "Couscous", "category": "grains", "emoji": "🫙", "crisis_exposure_pct": 8, "severity": "low", "base_price_eur_kg": 1.9, "current_price_eur_kg": 1.93, "projected_price_eur_kg": 1.96, "drivers": [{"input": "Import shipping", "description": "North African couscous exports route partly via Mediterranean/Suez lanes", "category": "freight", "price_change_pct": 204, "weight": 0.65}, {"input": "War-risk insurance", "description": "Mediterranean exporters pay elevated insurance premiums", "category": "insurance", "price_change_pct": 50, "weight": 0.25}, {"input": "Route disruption", "description": "Suez congestion affects North Africa–Europe trade timing", "category": "rerouting", "price_change_pct": 40, "weight": 0.1}], "explanation": "Couscous is imported from North Africa (Morocco, Algeria) and the Middle East. The short Suez-adjacent route means elevated insurance is the primary transmission mechanism.", "pass_through_30d": 0.55, "local_cost_floor_pct": 92, "dietary": ["v", "vg"], "exposure_low": 8, "exposure_high": 8}, {"id": "noodles", "name": "Instant Noodles", "category": "grains", "emoji": "🍜", "crisis_exposure_pct": 15, "severity": "low", "base_price_eur_kg": 3.5, "current_price_eur_kg": 3.65, "projected_price_eur_kg": 3.76, "drivers": [{"input": "Container shipping", "description": "Instant noodles are manufactured in SE Asia and exported in high volumes via Suez", "category": "freight", "price_change_pct": 204, "weight": 0.7}, {"input": "War-risk insurance", "description": "Asian food exporters face steeply higher Red Sea premiums", "category": "insurance", "price_change_pct": 50, "weight": 0.2}, {"input": "Cape detour", "description": "Cape rerouting adds 2+ weeks to Asian noodle deliveries", "category": "rerouting", "price_change_pct": 40, "weight": 0.1}], "explanation": "Instant noodles are an extreme case: manufactured in bulk in Thailand, Indonesia and China, packed in containers, and shipped directly through the Bab-el-Mandeb corridor to Europe.", "pass_through_30d": 0.7, "local_cost_floor_pct": 85, "dietary": ["v", "vg"], "exposure_low": 15, "exposure_high": 15}, {"id": "crackers", "name": "Crackers", "category": "grains", "emoji": "🍘", "crisis_exposure_pct": 5, "severity": "low", "base_price_eur_kg": 3.0, "current_price_eur_kg": 3.02, "projected_price_eur_kg": 3.04, "drivers": [{"input": "Import ingredients", "description": "Palm oil, sesame and specialty flavourings from SE Asia", "category": "freight", "price_change_pct": 204, "weight": 0.6}, {"input": "War-risk premium", "description": "SE Asian ingredient containers face higher insurance", "category": "insurance", "price_change_pct": 50, "weight": 0.4}], "explanation": "Crackers manufactured in Europe still import palm oil, sesame seeds and some coatings from SE Asian suppliers, all routed via the Suez corridor.", "pass_through_30d": 0.4, "local_cost_floor_pct": 95, "dietary": ["v", "vg"], "exposure_low": 5, "exposure_high": 5}, {"id": "tomatoes", "name": "Tomatoes", "category": "produce", "emoji": "🍅", "crisis_exposure_pct": 1, "severity": "low", "base_price_eur_kg": 3.2, "current_price_eur_kg": 3.2, "projected_price_eur_kg": 3.21, "drivers": [{"input": "Packaging imports", "description": "Plastic packaging and transport trays from Asian manufacturers", "category": "freight", "price_change_pct": 204, "weight": 0.55}, {"input": "Freight inflation", "description": "Global container rates affect packaging cost", "category": "insurance", "price_change_pct": 50, "weight": 0.45}], "explanation": "European tomatoes are grown domestically or in North Africa. The Red Sea crisis affects mainly packaging components sourced from Asia.", "pass_through_30d": 0.3, "local_cost_floor_pct": 99, "dietary": ["v", "vg"], "exposure_low": 1, "exposure_high": 1}, {"id": "potatoes", "name": "Potatoes", "category": "produce", "emoji": "🥔", "crisis_exposure_pct": 1, "severity": "low", "base_price_eur_kg": 0.9, "current_price_eur_kg": 0.9, "projected_price_eur_kg": 0.9, "drivers": [{"input": "Packaging", "description": "Polypropylene bags and plastic film from Asian producers", "category": "freight", "price_change_pct": 204, "weight": 0.5}, {"input": "Freight inflation", "description": "Marginal container cost increase", "category": "insurance", "price_change_pct": 50, "weight": 0.5}], "explanation": "Potatoes are one of Europe's most locally-produced foods. Essentially no direct Red Sea exposure.", "pass_through_30d": 0.2, "local_cost_floor_pct": 99, "dietary": ["v", "vg"], "exposure_low": 1, "exposure_high": 1}, {"id": "onions", "name": "Onions", "category": "produce", "emoji": "🧅", "crisis_exposure_pct": 1, "severity": "low", "base_price_eur_kg": 0.8, "current_price_eur_kg": 0.8, "projected_price_eur_kg": 0.8, "drivers": [{"input": "Packaging", "description": "Net bags and packaging materials from Asian suppliers", "category": "freight", "price_change_pct": 204, "weight": 0.5}, {"input": "Freight inflation", "description": "Marginal impact from container market", "category": "insurance", "price_change_pct": 50, "weight": 0.5}], "explanation": "Onions are produced domestically across Europe and North Africa. Red Sea disruption has negligible impact.", "pass_through_30d": 0.2, "local_cost_floor_pct": 99, "dietary": ["v", "vg"], "exposure_low": 1, "exposure_high": 1}, {"id": "bananas", "name": "Bananas", "category": "produce", "emoji": "🍌", "crisis_exposure_pct": 6, "severity": "low", "base_price_eur_kg": 1.4, "current_price_eur_kg": 1.41, "projected_price_eur_kg": 1.42, "drivers": [{"input": "Reefer shipping", "description": "Some banana shipments from East Africa routed via Red Sea", "category": "freight", "price_change_pct": 204, "weight": 0.6}, {"input": "War-risk premium", "description": "Reefer vessels face elevated insurance for Red Sea-adjacent routing", "category": "insurance", "price_change_pct": 50, "weight": 0.4}], "explanation": "European bananas come mainly from Latin America (unaffected), but East African banana imports (Kenya, Tanzania) transit the Bab-el-Mandeb, adding modest upward pressure on blended prices.", "pass_through_30d": 0.4, "local_cost_floor_pct": 94, "dietary": ["v", "vg"], "exposure_low": 6, "exposure_high": 6}, {"id": "apples", "name": "Apples", "category": "produce", "emoji": "🍎", "crisis_exposure_pct": 1, "severity": "low", "base_price_eur_kg": 1.8, "current_price_eur_kg": 1.8, "projected_price_eur_kg": 1.8, "drivers": [{"input": "Packaging", "description": "Protective foam netting and packaging from Asian manufacturers", "category": "freight", "price_change_pct": 204, "weight": 0.5}, {"input": "Freight inflation", "description": "Marginal impact from container market", "category": "insurance", "price_change_pct": 50, "weight": 0.5}], "explanation": "European apples are grown in Italy, France, Poland and Spain. Essentially no Suez dependency.", "pass_through_30d": 0.2, "local_cost_floor_pct": 99, "dietary": ["v", "vg"], "exposure_low": 1, "exposure_high": 1}, {"id": "oranges", "name": "Oranges", "category": "produce", "emoji": "🍊", "crisis_exposure_pct": 7, "severity": "low", "base_price_eur_kg": 1.5, "current_price_eur_kg": 1.51, "projected_price_eur_kg": 1.52, "drivers": [{"input": "Import shipping", "description": "South African and Egyptian oranges routed near Bab-el-Mandeb", "category": "freight", "price_change_pct": 204, "weight": 0.55}, {"input": "War-risk premium", "description": "Southern African reefer ships face elevated insurance", "category": "insurance", "price_change_pct": 50, "weight": 0.45}], "explanation": "South African citrus exports to Europe previously used the Suez Canal; many vessels now reroute via Cape Town, adding costs absorbed in part by European supermarkets.", "pass_through_30d": 0.3, "local_cost_floor_pct": 93, "dietary": ["v", "vg"], "exposure_low": 7, "exposure_high": 7}, {"id": "lettuce", "name": "Lettuce", "category": "produce", "emoji": "🥬", "crisis_exposure_pct": 1, "severity": "low", "base_price_eur_kg": 1.6, "current_price_eur_kg": 1.6, "projected_price_eur_kg": 1.6, "drivers": [{"input": "Packaging", "description": "Clamshell packaging partially from Asian producers", "category": "freight", "price_change_pct": 204, "weight": 0.5}, {"input": "Freight inflation", "description": "Minimal indirect container cost", "category": "insurance", "price_change_pct": 50, "weight": 0.5}], "explanation": "Lettuce is perishable and almost entirely local. The Red Sea crisis has essentially no impact.", "pass_through_30d": 0.15, "local_cost_floor_pct": 99, "dietary": ["v", "vg"], "exposure_low": 1, "exposure_high": 1}, {"id": "peppers", "name": "Bell Peppers", "category": "produce", "emoji": "🫑", "crisis_exposure_pct": 1, "severity": "low", "base_price_eur_kg": 2.8, "current_price_eur_kg": 2.8, "projected_price_eur_kg": 2.81, "drivers": [{"input": "Import shipping", "description": "Spanish and Dutch greenhouse peppers use Asian-sourced packaging", "category": "freight", "price_change_pct": 204, "weight": 0.55}, {"input": "Freight inflation", "description": "Marginal container cost increase", "category": "insurance", "price_change_pct": 50, "weight": 0.45}], "explanation": "Bell peppers are grown in Spain and the Netherlands. Red Sea disruption affects mainly imported packaging.", "pass_through_30d": 0.3, "local_cost_floor_pct": 99, "dietary": ["v", "vg"], "exposure_low": 1, "exposure_high": 1}, {"id": "carrots", "name": "Carrots", "category": "produce", "emoji": "🥕", "crisis_exposure_pct": 1, "severity": "low", "base_price_eur_kg": 0.9, "current_price_eur_kg": 0.9, "projected_price_eur_kg": 0.9, "drivers": [{"input": "Packaging", "description": "Polypropylene bags from Asian manufacturers", "category": "freight", "price_change_pct": 204, "weight": 0.5}, {"input": "Freight inflation", "description": "Negligible container market impact", "category": "insurance", "price_change_pct": 50, "weight": 0.5}], "explanation": "Carrots are produced locally across Europe. Minimal Red Sea exposure.", "pass_through_30d": 0.2, "local_cost_floor_pct": 99, "dietary": ["v", "vg"], "exposure_low": 1, "exposure_high": 1}, {"id": "avocado", "name": "Avocado", "category": "produce", "emoji": "🥑", "crisis_exposure_pct": 10, "severity": "low", "base_price_eur_kg": 2.5, "current_price_eur_kg": 2.54, "projected_price_eur_kg": 2.58, "drivers": [{"input": "Reefer shipping", "description": "East African avocados (Kenya, Tanzania) route via Bab-el-Mandeb", "category": "freight", "price_change_pct": 204, "weight": 0.65}, {"input": "War-risk premium", "description": "Reefer vessels from East Africa face elevated insurance", "category": "insurance", "price_change_pct": 50, "weight": 0.25}, {"input": "Cape detour", "description": "Some Kenyan avocados rerouted around Cape, adding 10 days", "category": "rerouting", "price_change_pct": 40, "weight": 0.1}], "explanation": "Europe imports avocados from both Americas (low Suez exposure) and East Africa (high Suez exposure). The blended effect is moderate — Kenyan exports transit directly past the Houthi attack zone.", "pass_through_30d": 0.45, "local_cost_floor_pct": 90, "dietary": ["v", "vg"], "exposure_low": 10, "exposure_high": 10}, {"id": "garlic", "name": "Garlic", "category": "produce", "emoji": "🧄", "crisis_exposure_pct": 15, "severity": "low", "base_price_eur_kg": 4.0, "current_price_eur_kg": 4.11, "projected_price_eur_kg": 4.19, "drivers": [{"input": "Container shipping", "description": "China accounts for ~75% of global garlic exports, shipping via Suez to Europe", "category": "freight", "price_change_pct": 204, "weight": 0.7}, {"input": "War-risk insurance", "description": "Chinese food exports face elevated Red Sea insurance", "category": "insurance", "price_change_pct": 50, "weight": 0.2}, {"input": "Cape detour", "description": "Cape rerouting from China to Europe adds 12–14 days", "category": "rerouting", "price_change_pct": 40, "weight": 0.1}], "explanation": "China dominates global garlic production and exports directly to European supermarkets via container ship through the Red Sea. Higher than most produce.", "pass_through_30d": 0.45, "local_cost_floor_pct": 85, "dietary": ["v", "vg"], "exposure_low": 15, "exposure_high": 15}, {"id": "cucumber", "name": "Cucumber", "category": "produce", "emoji": "🥒", "crisis_exposure_pct": 1, "severity": "low", "base_price_eur_kg": 1.2, "current_price_eur_kg": 1.2, "projected_price_eur_kg": 1.2, "drivers": [{"input": "Packaging", "description": "Film packaging and trays from Asian suppliers", "category": "freight", "price_change_pct": 204, "weight": 0.5}, {"input": "Freight inflation", "description": "Marginal container cost increase", "category": "insurance", "price_change_pct": 50, "weight": 0.5}], "explanation": "Cucumbers are greenhouse-grown in the Netherlands and Spain. Essentially no Suez route dependency.", "pass_through_30d": 0.2, "local_cost_floor_pct": 99, "dietary": ["v", "vg"], "exposure_low": 1, "exposure_high": 1}, {"id": "frozen_peas", "name": "Frozen Peas", "category": "produce", "emoji": "🟢", "crisis_exposure_pct": 8, "severity": "low", "base_price_eur_kg": 1.5, "current_price_eur_kg": 1.52, "projected_price_eur_kg": 1.54, "drivers": [{"input": "Reefer containers", "description": "Frozen vegetables shipped in refrigerated containers partly via Suez", "category": "freight", "price_change_pct": 204, "weight": 0.65}, {"input": "War-risk premium", "description": "Reefer containers face elevated insurance", "category": "insurance", "price_change_pct": 50, "weight": 0.25}, {"input": "Cape detour", "description": "Cape rerouting adds costs for Asian and Indian frozen pea exporters", "category": "rerouting", "price_change_pct": 40, "weight": 0.1}], "explanation": "India is a major frozen pea exporter to Europe. Indian frozen vegetable containers transit the Bab-el-Mandeb — now rerouted around Africa at extra cost.", "pass_through_30d": 0.5, "local_cost_floor_pct": 92, "dietary": ["v", "vg"], "exposure_low": 8, "exposure_high": 8}, {"id": "cooking_oil", "name": "Cooking Oil", "category": "packaged", "emoji": "🫙", "crisis_exposure_pct": 17, "severity": "low", "base_price_eur_kg": 2.5, "current_price_eur_kg": 2.62, "projected_price_eur_kg": 2.71, "drivers": [{"input": "Container shipping", "description": "Palm oil from Malaysia/Indonesia bulk ships and containers route via Suez", "category": "freight", "price_change_pct": 204, "weight": 0.7}, {"input": "War-risk insurance", "description": "Palm oil carriers face elevated Red Sea premiums", "category": "insurance", "price_change_pct": 50, "weight": 0.2}, {"input": "Cape detour", "description": "Cape rerouting adds 14+ days from SE Asian palm oil ports", "category": "rerouting", "price_change_pct": 40, "weight": 0.1}], "explanation": "Palm oil — used in virtually all cooking oils — is produced almost exclusively in Malaysia and Indonesia. Every tanker bound for European refineries must navigate near the Red Sea conflict zone.", "pass_through_30d": 0.7, "local_cost_floor_pct": 83, "dietary": ["v", "vg"], "exposure_low": 17, "exposure_high": 17}, {"id": "frozen_pizza", "name": "Frozen Pizza", "category": "packaged", "emoji": "🍕", "crisis_exposure_pct": 10, "severity": "low", "base_price_eur_kg": 4.5, "current_price_eur_kg": 4.62, "projected_price_eur_kg": 4.7, "drivers": [{"input": "Container/reefer", "description": "Frozen pizza imports and ingredient components in reefer containers", "category": "freight", "price_change_pct": 204, "weight": 0.7}, {"input": "War-risk insurance", "description": "Refrigerated containers attract elevated premiums", "category": "insurance", "price_change_pct": 50, "weight": 0.2}, {"input": "Cape detour", "description": "Extra transit time increases refrigeration costs", "category": "rerouting", "price_change_pct": 40, "weight": 0.1}], "explanation": "Frozen pizza combines multiple imported ingredients — palm oil, mozzarella ingredients, tomato paste concentrate — many of which move in containers via the Suez corridor.", "pass_through_30d": 0.65, "local_cost_floor_pct": 90, "dietary": ["v"], "exposure_low": 10, "exposure_high": 10}, {"id": "chocolate", "name": "Chocolate", "category": "packaged", "emoji": "🍫", "crisis_exposure_pct": 10, "severity": "low", "base_price_eur_kg": 8.0, "current_price_eur_kg": 8.21, "projected_price_eur_kg": 8.36, "drivers": [{"input": "Container shipping", "description": "Cocoa from Ivory Coast (Atlantic route) and Asian chocolate imports", "category": "freight", "price_change_pct": 204, "weight": 0.65}, {"input": "War-risk premium", "description": "Specialty chocolate from SE Asia and Middle East faces higher insurance", "category": "insurance", "price_change_pct": 50, "weight": 0.25}, {"input": "Cape detour", "description": "Some shipping lane diversions affect ingredient timing", "category": "rerouting", "price_change_pct": 40, "weight": 0.1}], "explanation": "West African cocoa (Ivory Coast, Ghana) travels the Atlantic — mostly unaffected. But Asian confectionery imports, cocoa butter from Indonesia, and specialty chocolate all route via Suez, contributing to a moderate blended exposure.", "pass_through_30d": 0.65, "local_cost_floor_pct": 90, "dietary": ["v"], "exposure_low": 10, "exposure_high": 10}, {"id": "crisps", "name": "Crisps / Chips", "category": "packaged", "emoji": "🥔", "crisis_exposure_pct": 12, "severity": "low", "base_price_eur_kg": 5.5, "current_price_eur_kg": 5.68, "projected_price_eur_kg": 5.81, "drivers": [{"input": "Palm oil & imports", "description": "SE Asian palm oil for frying and imported Asian crisps ship via Suez", "category": "freight", "price_change_pct": 204, "weight": 0.7}, {"input": "War-risk insurance", "description": "Bulk vegetable oil carriers face elevated Red Sea premiums", "category": "insurance", "price_change_pct": 50, "weight": 0.2}, {"input": "Cape detour", "description": "Palm oil from Indonesia/Malaysia adds 2 weeks via Cape", "category": "rerouting", "price_change_pct": 40, "weight": 0.1}], "explanation": "Crisps depend on palm oil for frying — sourced almost entirely from Malaysia and Indonesia. This single ingredient makes crisps highly exposed to Red Sea disruption.", "pass_through_30d": 0.68, "local_cost_floor_pct": 88, "dietary": ["v", "vg"], "exposure_low": 12, "exposure_high": 12}, {"id": "biscuits", "name": "Biscuits / Cookies", "category": "packaged", "emoji": "🍪", "crisis_exposure_pct": 10, "severity": "low", "base_price_eur_kg": 4.0, "current_price_eur_kg": 4.1, "projected_price_eur_kg": 4.18, "drivers": [{"input": "Palm oil & imports", "description": "Palm oil, cocoa and Asian-packaged biscuit imports via Suez", "category": "freight", "price_change_pct": 204, "weight": 0.68}, {"input": "War-risk premium", "description": "Food commodity vessels face elevated insurance", "category": "insurance", "price_change_pct": 50, "weight": 0.22}, {"input": "Cape detour", "description": "SE Asian ingredient suppliers rerouted around Cape", "category": "rerouting", "price_change_pct": 40, "weight": 0.1}], "explanation": "Biscuits are heavy consumers of palm oil and often include imported ingredients (cocoa powder from SE Asia, specialty flavourings) that transit the Bab-el-Mandeb.", "pass_through_30d": 0.65, "local_cost_floor_pct": 90, "dietary": ["v"], "exposure_low": 10, "exposure_high": 10}, {"id": "soft_drinks", "name": "Soft Drinks", "category": "packaged", "emoji": "🥤", "crisis_exposure_pct": 6, "severity": "low", "base_price_eur_kg": 0.8, "current_price_eur_kg": 0.81, "projected_price_eur_kg": 0.82, "drivers": [{"input": "Ingredients import", "description": "High-fructose corn syrup, citric acid, and colouring from Asia/Americas via Suez", "category": "freight", "price_change_pct": 204, "weight": 0.65}, {"input": "War-risk premium", "description": "Container-shipped syrups and concentrates face elevated insurance", "category": "insurance", "price_change_pct": 50, "weight": 0.35}], "explanation": "Soft drink concentrates and ingredient syrups are often produced in the US, Asia and Middle East and shipped to European bottling plants in containers via the Suez route.", "pass_through_30d": 0.55, "local_cost_floor_pct": 94, "dietary": ["v", "vg"], "exposure_low": 6, "exposure_high": 6}, {"id": "beer", "name": "Beer", "category": "packaged", "emoji": "🍺", "crisis_exposure_pct": 5, "severity": "low", "base_price_eur_kg": 1.8, "current_price_eur_kg": 1.82, "projected_price_eur_kg": 1.83, "drivers": [{"input": "Hop/malt imports", "description": "Specialty hops from New Zealand, malt from Australia ship via long routes", "category": "freight", "price_change_pct": 204, "weight": 0.6}, {"input": "Freight inflation", "description": "Global container market tightness adds indirect cost", "category": "insurance", "price_change_pct": 50, "weight": 0.4}], "explanation": "Most European beer uses local barley and hops. Craft breweries importing specialty hops from New Zealand or Australia, and imported canned beers from Asia, carry higher exposure.", "pass_through_30d": 0.45, "local_cost_floor_pct": 95, "dietary": ["v", "vg"], "exposure_low": 5, "exposure_high": 5}, {"id": "coffee", "name": "Coffee", "category": "packaged", "emoji": "☕", "crisis_exposure_pct": 13, "severity": "low", "base_price_eur_kg": 12.0, "current_price_eur_kg": 12.45, "projected_price_eur_kg": 12.79, "drivers": [{"input": "Container shipping", "description": "Ethiopian, Yemeni and Vietnamese coffee beans ship directly through Bab-el-Mandeb", "category": "freight", "price_change_pct": 204, "weight": 0.7}, {"input": "War-risk insurance", "description": "East African coffee exporters face highest Red Sea insurance premiums", "category": "insurance", "price_change_pct": 50, "weight": 0.2}, {"input": "Cape detour", "description": "Ethiopia and Yemen exports previously used short Red Sea route", "category": "rerouting", "price_change_pct": 40, "weight": 0.1}], "explanation": "Coffee is one of the most Red Sea-exposed foods. Ethiopian and Yemeni coffee — considered premium — ships directly from ports at the Red Sea entrance. Vietnamese robusta (the world's #2 bean) also passes through Bab-el-Mandeb.", "pass_through_30d": 0.72, "local_cost_floor_pct": 87, "dietary": ["v", "vg"], "exposure_low": 13, "exposure_high": 13}, {"id": "sugar", "name": "Sugar", "category": "packaged", "emoji": "🍬", "crisis_exposure_pct": 8, "severity": "low", "base_price_eur_kg": 1.2, "current_price_eur_kg": 1.22, "projected_price_eur_kg": 1.24, "drivers": [{"input": "Container shipping", "description": "Cane sugar from India, Pakistan and East Africa routes via Suez", "category": "freight", "price_change_pct": 204, "weight": 0.65}, {"input": "War-risk insurance", "description": "Sugar carriers from South Asia face elevated Red Sea premiums", "category": "insurance", "price_change_pct": 50, "weight": 0.25}, {"input": "Cape detour", "description": "Indian and Pakistani sugar exports rerouted around Africa", "category": "rerouting", "price_change_pct": 40, "weight": 0.1}], "explanation": "India and Pakistan are major sugar exporters to Europe. Their shipping lanes pass directly through the Bab-el-Mandeb, making sugar moderately exposed to Red Sea freight disruption.", "pass_through_30d": 0.6, "local_cost_floor_pct": 92, "dietary": ["v", "vg"], "exposure_low": 8, "exposure_high": 8}, {"id": "peanut_butter", "name": "Peanut Butter", "category": "packaged", "emoji": "🥜", "crisis_exposure_pct": 12, "severity": "low", "base_price_eur_kg": 5.5, "current_price_eur_kg": 5.68, "projected_price_eur_kg": 5.81, "drivers": [{"input": "Container shipping", "description": "Chinese and SE Asian peanuts and peanut butter ship via Suez in bulk", "category": "freight", "price_change_pct": 204, "weight": 0.7}, {"input": "War-risk premium", "description": "Commodity food vessels from Asia face elevated insurance", "category": "insurance", "price_change_pct": 50, "weight": 0.2}, {"input": "Cape detour", "description": "Chinese peanut exports via Cape add 12–14 days", "category": "rerouting", "price_change_pct": 40, "weight": 0.1}], "explanation": "Peanut butter production relies on peanuts from China (the world's largest producer) and Argentina (Atlantic route). The Chinese supply chain is heavily Suez-dependent.", "pass_through_30d": 0.68, "local_cost_floor_pct": 88, "dietary": ["v", "vg"], "exposure_low": 12, "exposure_high": 12}, {"id": "orange_juice", "name": "Orange Juice", "category": "packaged", "emoji": "🍊", "crisis_exposure_pct": 7, "severity": "low", "base_price_eur_kg": 1.8, "current_price_eur_kg": 1.82, "projected_price_eur_kg": 1.84, "drivers": [{"input": "Some Suez routing", "description": "South African and Indian OJ concentrate ships via Bab-el-Mandeb", "category": "freight", "price_change_pct": 204, "weight": 0.6}, {"input": "War-risk premium", "description": "OJ tankers from South Africa and India pay elevated premiums", "category": "insurance", "price_change_pct": 50, "weight": 0.4}], "explanation": "Brazilian OJ concentrate takes the Atlantic route — unaffected. But South African and Indian OJ, plus some concentrate from Egypt, travels via the Suez corridor, adding modest blended exposure.", "pass_through_30d": 0.45, "local_cost_floor_pct": 93, "dietary": ["v", "vg"], "exposure_low": 7, "exposure_high": 7}, {"id": "mayonnaise", "name": "Mayonnaise", "category": "packaged", "emoji": "🫙", "crisis_exposure_pct": 7, "severity": "low", "base_price_eur_kg": 4.5, "current_price_eur_kg": 4.57, "projected_price_eur_kg": 4.62, "drivers": [{"input": "Ingredient imports", "description": "Soybean oil from South America and egg powder from SE Asia via various routes", "category": "freight", "price_change_pct": 204, "weight": 0.65}, {"input": "War-risk premium", "description": "Some ingredient containers route via Suez", "category": "insurance", "price_change_pct": 50, "weight": 0.35}], "explanation": "Mayonnaise relies on vegetable oil (partly imported palm or soy from SE Asia) and egg powder, with moderate Suez route dependency.", "pass_through_30d": 0.55, "local_cost_floor_pct": 93, "dietary": ["v"], "exposure_low": 7, "exposure_high": 7}, {"id": "tomato_sauce", "name": "Tomato Sauce", "category": "packaged", "emoji": "🍅", "crisis_exposure_pct": 6, "severity": "low", "base_price_eur_kg": 2.0, "current_price_eur_kg": 2.02, "projected_price_eur_kg": 2.04, "drivers": [{"input": "Ingredient imports", "description": "Tomato concentrate and packaging from SE Asia and North Africa", "category": "freight", "price_change_pct": 204, "weight": 0.65}, {"input": "War-risk premium", "description": "Some ingredient containers route via Mediterranean/Suez lanes", "category": "insurance", "price_change_pct": 50, "weight": 0.35}], "explanation": "Tomato sauce ingredients (concentrate, spices, packaging) partly imported from North Africa and Asia via Suez-adjacent routes.", "pass_through_30d": 0.5, "local_cost_floor_pct": 94, "dietary": ["v", "vg"], "exposure_low": 6, "exposure_high": 6}, {"id": "baby_formula", "name": "Baby Formula", "category": "packaged", "emoji": "🍼", "crisis_exposure_pct": 14, "severity": "low", "base_price_eur_kg": 25.0, "current_price_eur_kg": 26.01, "projected_price_eur_kg": 26.76, "drivers": [{"input": "Container shipping", "description": "Australian and NZ whey, and Asian formula (Danone/Nestlé Asia) all route via Suez", "category": "freight", "price_change_pct": 204, "weight": 0.7}, {"input": "War-risk premium", "description": "High-value food cargo commands elevated war-risk insurance", "category": "insurance", "price_change_pct": 50, "weight": 0.2}, {"input": "Cape detour", "description": "NZ and Australian dairy container ships now reroute via Cape", "category": "rerouting", "price_change_pct": 40, "weight": 0.1}], "explanation": "Baby formula is heavily imported from Australia, New Zealand and Asian manufacturing hubs. NZ dairy containers previously transited Suez for speed; Cape rerouting adds 12 days and significant cost.", "pass_through_30d": 0.72, "local_cost_floor_pct": 86, "dietary": ["v"], "exposure_low": 14, "exposure_high": 14}, {"id": "lentils", "name": "Lentils", "category": "staples", "emoji": "🫘", "crisis_exposure_pct": 4, "severity": "low", "base_price_eur_kg": 1.8, "current_price_eur_kg": 1.81, "projected_price_eur_kg": 1.82, "drivers": [{"input": "Container shipping", "description": "Canadian lentils (world #1 exporter) ship via Atlantic to Europe; Indian lentils via Suez", "category": "freight", "price_change_pct": 204, "weight": 0.6}, {"input": "War-risk premium", "description": "Indian and Turkish lentil exports face elevated Red Sea insurance", "category": "insurance", "price_change_pct": 50, "weight": 0.4}], "explanation": "Canada and Australia supply most of Europe's lentils via Atlantic and Pacific routes (low Suez exposure). Indian lentil imports carry moderate exposure, giving a blended low result.", "pass_through_30d": 0.4, "local_cost_floor_pct": 96, "dietary": ["v", "vg"], "exposure_low": 4, "exposure_high": 4}, {"id": "chickpeas", "name": "Chickpeas", "category": "staples", "emoji": "🫘", "crisis_exposure_pct": 4, "severity": "low", "base_price_eur_kg": 2.0, "current_price_eur_kg": 2.01, "projected_price_eur_kg": 2.02, "drivers": [{"input": "Container shipping", "description": "Australian chickpeas via Pacific; Indian and Turkish via Suez", "category": "freight", "price_change_pct": 204, "weight": 0.6}, {"input": "War-risk premium", "description": "Indian chickpea exports face elevated Bab-el-Mandeb premiums", "category": "insurance", "price_change_pct": 50, "weight": 0.4}], "explanation": "Chickpeas come from both Australia (Cape or Pacific route) and India/Turkey (Suez route). Blended exposure is low.", "pass_through_30d": 0.4, "local_cost_floor_pct": 96, "dietary": ["v", "vg"], "exposure_low": 4, "exposure_high": 4}, {"id": "tofu", "name": "Tofu", "category": "staples", "emoji": "🫕", "crisis_exposure_pct": 8, "severity": "low", "base_price_eur_kg": 2.8, "current_price_eur_kg": 2.85, "projected_price_eur_kg": 2.89, "drivers": [{"input": "Container shipping", "description": "Soy protein and pre-made tofu from China and SE Asia via Suez", "category": "freight", "price_change_pct": 204, "weight": 0.65}, {"input": "War-risk premium", "description": "Chinese and SE Asian food exports face elevated insurance", "category": "insurance", "price_change_pct": 50, "weight": 0.25}, {"input": "Cape detour", "description": "Chinese tofu and soy ingredients rerouted via Cape", "category": "rerouting", "price_change_pct": 40, "weight": 0.1}], "explanation": "Specialty tofu and soy protein concentrate imported from China and Japan must navigate the Red Sea container corridor, giving tofu moderate Suez exposure.", "pass_through_30d": 0.55, "local_cost_floor_pct": 92, "dietary": ["v", "vg"], "exposure_low": 8, "exposure_high": 8}, {"id": "beans", "name": "Dried Beans", "category": "staples", "emoji": "🫘", "crisis_exposure_pct": 3, "severity": "low", "base_price_eur_kg": 1.5, "current_price_eur_kg": 1.51, "projected_price_eur_kg": 1.51, "drivers": [{"input": "Container imports", "description": "Some bean varieties (black beans, kidney beans) imported from SE Asia and East Africa", "category": "freight", "price_change_pct": 204, "weight": 0.55}, {"input": "Freight inflation", "description": "Container market tightness adds indirect cost", "category": "insurance", "price_change_pct": 50, "weight": 0.45}], "explanation": "Most European beans (haricot, flageolet) are grown domestically or in the Americas. Specialty imported varieties carry some Suez exposure.", "pass_through_30d": 0.3, "local_cost_floor_pct": 97, "dietary": ["v", "vg"], "exposure_low": 3, "exposure_high": 3}, {"id": "quinoa", "name": "Quinoa", "category": "staples", "emoji": "🌾", "crisis_exposure_pct": 4, "severity": "low", "base_price_eur_kg": 6.0, "current_price_eur_kg": 6.03, "projected_price_eur_kg": 6.06, "drivers": [{"input": "South American origin", "description": "Peruvian and Bolivian quinoa ships via Atlantic to Europe", "category": "freight", "price_change_pct": 204, "weight": 0.55}, {"input": "Freight inflation", "description": "Global container market tightness affects even non-Suez routes", "category": "insurance", "price_change_pct": 50, "weight": 0.45}], "explanation": "Quinoa is produced in Peru and Bolivia and ships via the Atlantic — largely unaffected by the Red Sea crisis. Modest exposure reflects global container market tightness.", "pass_through_30d": 0.35, "local_cost_floor_pct": 96, "dietary": ["v", "vg"], "exposure_low": 4, "exposure_high": 4}, {"id": "olive_oil", "name": "Olive Oil", "category": "staples", "emoji": "🫒", "crisis_exposure_pct": 1, "severity": "low", "base_price_eur_kg": 9.0, "current_price_eur_kg": 9.01, "projected_price_eur_kg": 9.01, "drivers": [{"input": "Local supply chain", "description": "Mediterranean-origin olive oil uses very short shipping routes", "category": "freight", "price_change_pct": 204, "weight": 0.5}, {"input": "Freight inflation", "description": "Marginal global container inflation impact", "category": "insurance", "price_change_pct": 50, "weight": 0.5}], "explanation": "Olive oil is produced in Spain, Italy, Greece and Tunisia and shipped via short Mediterranean routes that largely bypass the Bab-el-Mandeb.", "pass_through_30d": 0.2, "local_cost_floor_pct": 99, "dietary": ["v", "vg"], "exposure_low": 1, "exposure_high": 1}]}
+{
+  "last_updated": "2026-04-07",
+  "crisis_start": "2023-11-19",
+  "crisis_name": "Red Sea / Bab-el-Mandeb disruption",
+  "crisis_mechanism": "freight",
+  "sources": {
+    "drewry_wci_usd_40ft": 4200,
+    "drewry_wci_pre_crisis_usd_40ft": 1380.0,
+    "insurance_premium_bps": 0.75,
+    "insurance_premium_pre_crisis_bps": 0.05,
+    "exchange_rates": {
+      "EUR": 1.0,
+      "GBP": 0.87253,
+      "JPY": 183.94,
+      "PHP": 69.86,
+      "USD": 1.1525,
+      "INR": 107.3,
+      "BRL": 5.972,
+      "AUD": 1.6771,
+      "LKR": 331
+    },
+    "tipping_points": {
+      "port_congestion_risk": true,
+      "port_congestion_note": "Rotterdam and Hamburg facing 15–25% longer dwell times due to rerouted volumes"
+    }
+  },
+  "countries": [
+    {
+      "code": "IT",
+      "name": "Italy",
+      "currency": "EUR",
+      "suez_dependency_pct": 95,
+      "impact_multiplier": 1.0,
+      "price_level_index": 1.0,
+      "data_confidence": "high"
+    },
+    {
+      "code": "GB",
+      "name": "United Kingdom",
+      "currency": "GBP",
+      "suez_dependency_pct": 90,
+      "impact_multiplier": 0.95,
+      "price_level_index": 1.05,
+      "data_confidence": "high"
+    },
+    {
+      "code": "JP",
+      "name": "Japan",
+      "currency": "JPY",
+      "suez_dependency_pct": 30,
+      "impact_multiplier": 0.3,
+      "price_level_index": 1.0,
+      "data_confidence": "medium"
+    },
+    {
+      "code": "PH",
+      "name": "Philippines",
+      "currency": "PHP",
+      "suez_dependency_pct": 25,
+      "impact_multiplier": 0.25,
+      "price_level_index": 0.45,
+      "data_confidence": "low"
+    },
+    {
+      "code": "US",
+      "name": "United States",
+      "currency": "USD",
+      "suez_dependency_pct": 35,
+      "impact_multiplier": 0.35,
+      "price_level_index": 1.3,
+      "data_confidence": "high"
+    },
+    {
+      "code": "DE",
+      "name": "Germany",
+      "currency": "EUR",
+      "suez_dependency_pct": 95,
+      "impact_multiplier": 1.0,
+      "price_level_index": 0.95,
+      "data_confidence": "high"
+    },
+    {
+      "code": "IN",
+      "name": "India",
+      "currency": "INR",
+      "suez_dependency_pct": 65,
+      "impact_multiplier": 0.65,
+      "price_level_index": 0.45,
+      "data_confidence": "low"
+    },
+    {
+      "code": "BR",
+      "name": "Brazil",
+      "currency": "BRL",
+      "suez_dependency_pct": 45,
+      "impact_multiplier": 0.45,
+      "price_level_index": 0.75,
+      "data_confidence": "medium"
+    },
+    {
+      "code": "AU",
+      "name": "Australia",
+      "currency": "AUD",
+      "suez_dependency_pct": 25,
+      "impact_multiplier": 0.25,
+      "price_level_index": 1.25,
+      "data_confidence": "medium"
+    },
+    {
+      "code": "LK",
+      "name": "Sri Lanka",
+      "currency": "LKR",
+      "suez_dependency_pct": 80,
+      "impact_multiplier": 0.8,
+      "price_level_index": 0.4,
+      "data_confidence": "low"
+    }
+  ],
+  "foods": [
+    {
+      "id": "shrimp",
+      "name": "Shrimp",
+      "category": "seafood",
+      "emoji": "🦐",
+      "crisis_exposure_pct": 18,
+      "severity": "low",
+      "base_price_eur_kg": 15.0,
+      "current_price_eur_kg": 15.81,
+      "projected_price_eur_kg": 16.42,
+      "drivers": [
+        {
+          "input": "Container shipping",
+          "description": "Farmed shrimp from SE Asia typically routes via Suez — countries that import it are most affected; local producers face lower exposure",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.7
+        },
+        {
+          "input": "War-risk insurance",
+          "description": "Red Sea transit insurance up 15× since Nov 2023",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.2
+        },
+        {
+          "input": "Cape detour",
+          "description": "Extra 10–14 days via Cape of Good Hope adds refrigeration costs",
+          "category": "rerouting",
+          "price_change_pct": 123,
+          "weight": 0.1
+        }
+      ],
+      "explanation": "Farmed shrimp from Vietnam and Thailand is one of the most Suez-dependent proteins for importing nations. Countries that produce their own shrimp (India, Thailand domestically) face much lower exposure than those relying on long-haul imports.",
+      "pass_through_30d": 0.75,
+      "local_cost_floor_pct": 82,
+      "dietary": [],
+      "exposure_low": 18,
+      "exposure_high": 18
+    },
+    {
+      "id": "canned_tuna",
+      "name": "Canned Tuna",
+      "category": "seafood",
+      "emoji": "🥫",
+      "crisis_exposure_pct": 18,
+      "severity": "low",
+      "base_price_eur_kg": 4.0,
+      "current_price_eur_kg": 4.2,
+      "projected_price_eur_kg": 4.35,
+      "drivers": [
+        {
+          "input": "Container shipping",
+          "description": "Thai and Philippine canneries export exclusively in 20/40ft containers",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.7
+        },
+        {
+          "input": "War-risk insurance",
+          "description": "Vessel insurance for Red Sea routing has surged 15× since late 2023",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.2
+        },
+        {
+          "input": "Cape detour",
+          "description": "Cape route adds 14 days and roughly 40% extra bunker fuel per voyage",
+          "category": "rerouting",
+          "price_change_pct": 123,
+          "weight": 0.1
+        }
+      ],
+      "explanation": "Thailand processes over a third of the world's canned tuna. Every can in European stores was packed into a container that once sailed past Bab-el-Mandeb — now rerouted around Africa.",
+      "pass_through_30d": 0.7,
+      "local_cost_floor_pct": 82,
+      "dietary": [],
+      "exposure_low": 18,
+      "exposure_high": 18
+    },
+    {
+      "id": "salmon",
+      "name": "Salmon",
+      "category": "seafood",
+      "emoji": "🍣",
+      "crisis_exposure_pct": 6,
+      "severity": "low",
+      "base_price_eur_kg": 18.5,
+      "current_price_eur_kg": 18.77,
+      "projected_price_eur_kg": 18.97,
+      "drivers": [
+        {
+          "input": "Air/sea freight",
+          "description": "Norwegian salmon to Asia routes disrupted; some supply reallocation hits Europe",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.7
+        },
+        {
+          "input": "War-risk insurance",
+          "description": "Perishable cargo commands higher war-risk premiums",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.3
+        }
+      ],
+      "explanation": "European farmed salmon mostly travels short intra-European routes unaffected by Suez, but global supply reallocation and higher packaging import costs add modest pressure.",
+      "pass_through_30d": 0.6,
+      "local_cost_floor_pct": 94,
+      "dietary": [],
+      "exposure_low": 6,
+      "exposure_high": 6
+    },
+    {
+      "id": "canned_sardines",
+      "name": "Canned Sardines",
+      "category": "seafood",
+      "emoji": "🐟",
+      "crisis_exposure_pct": 12,
+      "severity": "low",
+      "base_price_eur_kg": 4.5,
+      "current_price_eur_kg": 4.64,
+      "projected_price_eur_kg": 4.75,
+      "drivers": [
+        {
+          "input": "Container shipping",
+          "description": "Moroccan and Portuguese sardines exported in steel cans, some via Suez lanes",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.65
+        },
+        {
+          "input": "War-risk insurance",
+          "description": "Mediterranean-origin vessels still pay elevated war-risk premiums",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.25
+        },
+        {
+          "input": "Route disruption",
+          "description": "Suez congestion affects Mediterranean export timing",
+          "category": "rerouting",
+          "price_change_pct": 123,
+          "weight": 0.1
+        }
+      ],
+      "explanation": "Moroccan sardines dominate European canned seafood imports. The Atlantic-to-Mediterranean leg is shorter, but elevated insurance and port congestion still filter through.",
+      "pass_through_30d": 0.65,
+      "local_cost_floor_pct": 88,
+      "dietary": [],
+      "exposure_low": 12,
+      "exposure_high": 12
+    },
+    {
+      "id": "cod",
+      "name": "Cod",
+      "category": "seafood",
+      "emoji": "🐠",
+      "crisis_exposure_pct": 5,
+      "severity": "low",
+      "base_price_eur_kg": 12.0,
+      "current_price_eur_kg": 12.13,
+      "projected_price_eur_kg": 12.23,
+      "drivers": [
+        {
+          "input": "Container shipping",
+          "description": "Frozen cod from Iceland and Norway shipped in reefer containers",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.65
+        },
+        {
+          "input": "War-risk insurance",
+          "description": "Reefer container premiums have risen with Red Sea risk",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.35
+        }
+      ],
+      "explanation": "North Atlantic cod rarely transits Suez, but reefer container spot rates have risen globally as capacity is absorbed by rerouting around Africa.",
+      "pass_through_30d": 0.55,
+      "local_cost_floor_pct": 95,
+      "dietary": [],
+      "exposure_low": 5,
+      "exposure_high": 5
+    },
+    {
+      "id": "chicken",
+      "name": "Chicken",
+      "category": "meat",
+      "emoji": "🍗",
+      "crisis_exposure_pct": 2,
+      "severity": "low",
+      "base_price_eur_kg": 5.4,
+      "current_price_eur_kg": 5.42,
+      "projected_price_eur_kg": 5.43,
+      "drivers": [
+        {
+          "input": "Packaging imports",
+          "description": "Polystyrene trays and plastic wrap sourced from SE Asia",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.55
+        },
+        {
+          "input": "Indirect cost",
+          "description": "Haulage and port handling costs rise with global freight inflation",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.45
+        }
+      ],
+      "explanation": "Chicken is mostly produced locally in Europe with domestic feed, insulating it from container shipping costs. Indirect exposure comes from imported packaging and processing equipment.",
+      "pass_through_30d": 0.35,
+      "local_cost_floor_pct": 98,
+      "dietary": [],
+      "exposure_low": 2,
+      "exposure_high": 2
+    },
+    {
+      "id": "beef",
+      "name": "Beef",
+      "category": "meat",
+      "emoji": "🥩",
+      "crisis_exposure_pct": 2,
+      "severity": "low",
+      "base_price_eur_kg": 12.0,
+      "current_price_eur_kg": 12.03,
+      "projected_price_eur_kg": 12.05,
+      "drivers": [
+        {
+          "input": "Packaging/ingredients",
+          "description": "Some seasoning and packaging sourced via long-haul container routes",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.55
+        },
+        {
+          "input": "Freight inflation",
+          "description": "Global container market tightness raises even non-Suez transport costs",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.45
+        }
+      ],
+      "explanation": "European beef production is largely self-contained. The Red Sea crisis has minimal direct impact; modest cost pass-through reflects imported packaging and equipment parts.",
+      "pass_through_30d": 0.3,
+      "local_cost_floor_pct": 98,
+      "dietary": [],
+      "exposure_low": 2,
+      "exposure_high": 2
+    },
+    {
+      "id": "pork",
+      "name": "Pork",
+      "category": "meat",
+      "emoji": "🥓",
+      "crisis_exposure_pct": 2,
+      "severity": "low",
+      "base_price_eur_kg": 6.5,
+      "current_price_eur_kg": 6.52,
+      "projected_price_eur_kg": 6.53,
+      "drivers": [
+        {
+          "input": "Packaging/ingredients",
+          "description": "Packaging and some feed additives travel in containers",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.55
+        },
+        {
+          "input": "Freight inflation",
+          "description": "Wider freight market inflation touches pork supply chain margins",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.45
+        }
+      ],
+      "explanation": "Pork production in Europe relies on domestic feed crops and local abattoirs. Container-route disruption has minimal direct effect.",
+      "pass_through_30d": 0.3,
+      "local_cost_floor_pct": 98,
+      "dietary": [],
+      "exposure_low": 2,
+      "exposure_high": 2
+    },
+    {
+      "id": "lamb",
+      "name": "Lamb",
+      "category": "meat",
+      "emoji": "🍖",
+      "crisis_exposure_pct": 7,
+      "severity": "low",
+      "base_price_eur_kg": 14.0,
+      "current_price_eur_kg": 14.12,
+      "projected_price_eur_kg": 14.21,
+      "drivers": [
+        {
+          "input": "Import costs",
+          "description": "New Zealand lamb to Europe was partly routed via Suez",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.55
+        },
+        {
+          "input": "War-risk premium",
+          "description": "NZ lamb ships pay elevated insurance for Red Sea passage",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.45
+        }
+      ],
+      "explanation": "New Zealand lamb exports to Europe historically routed via Suez for speed; Cape rerouting adds two weeks and ~$400/container in fuel costs, partially passed on at retail.",
+      "pass_through_30d": 0.3,
+      "local_cost_floor_pct": 93,
+      "dietary": [],
+      "exposure_low": 7,
+      "exposure_high": 7
+    },
+    {
+      "id": "turkey",
+      "name": "Turkey",
+      "category": "meat",
+      "emoji": "🦃",
+      "crisis_exposure_pct": 2,
+      "severity": "low",
+      "base_price_eur_kg": 7.0,
+      "current_price_eur_kg": 7.02,
+      "projected_price_eur_kg": 7.03,
+      "drivers": [
+        {
+          "input": "Packaging imports",
+          "description": "Plastic and film packaging sourced from Asian suppliers",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.55
+        },
+        {
+          "input": "Freight inflation",
+          "description": "Elevated global container rates add indirect cost pressure",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.45
+        }
+      ],
+      "explanation": "Turkey is produced domestically across Europe. Container-route disruption affects imported packaging and specialty seasoning more than the protein itself.",
+      "pass_through_30d": 0.3,
+      "local_cost_floor_pct": 98,
+      "dietary": [],
+      "exposure_low": 2,
+      "exposure_high": 2
+    },
+    {
+      "id": "sausages",
+      "name": "Sausages",
+      "category": "meat",
+      "emoji": "🌭",
+      "crisis_exposure_pct": 7,
+      "severity": "low",
+      "base_price_eur_kg": 5.5,
+      "current_price_eur_kg": 5.57,
+      "projected_price_eur_kg": 5.62,
+      "drivers": [
+        {
+          "input": "Ingredient imports",
+          "description": "Spices, casings and specialty ingredients from Asia and East Africa",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.65
+        },
+        {
+          "input": "War-risk premium",
+          "description": "Imported ingredient containers face higher insurance",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.35
+        }
+      ],
+      "explanation": "Sausages contain a diverse supply chain: casings from China, spices from East Africa and Asia, all moving through or near the Bab-el-Mandeb strait.",
+      "pass_through_30d": 0.45,
+      "local_cost_floor_pct": 93,
+      "dietary": [],
+      "exposure_low": 7,
+      "exposure_high": 7
+    },
+    {
+      "id": "milk",
+      "name": "Milk",
+      "category": "dairy",
+      "emoji": "🥛",
+      "crisis_exposure_pct": 1,
+      "severity": "low",
+      "base_price_eur_kg": 1.2,
+      "current_price_eur_kg": 1.2,
+      "projected_price_eur_kg": 1.2,
+      "drivers": [
+        {
+          "input": "Packaging",
+          "description": "Tetra Pak materials and plastics partially sourced from Asia",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.5
+        },
+        {
+          "input": "Freight inflation",
+          "description": "Wider container market inflation touches packaging supply chains",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.5
+        }
+      ],
+      "explanation": "Fresh milk is nearly entirely local. The Red Sea crisis reaches it only through imported Tetra Pak materials and other packaging components.",
+      "pass_through_30d": 0.25,
+      "local_cost_floor_pct": 99,
+      "dietary": [
+        "v"
+      ],
+      "exposure_low": 1,
+      "exposure_high": 1
+    },
+    {
+      "id": "cheese",
+      "name": "Cheese",
+      "category": "dairy",
+      "emoji": "🧀",
+      "crisis_exposure_pct": 2,
+      "severity": "low",
+      "base_price_eur_kg": 8.5,
+      "current_price_eur_kg": 8.52,
+      "projected_price_eur_kg": 8.54,
+      "drivers": [
+        {
+          "input": "Packaging imports",
+          "description": "Some specialty cheeses packaged with imported materials",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.55
+        },
+        {
+          "input": "Freight inflation",
+          "description": "Global container inflation adds marginal cost",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.45
+        }
+      ],
+      "explanation": "European cheese production is predominantly local with domestic milk. Minimal exposure to Red Sea disruption beyond packaging costs.",
+      "pass_through_30d": 0.3,
+      "local_cost_floor_pct": 98,
+      "dietary": [
+        "v"
+      ],
+      "exposure_low": 2,
+      "exposure_high": 2
+    },
+    {
+      "id": "butter",
+      "name": "Butter",
+      "category": "dairy",
+      "emoji": "🧈",
+      "crisis_exposure_pct": 7,
+      "severity": "low",
+      "base_price_eur_kg": 6.0,
+      "current_price_eur_kg": 6.05,
+      "projected_price_eur_kg": 6.09,
+      "drivers": [
+        {
+          "input": "NZ butter imports",
+          "description": "New Zealand butter exports routed Cape due to Red Sea",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.55
+        },
+        {
+          "input": "War-risk insurance",
+          "description": "NZ vessels pay elevated premiums for former Suez routing",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.45
+        }
+      ],
+      "explanation": "New Zealand is Europe's largest butter import source. Cape rerouting has added weeks to delivery times and elevated spot prices modestly.",
+      "pass_through_30d": 0.3,
+      "local_cost_floor_pct": 93,
+      "dietary": [
+        "v"
+      ],
+      "exposure_low": 7,
+      "exposure_high": 7
+    },
+    {
+      "id": "yoghurt",
+      "name": "Yoghurt",
+      "category": "dairy",
+      "emoji": "🫙",
+      "crisis_exposure_pct": 1,
+      "severity": "low",
+      "base_price_eur_kg": 1.8,
+      "current_price_eur_kg": 1.8,
+      "projected_price_eur_kg": 1.8,
+      "drivers": [
+        {
+          "input": "Packaging",
+          "description": "Polypropylene cups and lids sourced from Asian manufacturers",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.55
+        },
+        {
+          "input": "Freight inflation",
+          "description": "Container market tightness adds indirect cost",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.45
+        }
+      ],
+      "explanation": "Yoghurt is produced locally from domestic milk. Container disruption touches it mainly through imported pot and lid manufacturing.",
+      "pass_through_30d": 0.3,
+      "local_cost_floor_pct": 99,
+      "dietary": [
+        "v"
+      ],
+      "exposure_low": 1,
+      "exposure_high": 1
+    },
+    {
+      "id": "eggs",
+      "name": "Eggs",
+      "category": "dairy",
+      "emoji": "🥚",
+      "crisis_exposure_pct": 1,
+      "severity": "low",
+      "base_price_eur_kg": 3.5,
+      "current_price_eur_kg": 3.5,
+      "projected_price_eur_kg": 3.51,
+      "drivers": [
+        {
+          "input": "Packaging",
+          "description": "Cardboard trays use pulp partly sourced from SE Asian mills",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.5
+        },
+        {
+          "input": "Freight inflation",
+          "description": "Marginal cost increase from global container market",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.5
+        }
+      ],
+      "explanation": "Eggs are one of the most locally-produced foods in Europe. Red Sea disruption has negligible direct impact.",
+      "pass_through_30d": 0.25,
+      "local_cost_floor_pct": 99,
+      "dietary": [
+        "v"
+      ],
+      "exposure_low": 1,
+      "exposure_high": 1
+    },
+    {
+      "id": "cream",
+      "name": "Cream",
+      "category": "dairy",
+      "emoji": "🍦",
+      "crisis_exposure_pct": 1,
+      "severity": "low",
+      "base_price_eur_kg": 4.0,
+      "current_price_eur_kg": 4.0,
+      "projected_price_eur_kg": 4.01,
+      "drivers": [
+        {
+          "input": "Packaging",
+          "description": "UHT cream packaging materials from Asian suppliers",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.55
+        },
+        {
+          "input": "Freight inflation",
+          "description": "Global container rates add marginal cost",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.45
+        }
+      ],
+      "explanation": "Cream is produced from domestic milk. Container shipping costs affect mainly packaging inputs.",
+      "pass_through_30d": 0.3,
+      "local_cost_floor_pct": 99,
+      "dietary": [
+        "v"
+      ],
+      "exposure_low": 1,
+      "exposure_high": 1
+    },
+    {
+      "id": "bread",
+      "name": "Bread",
+      "category": "grains",
+      "emoji": "🍞",
+      "crisis_exposure_pct": 1,
+      "severity": "low",
+      "base_price_eur_kg": 2.1,
+      "current_price_eur_kg": 2.1,
+      "projected_price_eur_kg": 2.1,
+      "drivers": [
+        {
+          "input": "Packaging imports",
+          "description": "Polyethylene bags and wrapping sourced from Asian factories",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.55
+        },
+        {
+          "input": "Freight inflation",
+          "description": "Global container market tightness adds indirect cost",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.45
+        }
+      ],
+      "explanation": "Bread is baked locally using European wheat, largely insulating it from Suez shipping disruption. Imported packaging is the main exposure point.",
+      "pass_through_30d": 0.25,
+      "local_cost_floor_pct": 99,
+      "dietary": [
+        "v",
+        "vg"
+      ],
+      "exposure_low": 1,
+      "exposure_high": 1
+    },
+    {
+      "id": "rice",
+      "name": "Rice",
+      "category": "grains",
+      "emoji": "🍚",
+      "crisis_exposure_pct": 13,
+      "severity": "low",
+      "base_price_eur_kg": 1.8,
+      "current_price_eur_kg": 1.86,
+      "projected_price_eur_kg": 1.91,
+      "drivers": [
+        {
+          "input": "Container shipping",
+          "description": "Asian rice — Thai jasmine, Indian basmati — ships entirely in containers via Suez",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.7
+        },
+        {
+          "input": "War-risk insurance",
+          "description": "Rice vessels from India, Pakistan and Thailand face elevated Red Sea insurance",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.2
+        },
+        {
+          "input": "Cape detour",
+          "description": "Cape rerouting adds 10–14 days to rice voyages from South Asia",
+          "category": "rerouting",
+          "price_change_pct": 123,
+          "weight": 0.1
+        }
+      ],
+      "explanation": "European rice imports are dominated by Asian varieties (basmati, jasmine) that transit the Bab-el-Mandeb. Every bag of imported rice in a supermarket crossed the Red Sea shipping corridor.",
+      "pass_through_30d": 0.65,
+      "local_cost_floor_pct": 87,
+      "dietary": [
+        "v",
+        "vg"
+      ],
+      "exposure_low": 13,
+      "exposure_high": 13
+    },
+    {
+      "id": "pasta",
+      "name": "Pasta",
+      "category": "grains",
+      "emoji": "🍝",
+      "crisis_exposure_pct": 4,
+      "severity": "low",
+      "base_price_eur_kg": 1.6,
+      "current_price_eur_kg": 1.61,
+      "projected_price_eur_kg": 1.62,
+      "drivers": [
+        {
+          "input": "Ingredient imports",
+          "description": "Semolina from North Africa and packaging from Asia travel partially via Suez",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.65
+        },
+        {
+          "input": "War-risk premium",
+          "description": "Mediterranean supply chains face elevated insurance costs",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.35
+        }
+      ],
+      "explanation": "Italian and European pasta is made from locally grown durum wheat, but some North African semolina and Asian packaging components add modest Suez exposure.",
+      "pass_through_30d": 0.45,
+      "local_cost_floor_pct": 96,
+      "dietary": [
+        "v",
+        "vg"
+      ],
+      "exposure_low": 4,
+      "exposure_high": 4
+    },
+    {
+      "id": "flour",
+      "name": "Flour",
+      "category": "grains",
+      "emoji": "🌾",
+      "crisis_exposure_pct": 1,
+      "severity": "low",
+      "base_price_eur_kg": 0.9,
+      "current_price_eur_kg": 0.9,
+      "projected_price_eur_kg": 0.9,
+      "drivers": [
+        {
+          "input": "Packaging",
+          "description": "Multi-wall paper bags partially sourced from overseas mills",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.55
+        },
+        {
+          "input": "Freight inflation",
+          "description": "Global freight inflation adds marginal cost",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.45
+        }
+      ],
+      "explanation": "European flour is milled from locally grown wheat. Red Sea disruption affects it mainly through imported packaging materials.",
+      "pass_through_30d": 0.25,
+      "local_cost_floor_pct": 99,
+      "dietary": [
+        "v",
+        "vg"
+      ],
+      "exposure_low": 1,
+      "exposure_high": 1
+    },
+    {
+      "id": "oats",
+      "name": "Oats",
+      "category": "grains",
+      "emoji": "🥣",
+      "crisis_exposure_pct": 2,
+      "severity": "low",
+      "base_price_eur_kg": 1.4,
+      "current_price_eur_kg": 1.4,
+      "projected_price_eur_kg": 1.41,
+      "drivers": [
+        {
+          "input": "Packaging",
+          "description": "Cardboard oat packaging partially sourced from Asian mills",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.55
+        },
+        {
+          "input": "Freight inflation",
+          "description": "Container market tightness adds indirect cost",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.45
+        }
+      ],
+      "explanation": "Oats are grown and processed in Europe. Modest exposure comes through imported packaging and specialty oat varieties from North America.",
+      "pass_through_30d": 0.3,
+      "local_cost_floor_pct": 98,
+      "dietary": [
+        "v",
+        "vg"
+      ],
+      "exposure_low": 2,
+      "exposure_high": 2
+    },
+    {
+      "id": "cornflakes",
+      "name": "Cornflakes",
+      "category": "grains",
+      "emoji": "🌽",
+      "crisis_exposure_pct": 5,
+      "severity": "low",
+      "base_price_eur_kg": 3.2,
+      "current_price_eur_kg": 3.23,
+      "projected_price_eur_kg": 3.24,
+      "drivers": [
+        {
+          "input": "Import ingredients",
+          "description": "Corn syrup, vitamins and specialty coatings often sourced from Asia",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.6
+        },
+        {
+          "input": "War-risk premium",
+          "description": "Food additive imports face elevated container insurance",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.4
+        }
+      ],
+      "explanation": "Cornflakes are packaged locally but rely on imported corn syrup concentrates, vitamins and food colorings that route via container through Suez.",
+      "pass_through_30d": 0.4,
+      "local_cost_floor_pct": 95,
+      "dietary": [
+        "v",
+        "vg"
+      ],
+      "exposure_low": 5,
+      "exposure_high": 5
+    },
+    {
+      "id": "couscous",
+      "name": "Couscous",
+      "category": "grains",
+      "emoji": "🫙",
+      "crisis_exposure_pct": 8,
+      "severity": "low",
+      "base_price_eur_kg": 1.9,
+      "current_price_eur_kg": 1.93,
+      "projected_price_eur_kg": 1.96,
+      "drivers": [
+        {
+          "input": "Import shipping",
+          "description": "North African couscous exports route partly via Mediterranean/Suez lanes",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.65
+        },
+        {
+          "input": "War-risk insurance",
+          "description": "Mediterranean exporters pay elevated insurance premiums",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.25
+        },
+        {
+          "input": "Route disruption",
+          "description": "Suez congestion affects North Africa–Europe trade timing",
+          "category": "rerouting",
+          "price_change_pct": 123,
+          "weight": 0.1
+        }
+      ],
+      "explanation": "Couscous is imported from North Africa (Morocco, Algeria) and the Middle East. The short Suez-adjacent route means elevated insurance is the primary transmission mechanism.",
+      "pass_through_30d": 0.55,
+      "local_cost_floor_pct": 92,
+      "dietary": [
+        "v",
+        "vg"
+      ],
+      "exposure_low": 8,
+      "exposure_high": 8
+    },
+    {
+      "id": "noodles",
+      "name": "Instant Noodles",
+      "category": "grains",
+      "emoji": "🍜",
+      "crisis_exposure_pct": 15,
+      "severity": "low",
+      "base_price_eur_kg": 3.5,
+      "current_price_eur_kg": 3.65,
+      "projected_price_eur_kg": 3.76,
+      "drivers": [
+        {
+          "input": "Container shipping",
+          "description": "Instant noodles are manufactured in SE Asia and exported in high volumes via Suez",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.7
+        },
+        {
+          "input": "War-risk insurance",
+          "description": "Asian food exporters face steeply higher Red Sea premiums",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.2
+        },
+        {
+          "input": "Cape detour",
+          "description": "Cape rerouting adds 2+ weeks to Asian noodle deliveries",
+          "category": "rerouting",
+          "price_change_pct": 123,
+          "weight": 0.1
+        }
+      ],
+      "explanation": "Instant noodles are an extreme case: manufactured in bulk in Thailand, Indonesia and China, packed in containers, and shipped directly through the Bab-el-Mandeb corridor to Europe.",
+      "pass_through_30d": 0.7,
+      "local_cost_floor_pct": 85,
+      "dietary": [
+        "v",
+        "vg"
+      ],
+      "exposure_low": 15,
+      "exposure_high": 15
+    },
+    {
+      "id": "crackers",
+      "name": "Crackers",
+      "category": "grains",
+      "emoji": "🍘",
+      "crisis_exposure_pct": 5,
+      "severity": "low",
+      "base_price_eur_kg": 3.0,
+      "current_price_eur_kg": 3.02,
+      "projected_price_eur_kg": 3.04,
+      "drivers": [
+        {
+          "input": "Import ingredients",
+          "description": "Palm oil, sesame and specialty flavourings from SE Asia",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.6
+        },
+        {
+          "input": "War-risk premium",
+          "description": "SE Asian ingredient containers face higher insurance",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.4
+        }
+      ],
+      "explanation": "Crackers manufactured in Europe still import palm oil, sesame seeds and some coatings from SE Asian suppliers, all routed via the Suez corridor.",
+      "pass_through_30d": 0.4,
+      "local_cost_floor_pct": 95,
+      "dietary": [
+        "v",
+        "vg"
+      ],
+      "exposure_low": 5,
+      "exposure_high": 5
+    },
+    {
+      "id": "tomatoes",
+      "name": "Tomatoes",
+      "category": "produce",
+      "emoji": "🍅",
+      "crisis_exposure_pct": 1,
+      "severity": "low",
+      "base_price_eur_kg": 3.2,
+      "current_price_eur_kg": 3.2,
+      "projected_price_eur_kg": 3.21,
+      "drivers": [
+        {
+          "input": "Packaging imports",
+          "description": "Plastic packaging and transport trays from Asian manufacturers",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.55
+        },
+        {
+          "input": "Freight inflation",
+          "description": "Global container rates affect packaging cost",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.45
+        }
+      ],
+      "explanation": "European tomatoes are grown domestically or in North Africa. The Red Sea crisis affects mainly packaging components sourced from Asia.",
+      "pass_through_30d": 0.3,
+      "local_cost_floor_pct": 99,
+      "dietary": [
+        "v",
+        "vg"
+      ],
+      "exposure_low": 1,
+      "exposure_high": 1
+    },
+    {
+      "id": "potatoes",
+      "name": "Potatoes",
+      "category": "produce",
+      "emoji": "🥔",
+      "crisis_exposure_pct": 1,
+      "severity": "low",
+      "base_price_eur_kg": 0.9,
+      "current_price_eur_kg": 0.9,
+      "projected_price_eur_kg": 0.9,
+      "drivers": [
+        {
+          "input": "Packaging",
+          "description": "Polypropylene bags and plastic film from Asian producers",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.5
+        },
+        {
+          "input": "Freight inflation",
+          "description": "Marginal container cost increase",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.5
+        }
+      ],
+      "explanation": "Potatoes are one of Europe's most locally-produced foods. Essentially no direct Red Sea exposure.",
+      "pass_through_30d": 0.2,
+      "local_cost_floor_pct": 99,
+      "dietary": [
+        "v",
+        "vg"
+      ],
+      "exposure_low": 1,
+      "exposure_high": 1
+    },
+    {
+      "id": "onions",
+      "name": "Onions",
+      "category": "produce",
+      "emoji": "🧅",
+      "crisis_exposure_pct": 1,
+      "severity": "low",
+      "base_price_eur_kg": 0.8,
+      "current_price_eur_kg": 0.8,
+      "projected_price_eur_kg": 0.8,
+      "drivers": [
+        {
+          "input": "Packaging",
+          "description": "Net bags and packaging materials from Asian suppliers",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.5
+        },
+        {
+          "input": "Freight inflation",
+          "description": "Marginal impact from container market",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.5
+        }
+      ],
+      "explanation": "Onions are produced domestically across Europe and North Africa. Red Sea disruption has negligible impact.",
+      "pass_through_30d": 0.2,
+      "local_cost_floor_pct": 99,
+      "dietary": [
+        "v",
+        "vg"
+      ],
+      "exposure_low": 1,
+      "exposure_high": 1
+    },
+    {
+      "id": "bananas",
+      "name": "Bananas",
+      "category": "produce",
+      "emoji": "🍌",
+      "crisis_exposure_pct": 6,
+      "severity": "low",
+      "base_price_eur_kg": 1.4,
+      "current_price_eur_kg": 1.41,
+      "projected_price_eur_kg": 1.42,
+      "drivers": [
+        {
+          "input": "Reefer shipping",
+          "description": "Some banana shipments from East Africa routed via Red Sea",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.6
+        },
+        {
+          "input": "War-risk premium",
+          "description": "Reefer vessels face elevated insurance for Red Sea-adjacent routing",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.4
+        }
+      ],
+      "explanation": "European bananas come mainly from Latin America (unaffected), but East African banana imports (Kenya, Tanzania) transit the Bab-el-Mandeb, adding modest upward pressure on blended prices.",
+      "pass_through_30d": 0.4,
+      "local_cost_floor_pct": 94,
+      "dietary": [
+        "v",
+        "vg"
+      ],
+      "exposure_low": 6,
+      "exposure_high": 6
+    },
+    {
+      "id": "apples",
+      "name": "Apples",
+      "category": "produce",
+      "emoji": "🍎",
+      "crisis_exposure_pct": 1,
+      "severity": "low",
+      "base_price_eur_kg": 1.8,
+      "current_price_eur_kg": 1.8,
+      "projected_price_eur_kg": 1.8,
+      "drivers": [
+        {
+          "input": "Packaging",
+          "description": "Protective foam netting and packaging from Asian manufacturers",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.5
+        },
+        {
+          "input": "Freight inflation",
+          "description": "Marginal impact from container market",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.5
+        }
+      ],
+      "explanation": "European apples are grown in Italy, France, Poland and Spain. Essentially no Suez dependency.",
+      "pass_through_30d": 0.2,
+      "local_cost_floor_pct": 99,
+      "dietary": [
+        "v",
+        "vg"
+      ],
+      "exposure_low": 1,
+      "exposure_high": 1
+    },
+    {
+      "id": "oranges",
+      "name": "Oranges",
+      "category": "produce",
+      "emoji": "🍊",
+      "crisis_exposure_pct": 7,
+      "severity": "low",
+      "base_price_eur_kg": 1.5,
+      "current_price_eur_kg": 1.51,
+      "projected_price_eur_kg": 1.52,
+      "drivers": [
+        {
+          "input": "Import shipping",
+          "description": "South African and Egyptian oranges routed near Bab-el-Mandeb",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.55
+        },
+        {
+          "input": "War-risk premium",
+          "description": "Southern African reefer ships face elevated insurance",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.45
+        }
+      ],
+      "explanation": "South African citrus exports to Europe previously used the Suez Canal; many vessels now reroute via Cape Town, adding costs absorbed in part by European supermarkets.",
+      "pass_through_30d": 0.3,
+      "local_cost_floor_pct": 93,
+      "dietary": [
+        "v",
+        "vg"
+      ],
+      "exposure_low": 7,
+      "exposure_high": 7
+    },
+    {
+      "id": "lettuce",
+      "name": "Lettuce",
+      "category": "produce",
+      "emoji": "🥬",
+      "crisis_exposure_pct": 1,
+      "severity": "low",
+      "base_price_eur_kg": 1.6,
+      "current_price_eur_kg": 1.6,
+      "projected_price_eur_kg": 1.6,
+      "drivers": [
+        {
+          "input": "Packaging",
+          "description": "Clamshell packaging partially from Asian producers",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.5
+        },
+        {
+          "input": "Freight inflation",
+          "description": "Minimal indirect container cost",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.5
+        }
+      ],
+      "explanation": "Lettuce is perishable and almost entirely local. The Red Sea crisis has essentially no impact.",
+      "pass_through_30d": 0.15,
+      "local_cost_floor_pct": 99,
+      "dietary": [
+        "v",
+        "vg"
+      ],
+      "exposure_low": 1,
+      "exposure_high": 1
+    },
+    {
+      "id": "peppers",
+      "name": "Bell Peppers",
+      "category": "produce",
+      "emoji": "🫑",
+      "crisis_exposure_pct": 1,
+      "severity": "low",
+      "base_price_eur_kg": 2.8,
+      "current_price_eur_kg": 2.8,
+      "projected_price_eur_kg": 2.81,
+      "drivers": [
+        {
+          "input": "Import shipping",
+          "description": "Spanish and Dutch greenhouse peppers use Asian-sourced packaging",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.55
+        },
+        {
+          "input": "Freight inflation",
+          "description": "Marginal container cost increase",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.45
+        }
+      ],
+      "explanation": "Bell peppers are grown in Spain and the Netherlands. Red Sea disruption affects mainly imported packaging.",
+      "pass_through_30d": 0.3,
+      "local_cost_floor_pct": 99,
+      "dietary": [
+        "v",
+        "vg"
+      ],
+      "exposure_low": 1,
+      "exposure_high": 1
+    },
+    {
+      "id": "carrots",
+      "name": "Carrots",
+      "category": "produce",
+      "emoji": "🥕",
+      "crisis_exposure_pct": 1,
+      "severity": "low",
+      "base_price_eur_kg": 0.9,
+      "current_price_eur_kg": 0.9,
+      "projected_price_eur_kg": 0.9,
+      "drivers": [
+        {
+          "input": "Packaging",
+          "description": "Polypropylene bags from Asian manufacturers",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.5
+        },
+        {
+          "input": "Freight inflation",
+          "description": "Negligible container market impact",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.5
+        }
+      ],
+      "explanation": "Carrots are produced locally across Europe. Minimal Red Sea exposure.",
+      "pass_through_30d": 0.2,
+      "local_cost_floor_pct": 99,
+      "dietary": [
+        "v",
+        "vg"
+      ],
+      "exposure_low": 1,
+      "exposure_high": 1
+    },
+    {
+      "id": "avocado",
+      "name": "Avocado",
+      "category": "produce",
+      "emoji": "🥑",
+      "crisis_exposure_pct": 10,
+      "severity": "low",
+      "base_price_eur_kg": 2.5,
+      "current_price_eur_kg": 2.54,
+      "projected_price_eur_kg": 2.58,
+      "drivers": [
+        {
+          "input": "Reefer shipping",
+          "description": "East African avocados (Kenya, Tanzania) route via Bab-el-Mandeb",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.65
+        },
+        {
+          "input": "War-risk premium",
+          "description": "Reefer vessels from East Africa face elevated insurance",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.25
+        },
+        {
+          "input": "Cape detour",
+          "description": "Some Kenyan avocados rerouted around Cape, adding 10 days",
+          "category": "rerouting",
+          "price_change_pct": 123,
+          "weight": 0.1
+        }
+      ],
+      "explanation": "Europe imports avocados from both Americas (low Suez exposure) and East Africa (high Suez exposure). The blended effect is moderate — Kenyan exports transit directly past the Houthi attack zone.",
+      "pass_through_30d": 0.45,
+      "local_cost_floor_pct": 90,
+      "dietary": [
+        "v",
+        "vg"
+      ],
+      "exposure_low": 10,
+      "exposure_high": 10
+    },
+    {
+      "id": "garlic",
+      "name": "Garlic",
+      "category": "produce",
+      "emoji": "🧄",
+      "crisis_exposure_pct": 15,
+      "severity": "low",
+      "base_price_eur_kg": 4.0,
+      "current_price_eur_kg": 4.11,
+      "projected_price_eur_kg": 4.19,
+      "drivers": [
+        {
+          "input": "Container shipping",
+          "description": "China accounts for ~75% of global garlic exports, shipping via Suez to Europe",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.7
+        },
+        {
+          "input": "War-risk insurance",
+          "description": "Chinese food exports face elevated Red Sea insurance",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.2
+        },
+        {
+          "input": "Cape detour",
+          "description": "Cape rerouting from China to Europe adds 12–14 days",
+          "category": "rerouting",
+          "price_change_pct": 123,
+          "weight": 0.1
+        }
+      ],
+      "explanation": "China dominates global garlic production and exports directly to European supermarkets via container ship through the Red Sea. Higher than most produce.",
+      "pass_through_30d": 0.45,
+      "local_cost_floor_pct": 85,
+      "dietary": [
+        "v",
+        "vg"
+      ],
+      "exposure_low": 15,
+      "exposure_high": 15
+    },
+    {
+      "id": "cucumber",
+      "name": "Cucumber",
+      "category": "produce",
+      "emoji": "🥒",
+      "crisis_exposure_pct": 1,
+      "severity": "low",
+      "base_price_eur_kg": 1.2,
+      "current_price_eur_kg": 1.2,
+      "projected_price_eur_kg": 1.2,
+      "drivers": [
+        {
+          "input": "Packaging",
+          "description": "Film packaging and trays from Asian suppliers",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.5
+        },
+        {
+          "input": "Freight inflation",
+          "description": "Marginal container cost increase",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.5
+        }
+      ],
+      "explanation": "Cucumbers are greenhouse-grown in the Netherlands and Spain. Essentially no Suez route dependency.",
+      "pass_through_30d": 0.2,
+      "local_cost_floor_pct": 99,
+      "dietary": [
+        "v",
+        "vg"
+      ],
+      "exposure_low": 1,
+      "exposure_high": 1
+    },
+    {
+      "id": "frozen_peas",
+      "name": "Frozen Peas",
+      "category": "produce",
+      "emoji": "🟢",
+      "crisis_exposure_pct": 8,
+      "severity": "low",
+      "base_price_eur_kg": 1.5,
+      "current_price_eur_kg": 1.52,
+      "projected_price_eur_kg": 1.54,
+      "drivers": [
+        {
+          "input": "Reefer containers",
+          "description": "Frozen vegetables shipped in refrigerated containers partly via Suez",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.65
+        },
+        {
+          "input": "War-risk premium",
+          "description": "Reefer containers face elevated insurance",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.25
+        },
+        {
+          "input": "Cape detour",
+          "description": "Cape rerouting adds costs for Asian and Indian frozen pea exporters",
+          "category": "rerouting",
+          "price_change_pct": 123,
+          "weight": 0.1
+        }
+      ],
+      "explanation": "India is a major frozen pea exporter to Europe. Indian frozen vegetable containers transit the Bab-el-Mandeb — now rerouted around Africa at extra cost.",
+      "pass_through_30d": 0.5,
+      "local_cost_floor_pct": 92,
+      "dietary": [
+        "v",
+        "vg"
+      ],
+      "exposure_low": 8,
+      "exposure_high": 8
+    },
+    {
+      "id": "cooking_oil",
+      "name": "Cooking Oil",
+      "category": "packaged",
+      "emoji": "🫙",
+      "crisis_exposure_pct": 17,
+      "severity": "low",
+      "base_price_eur_kg": 2.5,
+      "current_price_eur_kg": 2.62,
+      "projected_price_eur_kg": 2.71,
+      "drivers": [
+        {
+          "input": "Container shipping",
+          "description": "Palm oil from Malaysia/Indonesia bulk ships and containers route via Suez",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.7
+        },
+        {
+          "input": "War-risk insurance",
+          "description": "Palm oil carriers face elevated Red Sea premiums",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.2
+        },
+        {
+          "input": "Cape detour",
+          "description": "Cape rerouting adds 14+ days from SE Asian palm oil ports",
+          "category": "rerouting",
+          "price_change_pct": 123,
+          "weight": 0.1
+        }
+      ],
+      "explanation": "Palm oil — used in virtually all cooking oils — is produced almost exclusively in Malaysia and Indonesia. Every tanker bound for European refineries must navigate near the Red Sea conflict zone.",
+      "pass_through_30d": 0.7,
+      "local_cost_floor_pct": 83,
+      "dietary": [
+        "v",
+        "vg"
+      ],
+      "exposure_low": 17,
+      "exposure_high": 17
+    },
+    {
+      "id": "frozen_pizza",
+      "name": "Frozen Pizza",
+      "category": "packaged",
+      "emoji": "🍕",
+      "crisis_exposure_pct": 10,
+      "severity": "low",
+      "base_price_eur_kg": 4.5,
+      "current_price_eur_kg": 4.62,
+      "projected_price_eur_kg": 4.7,
+      "drivers": [
+        {
+          "input": "Container/reefer",
+          "description": "Frozen pizza imports and ingredient components in reefer containers",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.7
+        },
+        {
+          "input": "War-risk insurance",
+          "description": "Refrigerated containers attract elevated premiums",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.2
+        },
+        {
+          "input": "Cape detour",
+          "description": "Extra transit time increases refrigeration costs",
+          "category": "rerouting",
+          "price_change_pct": 123,
+          "weight": 0.1
+        }
+      ],
+      "explanation": "Frozen pizza combines multiple imported ingredients — palm oil, mozzarella ingredients, tomato paste concentrate — many of which move in containers via the Suez corridor.",
+      "pass_through_30d": 0.65,
+      "local_cost_floor_pct": 90,
+      "dietary": [
+        "v"
+      ],
+      "exposure_low": 10,
+      "exposure_high": 10
+    },
+    {
+      "id": "chocolate",
+      "name": "Chocolate",
+      "category": "packaged",
+      "emoji": "🍫",
+      "crisis_exposure_pct": 10,
+      "severity": "low",
+      "base_price_eur_kg": 8.0,
+      "current_price_eur_kg": 8.21,
+      "projected_price_eur_kg": 8.36,
+      "drivers": [
+        {
+          "input": "Container shipping",
+          "description": "Cocoa from Ivory Coast (Atlantic route) and Asian chocolate imports",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.65
+        },
+        {
+          "input": "War-risk premium",
+          "description": "Specialty chocolate from SE Asia and Middle East faces higher insurance",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.25
+        },
+        {
+          "input": "Cape detour",
+          "description": "Some shipping lane diversions affect ingredient timing",
+          "category": "rerouting",
+          "price_change_pct": 123,
+          "weight": 0.1
+        }
+      ],
+      "explanation": "West African cocoa (Ivory Coast, Ghana) travels the Atlantic — mostly unaffected. But Asian confectionery imports, cocoa butter from Indonesia, and specialty chocolate all route via Suez, contributing to a moderate blended exposure.",
+      "pass_through_30d": 0.65,
+      "local_cost_floor_pct": 90,
+      "dietary": [
+        "v"
+      ],
+      "exposure_low": 10,
+      "exposure_high": 10
+    },
+    {
+      "id": "crisps",
+      "name": "Crisps / Chips",
+      "category": "packaged",
+      "emoji": "🥔",
+      "crisis_exposure_pct": 12,
+      "severity": "low",
+      "base_price_eur_kg": 5.5,
+      "current_price_eur_kg": 5.68,
+      "projected_price_eur_kg": 5.81,
+      "drivers": [
+        {
+          "input": "Palm oil & imports",
+          "description": "SE Asian palm oil for frying and imported Asian crisps ship via Suez",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.7
+        },
+        {
+          "input": "War-risk insurance",
+          "description": "Bulk vegetable oil carriers face elevated Red Sea premiums",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.2
+        },
+        {
+          "input": "Cape detour",
+          "description": "Palm oil from Indonesia/Malaysia adds 2 weeks via Cape",
+          "category": "rerouting",
+          "price_change_pct": 123,
+          "weight": 0.1
+        }
+      ],
+      "explanation": "Crisps depend on palm oil for frying — sourced almost entirely from Malaysia and Indonesia. This single ingredient makes crisps highly exposed to Red Sea disruption.",
+      "pass_through_30d": 0.68,
+      "local_cost_floor_pct": 88,
+      "dietary": [
+        "v",
+        "vg"
+      ],
+      "exposure_low": 12,
+      "exposure_high": 12
+    },
+    {
+      "id": "biscuits",
+      "name": "Biscuits / Cookies",
+      "category": "packaged",
+      "emoji": "🍪",
+      "crisis_exposure_pct": 10,
+      "severity": "low",
+      "base_price_eur_kg": 4.0,
+      "current_price_eur_kg": 4.1,
+      "projected_price_eur_kg": 4.18,
+      "drivers": [
+        {
+          "input": "Palm oil & imports",
+          "description": "Palm oil, cocoa and Asian-packaged biscuit imports via Suez",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.68
+        },
+        {
+          "input": "War-risk premium",
+          "description": "Food commodity vessels face elevated insurance",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.22
+        },
+        {
+          "input": "Cape detour",
+          "description": "SE Asian ingredient suppliers rerouted around Cape",
+          "category": "rerouting",
+          "price_change_pct": 123,
+          "weight": 0.1
+        }
+      ],
+      "explanation": "Biscuits are heavy consumers of palm oil and often include imported ingredients (cocoa powder from SE Asia, specialty flavourings) that transit the Bab-el-Mandeb.",
+      "pass_through_30d": 0.65,
+      "local_cost_floor_pct": 90,
+      "dietary": [
+        "v"
+      ],
+      "exposure_low": 10,
+      "exposure_high": 10
+    },
+    {
+      "id": "soft_drinks",
+      "name": "Soft Drinks",
+      "category": "packaged",
+      "emoji": "🥤",
+      "crisis_exposure_pct": 6,
+      "severity": "low",
+      "base_price_eur_kg": 0.8,
+      "current_price_eur_kg": 0.81,
+      "projected_price_eur_kg": 0.82,
+      "drivers": [
+        {
+          "input": "Ingredients import",
+          "description": "High-fructose corn syrup, citric acid, and colouring from Asia/Americas via Suez",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.65
+        },
+        {
+          "input": "War-risk premium",
+          "description": "Container-shipped syrups and concentrates face elevated insurance",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.35
+        }
+      ],
+      "explanation": "Soft drink concentrates and ingredient syrups are often produced in the US, Asia and Middle East and shipped to European bottling plants in containers via the Suez route.",
+      "pass_through_30d": 0.55,
+      "local_cost_floor_pct": 94,
+      "dietary": [
+        "v",
+        "vg"
+      ],
+      "exposure_low": 6,
+      "exposure_high": 6
+    },
+    {
+      "id": "beer",
+      "name": "Beer",
+      "category": "packaged",
+      "emoji": "🍺",
+      "crisis_exposure_pct": 5,
+      "severity": "low",
+      "base_price_eur_kg": 1.8,
+      "current_price_eur_kg": 1.82,
+      "projected_price_eur_kg": 1.83,
+      "drivers": [
+        {
+          "input": "Hop/malt imports",
+          "description": "Specialty hops from New Zealand, malt from Australia ship via long routes",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.6
+        },
+        {
+          "input": "Freight inflation",
+          "description": "Global container market tightness adds indirect cost",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.4
+        }
+      ],
+      "explanation": "Most European beer uses local barley and hops. Craft breweries importing specialty hops from New Zealand or Australia, and imported canned beers from Asia, carry higher exposure.",
+      "pass_through_30d": 0.45,
+      "local_cost_floor_pct": 95,
+      "dietary": [
+        "v",
+        "vg"
+      ],
+      "exposure_low": 5,
+      "exposure_high": 5
+    },
+    {
+      "id": "coffee",
+      "name": "Coffee",
+      "category": "packaged",
+      "emoji": "☕",
+      "crisis_exposure_pct": 13,
+      "severity": "low",
+      "base_price_eur_kg": 12.0,
+      "current_price_eur_kg": 12.45,
+      "projected_price_eur_kg": 12.79,
+      "drivers": [
+        {
+          "input": "Container shipping",
+          "description": "Ethiopian, Yemeni and Vietnamese coffee beans ship directly through Bab-el-Mandeb",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.7
+        },
+        {
+          "input": "War-risk insurance",
+          "description": "East African coffee exporters face highest Red Sea insurance premiums",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.2
+        },
+        {
+          "input": "Cape detour",
+          "description": "Ethiopia and Yemen exports previously used short Red Sea route",
+          "category": "rerouting",
+          "price_change_pct": 123,
+          "weight": 0.1
+        }
+      ],
+      "explanation": "Coffee is one of the most Red Sea-exposed foods. Ethiopian and Yemeni coffee — considered premium — ships directly from ports at the Red Sea entrance. Vietnamese robusta (the world's #2 bean) also passes through Bab-el-Mandeb.",
+      "pass_through_30d": 0.72,
+      "local_cost_floor_pct": 87,
+      "dietary": [
+        "v",
+        "vg"
+      ],
+      "exposure_low": 13,
+      "exposure_high": 13
+    },
+    {
+      "id": "sugar",
+      "name": "Sugar",
+      "category": "packaged",
+      "emoji": "🍬",
+      "crisis_exposure_pct": 8,
+      "severity": "low",
+      "base_price_eur_kg": 1.2,
+      "current_price_eur_kg": 1.22,
+      "projected_price_eur_kg": 1.24,
+      "drivers": [
+        {
+          "input": "Container shipping",
+          "description": "Cane sugar from India, Pakistan and East Africa routes via Suez",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.65
+        },
+        {
+          "input": "War-risk insurance",
+          "description": "Sugar carriers from South Asia face elevated Red Sea premiums",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.25
+        },
+        {
+          "input": "Cape detour",
+          "description": "Indian and Pakistani sugar exports rerouted around Africa",
+          "category": "rerouting",
+          "price_change_pct": 123,
+          "weight": 0.1
+        }
+      ],
+      "explanation": "India and Pakistan are major sugar exporters to Europe. Their shipping lanes pass directly through the Bab-el-Mandeb, making sugar moderately exposed to Red Sea freight disruption.",
+      "pass_through_30d": 0.6,
+      "local_cost_floor_pct": 92,
+      "dietary": [
+        "v",
+        "vg"
+      ],
+      "exposure_low": 8,
+      "exposure_high": 8
+    },
+    {
+      "id": "peanut_butter",
+      "name": "Peanut Butter",
+      "category": "packaged",
+      "emoji": "🥜",
+      "crisis_exposure_pct": 12,
+      "severity": "low",
+      "base_price_eur_kg": 5.5,
+      "current_price_eur_kg": 5.68,
+      "projected_price_eur_kg": 5.81,
+      "drivers": [
+        {
+          "input": "Container shipping",
+          "description": "Chinese and SE Asian peanuts and peanut butter ship via Suez in bulk",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.7
+        },
+        {
+          "input": "War-risk premium",
+          "description": "Commodity food vessels from Asia face elevated insurance",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.2
+        },
+        {
+          "input": "Cape detour",
+          "description": "Chinese peanut exports via Cape add 12–14 days",
+          "category": "rerouting",
+          "price_change_pct": 123,
+          "weight": 0.1
+        }
+      ],
+      "explanation": "Peanut butter production relies on peanuts from China (the world's largest producer) and Argentina (Atlantic route). The Chinese supply chain is heavily Suez-dependent.",
+      "pass_through_30d": 0.68,
+      "local_cost_floor_pct": 88,
+      "dietary": [
+        "v",
+        "vg"
+      ],
+      "exposure_low": 12,
+      "exposure_high": 12
+    },
+    {
+      "id": "orange_juice",
+      "name": "Orange Juice",
+      "category": "packaged",
+      "emoji": "🍊",
+      "crisis_exposure_pct": 7,
+      "severity": "low",
+      "base_price_eur_kg": 1.8,
+      "current_price_eur_kg": 1.82,
+      "projected_price_eur_kg": 1.84,
+      "drivers": [
+        {
+          "input": "Some Suez routing",
+          "description": "South African and Indian OJ concentrate ships via Bab-el-Mandeb",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.6
+        },
+        {
+          "input": "War-risk premium",
+          "description": "OJ tankers from South Africa and India pay elevated premiums",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.4
+        }
+      ],
+      "explanation": "Brazilian OJ concentrate takes the Atlantic route — unaffected. But South African and Indian OJ, plus some concentrate from Egypt, travels via the Suez corridor, adding modest blended exposure.",
+      "pass_through_30d": 0.45,
+      "local_cost_floor_pct": 93,
+      "dietary": [
+        "v",
+        "vg"
+      ],
+      "exposure_low": 7,
+      "exposure_high": 7
+    },
+    {
+      "id": "mayonnaise",
+      "name": "Mayonnaise",
+      "category": "packaged",
+      "emoji": "🫙",
+      "crisis_exposure_pct": 7,
+      "severity": "low",
+      "base_price_eur_kg": 4.5,
+      "current_price_eur_kg": 4.57,
+      "projected_price_eur_kg": 4.62,
+      "drivers": [
+        {
+          "input": "Ingredient imports",
+          "description": "Soybean oil from South America and egg powder from SE Asia via various routes",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.65
+        },
+        {
+          "input": "War-risk premium",
+          "description": "Some ingredient containers route via Suez",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.35
+        }
+      ],
+      "explanation": "Mayonnaise relies on vegetable oil (partly imported palm or soy from SE Asia) and egg powder, with moderate Suez route dependency.",
+      "pass_through_30d": 0.55,
+      "local_cost_floor_pct": 93,
+      "dietary": [
+        "v"
+      ],
+      "exposure_low": 7,
+      "exposure_high": 7
+    },
+    {
+      "id": "tomato_sauce",
+      "name": "Tomato Sauce",
+      "category": "packaged",
+      "emoji": "🍅",
+      "crisis_exposure_pct": 6,
+      "severity": "low",
+      "base_price_eur_kg": 2.0,
+      "current_price_eur_kg": 2.02,
+      "projected_price_eur_kg": 2.04,
+      "drivers": [
+        {
+          "input": "Ingredient imports",
+          "description": "Tomato concentrate and packaging from SE Asia and North Africa",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.65
+        },
+        {
+          "input": "War-risk premium",
+          "description": "Some ingredient containers route via Mediterranean/Suez lanes",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.35
+        }
+      ],
+      "explanation": "Tomato sauce ingredients (concentrate, spices, packaging) partly imported from North Africa and Asia via Suez-adjacent routes.",
+      "pass_through_30d": 0.5,
+      "local_cost_floor_pct": 94,
+      "dietary": [
+        "v",
+        "vg"
+      ],
+      "exposure_low": 6,
+      "exposure_high": 6
+    },
+    {
+      "id": "baby_formula",
+      "name": "Baby Formula",
+      "category": "packaged",
+      "emoji": "🍼",
+      "crisis_exposure_pct": 14,
+      "severity": "low",
+      "base_price_eur_kg": 25.0,
+      "current_price_eur_kg": 26.01,
+      "projected_price_eur_kg": 26.76,
+      "drivers": [
+        {
+          "input": "Container shipping",
+          "description": "Australian and NZ whey, and Asian formula (Danone/Nestlé Asia) all route via Suez",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.7
+        },
+        {
+          "input": "War-risk premium",
+          "description": "High-value food cargo commands elevated war-risk insurance",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.2
+        },
+        {
+          "input": "Cape detour",
+          "description": "NZ and Australian dairy container ships now reroute via Cape",
+          "category": "rerouting",
+          "price_change_pct": 123,
+          "weight": 0.1
+        }
+      ],
+      "explanation": "Baby formula is heavily imported from Australia, New Zealand and Asian manufacturing hubs. NZ dairy containers previously transited Suez for speed; Cape rerouting adds 12 days and significant cost.",
+      "pass_through_30d": 0.72,
+      "local_cost_floor_pct": 86,
+      "dietary": [
+        "v"
+      ],
+      "exposure_low": 14,
+      "exposure_high": 14
+    },
+    {
+      "id": "lentils",
+      "name": "Lentils",
+      "category": "staples",
+      "emoji": "🫘",
+      "crisis_exposure_pct": 4,
+      "severity": "low",
+      "base_price_eur_kg": 1.8,
+      "current_price_eur_kg": 1.81,
+      "projected_price_eur_kg": 1.82,
+      "drivers": [
+        {
+          "input": "Container shipping",
+          "description": "Canadian lentils (world #1 exporter) ship via Atlantic to Europe; Indian lentils via Suez",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.6
+        },
+        {
+          "input": "War-risk premium",
+          "description": "Indian and Turkish lentil exports face elevated Red Sea insurance",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.4
+        }
+      ],
+      "explanation": "Canada and Australia supply most of Europe's lentils via Atlantic and Pacific routes (low Suez exposure). Indian lentil imports carry moderate exposure, giving a blended low result.",
+      "pass_through_30d": 0.4,
+      "local_cost_floor_pct": 96,
+      "dietary": [
+        "v",
+        "vg"
+      ],
+      "exposure_low": 4,
+      "exposure_high": 4
+    },
+    {
+      "id": "chickpeas",
+      "name": "Chickpeas",
+      "category": "staples",
+      "emoji": "🫘",
+      "crisis_exposure_pct": 4,
+      "severity": "low",
+      "base_price_eur_kg": 2.0,
+      "current_price_eur_kg": 2.01,
+      "projected_price_eur_kg": 2.02,
+      "drivers": [
+        {
+          "input": "Container shipping",
+          "description": "Australian chickpeas via Pacific; Indian and Turkish via Suez",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.6
+        },
+        {
+          "input": "War-risk premium",
+          "description": "Indian chickpea exports face elevated Bab-el-Mandeb premiums",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.4
+        }
+      ],
+      "explanation": "Chickpeas come from both Australia (Cape or Pacific route) and India/Turkey (Suez route). Blended exposure is low.",
+      "pass_through_30d": 0.4,
+      "local_cost_floor_pct": 96,
+      "dietary": [
+        "v",
+        "vg"
+      ],
+      "exposure_low": 4,
+      "exposure_high": 4
+    },
+    {
+      "id": "tofu",
+      "name": "Tofu",
+      "category": "staples",
+      "emoji": "🫕",
+      "crisis_exposure_pct": 8,
+      "severity": "low",
+      "base_price_eur_kg": 2.8,
+      "current_price_eur_kg": 2.85,
+      "projected_price_eur_kg": 2.89,
+      "drivers": [
+        {
+          "input": "Container shipping",
+          "description": "Soy protein and pre-made tofu from China and SE Asia via Suez",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.65
+        },
+        {
+          "input": "War-risk premium",
+          "description": "Chinese and SE Asian food exports face elevated insurance",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.25
+        },
+        {
+          "input": "Cape detour",
+          "description": "Chinese tofu and soy ingredients rerouted via Cape",
+          "category": "rerouting",
+          "price_change_pct": 123,
+          "weight": 0.1
+        }
+      ],
+      "explanation": "Specialty tofu and soy protein concentrate imported from China and Japan must navigate the Red Sea container corridor, giving tofu moderate Suez exposure.",
+      "pass_through_30d": 0.55,
+      "local_cost_floor_pct": 92,
+      "dietary": [
+        "v",
+        "vg"
+      ],
+      "exposure_low": 8,
+      "exposure_high": 8
+    },
+    {
+      "id": "beans",
+      "name": "Dried Beans",
+      "category": "staples",
+      "emoji": "🫘",
+      "crisis_exposure_pct": 3,
+      "severity": "low",
+      "base_price_eur_kg": 1.5,
+      "current_price_eur_kg": 1.51,
+      "projected_price_eur_kg": 1.51,
+      "drivers": [
+        {
+          "input": "Container imports",
+          "description": "Some bean varieties (black beans, kidney beans) imported from SE Asia and East Africa",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.55
+        },
+        {
+          "input": "Freight inflation",
+          "description": "Container market tightness adds indirect cost",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.45
+        }
+      ],
+      "explanation": "Most European beans (haricot, flageolet) are grown domestically or in the Americas. Specialty imported varieties carry some Suez exposure.",
+      "pass_through_30d": 0.3,
+      "local_cost_floor_pct": 97,
+      "dietary": [
+        "v",
+        "vg"
+      ],
+      "exposure_low": 3,
+      "exposure_high": 3
+    },
+    {
+      "id": "quinoa",
+      "name": "Quinoa",
+      "category": "staples",
+      "emoji": "🌾",
+      "crisis_exposure_pct": 4,
+      "severity": "low",
+      "base_price_eur_kg": 6.0,
+      "current_price_eur_kg": 6.03,
+      "projected_price_eur_kg": 6.06,
+      "drivers": [
+        {
+          "input": "South American origin",
+          "description": "Peruvian and Bolivian quinoa ships via Atlantic to Europe",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.55
+        },
+        {
+          "input": "Freight inflation",
+          "description": "Global container market tightness affects even non-Suez routes",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.45
+        }
+      ],
+      "explanation": "Quinoa is produced in Peru and Bolivia and ships via the Atlantic — largely unaffected by the Red Sea crisis. Modest exposure reflects global container market tightness.",
+      "pass_through_30d": 0.35,
+      "local_cost_floor_pct": 96,
+      "dietary": [
+        "v",
+        "vg"
+      ],
+      "exposure_low": 4,
+      "exposure_high": 4
+    },
+    {
+      "id": "olive_oil",
+      "name": "Olive Oil",
+      "category": "staples",
+      "emoji": "🫒",
+      "crisis_exposure_pct": 1,
+      "severity": "low",
+      "base_price_eur_kg": 9.0,
+      "current_price_eur_kg": 9.01,
+      "projected_price_eur_kg": 9.01,
+      "drivers": [
+        {
+          "input": "Local supply chain",
+          "description": "Mediterranean-origin olive oil uses very short shipping routes",
+          "category": "freight",
+          "price_change_pct": 204,
+          "weight": 0.5
+        },
+        {
+          "input": "Freight inflation",
+          "description": "Marginal global container inflation impact",
+          "category": "insurance",
+          "price_change_pct": 56,
+          "weight": 0.5
+        }
+      ],
+      "explanation": "Olive oil is produced in Spain, Italy, Greece and Tunisia and shipped via short Mediterranean routes that largely bypass the Bab-el-Mandeb.",
+      "pass_through_30d": 0.2,
+      "local_cost_floor_pct": 99,
+      "dietary": [
+        "v",
+        "vg"
+      ],
+      "exposure_low": 1,
+      "exposure_high": 1
+    }
+  ],
+  "stale_sources": [
+    "drewry_wci",
+    "freightos_fbx"
+  ]
+}
