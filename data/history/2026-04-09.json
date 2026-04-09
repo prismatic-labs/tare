@@ -17,7 +17,7 @@
     },
     {
       "id": "tomatoes",
-      "crisis_exposure_pct": 38
+      "crisis_exposure_pct": 37
     },
     {
       "id": "salmon",
@@ -29,11 +29,11 @@
     },
     {
       "id": "pasta",
-      "crisis_exposure_pct": 42
+      "crisis_exposure_pct": 43
     },
     {
       "id": "flour",
-      "crisis_exposure_pct": 37
+      "crisis_exposure_pct": 38
     },
     {
       "id": "oats",
@@ -45,7 +45,7 @@
     },
     {
       "id": "couscous",
-      "crisis_exposure_pct": 39
+      "crisis_exposure_pct": 40
     },
     {
       "id": "noodles",
@@ -61,15 +61,15 @@
     },
     {
       "id": "pork",
-      "crisis_exposure_pct": 37
+      "crisis_exposure_pct": 36
     },
     {
       "id": "lamb",
-      "crisis_exposure_pct": 38
+      "crisis_exposure_pct": 37
     },
     {
       "id": "turkey",
-      "crisis_exposure_pct": 36
+      "crisis_exposure_pct": 35
     },
     {
       "id": "sausages",
@@ -109,11 +109,11 @@
     },
     {
       "id": "bananas",
-      "crisis_exposure_pct": 24
+      "crisis_exposure_pct": 23
     },
     {
       "id": "apples",
-      "crisis_exposure_pct": 25
+      "crisis_exposure_pct": 26
     },
     {
       "id": "oranges",
@@ -125,7 +125,7 @@
     },
     {
       "id": "peppers",
-      "crisis_exposure_pct": 36
+      "crisis_exposure_pct": 35
     },
     {
       "id": "carrots",
@@ -133,7 +133,7 @@
     },
     {
       "id": "avocado",
-      "crisis_exposure_pct": 39
+      "crisis_exposure_pct": 38
     },
     {
       "id": "garlic",
@@ -141,7 +141,7 @@
     },
     {
       "id": "cucumber",
-      "crisis_exposure_pct": 52
+      "crisis_exposure_pct": 55
     },
     {
       "id": "shrimp",
@@ -149,7 +149,7 @@
     },
     {
       "id": "canned_sardines",
-      "crisis_exposure_pct": 59
+      "crisis_exposure_pct": 64
     },
     {
       "id": "cod",
@@ -201,11 +201,11 @@
     },
     {
       "id": "orange_juice",
-      "crisis_exposure_pct": 6
+      "crisis_exposure_pct": 5
     },
     {
       "id": "mayonnaise",
-      "crisis_exposure_pct": 9
+      "crisis_exposure_pct": 7
     },
     {
       "id": "tomato_sauce",
@@ -233,11 +233,11 @@
     },
     {
       "id": "quinoa",
-      "crisis_exposure_pct": 16
+      "crisis_exposure_pct": 15
     },
     {
       "id": "olive_oil",
-      "crisis_exposure_pct": 20
+      "crisis_exposure_pct": 18
     },
     {
       "id": "frozen_peas",
