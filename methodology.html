@@ -314,6 +314,7 @@ country_exposure    = clamp(round(eu_exposure_pct × impact_multiplier), 1, adju
     <li><strong>Subsidies and price controls.</strong> Several countries have active food price interventions that suppress the retail transmission of commodity shocks.</li>
     <li><strong>Local substitution.</strong> Farmers and processors adapt. If urea prices spike, some switch to alternative fertilizers; if diesel costs rise, some supply chains shorten. The model treats supply chains as static.</li>
     <li><strong>Western-centric cost structure.</strong> USDA and FAO cost-of-production data skews toward mechanised, energy-intensive agriculture. Labor-intensive smallholder farming (dominant in South and Southeast Asia) has a different input structure. The country multiplier partially corrects for this but does not fully replace local data.</li>
+    <li><strong>Exchange rate risk.</strong> Commodity prices are tracked in USD and EUR. Countries whose currencies weaken during a crisis (e.g. LKR, PHP) face amplified import costs that are not reflected in the exposure score. Conversely, USD-denominated economies may see a partial buffer from petrodollar effects. Exchange rates are fetched for display purposes (converting shelf prices) but do not currently feed into the exposure calculation.</li>
   </ul>
 
   <h2>Update cadence</h2>
