@@ -1953,13 +1953,17 @@ function formatEur(amount) {
 }
 
 // Country-adjusted exposure: scale EU baseline by the country's impact multiplier.
-// Gemini#4: round to nearest 5% for medium confidence, nearest 10% for low confidence,
-// to avoid false precision on extrapolated data.
+// The local_cost_floor represents labour/retail costs unaffected by the crisis.
+// For high-dependency countries, commodity costs are a larger share of retail price,
+// so the effective floor shrinks (and the ceiling rises) with the multiplier.
+// Round to nearest 5% for medium confidence, nearest 10% for low confidence.
 function countryExposure(food, country) {
-  const cap = 100 - (food.local_cost_floor_pct || 45);
-  const raw = Math.min(cap, Math.round(food.crisis_exposure_pct * country.impact_multiplier));
-  if (country.data_confidence === 'low')    return Math.min(cap, Math.round(raw / 10) * 10) || 10;
-  if (country.data_confidence === 'medium') return Math.min(cap, Math.round(raw / 5)  * 5)  || 5;
+  const localFloor = food.local_cost_floor_pct || 45;
+  const mult = country.impact_multiplier || 1.0;
+  const adjustedCap = Math.min(95, Math.round(100 - localFloor / mult));
+  const raw = Math.min(adjustedCap, Math.round(food.crisis_exposure_pct * mult));
+  if (country.data_confidence === 'low')    return Math.min(adjustedCap, Math.round(raw / 10) * 10) || 10;
+  if (country.data_confidence === 'medium') return Math.min(adjustedCap, Math.round(raw / 5)  * 5)  || 5;
   return raw;
 }
 

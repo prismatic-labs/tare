@@ -1994,14 +1994,17 @@ function formatEur(amount) {
 }
 
 // Country-adjusted exposure: scale EU baseline by country multiplier and active scenario.
-// Scenario multiplier applies before the local_cost_floor cap — the floor reflects
-// local labour/retail costs that don't change in a crisis, only commodity inputs do.
+// The local_cost_floor represents labour/retail costs unaffected by the crisis.
+// For high-dependency countries, commodity costs are a larger share of retail price,
+// so the effective floor shrinks (and the ceiling rises) with the multiplier.
 function countryExposure(food, country) {
-  const cap = 100 - (food.local_cost_floor_pct || 45);
+  const localFloor = food.local_cost_floor_pct || 45;
+  const mult = country.impact_multiplier || 1.0;
+  const adjustedCap = Math.min(95, Math.round(100 - localFloor / mult));
   const scenMult = SCENARIO_MULTIPLIERS[state.scenario] || 1.0;
-  const raw = Math.min(cap, Math.round(food.crisis_exposure_pct * scenMult * country.impact_multiplier));
-  if (country.data_confidence === 'low')    return Math.min(cap, Math.round(raw / 10) * 10) || 10;
-  if (country.data_confidence === 'medium') return Math.min(cap, Math.round(raw / 5)  * 5)  || 5;
+  const raw = Math.min(adjustedCap, Math.round(food.crisis_exposure_pct * scenMult * mult));
+  if (country.data_confidence === 'low')    return Math.min(adjustedCap, Math.round(raw / 10) * 10) || 10;
+  if (country.data_confidence === 'medium') return Math.min(adjustedCap, Math.round(raw / 5)  * 5)  || 5;
   return raw;
 }
 

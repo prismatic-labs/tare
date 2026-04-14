@@ -8,7 +8,7 @@
  *
  * Attributes:
  *   data-tare-food     Food ID (e.g. "chicken", "bread", "salmon")
- *   data-tare-country  ISO country code: IT DE GB US JP IN PH BR AU LK  (default: IT)
+ *   data-tare-country  ISO country code (default: IT) — supports all countries in foods.json
  *   data-tare-theme    "light" (default) | "dark"
  *
  * The widget is self-contained — CSS is injected inline.
@@ -37,9 +37,12 @@
 
   // ── Helpers ───────────────────────────────────────────────────────────────
   function countryExposure(food, country) {
-    const raw = Math.min(99, Math.round(food.crisis_exposure_pct * country.impact_multiplier));
-    if (country.data_confidence === 'low')    return Math.min(99, Math.round(raw / 10) * 10) || 10;
-    if (country.data_confidence === 'medium') return Math.min(99, Math.round(raw / 5)  * 5)  || 5;
+    const localFloor = food.local_cost_floor_pct || 45;
+    const mult = country.impact_multiplier || 1.0;
+    const adjustedCap = Math.min(95, Math.round(100 - localFloor / mult));
+    const raw = Math.min(adjustedCap, Math.round(food.crisis_exposure_pct * mult));
+    if (country.data_confidence === 'low')    return Math.min(adjustedCap, Math.round(raw / 10) * 10) || 10;
+    if (country.data_confidence === 'medium') return Math.min(adjustedCap, Math.round(raw / 5)  * 5)  || 5;
     return raw;
   }
   function severityFromPct(pct) {
