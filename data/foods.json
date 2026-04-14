@@ -2,7 +2,7 @@
   "last_updated": "2026-04-14",
   "crisis_start": "2026-02-28",
   "sources": {
-    "oil_brent_usd": 112,
+    "oil_brent_usd": 127.61,
     "oil_brent_pre_crisis_usd": 72.0,
     "natural_gas_eur_mwh": 58,
     "natural_gas_pre_crisis_eur_mwh": 34.0,
@@ -27,7 +27,7 @@
       "urea_scarcity_risk": false,
       "brent_surcharge_risk": true,
       "brent_surcharge_threshold_usd": 110.0,
-      "brent_current_usd": 112
+      "brent_current_usd": 127.6
     }
   },
   "countries": [
@@ -242,7 +242,7 @@
           "input": "Diesel fuel",
           "description": "Powers tractors, feed trucks, slaughterhouse transport",
           "category": "fuel",
-          "price_change_pct": 53,
+          "price_change_pct": 73,
           "weight": 0.2353
         },
         {
@@ -315,8 +315,8 @@
       "name": "Tomatoes",
       "category": "produce",
       "emoji": "🍅",
-      "crisis_exposure_pct": 36,
-      "severity": "moderate",
+      "crisis_exposure_pct": 43,
+      "severity": "high",
       "base_price_eur_kg": 3.2,
       "current_price_eur_kg": 4.5,
       "projected_price_eur_kg": 5.8,
@@ -339,7 +339,7 @@
           "input": "Refrigerated transport",
           "description": "Diesel-powered cold-chain logistics",
           "category": "fuel",
-          "price_change_pct": 53,
+          "price_change_pct": 73,
           "weight": 0.6349
         }
       ],
@@ -350,8 +350,8 @@
         "v",
         "vg"
       ],
-      "exposure_low": 36,
-      "exposure_high": 36
+      "exposure_low": 43,
+      "exposure_high": 44
     },
     {
       "id": "salmon",
@@ -375,7 +375,7 @@
           "input": "Global shipping",
           "description": "Air and sea freight for freshness-critical supply chains",
           "category": "fuel",
-          "price_change_pct": 53,
+          "price_change_pct": 73,
           "weight": 0.9333
         },
         {
@@ -405,7 +405,7 @@
       "name": "Rice",
       "category": "grains",
       "emoji": "🍚",
-      "crisis_exposure_pct": 27,
+      "crisis_exposure_pct": 33,
       "severity": "moderate",
       "base_price_eur_kg": 1.8,
       "current_price_eur_kg": 2.2,
@@ -422,14 +422,14 @@
           "input": "Diesel for irrigation",
           "description": "Pumped irrigation dominates rice paddy water management",
           "category": "fuel",
-          "price_change_pct": 53,
+          "price_change_pct": 73,
           "weight": 0.2857
         },
         {
           "input": "Maritime shipping",
           "description": "Most global rice trade moves by sea through Hormuz-adjacent routes",
           "category": "fuel",
-          "price_change_pct": 53,
+          "price_change_pct": 73,
           "weight": 0.2857
         }
       ],
@@ -440,15 +440,15 @@
         "v",
         "vg"
       ],
-      "exposure_low": 27,
-      "exposure_high": 27
+      "exposure_low": 32,
+      "exposure_high": 33
     },
     {
       "id": "pasta",
       "name": "Pasta",
       "category": "grains",
       "emoji": "🍝",
-      "crisis_exposure_pct": 44,
+      "crisis_exposure_pct": 45,
       "severity": "high",
       "base_price_eur_kg": 1.6,
       "current_price_eur_kg": 2.1,
@@ -472,7 +472,7 @@
           "input": "Diesel transport",
           "description": "Bulk grain and finished product haulage",
           "category": "fuel",
-          "price_change_pct": 53,
+          "price_change_pct": 73,
           "weight": 0.2223
         }
       ],
@@ -483,7 +483,7 @@
         "v",
         "vg"
       ],
-      "exposure_low": 44,
+      "exposure_low": 45,
       "exposure_high": 45
     },
     {
@@ -491,8 +491,8 @@
       "name": "Flour",
       "category": "grains",
       "emoji": "🌾",
-      "crisis_exposure_pct": 39,
-      "severity": "moderate",
+      "crisis_exposure_pct": 43,
+      "severity": "high",
       "base_price_eur_kg": 0.9,
       "current_price_eur_kg": 1.15,
       "projected_price_eur_kg": 1.38,
@@ -515,7 +515,7 @@
           "input": "Diesel haulage",
           "description": "Grain to mill and flour to bakeries and retailers",
           "category": "fuel",
-          "price_change_pct": 53,
+          "price_change_pct": 73,
           "weight": 0.2223
         }
       ],
@@ -526,8 +526,8 @@
         "v",
         "vg"
       ],
-      "exposure_low": 39,
-      "exposure_high": 40
+      "exposure_low": 43,
+      "exposure_high": 44
     },
     {
       "id": "oats",
@@ -613,7 +613,7 @@
       "name": "Couscous",
       "category": "grains",
       "emoji": "🫙",
-      "crisis_exposure_pct": 41,
+      "crisis_exposure_pct": 45,
       "severity": "high",
       "base_price_eur_kg": 1.9,
       "current_price_eur_kg": 2.45,
@@ -637,7 +637,7 @@
           "input": "Mediterranean shipping",
           "description": "Most couscous is produced in North Africa and shipped to Europe",
           "category": "fuel",
-          "price_change_pct": 53,
+          "price_change_pct": 73,
           "weight": 0.2223
         }
       ],
@@ -648,8 +648,8 @@
         "v",
         "vg"
       ],
-      "exposure_low": 41,
-      "exposure_high": 42
+      "exposure_low": 45,
+      "exposure_high": 45
     },
     {
       "id": "noodles",
@@ -766,7 +766,7 @@
           "input": "Diesel for farms",
           "description": "Machinery, feed transport, and slaughterhouse logistics",
           "category": "fuel",
-          "price_change_pct": 53,
+          "price_change_pct": 73,
           "weight": 0.2353
         },
         {
@@ -796,7 +796,7 @@
       "name": "Pork",
       "category": "meat",
       "emoji": "🥓",
-      "crisis_exposure_pct": 35,
+      "crisis_exposure_pct": 37,
       "severity": "moderate",
       "base_price_eur_kg": 6.5,
       "current_price_eur_kg": 8.8,
@@ -813,7 +813,7 @@
           "input": "Diesel logistics",
           "description": "Pig farms, abattoirs, and distribution centres",
           "category": "fuel",
-          "price_change_pct": 53,
+          "price_change_pct": 73,
           "weight": 0.25
         },
         {
@@ -828,15 +828,15 @@
       "pass_through_30d": 0.5,
       "local_cost_floor_pct": 40,
       "dietary": [],
-      "exposure_low": 34,
-      "exposure_high": 35
+      "exposure_low": 36,
+      "exposure_high": 37
     },
     {
       "id": "lamb",
       "name": "Lamb",
       "category": "meat",
       "emoji": "🍖",
-      "crisis_exposure_pct": 36,
+      "crisis_exposure_pct": 37,
       "severity": "moderate",
       "base_price_eur_kg": 14.0,
       "current_price_eur_kg": 18.5,
@@ -860,7 +860,7 @@
           "input": "Long-distance shipping",
           "description": "New Zealand and Australian lamb shipped globally",
           "category": "fuel",
-          "price_change_pct": 53,
+          "price_change_pct": 73,
           "weight": 0.1667
         },
         {
@@ -875,15 +875,15 @@
       "pass_through_30d": 0.5,
       "local_cost_floor_pct": 40,
       "dietary": [],
-      "exposure_low": 35,
-      "exposure_high": 36
+      "exposure_low": 37,
+      "exposure_high": 37
     },
     {
       "id": "turkey",
       "name": "Turkey",
       "category": "meat",
       "emoji": "🦃",
-      "crisis_exposure_pct": 34,
+      "crisis_exposure_pct": 36,
       "severity": "moderate",
       "base_price_eur_kg": 7.0,
       "current_price_eur_kg": 9.5,
@@ -907,7 +907,7 @@
           "input": "Diesel transport",
           "description": "Hatchery-to-farm and farm-to-processor logistics",
           "category": "fuel",
-          "price_change_pct": 53,
+          "price_change_pct": 73,
           "weight": 0.25
         }
       ],
@@ -915,8 +915,8 @@
       "pass_through_30d": 0.5,
       "local_cost_floor_pct": 40,
       "dietary": [],
-      "exposure_low": 33,
-      "exposure_high": 34
+      "exposure_low": 35,
+      "exposure_high": 36
     },
     {
       "id": "sausages",
@@ -954,7 +954,7 @@
           "input": "Refrigerated logistics",
           "description": "Diesel cold-chain from factory to shelf",
           "category": "fuel",
-          "price_change_pct": 53,
+          "price_change_pct": 73,
           "weight": 0.2353
         }
       ],
@@ -970,7 +970,7 @@
       "name": "Milk",
       "category": "dairy",
       "emoji": "🥛",
-      "crisis_exposure_pct": 35,
+      "crisis_exposure_pct": 38,
       "severity": "moderate",
       "base_price_eur_kg": 1.2,
       "current_price_eur_kg": 1.55,
@@ -994,7 +994,7 @@
           "input": "Refrigerated distribution",
           "description": "Milk requires unbroken cold-chain from farm to shop",
           "category": "fuel",
-          "price_change_pct": 53,
+          "price_change_pct": 73,
           "weight": 0.2778
         }
       ],
@@ -1004,8 +1004,8 @@
       "dietary": [
         "v"
       ],
-      "exposure_low": 34,
-      "exposure_high": 35
+      "exposure_low": 38,
+      "exposure_high": 39
     },
     {
       "id": "cheese",
@@ -1054,7 +1054,7 @@
       "name": "Butter",
       "category": "dairy",
       "emoji": "🧈",
-      "crisis_exposure_pct": 48,
+      "crisis_exposure_pct": 52,
       "severity": "high",
       "base_price_eur_kg": 6.0,
       "current_price_eur_kg": 8.8,
@@ -1078,7 +1078,7 @@
           "input": "Cold-chain transport",
           "description": "Butter requires consistent refrigeration throughout distribution",
           "category": "fuel",
-          "price_change_pct": 53,
+          "price_change_pct": 73,
           "weight": 0.2778
         }
       ],
@@ -1088,8 +1088,8 @@
       "dietary": [
         "v"
       ],
-      "exposure_low": 47,
-      "exposure_high": 48
+      "exposure_low": 52,
+      "exposure_high": 53
     },
     {
       "id": "yoghurt",
@@ -1138,8 +1138,8 @@
       "name": "Eggs",
       "category": "dairy",
       "emoji": "🥚",
-      "crisis_exposure_pct": 55,
-      "severity": "high",
+      "crisis_exposure_pct": 60,
+      "severity": "extreme",
       "base_price_eur_kg": 3.5,
       "current_price_eur_kg": 5.2,
       "projected_price_eur_kg": 6.5,
@@ -1162,7 +1162,7 @@
           "input": "Diesel logistics",
           "description": "Daily collection rounds to retailers and egg processors",
           "category": "fuel",
-          "price_change_pct": 53,
+          "price_change_pct": 73,
           "weight": 0.2778
         }
       ],
@@ -1172,8 +1172,8 @@
       "dietary": [
         "v"
       ],
-      "exposure_low": 54,
-      "exposure_high": 55
+      "exposure_low": 59,
+      "exposure_high": 61
     },
     {
       "id": "cream",
@@ -1222,7 +1222,7 @@
       "name": "Potatoes",
       "category": "produce",
       "emoji": "🥔",
-      "crisis_exposure_pct": 22,
+      "crisis_exposure_pct": 26,
       "severity": "moderate",
       "base_price_eur_kg": 0.9,
       "current_price_eur_kg": 1.15,
@@ -1239,7 +1239,7 @@
           "input": "Diesel harvesting",
           "description": "Mechanical harvesting is highly fuel-intensive",
           "category": "fuel",
-          "price_change_pct": 53,
+          "price_change_pct": 73,
           "weight": 0.6349
         },
         {
@@ -1257,15 +1257,15 @@
         "v",
         "vg"
       ],
-      "exposure_low": 21,
-      "exposure_high": 22
+      "exposure_low": 26,
+      "exposure_high": 27
     },
     {
       "id": "onions",
       "name": "Onions",
       "category": "produce",
       "emoji": "🧅",
-      "crisis_exposure_pct": 23,
+      "crisis_exposure_pct": 31,
       "severity": "moderate",
       "base_price_eur_kg": 0.8,
       "current_price_eur_kg": 0.98,
@@ -1282,7 +1282,7 @@
           "input": "Diesel machinery",
           "description": "Planting and harvesting machinery runs on diesel",
           "category": "fuel",
-          "price_change_pct": 53,
+          "price_change_pct": 73,
           "weight": 0.8333
         }
       ],
@@ -1293,15 +1293,15 @@
         "v",
         "vg"
       ],
-      "exposure_low": 23,
-      "exposure_high": 23
+      "exposure_low": 31,
+      "exposure_high": 31
     },
     {
       "id": "bananas",
       "name": "Bananas",
       "category": "produce",
       "emoji": "🍌",
-      "crisis_exposure_pct": 22,
+      "crisis_exposure_pct": 26,
       "severity": "moderate",
       "base_price_eur_kg": 1.4,
       "current_price_eur_kg": 1.8,
@@ -1318,7 +1318,7 @@
           "input": "Refrigerated shipping",
           "description": "Banana transport requires temperature-controlled container ships",
           "category": "fuel",
-          "price_change_pct": 53,
+          "price_change_pct": 73,
           "weight": 0.6349
         },
         {
@@ -1336,15 +1336,15 @@
         "v",
         "vg"
       ],
-      "exposure_low": 22,
-      "exposure_high": 23
+      "exposure_low": 26,
+      "exposure_high": 27
     },
     {
       "id": "apples",
       "name": "Apples",
       "category": "produce",
       "emoji": "🍎",
-      "crisis_exposure_pct": 27,
+      "crisis_exposure_pct": 28,
       "severity": "moderate",
       "base_price_eur_kg": 1.8,
       "current_price_eur_kg": 2.08,
@@ -1372,16 +1372,16 @@
         "v",
         "vg"
       ],
-      "exposure_low": 27,
-      "exposure_high": 28
+      "exposure_low": 28,
+      "exposure_high": 29
     },
     {
       "id": "oranges",
       "name": "Oranges",
       "category": "produce",
       "emoji": "🍊",
-      "crisis_exposure_pct": 16,
-      "severity": "low",
+      "crisis_exposure_pct": 22,
+      "severity": "moderate",
       "base_price_eur_kg": 1.5,
       "current_price_eur_kg": 1.74,
       "projected_price_eur_kg": 1.95,
@@ -1397,7 +1397,7 @@
           "input": "Regional transport",
           "description": "Mediterranean citrus production keeps logistics distances short",
           "category": "fuel",
-          "price_change_pct": 53,
+          "price_change_pct": 73,
           "weight": 0.8333
         }
       ],
@@ -1408,15 +1408,15 @@
         "v",
         "vg"
       ],
-      "exposure_low": 16,
-      "exposure_high": 16
+      "exposure_low": 21,
+      "exposure_high": 22
     },
     {
       "id": "lettuce",
       "name": "Lettuce",
       "category": "produce",
       "emoji": "🥬",
-      "crisis_exposure_pct": 12,
+      "crisis_exposure_pct": 16,
       "severity": "low",
       "base_price_eur_kg": 1.6,
       "current_price_eur_kg": 1.8,
@@ -1433,7 +1433,7 @@
           "input": "Local distribution",
           "description": "Short shelf life means local supply chains — minimal shipping",
           "category": "fuel",
-          "price_change_pct": 53,
+          "price_change_pct": 73,
           "weight": 0.8333
         }
       ],
@@ -1444,16 +1444,16 @@
         "v",
         "vg"
       ],
-      "exposure_low": 12,
-      "exposure_high": 12
+      "exposure_low": 16,
+      "exposure_high": 16
     },
     {
       "id": "peppers",
       "name": "Bell Peppers",
       "category": "produce",
       "emoji": "🫑",
-      "crisis_exposure_pct": 34,
-      "severity": "moderate",
+      "crisis_exposure_pct": 41,
+      "severity": "high",
       "base_price_eur_kg": 2.8,
       "current_price_eur_kg": 4.0,
       "projected_price_eur_kg": 5.2,
@@ -1476,7 +1476,7 @@
           "input": "Refrigerated logistics",
           "description": "Fragile produce requires unbroken cold chain",
           "category": "fuel",
-          "price_change_pct": 53,
+          "price_change_pct": 73,
           "weight": 0.6349
         }
       ],
@@ -1487,15 +1487,15 @@
         "v",
         "vg"
       ],
-      "exposure_low": 34,
-      "exposure_high": 35
+      "exposure_low": 41,
+      "exposure_high": 41
     },
     {
       "id": "carrots",
       "name": "Carrots",
       "category": "produce",
       "emoji": "🥕",
-      "crisis_exposure_pct": 14,
+      "crisis_exposure_pct": 19,
       "severity": "low",
       "base_price_eur_kg": 0.9,
       "current_price_eur_kg": 1.03,
@@ -1512,7 +1512,7 @@
           "input": "Diesel harvesting",
           "description": "Root vegetable harvesting is mechanised",
           "category": "fuel",
-          "price_change_pct": 53,
+          "price_change_pct": 73,
           "weight": 0.8333
         }
       ],
@@ -1523,16 +1523,16 @@
         "v",
         "vg"
       ],
-      "exposure_low": 14,
-      "exposure_high": 14
+      "exposure_low": 19,
+      "exposure_high": 19
     },
     {
       "id": "avocado",
       "name": "Avocado",
       "category": "produce",
       "emoji": "🥑",
-      "crisis_exposure_pct": 37,
-      "severity": "moderate",
+      "crisis_exposure_pct": 44,
+      "severity": "high",
       "base_price_eur_kg": 2.5,
       "current_price_eur_kg": 3.6,
       "projected_price_eur_kg": 4.5,
@@ -1541,7 +1541,7 @@
           "input": "Long-haul refrigerated freight",
           "description": "Avocados are flown or shipped from Mexico, Peru, and Kenya",
           "category": "fuel",
-          "price_change_pct": 53,
+          "price_change_pct": 73,
           "weight": 0.6349
         },
         {
@@ -1566,16 +1566,16 @@
         "v",
         "vg"
       ],
-      "exposure_low": 37,
-      "exposure_high": 37
+      "exposure_low": 44,
+      "exposure_high": 45
     },
     {
       "id": "garlic",
       "name": "Garlic",
       "category": "produce",
       "emoji": "🧄",
-      "crisis_exposure_pct": 15,
-      "severity": "low",
+      "crisis_exposure_pct": 20,
+      "severity": "moderate",
       "base_price_eur_kg": 4.0,
       "current_price_eur_kg": 4.65,
       "projected_price_eur_kg": 5.2,
@@ -1591,7 +1591,7 @@
           "input": "Import shipping",
           "description": "Much of EU garlic is imported from China and Spain",
           "category": "fuel",
-          "price_change_pct": 53,
+          "price_change_pct": 73,
           "weight": 0.8333
         }
       ],
@@ -1602,8 +1602,8 @@
         "v",
         "vg"
       ],
-      "exposure_low": 15,
-      "exposure_high": 15
+      "exposure_low": 20,
+      "exposure_high": 20
     },
     {
       "id": "cucumber",
@@ -1663,7 +1663,7 @@
           "input": "Air freight",
           "description": "Fresh shrimp is largely air-freighted from Asia, highly fuel-sensitive",
           "category": "fuel",
-          "price_change_pct": 53,
+          "price_change_pct": 73,
           "weight": 0.9333
         },
         {
@@ -1703,7 +1703,7 @@
           "input": "Fishing vessel fuel",
           "description": "Small-scale fishing boats run on diesel",
           "category": "fuel",
-          "price_change_pct": 53,
+          "price_change_pct": 73,
           "weight": 0.9459
         },
         {
@@ -1743,7 +1743,7 @@
           "input": "Fishing and trawling fuel",
           "description": "North Sea and Atlantic trawlers consume significant diesel",
           "category": "fuel",
-          "price_change_pct": 53,
+          "price_change_pct": 73,
           "weight": 0.9459
         },
         {
@@ -1783,7 +1783,7 @@
           "input": "Long-range fishing fleets",
           "description": "Tuna is caught in distant Pacific and Indian Ocean waters — high fuel use",
           "category": "fuel",
-          "price_change_pct": 53,
+          "price_change_pct": 73,
           "weight": 0.0886
         },
         {
@@ -1804,7 +1804,7 @@
           "input": "Refrigerated shipping",
           "description": "Frozen tuna ships from processing plants in Thailand and Ecuador",
           "category": "fuel",
-          "price_change_pct": 53,
+          "price_change_pct": 73,
           "weight": 0.0886
         }
       ],
@@ -1936,7 +1936,7 @@
           "input": "Long-distance shipping",
           "description": "Cocoa beans shipped from West Africa and South America",
           "category": "fuel",
-          "price_change_pct": 53,
+          "price_change_pct": 73,
           "weight": 0.0933
         },
         {
@@ -2163,7 +2163,7 @@
           "input": "Long-haul shipping",
           "description": "Coffee originates in tropical regions far from consuming markets",
           "category": "fuel",
-          "price_change_pct": 53,
+          "price_change_pct": 73,
           "weight": 0.0933
         },
         {
@@ -2249,7 +2249,7 @@
           "input": "Long-distance shipping",
           "description": "Most peanuts are sourced from China, Argentina, or South Africa",
           "category": "fuel",
-          "price_change_pct": 53,
+          "price_change_pct": 73,
           "weight": 0.07
         },
         {
@@ -2299,7 +2299,7 @@
           "input": "Refrigerated shipping",
           "description": "NFC juice shipped from Brazil requires continuous cold-chain",
           "category": "fuel",
-          "price_change_pct": 53,
+          "price_change_pct": 73,
           "weight": 0.2333
         },
         {
@@ -2317,7 +2317,7 @@
         "v",
         "vg"
       ],
-      "exposure_low": 4,
+      "exposure_low": 3,
       "exposure_high": 4
     },
     {
@@ -2325,7 +2325,7 @@
       "name": "Mayonnaise",
       "category": "packaged",
       "emoji": "🫙",
-      "crisis_exposure_pct": 6,
+      "crisis_exposure_pct": 5,
       "severity": "low",
       "base_price_eur_kg": 4.5,
       "current_price_eur_kg": 6.5,
@@ -2359,8 +2359,8 @@
       "dietary": [
         "v"
       ],
-      "exposure_low": 6,
-      "exposure_high": 6
+      "exposure_low": 5,
+      "exposure_high": 5
     },
     {
       "id": "tomato_sauce",
@@ -2459,8 +2459,8 @@
       "name": "Lentils",
       "category": "staples",
       "emoji": "🫘",
-      "crisis_exposure_pct": 18,
-      "severity": "low",
+      "crisis_exposure_pct": 21,
+      "severity": "moderate",
       "base_price_eur_kg": 1.8,
       "current_price_eur_kg": 2.1,
       "projected_price_eur_kg": 2.35,
@@ -2476,7 +2476,7 @@
           "input": "Diesel harvest",
           "description": "Combine harvesting and transport to processing",
           "category": "fuel",
-          "price_change_pct": 53,
+          "price_change_pct": 73,
           "weight": 0.375
         }
       ],
@@ -2487,15 +2487,15 @@
         "v",
         "vg"
       ],
-      "exposure_low": 18,
-      "exposure_high": 18
+      "exposure_low": 20,
+      "exposure_high": 21
     },
     {
       "id": "chickpeas",
       "name": "Chickpeas",
       "category": "staples",
       "emoji": "🫘",
-      "crisis_exposure_pct": 14,
+      "crisis_exposure_pct": 16,
       "severity": "low",
       "base_price_eur_kg": 2.0,
       "current_price_eur_kg": 2.3,
@@ -2512,7 +2512,7 @@
           "input": "Dry shipping",
           "description": "Dried chickpeas ship in bulk without refrigeration",
           "category": "fuel",
-          "price_change_pct": 53,
+          "price_change_pct": 73,
           "weight": 0.375
         }
       ],
@@ -2523,8 +2523,8 @@
         "v",
         "vg"
       ],
-      "exposure_low": 14,
-      "exposure_high": 14
+      "exposure_low": 16,
+      "exposure_high": 16
     },
     {
       "id": "tofu",
@@ -2574,7 +2574,7 @@
       "name": "Dried Beans",
       "category": "staples",
       "emoji": "🫘",
-      "crisis_exposure_pct": 11,
+      "crisis_exposure_pct": 13,
       "severity": "low",
       "base_price_eur_kg": 1.5,
       "current_price_eur_kg": 1.72,
@@ -2591,7 +2591,7 @@
           "input": "Bulk shipping",
           "description": "Dry beans ship efficiently in bulk without refrigeration",
           "category": "fuel",
-          "price_change_pct": 53,
+          "price_change_pct": 73,
           "weight": 0.375
         }
       ],
@@ -2602,15 +2602,15 @@
         "v",
         "vg"
       ],
-      "exposure_low": 11,
-      "exposure_high": 11
+      "exposure_low": 12,
+      "exposure_high": 13
     },
     {
       "id": "quinoa",
       "name": "Quinoa",
       "category": "staples",
       "emoji": "🌾",
-      "crisis_exposure_pct": 14,
+      "crisis_exposure_pct": 15,
       "severity": "low",
       "base_price_eur_kg": 6.0,
       "current_price_eur_kg": 7.8,
@@ -2627,7 +2627,7 @@
           "input": "Long-haul shipping",
           "description": "Exported from South America to Europe and North America",
           "category": "fuel",
-          "price_change_pct": 53,
+          "price_change_pct": 73,
           "weight": 0.3261
         },
         {
@@ -2646,7 +2646,7 @@
         "vg"
       ],
       "exposure_low": 14,
-      "exposure_high": 14
+      "exposure_high": 15
     },
     {
       "id": "olive_oil",
@@ -2684,7 +2684,7 @@
           "input": "Diesel distribution",
           "description": "Mediterranean production region to global retail",
           "category": "fuel",
-          "price_change_pct": 53,
+          "price_change_pct": 73,
           "weight": 0.2884
         }
       ],
@@ -2703,7 +2703,7 @@
       "name": "Frozen Peas",
       "category": "produce",
       "emoji": "🟢",
-      "crisis_exposure_pct": 22,
+      "crisis_exposure_pct": 26,
       "severity": "moderate",
       "base_price_eur_kg": 1.5,
       "current_price_eur_kg": 1.9,
@@ -2727,7 +2727,7 @@
           "input": "Frozen logistics",
           "description": "Continuous frozen distribution from factory to freezer",
           "category": "fuel",
-          "price_change_pct": 53,
+          "price_change_pct": 73,
           "weight": 0.6349
         }
       ],
@@ -2738,14 +2738,13 @@
         "v",
         "vg"
       ],
-      "exposure_low": 21,
-      "exposure_high": 22
+      "exposure_low": 26,
+      "exposure_high": 27
     }
   ],
   "stale_sources": [
     "methanol_usd_ton",
     "natural_gas_eur_mwh",
-    "oil_brent_usd",
     "urea_usd_ton"
   ]
 }
