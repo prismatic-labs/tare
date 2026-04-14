@@ -80,9 +80,9 @@ PRE_CRISIS = {
 # scraping fills in.
 #
 # Source priority per commodity:
-#   Oil:      FRED (DCOILBRENTEU) → World Bank API → WB Excel
-#   Gas:      FRED (PNGASEUQ) → World Bank API → WB Excel
-#   Urea:    World Bank API → WB Excel → FRED (if available)
+#   Oil:      FRED (DCOILBRENTEU, daily) → World Bank API → WB Excel
+#   Gas:      World Bank API (European spot) → WB Excel
+#   Urea:    World Bank API (E. European spot) → WB Excel
 #   Methanol: World Bank API → WB Excel
 
 # Conversion: WB gas API reports $/mmbtu; 1 mmbtu ≈ 0.293 MWh → $/MWh = $/mmbtu / 0.293
@@ -93,9 +93,10 @@ GAS_MMBTU_TO_MWH = 0.293
 # Key set as FRED_API_KEY env var (also used by Clover).
 FRED_API_BASE = "https://api.stlouisfed.org/fred/series/observations"
 FRED_SERIES = {
-    "oil_brent_usd":       "DCOILBRENTEU",   # Brent crude, daily ($/bbl)
-    "natural_gas_eur_mwh": "PNGASEUUSDM",    # EU natural gas, monthly ($/mmbtu → EUR/MWh)
-    "urea_usd_ton":        "PCU325311325311A",  # PPI: nitrogenous fertilizer incl. urea (index → $/ton)
+    "oil_brent_usd":       "DCOILBRENTEU",   # Brent crude, daily ($/bbl) — globally priced
+    # Gas and urea removed: FRED series are US-domestic prices that don't reflect
+    # international markets during a Hormuz crisis. World Bank provides proper
+    # European gas and E. European urea prices.
 }
 
 # ─── World Bank Commodity Price Data API ──────────────────────────────────
@@ -273,13 +274,6 @@ def _fetch_fred(key: str) -> float | None:
             val_str = obs.get("value", ".")
             if val_str != ".":
                 val = float(val_str)
-                # PNGASEUUSDM: $/mmbtu → EUR/MWh (divide by 0.293, then approximate USD→EUR)
-                if key == "natural_gas_eur_mwh":
-                    val = val / GAS_MMBTU_TO_MWH  # $/mmbtu → $/MWh ≈ EUR/MWh
-                # PCU325311325311A: PPI index → approximate $/ton
-                # Baseline: index ~200 ≈ $320/ton (Dec 2022 calibration)
-                elif key == "urea_usd_ton":
-                    val = val * 320.0 / 200.0
                 return _validate_wb_row(key, val)
         return None
     except (requests.RequestException, ValueError, KeyError, TypeError) as exc:

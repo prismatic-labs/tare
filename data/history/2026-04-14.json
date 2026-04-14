@@ -2,22 +2,22 @@
   "date": "2026-04-14",
   "sources": {
     "oil_brent_usd": 127.61,
-    "natural_gas_eur_mwh": 38.19112627986348,
-    "urea_usd_ton": 226.7696,
+    "natural_gas_eur_mwh": 58,
+    "urea_usd_ton": 480,
     "methanol_usd_ton": 540
   },
   "foods": [
     {
       "id": "chicken",
-      "crisis_exposure_pct": 9
+      "crisis_exposure_pct": 60
     },
     {
       "id": "bread",
-      "crisis_exposure_pct": 1
+      "crisis_exposure_pct": 45
     },
     {
       "id": "tomatoes",
-      "crisis_exposure_pct": 30
+      "crisis_exposure_pct": 46
     },
     {
       "id": "salmon",
@@ -25,123 +25,123 @@
     },
     {
       "id": "rice",
-      "crisis_exposure_pct": 15
+      "crisis_exposure_pct": 32
     },
     {
       "id": "pasta",
-      "crisis_exposure_pct": 8
+      "crisis_exposure_pct": 45
     },
     {
       "id": "flour",
-      "crisis_exposure_pct": 8
+      "crisis_exposure_pct": 43
     },
     {
       "id": "oats",
-      "crisis_exposure_pct": 1
+      "crisis_exposure_pct": 16
     },
     {
       "id": "cornflakes",
-      "crisis_exposure_pct": 1
+      "crisis_exposure_pct": 45
     },
     {
       "id": "couscous",
-      "crisis_exposure_pct": 8
+      "crisis_exposure_pct": 45
     },
     {
       "id": "noodles",
-      "crisis_exposure_pct": 1
+      "crisis_exposure_pct": 45
     },
     {
       "id": "crackers",
-      "crisis_exposure_pct": 1
+      "crisis_exposure_pct": 45
     },
     {
       "id": "beef",
-      "crisis_exposure_pct": 9
+      "crisis_exposure_pct": 60
     },
     {
       "id": "pork",
-      "crisis_exposure_pct": 4
+      "crisis_exposure_pct": 35
     },
     {
       "id": "lamb",
-      "crisis_exposure_pct": 1
+      "crisis_exposure_pct": 35
     },
     {
       "id": "turkey",
-      "crisis_exposure_pct": 4
+      "crisis_exposure_pct": 34
     },
     {
       "id": "sausages",
-      "crisis_exposure_pct": 9
+      "crisis_exposure_pct": 60
     },
     {
       "id": "milk",
-      "crisis_exposure_pct": 8
+      "crisis_exposure_pct": 37
     },
     {
       "id": "cheese",
-      "crisis_exposure_pct": 1
+      "crisis_exposure_pct": 55
     },
     {
       "id": "butter",
-      "crisis_exposure_pct": 11
+      "crisis_exposure_pct": 51
     },
     {
       "id": "yoghurt",
-      "crisis_exposure_pct": 1
+      "crisis_exposure_pct": 55
     },
     {
       "id": "eggs",
-      "crisis_exposure_pct": 12
+      "crisis_exposure_pct": 59
     },
     {
       "id": "cream",
-      "crisis_exposure_pct": 1
+      "crisis_exposure_pct": 55
     },
     {
       "id": "potatoes",
-      "crisis_exposure_pct": 18
-    },
-    {
-      "id": "onions",
       "crisis_exposure_pct": 28
     },
     {
+      "id": "onions",
+      "crisis_exposure_pct": 35
+    },
+    {
       "id": "bananas",
-      "crisis_exposure_pct": 18
+      "crisis_exposure_pct": 28
     },
     {
       "id": "apples",
-      "crisis_exposure_pct": 1
-    },
-    {
-      "id": "oranges",
-      "crisis_exposure_pct": 20
-    },
-    {
-      "id": "lettuce",
-      "crisis_exposure_pct": 15
-    },
-    {
-      "id": "peppers",
       "crisis_exposure_pct": 29
     },
     {
-      "id": "carrots",
-      "crisis_exposure_pct": 17
+      "id": "oranges",
+      "crisis_exposure_pct": 25
     },
     {
-      "id": "avocado",
-      "crisis_exposure_pct": 31
-    },
-    {
-      "id": "garlic",
+      "id": "lettuce",
       "crisis_exposure_pct": 18
     },
     {
+      "id": "peppers",
+      "crisis_exposure_pct": 44
+    },
+    {
+      "id": "carrots",
+      "crisis_exposure_pct": 21
+    },
+    {
+      "id": "avocado",
+      "crisis_exposure_pct": 47
+    },
+    {
+      "id": "garlic",
+      "crisis_exposure_pct": 23
+    },
+    {
       "id": "cucumber",
-      "crisis_exposure_pct": 1
+      "crisis_exposure_pct": 55
     },
     {
       "id": "shrimp",
@@ -157,91 +157,91 @@
     },
     {
       "id": "canned_tuna",
-      "crisis_exposure_pct": 22
+      "crisis_exposure_pct": 49
     },
     {
       "id": "cooking_oil",
-      "crisis_exposure_pct": 19
+      "crisis_exposure_pct": 50
     },
     {
       "id": "frozen_pizza",
-      "crisis_exposure_pct": 21
+      "crisis_exposure_pct": 55
     },
     {
       "id": "chocolate",
-      "crisis_exposure_pct": 18
+      "crisis_exposure_pct": 50
     },
     {
       "id": "crisps",
-      "crisis_exposure_pct": 19
+      "crisis_exposure_pct": 50
     },
     {
       "id": "biscuits",
-      "crisis_exposure_pct": 15
+      "crisis_exposure_pct": 50
     },
     {
       "id": "soft_drinks",
-      "crisis_exposure_pct": 15
+      "crisis_exposure_pct": 50
     },
     {
       "id": "beer",
-      "crisis_exposure_pct": 9
+      "crisis_exposure_pct": 50
     },
     {
       "id": "coffee",
-      "crisis_exposure_pct": 22
+      "crisis_exposure_pct": 60
     },
     {
       "id": "sugar",
-      "crisis_exposure_pct": 7
+      "crisis_exposure_pct": 45
     },
     {
       "id": "peanut_butter",
-      "crisis_exposure_pct": 12
+      "crisis_exposure_pct": 50
     },
     {
       "id": "orange_juice",
-      "crisis_exposure_pct": 2
+      "crisis_exposure_pct": 3
     },
     {
       "id": "mayonnaise",
-      "crisis_exposure_pct": 3
+      "crisis_exposure_pct": 4
     },
     {
       "id": "tomato_sauce",
-      "crisis_exposure_pct": 9
+      "crisis_exposure_pct": 50
     },
     {
       "id": "baby_formula",
-      "crisis_exposure_pct": 19
+      "crisis_exposure_pct": 50
     },
     {
       "id": "lentils",
-      "crisis_exposure_pct": 3
+      "crisis_exposure_pct": 20
     },
     {
       "id": "chickpeas",
-      "crisis_exposure_pct": 2
+      "crisis_exposure_pct": 15
     },
     {
       "id": "tofu",
-      "crisis_exposure_pct": 1
+      "crisis_exposure_pct": 40
     },
     {
       "id": "beans",
-      "crisis_exposure_pct": 2
+      "crisis_exposure_pct": 12
     },
     {
       "id": "quinoa",
-      "crisis_exposure_pct": 2
+      "crisis_exposure_pct": 14
     },
     {
       "id": "olive_oil",
-      "crisis_exposure_pct": 2
+      "crisis_exposure_pct": 15
     },
     {
       "id": "frozen_peas",
-      "crisis_exposure_pct": 18
+      "crisis_exposure_pct": 28
     }
   ]
 }
