@@ -10,13 +10,13 @@
     "insurance_premium_pre_crisis_bps": 0.05,
     "exchange_rates": {
       "EUR": 1.0,
-      "GBP": 0.87058,
-      "JPY": 186.75,
-      "PHP": 70.356,
-      "USD": 1.1684,
-      "INR": 109.047,
-      "BRL": 5.874,
-      "AUD": 1.661,
+      "GBP": 0.86913,
+      "JPY": 187.33,
+      "PHP": 70.578,
+      "USD": 1.1793,
+      "INR": 109.7765,
+      "BRL": 5.8747,
+      "AUD": 1.6558,
       "LKR": 331
     },
     "tipping_points": {
