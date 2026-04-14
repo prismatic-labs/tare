@@ -94,7 +94,8 @@ GAS_MMBTU_TO_MWH = 0.293
 FRED_API_BASE = "https://api.stlouisfed.org/fred/series/observations"
 FRED_SERIES = {
     "oil_brent_usd":       "DCOILBRENTEU",   # Brent crude, daily ($/bbl)
-    "natural_gas_eur_mwh": "PNGASEUQ",       # EU natural gas (index → converted)
+    "natural_gas_eur_mwh": "PNGASEUUSDM",    # EU natural gas, monthly ($/mmbtu → EUR/MWh)
+    "urea_usd_ton":        "PCU325311325311A",  # PPI: nitrogenous fertilizer incl. urea (index → $/ton)
 }
 
 # ─── World Bank Commodity Price Data API ──────────────────────────────────
@@ -272,10 +273,13 @@ def _fetch_fred(key: str) -> float | None:
             val_str = obs.get("value", ".")
             if val_str != ".":
                 val = float(val_str)
-                # FRED PNGASEUQ is an index; convert to approximate EUR/MWh
-                # using the baseline ratio: index 100 ≈ €34/MWh (pre-crisis TTF)
-                if key == "natural_gas_eur_mwh" and series_id == "PNGASEUQ":
-                    val = val * 34.0 / 100.0
+                # PNGASEUUSDM: $/mmbtu → EUR/MWh (divide by 0.293, then approximate USD→EUR)
+                if key == "natural_gas_eur_mwh":
+                    val = val / GAS_MMBTU_TO_MWH  # $/mmbtu → $/MWh ≈ EUR/MWh
+                # PCU325311325311A: PPI index → approximate $/ton
+                # Baseline: index ~200 ≈ $320/ton (Dec 2022 calibration)
+                elif key == "urea_usd_ton":
+                    val = val * 320.0 / 200.0
                 return _validate_wb_row(key, val)
         return None
     except (requests.RequestException, ValueError, KeyError, TypeError) as exc:
