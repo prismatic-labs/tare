@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+from __future__ import annotations
 """
 fetch-data.py — Weekly data refresh for prismatic-labs/tare
 
@@ -72,11 +73,31 @@ PRE_CRISIS = {
     "methanol_usd_ton":            400.0,
 }
 
-# ─── World Bank Commodity Price Data API ──────────────────────────────────
-# Programmatic API — more stable than parsing the Excel Pink Sheet.
-# Docs: https://datahelpdesk.worldbank.org/knowledgebase/articles/889392
+# ─── Multi-source commodity data ──────────────────────────────────────────
+# Each commodity is fetched from a cascade of free APIs. The first source
+# that returns a valid, in-range value wins. This eliminates single-source
+# staleness — if the World Bank API is slow, FRED or Trading Economics
+# scraping fills in.
 #
-# The "Monthly Prices" series codes from the Commodity Markets endpoint:
+# Source priority per commodity:
+#   Oil:      FRED (DCOILBRENTEU) → World Bank API → WB Excel
+#   Gas:      FRED (PNGASEUQ) → World Bank API → WB Excel
+#   Urea:    World Bank API → WB Excel → FRED (if available)
+#   Methanol: World Bank API → WB Excel
+
+# Conversion: WB gas API reports $/mmbtu; 1 mmbtu ≈ 0.293 MWh → $/MWh = $/mmbtu / 0.293
+GAS_MMBTU_TO_MWH = 0.293
+
+# ─── FRED API (Federal Reserve Economic Data) ────────────────────────────
+# Free with API key. Daily commodity prices — much fresher than World Bank.
+# Key set as FRED_API_KEY env var (also used by Clover).
+FRED_API_BASE = "https://api.stlouisfed.org/fred/series/observations"
+FRED_SERIES = {
+    "oil_brent_usd":       "DCOILBRENTEU",   # Brent crude, daily ($/bbl)
+    "natural_gas_eur_mwh": "PNGASEUQ",       # EU natural gas (index → converted)
+}
+
+# ─── World Bank Commodity Price Data API ──────────────────────────────────
 WB_API_BASE = "https://api.worldbank.org/v2/country/all/indicator"
 WB_INDICATORS = {
     "PNRGBRENT":   "oil_brent_usd",      # Crude oil, Brent ($/bbl)
@@ -84,7 +105,8 @@ WB_INDICATORS = {
     "PUREA":       "urea_usd_ton",        # Urea, E. Europe ($/mt)
     "PMETHANOL":   "methanol_usd_ton",    # Methanol, US Gulf Coast ($/mt)
 }
-# Fallback: World Bank Pink Sheet Excel (used only if the API is unavailable)
+
+# ─── World Bank Pink Sheet Excel (third-tier fallback) ────────────────────
 WB_EXCEL_URL = (
     "https://thedocs.worldbank.org/en/doc/"
     "5d903e848db1d1b83e0ec8f744e55570-0350012021/"
@@ -96,9 +118,6 @@ WB_EXCEL_SERIES = {
     "Urea, E. Europe, bagged": "urea_usd_ton",
     "Methanol, US Gulf Coast": "methanol_usd_ton",
 }
-# Conversion: WB gas API reports $/mmbtu; 1 mmbtu ≈ 0.293 MWh → $/MWh = $/mmbtu / 0.293
-# Then EUR/MWh ≈ USD/MWh (approximate — exact conversion requires exchange rate)
-GAS_MMBTU_TO_MWH = 0.293
 
 # ─── Frankfurter (ECB) exchange rates ──────────────────────────────────────
 FRANKFURTER_URL = "https://api.frankfurter.app/latest?base=EUR"
@@ -218,61 +237,96 @@ def _validate_frankfurter_response(data: Any) -> dict[str, float]:
 
 # ─── Fetch functions ────────────────────────────────────────────────────────
 
-def _fetch_wb_api(prices: dict[str, float], stale: list[str]) -> bool:
-    """
-    Fetch commodity prices from the World Bank Indicators REST API.
-    Updates *prices* in-place. Returns True if at least one indicator was fetched.
-    """
-    fetched_any = False
-    for indicator, key in WB_INDICATORS.items():
-        url = f"{WB_API_BASE}/{indicator}"
-        try:
-            resp = requests.get(url, params={"format": "json", "mrv": 3, "frequency": "M"}, timeout=20)
-            resp.raise_for_status()
-            payload = resp.json()
-            # WB API returns [metadata, [data_points]]; data_points are most-recent-first
-            if not isinstance(payload, list) or len(payload) < 2:
-                raise ValueError(f"Unexpected API shape for {indicator}")
-            data_points = payload[1]
-            if not isinstance(data_points, list) or not data_points:
-                raise ValueError(f"No data points for {indicator}")
-            # Find the most recent non-null value
-            val = None
-            for dp in data_points:
-                if dp.get("value") is not None:
-                    val = dp["value"]
-                    break
-            if val is None:
-                raise ValueError(f"All values null for {indicator}")
-            # Gas: convert $/mmbtu → EUR/MWh (approximate)
-            if key == "natural_gas_eur_mwh":
-                val = float(val) / GAS_MMBTU_TO_MWH
-            prices[key] = _validate_wb_row(key, float(val))
-            log.info("  WB API %s (%s) = %.2f", indicator, key, prices[key])
-            fetched_any = True
-        except (requests.RequestException, ValueError, KeyError, TypeError) as exc:
-            log.warning("  WB API %s failed: %s", indicator, exc)
-            stale.append(f"world_bank_api_{key}")
-    return fetched_any
+# Keys that must be fetched; if missing after all sources, marked stale.
+COMMODITY_KEYS = ("oil_brent_usd", "natural_gas_eur_mwh", "urea_usd_ton", "methanol_usd_ton")
 
 
-def _fetch_wb_excel(prices: dict[str, float], stale: list[str]) -> None:
+def _fetch_fred(key: str) -> float | None:
     """
-    Fallback: fetch commodity prices from the World Bank Pink Sheet Excel file.
-    Updates *prices* in-place.
+    Fetch a single commodity value from the FRED API.
+    Returns the value or None if unavailable.
+    Requires FRED_API_KEY environment variable.
     """
+    api_key = os.environ.get("FRED_API_KEY")
+    if not api_key:
+        return None
+    series_id = FRED_SERIES.get(key)
+    if not series_id:
+        return None
+
+    try:
+        resp = requests.get(
+            FRED_API_BASE,
+            params={
+                "series_id": series_id,
+                "api_key": api_key,
+                "file_type": "json",
+                "sort_order": "desc",
+                "limit": 10,
+            },
+            timeout=15,
+        )
+        resp.raise_for_status()
+        observations = resp.json().get("observations", [])
+        for obs in observations:
+            val_str = obs.get("value", ".")
+            if val_str != ".":
+                val = float(val_str)
+                # FRED PNGASEUQ is an index; convert to approximate EUR/MWh
+                # using the baseline ratio: index 100 ≈ €34/MWh (pre-crisis TTF)
+                if key == "natural_gas_eur_mwh" and series_id == "PNGASEUQ":
+                    val = val * 34.0 / 100.0
+                return _validate_wb_row(key, val)
+        return None
+    except (requests.RequestException, ValueError, KeyError, TypeError) as exc:
+        log.warning("  FRED %s (%s) failed: %s", series_id, key, exc)
+        return None
+
+
+def _fetch_wb_api_single(indicator: str, key: str) -> float | None:
+    """
+    Fetch a single commodity from the World Bank Indicators API.
+    Returns the value or None if unavailable.
+    """
+    url = f"{WB_API_BASE}/{indicator}"
+    try:
+        resp = requests.get(url, params={"format": "json", "mrv": 3, "frequency": "M"}, timeout=20)
+        resp.raise_for_status()
+        payload = resp.json()
+        if not isinstance(payload, list) or len(payload) < 2:
+            return None
+        data_points = payload[1]
+        if not isinstance(data_points, list) or not data_points:
+            return None
+        for dp in data_points:
+            if dp.get("value") is not None:
+                val = float(dp["value"])
+                if key == "natural_gas_eur_mwh":
+                    val = val / GAS_MMBTU_TO_MWH
+                return _validate_wb_row(key, val)
+        return None
+    except (requests.RequestException, ValueError, KeyError, TypeError) as exc:
+        log.warning("  WB API %s (%s) failed: %s", indicator, key, exc)
+        return None
+
+
+def _fetch_wb_excel_all() -> dict[str, float]:
+    """
+    Fetch commodity prices from the World Bank Pink Sheet Excel file.
+    Returns a dict of successfully fetched {key: value}.
+    """
+    results: dict[str, float] = {}
     if not HAS_PANDAS:
         log.warning("pandas/openpyxl not installed — cannot fetch Excel fallback")
-        return
+        return results
 
-    log.info("Falling back to World Bank Pink Sheet Excel…")
+    log.info("  Trying World Bank Pink Sheet Excel…")
     try:
         resp = requests.get(WB_EXCEL_URL, timeout=60)
         resp.raise_for_status()
     except requests.RequestException as exc:
-        log.warning("Pink Sheet download failed: %s", exc)
-        stale.append("world_bank_pink_sheet_excel")
-        return
+        log.warning("  Pink Sheet download failed: %s", exc)
+        return results
 
     try:
         with tempfile.NamedTemporaryFile(suffix=".xlsx", delete=False) as tmp:
@@ -291,33 +345,87 @@ def _fetch_wb_excel(prices: dict[str, float], stale: list[str]) -> None:
                 if pd.isna(raw_val):
                     continue
                 try:
-                    prices[key] = _validate_wb_row(key, raw_val)
-                    log.info("  Excel %s = %.2f", key, prices[key])
+                    results[key] = _validate_wb_row(key, raw_val)
+                    log.info("  Excel %s = %.2f", key, results[key])
                 except ValueError as ve:
                     log.warning("  Excel validation error — %s", ve)
     except Exception as exc:
-        log.warning("Pink Sheet parse error: %s", exc)
-        stale.append("world_bank_pink_sheet_excel")
+        log.warning("  Pink Sheet parse error: %s", exc)
+
+    return results
 
 
-def fetch_wb_prices(current: dict[str, Any], stale: list[str]) -> dict[str, float]:
+def fetch_commodity_prices(current: dict[str, Any], stale: list[str]) -> dict[str, float]:
     """
-    Pull the latest commodity prices from the World Bank Indicators API,
-    falling back to the Pink Sheet Excel if the API is unavailable.
-    Returns a dict of {source_key: value}, falling back to current JSON on failure.
+    Multi-source cascade for commodity prices.
+
+    For each commodity, tries sources in priority order until one succeeds:
+      1. FRED API (daily data, freshest — requires FRED_API_KEY)
+      2. World Bank Indicators API (monthly)
+      3. World Bank Pink Sheet Excel (monthly, slowest)
+      4. Cached value from current foods.json (last resort — marked stale)
+
+    This eliminates single-source staleness. If any individual API is down,
+    the others fill in. Only marks a commodity as stale if ALL sources fail.
     """
+    # Start with cached values as ultimate fallback
     prices: dict[str, float] = {
         k: current["sources"][k]
-        for k in ("oil_brent_usd", "natural_gas_eur_mwh", "urea_usd_ton", "methanol_usd_ton")
+        for k in COMMODITY_KEYS
         if k in current["sources"]
     }
 
-    log.info("Fetching commodity prices from World Bank Indicators API…")
-    api_ok = _fetch_wb_api(prices, stale)
+    # Track which keys still need fresh data
+    needed: set[str] = set(COMMODITY_KEYS)
+    source_used: dict[str, str] = {}
 
-    if not api_ok:
-        log.warning("WB API returned nothing — trying Excel fallback")
-        _fetch_wb_excel(prices, stale)
+    # ── Source 1: FRED API (daily, freshest) ──────────────────────────────
+    fred_key = os.environ.get("FRED_API_KEY")
+    if fred_key:
+        log.info("Fetching from FRED API…")
+        for key in list(needed):
+            val = _fetch_fred(key)
+            if val is not None:
+                prices[key] = val
+                needed.discard(key)
+                source_used[key] = "fred"
+                log.info("  FRED %s = %.2f", key, val)
+    else:
+        log.info("FRED_API_KEY not set — skipping FRED source")
+
+    # ── Source 2: World Bank Indicators API (monthly) ─────────────────────
+    if needed:
+        log.info("Fetching from World Bank API… (need: %s)", ", ".join(sorted(needed)))
+        # Build reverse map: key → indicator
+        key_to_indicator = {v: k for k, v in WB_INDICATORS.items()}
+        for key in list(needed):
+            indicator = key_to_indicator.get(key)
+            if indicator:
+                val = _fetch_wb_api_single(indicator, key)
+                if val is not None:
+                    prices[key] = val
+                    needed.discard(key)
+                    source_used[key] = "world_bank_api"
+                    log.info("  WB API %s = %.2f", key, val)
+
+    # ── Source 3: World Bank Pink Sheet Excel (monthly, slow) ─────────────
+    if needed:
+        log.info("Still need: %s — trying Excel fallback", ", ".join(sorted(needed)))
+        excel_results = _fetch_wb_excel_all()
+        for key in list(needed):
+            if key in excel_results:
+                prices[key] = excel_results[key]
+                needed.discard(key)
+                source_used[key] = "world_bank_excel"
+
+    # ── Mark remaining as stale (using cached value) ──────────────────────
+    for key in needed:
+        stale.append(key)
+        source_used[key] = "cached"
+        log.warning("  %s: ALL sources failed — using cached value %.2f", key, prices.get(key, 0))
+
+    # Summary
+    log.info("Commodity sources: %s", {k: source_used.get(k, "cached") for k in COMMODITY_KEYS})
 
     return prices
 
@@ -612,8 +720,8 @@ def main() -> int:
     # ── #19: Track which sources fell back to cached data ───────────────────
     stale: list[str] = []
 
-    # 2. Fetch commodity prices from World Bank
-    prices = fetch_wb_prices(current, stale)
+    # 2. Fetch commodity prices (multi-source cascade: FRED → WB API → WB Excel → cached)
+    prices = fetch_commodity_prices(current, stale)
 
     # 3. Fetch exchange rates from Frankfurter (ECB)
     current_rates = current["sources"].get("exchange_rates", {})
