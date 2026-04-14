@@ -17,7 +17,7 @@
     },
     {
       "id": "tomatoes",
-      "crisis_exposure_pct": 32
+      "crisis_exposure_pct": 36
     },
     {
       "id": "salmon",
@@ -29,11 +29,11 @@
     },
     {
       "id": "pasta",
-      "crisis_exposure_pct": 45
+      "crisis_exposure_pct": 44
     },
     {
       "id": "flour",
-      "crisis_exposure_pct": 43
+      "crisis_exposure_pct": 39
     },
     {
       "id": "oats",
@@ -45,7 +45,7 @@
     },
     {
       "id": "couscous",
-      "crisis_exposure_pct": 45
+      "crisis_exposure_pct": 41
     },
     {
       "id": "noodles",
@@ -61,15 +61,15 @@
     },
     {
       "id": "pork",
-      "crisis_exposure_pct": 31
+      "crisis_exposure_pct": 35
     },
     {
       "id": "lamb",
-      "crisis_exposure_pct": 32
+      "crisis_exposure_pct": 36
     },
     {
       "id": "turkey",
-      "crisis_exposure_pct": 30
+      "crisis_exposure_pct": 34
     },
     {
       "id": "sausages",
@@ -113,7 +113,7 @@
     },
     {
       "id": "apples",
-      "crisis_exposure_pct": 31
+      "crisis_exposure_pct": 27
     },
     {
       "id": "oranges",
@@ -125,7 +125,7 @@
     },
     {
       "id": "peppers",
-      "crisis_exposure_pct": 30
+      "crisis_exposure_pct": 34
     },
     {
       "id": "carrots",
@@ -133,7 +133,7 @@
     },
     {
       "id": "avocado",
-      "crisis_exposure_pct": 33
+      "crisis_exposure_pct": 37
     },
     {
       "id": "garlic",
@@ -201,11 +201,11 @@
     },
     {
       "id": "orange_juice",
-      "crisis_exposure_pct": 2
+      "crisis_exposure_pct": 4
     },
     {
       "id": "mayonnaise",
-      "crisis_exposure_pct": 2
+      "crisis_exposure_pct": 6
     },
     {
       "id": "tomato_sauce",
@@ -233,11 +233,11 @@
     },
     {
       "id": "quinoa",
-      "crisis_exposure_pct": 10
+      "crisis_exposure_pct": 14
     },
     {
       "id": "olive_oil",
-      "crisis_exposure_pct": 12
+      "crisis_exposure_pct": 16
     },
     {
       "id": "frozen_peas",
