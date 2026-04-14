@@ -32,7 +32,7 @@ Each food is scored by its **crisis exposure** — the percentage of its retail 
 | Moderate | 20–39% | Meaningful but partial exposure |
 | Low | 0–19% | Largely insulated from the crisis |
 
-Data updates weekly via GitHub Actions. No API keys required to view the site.
+Data updates daily via GitHub Actions. No API keys required to view the site.
 
 ---
 
