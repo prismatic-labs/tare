@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-04-15",
+  "last_updated": "2026-04-16",
   "crisis_start": "2023-11-19",
   "crisis_name": "Red Sea / Bab-el-Mandeb disruption",
   "crisis_mechanism": "freight",
@@ -10,13 +10,13 @@
     "insurance_premium_pre_crisis_bps": 0.05,
     "exchange_rates": {
       "EUR": 1.0,
-      "GBP": 0.86913,
-      "JPY": 187.33,
-      "PHP": 70.578,
-      "USD": 1.1793,
-      "INR": 109.7765,
-      "BRL": 5.8747,
-      "AUD": 1.6558,
+      "GBP": 0.86935,
+      "JPY": 187.41,
+      "PHP": 70.794,
+      "USD": 1.178,
+      "INR": 110.0695,
+      "BRL": 5.8878,
+      "AUD": 1.6507,
       "LKR": 331
     },
     "tipping_points": {
