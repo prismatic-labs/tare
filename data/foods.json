@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-05-03",
+  "last_updated": "2026-05-04",
   "crisis_start": "2026-02-28",
   "sources": {
     "oil_brent_usd": 113.89,
@@ -358,7 +358,7 @@
       "name": "Salmon",
       "category": "seafood",
       "emoji": "🍣",
-      "crisis_exposure_pct": 53,
+      "crisis_exposure_pct": 59,
       "severity": "high",
       "base_price_eur_kg": 18.5,
       "current_price_eur_kg": 26.2,
@@ -397,8 +397,8 @@
       "pass_through_30d": 0.8,
       "local_cost_floor_pct": 30,
       "dietary": [],
-      "exposure_low": 53,
-      "exposure_high": 53
+      "exposure_low": 59,
+      "exposure_high": 59
     },
     {
       "id": "rice",
@@ -796,7 +796,7 @@
       "name": "Pork",
       "category": "meat",
       "emoji": "🥓",
-      "crisis_exposure_pct": 17,
+      "crisis_exposure_pct": 16,
       "severity": "low",
       "base_price_eur_kg": 6.5,
       "current_price_eur_kg": 8.8,
@@ -828,15 +828,15 @@
       "pass_through_30d": 0.5,
       "local_cost_floor_pct": 40,
       "dietary": [],
-      "exposure_low": 17,
-      "exposure_high": 18
+      "exposure_low": 16,
+      "exposure_high": 17
     },
     {
       "id": "lamb",
       "name": "Lamb",
       "category": "meat",
       "emoji": "🍖",
-      "crisis_exposure_pct": 16,
+      "crisis_exposure_pct": 15,
       "severity": "low",
       "base_price_eur_kg": 14.0,
       "current_price_eur_kg": 18.5,
@@ -875,7 +875,7 @@
       "pass_through_30d": 0.5,
       "local_cost_floor_pct": 40,
       "dietary": [],
-      "exposure_low": 16,
+      "exposure_low": 15,
       "exposure_high": 16
     },
     {
@@ -883,7 +883,7 @@
       "name": "Turkey",
       "category": "meat",
       "emoji": "🦃",
-      "crisis_exposure_pct": 17,
+      "crisis_exposure_pct": 16,
       "severity": "low",
       "base_price_eur_kg": 7.0,
       "current_price_eur_kg": 9.5,
@@ -915,8 +915,8 @@
       "pass_through_30d": 0.5,
       "local_cost_floor_pct": 40,
       "dietary": [],
-      "exposure_low": 17,
-      "exposure_high": 18
+      "exposure_low": 16,
+      "exposure_high": 17
     },
     {
       "id": "sausages",
@@ -1265,7 +1265,7 @@
       "name": "Onions",
       "category": "produce",
       "emoji": "🧅",
-      "crisis_exposure_pct": 36,
+      "crisis_exposure_pct": 37,
       "severity": "moderate",
       "base_price_eur_kg": 0.8,
       "current_price_eur_kg": 0.98,
@@ -1293,8 +1293,8 @@
         "v",
         "vg"
       ],
-      "exposure_low": 36,
-      "exposure_high": 36
+      "exposure_low": 37,
+      "exposure_high": 37
     },
     {
       "id": "bananas",
@@ -1380,7 +1380,7 @@
       "name": "Oranges",
       "category": "produce",
       "emoji": "🍊",
-      "crisis_exposure_pct": 32,
+      "crisis_exposure_pct": 33,
       "severity": "moderate",
       "base_price_eur_kg": 1.5,
       "current_price_eur_kg": 1.74,
@@ -1408,15 +1408,15 @@
         "v",
         "vg"
       ],
-      "exposure_low": 32,
-      "exposure_high": 32
+      "exposure_low": 33,
+      "exposure_high": 33
     },
     {
       "id": "lettuce",
       "name": "Lettuce",
       "category": "produce",
       "emoji": "🥬",
-      "crisis_exposure_pct": 26,
+      "crisis_exposure_pct": 27,
       "severity": "moderate",
       "base_price_eur_kg": 1.6,
       "current_price_eur_kg": 1.8,
@@ -1444,8 +1444,8 @@
         "v",
         "vg"
       ],
-      "exposure_low": 26,
-      "exposure_high": 26
+      "exposure_low": 27,
+      "exposure_high": 27
     },
     {
       "id": "peppers",
@@ -1495,7 +1495,7 @@
       "name": "Carrots",
       "category": "produce",
       "emoji": "🥕",
-      "crisis_exposure_pct": 29,
+      "crisis_exposure_pct": 30,
       "severity": "moderate",
       "base_price_eur_kg": 0.9,
       "current_price_eur_kg": 1.03,
@@ -1523,8 +1523,8 @@
         "v",
         "vg"
       ],
-      "exposure_low": 29,
-      "exposure_high": 29
+      "exposure_low": 30,
+      "exposure_high": 30
     },
     {
       "id": "avocado",
@@ -1574,7 +1574,7 @@
       "name": "Garlic",
       "category": "produce",
       "emoji": "🧄",
-      "crisis_exposure_pct": 31,
+      "crisis_exposure_pct": 32,
       "severity": "moderate",
       "base_price_eur_kg": 4.0,
       "current_price_eur_kg": 4.65,
@@ -1602,8 +1602,8 @@
         "v",
         "vg"
       ],
-      "exposure_low": 31,
-      "exposure_high": 31
+      "exposure_low": 32,
+      "exposure_high": 32
     },
     {
       "id": "cucumber",
@@ -1646,7 +1646,7 @@
       "name": "Shrimp",
       "category": "seafood",
       "emoji": "🦐",
-      "crisis_exposure_pct": 49,
+      "crisis_exposure_pct": 54,
       "severity": "high",
       "base_price_eur_kg": 15.0,
       "current_price_eur_kg": 22.0,
@@ -1685,16 +1685,16 @@
       "pass_through_30d": 0.8,
       "local_cost_floor_pct": 35,
       "dietary": [],
-      "exposure_low": 49,
-      "exposure_high": 49
+      "exposure_low": 54,
+      "exposure_high": 54
     },
     {
       "id": "canned_sardines",
       "name": "Canned Sardines",
       "category": "seafood",
       "emoji": "🐟",
-      "crisis_exposure_pct": 58,
-      "severity": "high",
+      "crisis_exposure_pct": 64,
+      "severity": "extreme",
       "base_price_eur_kg": 4.5,
       "current_price_eur_kg": 5.8,
       "projected_price_eur_kg": 7.0,
@@ -1725,16 +1725,16 @@
       "pass_through_30d": 0.75,
       "local_cost_floor_pct": 35,
       "dietary": [],
-      "exposure_low": 58,
-      "exposure_high": 58
+      "exposure_low": 64,
+      "exposure_high": 64
     },
     {
       "id": "cod",
       "name": "Cod",
       "category": "seafood",
       "emoji": "🐠",
-      "crisis_exposure_pct": 58,
-      "severity": "high",
+      "crisis_exposure_pct": 64,
+      "severity": "extreme",
       "base_price_eur_kg": 12.0,
       "current_price_eur_kg": 15.5,
       "projected_price_eur_kg": 18.5,
@@ -1765,8 +1765,8 @@
       "pass_through_30d": 0.75,
       "local_cost_floor_pct": 35,
       "dietary": [],
-      "exposure_low": 58,
-      "exposure_high": 58
+      "exposure_low": 64,
+      "exposure_high": 64
     },
     {
       "id": "canned_tuna",
