@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-05-12",
+  "last_updated": "2026-05-13",
   "crisis_start": "2026-02-28",
   "sources": {
     "oil_brent_usd": 118.26,
@@ -14,13 +14,13 @@
     "methanol_pre_crisis_usd_ton": 400.0,
     "exchange_rates": {
       "EUR": 1.0,
-      "GBP": 0.86488,
-      "JPY": 184.87,
-      "PHP": 71.683,
-      "USD": 1.1765,
-      "INR": 112.1385,
-      "BRL": 5.7671,
-      "AUD": 1.6249,
+      "GBP": 0.86803,
+      "JPY": 184.98,
+      "PHP": 72.152,
+      "USD": 1.1738,
+      "INR": 112.2585,
+      "BRL": 5.7561,
+      "AUD": 1.6252,
       "LKR": 331
     },
     "tipping_points": {
@@ -315,7 +315,7 @@
       "name": "Tomatoes",
       "category": "produce",
       "emoji": "🍅",
-      "crisis_exposure_pct": 33,
+      "crisis_exposure_pct": 34,
       "severity": "moderate",
       "base_price_eur_kg": 3.2,
       "current_price_eur_kg": 4.5,
@@ -350,8 +350,8 @@
         "v",
         "vg"
       ],
-      "exposure_low": 32,
-      "exposure_high": 33
+      "exposure_low": 34,
+      "exposure_high": 34
     },
     {
       "id": "salmon",
@@ -1138,7 +1138,7 @@
       "name": "Eggs",
       "category": "dairy",
       "emoji": "🥚",
-      "crisis_exposure_pct": 41,
+      "crisis_exposure_pct": 40,
       "severity": "high",
       "base_price_eur_kg": 3.5,
       "current_price_eur_kg": 5.2,
@@ -1172,8 +1172,8 @@
       "dietary": [
         "v"
       ],
-      "exposure_low": 41,
-      "exposure_high": 42
+      "exposure_low": 40,
+      "exposure_high": 41
     },
     {
       "id": "cream",
@@ -1380,7 +1380,7 @@
       "name": "Oranges",
       "category": "produce",
       "emoji": "🍊",
-      "crisis_exposure_pct": 54,
+      "crisis_exposure_pct": 55,
       "severity": "high",
       "base_price_eur_kg": 1.5,
       "current_price_eur_kg": 1.74,
@@ -1408,7 +1408,7 @@
         "v",
         "vg"
       ],
-      "exposure_low": 54,
+      "exposure_low": 55,
       "exposure_high": 55
     },
     {
@@ -1416,7 +1416,7 @@
       "name": "Lettuce",
       "category": "produce",
       "emoji": "🥬",
-      "crisis_exposure_pct": 45,
+      "crisis_exposure_pct": 48,
       "severity": "high",
       "base_price_eur_kg": 1.6,
       "current_price_eur_kg": 1.8,
@@ -1444,15 +1444,15 @@
         "v",
         "vg"
       ],
-      "exposure_low": 45,
-      "exposure_high": 45
+      "exposure_low": 48,
+      "exposure_high": 48
     },
     {
       "id": "peppers",
       "name": "Bell Peppers",
       "category": "produce",
       "emoji": "🫑",
-      "crisis_exposure_pct": 33,
+      "crisis_exposure_pct": 34,
       "severity": "moderate",
       "base_price_eur_kg": 2.8,
       "current_price_eur_kg": 4.0,
@@ -1487,15 +1487,15 @@
         "v",
         "vg"
       ],
-      "exposure_low": 32,
-      "exposure_high": 33
+      "exposure_low": 33,
+      "exposure_high": 34
     },
     {
       "id": "carrots",
       "name": "Carrots",
       "category": "produce",
       "emoji": "🥕",
-      "crisis_exposure_pct": 50,
+      "crisis_exposure_pct": 53,
       "severity": "high",
       "base_price_eur_kg": 0.9,
       "current_price_eur_kg": 1.03,
@@ -1523,15 +1523,15 @@
         "v",
         "vg"
       ],
-      "exposure_low": 50,
-      "exposure_high": 50
+      "exposure_low": 53,
+      "exposure_high": 54
     },
     {
       "id": "avocado",
       "name": "Avocado",
       "category": "produce",
       "emoji": "🥑",
-      "crisis_exposure_pct": 36,
+      "crisis_exposure_pct": 37,
       "severity": "moderate",
       "base_price_eur_kg": 2.5,
       "current_price_eur_kg": 3.6,
@@ -1566,15 +1566,15 @@
         "v",
         "vg"
       ],
-      "exposure_low": 36,
-      "exposure_high": 36
+      "exposure_low": 37,
+      "exposure_high": 37
     },
     {
       "id": "garlic",
       "name": "Garlic",
       "category": "produce",
       "emoji": "🧄",
-      "crisis_exposure_pct": 53,
+      "crisis_exposure_pct": 55,
       "severity": "high",
       "base_price_eur_kg": 4.0,
       "current_price_eur_kg": 4.65,
@@ -1602,8 +1602,8 @@
         "v",
         "vg"
       ],
-      "exposure_low": 53,
-      "exposure_high": 54
+      "exposure_low": 55,
+      "exposure_high": 55
     },
     {
       "id": "cucumber",
