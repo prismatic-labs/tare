@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-05-23",
+  "last_updated": "2026-05-24",
   "crisis_start": "2026-02-28",
   "sources": {
     "oil_brent_usd": 116.73,
@@ -1265,7 +1265,7 @@
       "name": "Onions",
       "category": "produce",
       "emoji": "🧅",
-      "crisis_exposure_pct": 50,
+      "crisis_exposure_pct": 53,
       "severity": "high",
       "base_price_eur_kg": 0.8,
       "current_price_eur_kg": 0.98,
@@ -1293,8 +1293,8 @@
         "v",
         "vg"
       ],
-      "exposure_low": 49,
-      "exposure_high": 50
+      "exposure_low": 53,
+      "exposure_high": 53
     },
     {
       "id": "bananas",
@@ -1380,7 +1380,7 @@
       "name": "Oranges",
       "category": "produce",
       "emoji": "🍊",
-      "crisis_exposure_pct": 50,
+      "crisis_exposure_pct": 53,
       "severity": "high",
       "base_price_eur_kg": 1.5,
       "current_price_eur_kg": 1.74,
@@ -1408,15 +1408,15 @@
         "v",
         "vg"
       ],
-      "exposure_low": 49,
-      "exposure_high": 50
+      "exposure_low": 53,
+      "exposure_high": 53
     },
     {
       "id": "lettuce",
       "name": "Lettuce",
       "category": "produce",
       "emoji": "🥬",
-      "crisis_exposure_pct": 45,
+      "crisis_exposure_pct": 47,
       "severity": "high",
       "base_price_eur_kg": 1.6,
       "current_price_eur_kg": 1.8,
@@ -1444,8 +1444,8 @@
         "v",
         "vg"
       ],
-      "exposure_low": 45,
-      "exposure_high": 46
+      "exposure_low": 47,
+      "exposure_high": 48
     },
     {
       "id": "peppers",
@@ -1495,7 +1495,7 @@
       "name": "Carrots",
       "category": "produce",
       "emoji": "🥕",
-      "crisis_exposure_pct": 50,
+      "crisis_exposure_pct": 53,
       "severity": "high",
       "base_price_eur_kg": 0.9,
       "current_price_eur_kg": 1.03,
@@ -1523,8 +1523,8 @@
         "v",
         "vg"
       ],
-      "exposure_low": 49,
-      "exposure_high": 50
+      "exposure_low": 53,
+      "exposure_high": 53
     },
     {
       "id": "avocado",
@@ -1574,7 +1574,7 @@
       "name": "Garlic",
       "category": "produce",
       "emoji": "🧄",
-      "crisis_exposure_pct": 50,
+      "crisis_exposure_pct": 53,
       "severity": "high",
       "base_price_eur_kg": 4.0,
       "current_price_eur_kg": 4.65,
@@ -1602,8 +1602,8 @@
         "v",
         "vg"
       ],
-      "exposure_low": 49,
-      "exposure_high": 50
+      "exposure_low": 53,
+      "exposure_high": 53
     },
     {
       "id": "cucumber",
