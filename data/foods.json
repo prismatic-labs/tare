@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-16",
+  "last_updated": "2026-06-17",
   "crisis_start": "2026-02-28",
   "sources": {
     "oil_brent_usd": 97.46,
@@ -14,13 +14,13 @@
     "methanol_pre_crisis_usd_ton": 400.0,
     "exchange_rates": {
       "EUR": 1.0,
-      "GBP": 0.86483,
-      "JPY": 185.93,
-      "PHP": 70.028,
-      "USD": 1.1607,
-      "INR": 109.9355,
-      "BRL": 5.8613,
-      "AUD": 1.6424,
+      "GBP": 0.86471,
+      "JPY": 185.94,
+      "PHP": 69.925,
+      "USD": 1.1594,
+      "INR": 109.6335,
+      "BRL": 5.8669,
+      "AUD": 1.6411,
       "LKR": 331
     },
     "tipping_points": {
@@ -1263,7 +1263,7 @@
       "name": "Onions",
       "category": "produce",
       "emoji": "🧅",
-      "crisis_exposure_pct": 4,
+      "crisis_exposure_pct": 3,
       "severity": "low",
       "base_price_eur_kg": 0.8,
       "current_price_eur_kg": 0.98,
@@ -1291,8 +1291,8 @@
         "v",
         "vg"
       ],
-      "exposure_low": 4,
-      "exposure_high": 4
+      "exposure_low": 3,
+      "exposure_high": 3
     },
     {
       "id": "bananas",
@@ -1378,7 +1378,7 @@
       "name": "Oranges",
       "category": "produce",
       "emoji": "🍊",
-      "crisis_exposure_pct": 4,
+      "crisis_exposure_pct": 3,
       "severity": "low",
       "base_price_eur_kg": 1.5,
       "current_price_eur_kg": 1.74,
@@ -1406,7 +1406,7 @@
         "v",
         "vg"
       ],
-      "exposure_low": 4,
+      "exposure_low": 3,
       "exposure_high": 4
     },
     {
@@ -1414,7 +1414,7 @@
       "name": "Lettuce",
       "category": "produce",
       "emoji": "🥬",
-      "crisis_exposure_pct": 4,
+      "crisis_exposure_pct": 3,
       "severity": "low",
       "base_price_eur_kg": 1.6,
       "current_price_eur_kg": 1.8,
@@ -1442,8 +1442,8 @@
         "v",
         "vg"
       ],
-      "exposure_low": 4,
-      "exposure_high": 4
+      "exposure_low": 3,
+      "exposure_high": 3
     },
     {
       "id": "peppers",
@@ -1493,7 +1493,7 @@
       "name": "Carrots",
       "category": "produce",
       "emoji": "🥕",
-      "crisis_exposure_pct": 4,
+      "crisis_exposure_pct": 3,
       "severity": "low",
       "base_price_eur_kg": 0.9,
       "current_price_eur_kg": 1.03,
@@ -1521,8 +1521,8 @@
         "v",
         "vg"
       ],
-      "exposure_low": 4,
-      "exposure_high": 4
+      "exposure_low": 3,
+      "exposure_high": 3
     },
     {
       "id": "avocado",
@@ -1572,7 +1572,7 @@
       "name": "Garlic",
       "category": "produce",
       "emoji": "🧄",
-      "crisis_exposure_pct": 4,
+      "crisis_exposure_pct": 3,
       "severity": "low",
       "base_price_eur_kg": 4.0,
       "current_price_eur_kg": 4.65,
@@ -1600,8 +1600,8 @@
         "v",
         "vg"
       ],
-      "exposure_low": 4,
-      "exposure_high": 4
+      "exposure_low": 3,
+      "exposure_high": 3
     },
     {
       "id": "cucumber",
