@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-29",
+  "last_updated": "2026-06-30",
   "crisis_start": "2026-02-28",
   "sources": {
     "oil_brent_usd": 76.49,
@@ -14,13 +14,13 @@
     "methanol_pre_crisis_usd_ton": 400.0,
     "exchange_rates": {
       "EUR": 1.0,
-      "GBP": 0.86253,
-      "JPY": 184.3,
-      "PHP": 69.895,
-      "USD": 1.1401,
-      "INR": 107.6305,
-      "BRL": 5.901,
-      "AUD": 1.6518,
+      "GBP": 0.86215,
+      "JPY": 184.62,
+      "PHP": 69.786,
+      "USD": 1.1406,
+      "INR": 107.838,
+      "BRL": 5.8899,
+      "AUD": 1.6531,
       "LKR": 331
     },
     "tipping_points": {
@@ -403,7 +403,7 @@
       "name": "Rice",
       "category": "grains",
       "emoji": "🍚",
-      "crisis_exposure_pct": 41,
+      "crisis_exposure_pct": 45,
       "severity": "high",
       "base_price_eur_kg": 1.8,
       "current_price_eur_kg": 2.2,
@@ -438,8 +438,8 @@
         "v",
         "vg"
       ],
-      "exposure_low": 38,
-      "exposure_high": 43
+      "exposure_low": 45,
+      "exposure_high": 45
     },
     {
       "id": "pasta",
@@ -968,7 +968,7 @@
       "name": "Milk",
       "category": "dairy",
       "emoji": "🥛",
-      "crisis_exposure_pct": 32,
+      "crisis_exposure_pct": 34,
       "severity": "moderate",
       "base_price_eur_kg": 1.2,
       "current_price_eur_kg": 1.55,
@@ -1002,8 +1002,8 @@
       "dietary": [
         "v"
       ],
-      "exposure_low": 30,
-      "exposure_high": 33
+      "exposure_low": 32,
+      "exposure_high": 35
     },
     {
       "id": "cheese",
@@ -1052,7 +1052,7 @@
       "name": "Butter",
       "category": "dairy",
       "emoji": "🧈",
-      "crisis_exposure_pct": 45,
+      "crisis_exposure_pct": 47,
       "severity": "high",
       "base_price_eur_kg": 6.0,
       "current_price_eur_kg": 8.8,
@@ -1086,8 +1086,8 @@
       "dietary": [
         "v"
       ],
-      "exposure_low": 44,
-      "exposure_high": 47
+      "exposure_low": 46,
+      "exposure_high": 49
     },
     {
       "id": "yoghurt",
@@ -1136,7 +1136,7 @@
       "name": "Eggs",
       "category": "dairy",
       "emoji": "🥚",
-      "crisis_exposure_pct": 45,
+      "crisis_exposure_pct": 47,
       "severity": "high",
       "base_price_eur_kg": 3.5,
       "current_price_eur_kg": 5.2,
@@ -1170,8 +1170,8 @@
       "dietary": [
         "v"
       ],
-      "exposure_low": 44,
-      "exposure_high": 47
+      "exposure_low": 46,
+      "exposure_high": 49
     },
     {
       "id": "cream",
@@ -2457,7 +2457,7 @@
       "name": "Lentils",
       "category": "staples",
       "emoji": "🫘",
-      "crisis_exposure_pct": 32,
+      "crisis_exposure_pct": 38,
       "severity": "moderate",
       "base_price_eur_kg": 1.8,
       "current_price_eur_kg": 2.1,
@@ -2485,15 +2485,15 @@
         "v",
         "vg"
       ],
-      "exposure_low": 31,
-      "exposure_high": 34
+      "exposure_low": 36,
+      "exposure_high": 40
     },
     {
       "id": "chickpeas",
       "name": "Chickpeas",
       "category": "staples",
       "emoji": "🫘",
-      "crisis_exposure_pct": 32,
+      "crisis_exposure_pct": 38,
       "severity": "moderate",
       "base_price_eur_kg": 2.0,
       "current_price_eur_kg": 2.3,
@@ -2521,8 +2521,8 @@
         "v",
         "vg"
       ],
-      "exposure_low": 31,
-      "exposure_high": 34
+      "exposure_low": 36,
+      "exposure_high": 40
     },
     {
       "id": "tofu",
@@ -2572,7 +2572,7 @@
       "name": "Dried Beans",
       "category": "staples",
       "emoji": "🫘",
-      "crisis_exposure_pct": 29,
+      "crisis_exposure_pct": 35,
       "severity": "moderate",
       "base_price_eur_kg": 1.5,
       "current_price_eur_kg": 1.72,
@@ -2600,8 +2600,8 @@
         "v",
         "vg"
       ],
-      "exposure_low": 27,
-      "exposure_high": 30
+      "exposure_low": 33,
+      "exposure_high": 36
     },
     {
       "id": "quinoa",
