@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-02",
+  "last_updated": "2026-07-03",
   "crisis_start": "2026-02-28",
   "sources": {
     "oil_brent_usd": 71.59,
@@ -14,13 +14,13 @@
     "methanol_pre_crisis_usd_ton": 400.0,
     "exchange_rates": {
       "EUR": 1.0,
-      "GBP": 0.85973,
-      "JPY": 185.21,
-      "PHP": 70.17,
-      "USD": 1.1383,
-      "INR": 108.4215,
-      "BRL": 5.9048,
-      "AUD": 1.6518,
+      "GBP": 0.85665,
+      "JPY": 184.19,
+      "PHP": 70.191,
+      "USD": 1.1399,
+      "INR": 108.7435,
+      "BRL": 5.9286,
+      "AUD": 1.6546,
       "LKR": 331
     },
     "tipping_points": {
@@ -1052,7 +1052,7 @@
       "name": "Butter",
       "category": "dairy",
       "emoji": "🧈",
-      "crisis_exposure_pct": 51,
+      "crisis_exposure_pct": 52,
       "severity": "high",
       "base_price_eur_kg": 6.0,
       "current_price_eur_kg": 8.8,
@@ -1087,7 +1087,7 @@
         "v"
       ],
       "exposure_low": 49,
-      "exposure_high": 53
+      "exposure_high": 54
     },
     {
       "id": "yoghurt",
@@ -1136,7 +1136,7 @@
       "name": "Eggs",
       "category": "dairy",
       "emoji": "🥚",
-      "crisis_exposure_pct": 51,
+      "crisis_exposure_pct": 52,
       "severity": "high",
       "base_price_eur_kg": 3.5,
       "current_price_eur_kg": 5.2,
@@ -1170,8 +1170,8 @@
       "dietary": [
         "v"
       ],
-      "exposure_low": 48,
-      "exposure_high": 53
+      "exposure_low": 49,
+      "exposure_high": 54
     },
     {
       "id": "cream",
