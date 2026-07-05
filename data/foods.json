@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-04",
+  "last_updated": "2026-07-05",
   "crisis_start": "2026-02-28",
   "sources": {
     "oil_brent_usd": 71.59,
@@ -1052,7 +1052,7 @@
       "name": "Butter",
       "category": "dairy",
       "emoji": "🧈",
-      "crisis_exposure_pct": 53,
+      "crisis_exposure_pct": 54,
       "severity": "high",
       "base_price_eur_kg": 6.0,
       "current_price_eur_kg": 8.8,
@@ -1086,8 +1086,8 @@
       "dietary": [
         "v"
       ],
-      "exposure_low": 50,
-      "exposure_high": 55
+      "exposure_low": 51,
+      "exposure_high": 56
     },
     {
       "id": "yoghurt",
@@ -1136,7 +1136,7 @@
       "name": "Eggs",
       "category": "dairy",
       "emoji": "🥚",
-      "crisis_exposure_pct": 53,
+      "crisis_exposure_pct": 54,
       "severity": "high",
       "base_price_eur_kg": 3.5,
       "current_price_eur_kg": 5.2,
@@ -1170,8 +1170,8 @@
       "dietary": [
         "v"
       ],
-      "exposure_low": 50,
-      "exposure_high": 55
+      "exposure_low": 51,
+      "exposure_high": 56
     },
     {
       "id": "cream",
