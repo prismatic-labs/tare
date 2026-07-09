@@ -1,8 +1,8 @@
 {
-  "last_updated": "2026-07-08",
+  "last_updated": "2026-07-09",
   "crisis_start": "2026-02-28",
   "sources": {
-    "oil_brent_usd": 71.59,
+    "oil_brent_usd": 69.56,
     "oil_brent_pre_crisis_usd": 72.0,
     "natural_gas_eur_mwh": 58,
     "natural_gas_pre_crisis_eur_mwh": 34.0,
@@ -14,13 +14,13 @@
     "methanol_pre_crisis_usd_ton": 400.0,
     "exchange_rates": {
       "EUR": 1.0,
-      "GBP": 0.85411,
-      "JPY": 185.09,
-      "PHP": 70.236,
-      "USD": 1.1433,
-      "INR": 108.582,
-      "BRL": 5.8781,
-      "AUD": 1.6455,
+      "GBP": 0.85435,
+      "JPY": 185.3,
+      "PHP": 70.199,
+      "USD": 1.1404,
+      "INR": 108.9765,
+      "BRL": 5.8802,
+      "AUD": 1.6471,
       "LKR": 331
     },
     "tipping_points": {
@@ -403,7 +403,7 @@
       "name": "Rice",
       "category": "grains",
       "emoji": "🍚",
-      "crisis_exposure_pct": 45,
+      "crisis_exposure_pct": 43,
       "severity": "high",
       "base_price_eur_kg": 1.8,
       "current_price_eur_kg": 2.2,
@@ -438,7 +438,7 @@
         "v",
         "vg"
       ],
-      "exposure_low": 42,
+      "exposure_low": 38,
       "exposure_high": 45
     },
     {
@@ -1002,8 +1002,8 @@
       "dietary": [
         "v"
       ],
-      "exposure_low": 35,
-      "exposure_high": 38
+      "exposure_low": 34,
+      "exposure_high": 37
     },
     {
       "id": "cheese",
