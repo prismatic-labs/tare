@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-12",
+  "last_updated": "2026-07-13",
   "crisis_start": "2026-02-28",
   "sources": {
     "oil_brent_usd": 69.56,
@@ -403,7 +403,7 @@
       "name": "Rice",
       "category": "grains",
       "emoji": "🍚",
-      "crisis_exposure_pct": 37,
+      "crisis_exposure_pct": 35,
       "severity": "moderate",
       "base_price_eur_kg": 1.8,
       "current_price_eur_kg": 2.2,
@@ -438,8 +438,8 @@
         "v",
         "vg"
       ],
-      "exposure_low": 34,
-      "exposure_high": 40
+      "exposure_low": 32,
+      "exposure_high": 39
     },
     {
       "id": "pasta",
