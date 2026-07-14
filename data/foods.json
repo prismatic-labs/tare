@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-13",
+  "last_updated": "2026-07-14",
   "crisis_start": "2026-02-28",
   "sources": {
     "oil_brent_usd": 69.56,
@@ -14,13 +14,13 @@
     "methanol_pre_crisis_usd_ton": 400.0,
     "exchange_rates": {
       "EUR": 1.0,
-      "GBP": 0.85155,
-      "JPY": 185.02,
-      "PHP": 70.378,
-      "USD": 1.143,
-      "INR": 108.9665,
-      "BRL": 5.8505,
-      "AUD": 1.6447,
+      "GBP": 0.8533,
+      "JPY": 185.23,
+      "PHP": 70.348,
+      "USD": 1.1424,
+      "INR": 109.2375,
+      "BRL": 5.8439,
+      "AUD": 1.6454,
       "LKR": 331
     },
     "tipping_points": {
@@ -403,7 +403,7 @@
       "name": "Rice",
       "category": "grains",
       "emoji": "🍚",
-      "crisis_exposure_pct": 35,
+      "crisis_exposure_pct": 33,
       "severity": "moderate",
       "base_price_eur_kg": 1.8,
       "current_price_eur_kg": 2.2,
@@ -438,8 +438,8 @@
         "v",
         "vg"
       ],
-      "exposure_low": 32,
-      "exposure_high": 39
+      "exposure_low": 30,
+      "exposure_high": 36
     },
     {
       "id": "pasta",
