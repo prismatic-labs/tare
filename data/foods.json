@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-16",
+  "last_updated": "2026-07-17",
   "crisis_start": "2026-02-28",
   "sources": {
     "oil_brent_usd": 81.62,
@@ -14,13 +14,13 @@
     "methanol_pre_crisis_usd_ton": 400.0,
     "exchange_rates": {
       "EUR": 1.0,
-      "GBP": 0.85093,
-      "JPY": 185.22,
-      "PHP": 70.361,
-      "USD": 1.1406,
-      "INR": 109.794,
-      "BRL": 5.7954,
-      "AUD": 1.6335,
+      "GBP": 0.84873,
+      "JPY": 185.99,
+      "PHP": 70.667,
+      "USD": 1.1467,
+      "INR": 110.4895,
+      "BRL": 5.8318,
+      "AUD": 1.6362,
       "LKR": 331
     },
     "tipping_points": {
@@ -403,7 +403,7 @@
       "name": "Rice",
       "category": "grains",
       "emoji": "🍚",
-      "crisis_exposure_pct": 43,
+      "crisis_exposure_pct": 45,
       "severity": "high",
       "base_price_eur_kg": 1.8,
       "current_price_eur_kg": 2.2,
@@ -438,7 +438,7 @@
         "v",
         "vg"
       ],
-      "exposure_low": 41,
+      "exposure_low": 45,
       "exposure_high": 45
     },
     {
@@ -826,7 +826,7 @@
       "pass_through_30d": 0.5,
       "local_cost_floor_pct": 40,
       "dietary": [],
-      "exposure_low": 7,
+      "exposure_low": 8,
       "exposure_high": 8
     },
     {
@@ -874,7 +874,7 @@
       "local_cost_floor_pct": 40,
       "dietary": [],
       "exposure_low": 7,
-      "exposure_high": 8
+      "exposure_high": 7
     },
     {
       "id": "turkey",
@@ -913,7 +913,7 @@
       "pass_through_30d": 0.5,
       "local_cost_floor_pct": 40,
       "dietary": [],
-      "exposure_low": 7,
+      "exposure_low": 8,
       "exposure_high": 8
     },
     {
@@ -968,7 +968,7 @@
       "name": "Milk",
       "category": "dairy",
       "emoji": "🥛",
-      "crisis_exposure_pct": 40,
+      "crisis_exposure_pct": 42,
       "severity": "high",
       "base_price_eur_kg": 1.2,
       "current_price_eur_kg": 1.55,
@@ -1002,8 +1002,8 @@
       "dietary": [
         "v"
       ],
-      "exposure_low": 38,
-      "exposure_high": 41
+      "exposure_low": 40,
+      "exposure_high": 43
     },
     {
       "id": "cheese",
@@ -1136,7 +1136,7 @@
       "name": "Eggs",
       "category": "dairy",
       "emoji": "🥚",
-      "crisis_exposure_pct": 63,
+      "crisis_exposure_pct": 65,
       "severity": "extreme",
       "base_price_eur_kg": 3.5,
       "current_price_eur_kg": 5.2,
@@ -1170,8 +1170,8 @@
       "dietary": [
         "v"
       ],
-      "exposure_low": 60,
-      "exposure_high": 64
+      "exposure_low": 63,
+      "exposure_high": 65
     },
     {
       "id": "cream",
