@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-17",
+  "last_updated": "2026-07-18",
   "crisis_start": "2026-02-28",
   "sources": {
     "oil_brent_usd": 81.62,
@@ -14,13 +14,13 @@
     "methanol_pre_crisis_usd_ton": 400.0,
     "exchange_rates": {
       "EUR": 1.0,
-      "GBP": 0.84873,
-      "JPY": 185.99,
-      "PHP": 70.667,
-      "USD": 1.1467,
-      "INR": 110.4895,
-      "BRL": 5.8318,
-      "AUD": 1.6362,
+      "GBP": 0.85098,
+      "JPY": 185.65,
+      "PHP": 70.441,
+      "USD": 1.1435,
+      "INR": 110.102,
+      "BRL": 5.8499,
+      "AUD": 1.6394,
       "LKR": 331
     },
     "tipping_points": {
@@ -968,7 +968,7 @@
       "name": "Milk",
       "category": "dairy",
       "emoji": "🥛",
-      "crisis_exposure_pct": 42,
+      "crisis_exposure_pct": 44,
       "severity": "high",
       "base_price_eur_kg": 1.2,
       "current_price_eur_kg": 1.55,
@@ -1002,8 +1002,8 @@
       "dietary": [
         "v"
       ],
-      "exposure_low": 40,
-      "exposure_high": 43
+      "exposure_low": 42,
+      "exposure_high": 45
     },
     {
       "id": "cheese",
@@ -1170,7 +1170,7 @@
       "dietary": [
         "v"
       ],
-      "exposure_low": 63,
+      "exposure_low": 65,
       "exposure_high": 65
     },
     {
