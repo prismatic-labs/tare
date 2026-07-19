@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-18",
+  "last_updated": "2026-07-19",
   "crisis_start": "2026-02-28",
   "sources": {
     "oil_brent_usd": 81.62,
@@ -968,7 +968,7 @@
       "name": "Milk",
       "category": "dairy",
       "emoji": "🥛",
-      "crisis_exposure_pct": 44,
+      "crisis_exposure_pct": 46,
       "severity": "high",
       "base_price_eur_kg": 1.2,
       "current_price_eur_kg": 1.55,
@@ -1002,8 +1002,8 @@
       "dietary": [
         "v"
       ],
-      "exposure_low": 42,
-      "exposure_high": 45
+      "exposure_low": 44,
+      "exposure_high": 47
     },
     {
       "id": "cheese",
