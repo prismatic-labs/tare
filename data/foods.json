@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-23",
+  "last_updated": "2026-07-24",
   "crisis_start": "2026-02-28",
   "sources": {
     "oil_brent_usd": 86.99,
@@ -826,7 +826,7 @@
       "pass_through_30d": 0.5,
       "local_cost_floor_pct": 40,
       "dietary": [],
-      "exposure_low": 8,
+      "exposure_low": 9,
       "exposure_high": 9
     },
     {
@@ -913,7 +913,7 @@
       "pass_through_30d": 0.5,
       "local_cost_floor_pct": 40,
       "dietary": [],
-      "exposure_low": 8,
+      "exposure_low": 9,
       "exposure_high": 9
     },
     {
@@ -2741,6 +2741,7 @@
     }
   ],
   "stale_sources": [
+    "frankfurter_exchange_rates",
     "methanol_usd_ton",
     "natural_gas_eur_mwh",
     "urea_usd_ton"
