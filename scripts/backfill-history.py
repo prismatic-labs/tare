@@ -121,6 +121,8 @@ def main() -> int:
                     help="foods.json as it stood the day before --start")
     ap.add_argument("--dry-run", action="store_true",
                     help="print the reconstructed series without writing")
+    ap.add_argument("--overwrite", action="store_true",
+                    help="replace snapshots that already exist for these dates")
     args = ap.parse_args()
 
     logging.basicConfig(level=logging.INFO, format="%(message)s")
@@ -185,11 +187,27 @@ def main() -> int:
 
         if args.dry_run:
             continue
-        if snap_path.exists():
+        if snap_path.exists() and not args.overwrite:
             existing_skipped.append(iso)
             continue
 
         fd.archive_snapshot(state, iso)
+
+        # Stamp provenance. A reconstructed snapshot is otherwise byte-shaped
+        # exactly like an observed one, and on a site whose whole claim is
+        # measurement, a reader must be able to tell the difference.
+        with open(snap_path, encoding="utf-8") as fh:
+            snap = json.load(fh)
+        snap["reconstructed"] = {
+            "by": "scripts/backfill-history.py",
+            "on": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
+            "reason": "daily collection did not run (push to protected main was rejected)",
+            "oil_brent_usd": "observed — FRED DCOILBRENTEU at or before this date",
+            "monthly_series": ("held at the August level — natural_gas_eur_mwh, "
+                               "urea_usd_ton and methanol_usd_ton are monthly World "
+                               "Bank series, so this is exact, not interpolated"),
+        }
+        fd.write_atomic(snap_path, snap)
         written.append(iso)
 
     if args.dry_run:

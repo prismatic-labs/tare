@@ -22,6 +22,10 @@ on:
         description: 'Print the reconstructed series without writing'
         type: boolean
         default: true
+      overwrite:
+        description: 'Replace snapshots that already exist for these dates'
+        type: boolean
+        default: false
 
 # contents:write pushes the unprotected `data` branch only.
 permissions:
@@ -82,6 +86,7 @@ jobs:
             --end '${{ inputs.end }}' \
             --base-file /tmp/base-foods.json \
             ${{ inputs.dry_run && '--dry-run' || '' }} \
+            ${{ inputs.overwrite && '--overwrite' || '' }} \
             2>&1 | tee /tmp/backfill.log
 
       - name: Publish the reconstructed series to the run summary
