@@ -1,0 +1,122 @@
+name: Backfill history
+
+# Manual repair job for gaps in data/history/. Written for the 2026-08-11..27
+# outage, kept for the next one. Defaults to a dry run: flip dry_run off only
+# after reading the reconstructed series in the log.
+#
+# Deliberately does NOT deploy Pages. It repairs the archive; the daily job
+# owns the live snapshot and the deploy.
+
+on:
+  workflow_dispatch:
+    inputs:
+      start:
+        description: 'First missing date (YYYY-MM-DD)'
+        required: true
+        default: '2026-08-11'
+      end:
+        description: 'Last missing date (YYYY-MM-DD)'
+        required: true
+        default: '2026-08-27'
+      dry_run:
+        description: 'Print the reconstructed series without writing'
+        type: boolean
+        default: true
+
+# contents:write pushes the unprotected `data` branch only.
+permissions:
+  contents: write
+
+concurrency:
+  group: tare-data-write
+  cancel-in-progress: false
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout site code (main)
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262  # v4.2.2
+
+      # main's data/foods.json has not been written since 2026-08-10 — the bot
+      # stopped being able to push there, which is what caused the gap. That
+      # makes it exactly the state the replay must start from. Captured before
+      # the data-branch overlay replaces it.
+      - name: Capture replay base state
+        run: |
+          cp data/foods.json /tmp/base-foods.json
+          BASE_DATE="$(python3 -c "import json;print(json.load(open('/tmp/base-foods.json'))['last_updated'])")"
+          EXPECTED="$(date -u -d '${{ inputs.start }} - 1 day' +%F)"
+          echo "base state: $BASE_DATE / expected: $EXPECTED"
+          if [ "$BASE_DATE" != "$EXPECTED" ]; then
+            echo "::error::base state is $BASE_DATE but --start ${{ inputs.start }} needs $EXPECTED. Refusing to replay from the wrong anchor."
+            exit 1
+          fi
+
+      - name: Checkout data branch
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262  # v4.2.2
+        with:
+          ref: data
+          path: .data-branch
+
+      - name: Overlay data branch onto working tree
+        run: |
+          test -d .data-branch/data || { echo "::error::data branch has no data/ directory"; exit 1; }
+          rm -rf data
+          cp -R .data-branch/data data
+
+      - name: Set up Python
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065  # v5.3.0
+        with:
+          python-version: '3.12'
+
+      - name: Install pinned dependencies
+        run: pip install --no-deps -r scripts/requirements.txt
+
+      - name: Reconstruct missing snapshots
+        env:
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+        run: |
+          python3 scripts/backfill-history.py \
+            --start '${{ inputs.start }}' \
+            --end '${{ inputs.end }}' \
+            --base-file /tmp/base-foods.json \
+            ${{ inputs.dry_run && '--dry-run' || '' }} \
+            2>&1 | tee /tmp/backfill.log
+
+      - name: Publish the reconstructed series to the run summary
+        if: always()
+        run: |
+          {
+            echo "### Backfill ${{ inputs.start }} .. ${{ inputs.end }}"
+            echo
+            echo "dry_run: \`${{ inputs.dry_run }}\`"
+            echo
+            echo '```'
+            cat /tmp/backfill.log 2>/dev/null || echo "(no log)"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Regenerate history summary
+        if: ${{ !inputs.dry_run }}
+        run: python3 scripts/gen-history-summary.py
+
+      - name: Commit reconstructed history to the data branch
+        if: ${{ !inputs.dry_run }}
+        run: |
+          rm -rf .data-branch/data
+          cp -R data .data-branch/data
+          cd .data-branch
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A data
+          if git diff --cached --quiet; then
+            echo "Nothing to commit."
+            exit 0
+          fi
+          git commit -m "data: backfill history ${{ inputs.start }}..${{ inputs.end }}
+
+          Reconstructed by scripts/backfill-history.py after the protect-main
+          outage. Brent is genuine per-date FRED data; the World Bank series in
+          this window are monthly and held at their August level."
+          git push origin HEAD:data
