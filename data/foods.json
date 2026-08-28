@@ -1,8 +1,8 @@
 {
-  "last_updated": "2026-08-10",
+  "last_updated": "2026-08-28",
   "crisis_start": "2026-02-28",
   "sources": {
-    "oil_brent_usd": 88.9,
+    "oil_brent_usd": 88.24,
     "oil_brent_pre_crisis_usd": 72.0,
     "natural_gas_eur_mwh": 58,
     "natural_gas_pre_crisis_eur_mwh": 34.0,
@@ -14,13 +14,13 @@
     "methanol_pre_crisis_usd_ton": 400.0,
     "exchange_rates": {
       "EUR": 1.0,
-      "GBP": 0.85765,
-      "JPY": 182.64,
-      "PHP": 70.21,
-      "USD": 1.1535,
-      "INR": 109.8275,
-      "BRL": 5.8826,
-      "AUD": 1.6384,
+      "GBP": 0.8572,
+      "JPY": 185.92,
+      "PHP": 72.482,
+      "USD": 1.1643,
+      "INR": 111.0585,
+      "BRL": 6.0126,
+      "AUD": 1.6183,
       "LKR": 331
     },
     "tipping_points": {
