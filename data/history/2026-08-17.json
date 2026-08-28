@@ -243,5 +243,12 @@
       "id": "frozen_peas",
       "crisis_exposure_pct": 1
     }
-  ]
+  ],
+  "reconstructed": {
+    "by": "scripts/backfill-history.py",
+    "on": "2026-08-28",
+    "reason": "daily collection did not run (push to protected main was rejected)",
+    "oil_brent_usd": "observed — FRED DCOILBRENTEU at or before this date",
+    "monthly_series": "held at the August level — natural_gas_eur_mwh, urea_usd_ton and methanol_usd_ton are monthly World Bank series, so this is exact, not interpolated"
+  }
 }
