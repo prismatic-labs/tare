@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-11",
+  "last_updated": "2026-09-12",
   "crisis_start": "2026-02-28",
   "sources": {
     "oil_brent_usd": 109.51,
@@ -14,13 +14,13 @@
     "methanol_pre_crisis_usd_ton": 400.0,
     "exchange_rates": {
       "EUR": 1.0,
-      "GBP": 0.85915,
-      "JPY": 179.09,
-      "PHP": 72.688,
-      "USD": 1.1616,
-      "INR": 110.8645,
-      "BRL": 5.9528,
-      "AUD": 1.6167,
+      "GBP": 0.85815,
+      "JPY": 178.56,
+      "PHP": 72.6,
+      "USD": 1.1592,
+      "INR": 110.7675,
+      "BRL": 5.9244,
+      "AUD": 1.6161,
       "LKR": 331
     },
     "tipping_points": {
@@ -1002,7 +1002,7 @@
       "dietary": [
         "v"
       ],
-      "exposure_low": 55,
+      "exposure_low": 54,
       "exposure_high": 55
     },
     {
@@ -1086,7 +1086,7 @@
       "dietary": [
         "v"
       ],
-      "exposure_low": 60,
+      "exposure_low": 59,
       "exposure_high": 60
     },
     {
@@ -1170,7 +1170,7 @@
       "dietary": [
         "v"
       ],
-      "exposure_low": 65,
+      "exposure_low": 64,
       "exposure_high": 65
     },
     {
