@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-13",
+  "last_updated": "2026-09-14",
   "crisis_start": "2026-02-28",
   "sources": {
     "oil_brent_usd": 109.51,
@@ -913,7 +913,7 @@
       "pass_through_30d": 0.5,
       "local_cost_floor_pct": 40,
       "dietary": [],
-      "exposure_low": 11,
+      "exposure_low": 10,
       "exposure_high": 11
     },
     {
