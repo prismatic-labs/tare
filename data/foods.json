@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-25",
+  "last_updated": "2026-09-26",
   "crisis_start": "2026-02-28",
   "sources": {
     "oil_brent_usd": 114.89,
@@ -14,13 +14,13 @@
     "methanol_pre_crisis_usd_ton": 400.0,
     "exchange_rates": {
       "EUR": 1.0,
-      "GBP": 0.85986,
-      "JPY": 180.57,
-      "PHP": 71.328,
-      "USD": 1.1367,
-      "INR": 109.0775,
-      "BRL": 5.889,
-      "AUD": 1.6177,
+      "GBP": 0.86045,
+      "JPY": 179.7,
+      "PHP": 71.244,
+      "USD": 1.1403,
+      "INR": 109.2605,
+      "BRL": 5.9091,
+      "AUD": 1.622,
       "LKR": 331
     },
     "tipping_points": {
@@ -358,7 +358,7 @@
       "name": "Salmon",
       "category": "seafood",
       "emoji": "🍣",
-      "crisis_exposure_pct": 16,
+      "crisis_exposure_pct": 18,
       "severity": "low",
       "base_price_eur_kg": 18.5,
       "current_price_eur_kg": 26.2,
@@ -397,8 +397,8 @@
       "pass_through_30d": 0.8,
       "local_cost_floor_pct": 30,
       "dietary": [],
-      "exposure_low": 16,
-      "exposure_high": 16
+      "exposure_low": 18,
+      "exposure_high": 18
     },
     {
       "id": "rice",
@@ -448,7 +448,7 @@
       "name": "Pasta",
       "category": "grains",
       "emoji": "🍝",
-      "crisis_exposure_pct": 37,
+      "crisis_exposure_pct": 38,
       "severity": "moderate",
       "base_price_eur_kg": 1.6,
       "current_price_eur_kg": 2.1,
@@ -483,15 +483,15 @@
         "v",
         "vg"
       ],
-      "exposure_low": 36,
-      "exposure_high": 37
+      "exposure_low": 37,
+      "exposure_high": 38
     },
     {
       "id": "flour",
       "name": "Flour",
       "category": "grains",
       "emoji": "🌾",
-      "crisis_exposure_pct": 37,
+      "crisis_exposure_pct": 38,
       "severity": "moderate",
       "base_price_eur_kg": 0.9,
       "current_price_eur_kg": 1.15,
@@ -526,8 +526,8 @@
         "v",
         "vg"
       ],
-      "exposure_low": 36,
-      "exposure_high": 37
+      "exposure_low": 37,
+      "exposure_high": 38
     },
     {
       "id": "oats",
@@ -613,7 +613,7 @@
       "name": "Couscous",
       "category": "grains",
       "emoji": "🫙",
-      "crisis_exposure_pct": 37,
+      "crisis_exposure_pct": 38,
       "severity": "moderate",
       "base_price_eur_kg": 1.9,
       "current_price_eur_kg": 2.45,
@@ -648,8 +648,8 @@
         "v",
         "vg"
       ],
-      "exposure_low": 36,
-      "exposure_high": 37
+      "exposure_low": 37,
+      "exposure_high": 38
     },
     {
       "id": "noodles",
@@ -1138,7 +1138,7 @@
       "name": "Eggs",
       "category": "dairy",
       "emoji": "🥚",
-      "crisis_exposure_pct": 47,
+      "crisis_exposure_pct": 46,
       "severity": "high",
       "base_price_eur_kg": 3.5,
       "current_price_eur_kg": 5.2,
@@ -1172,8 +1172,8 @@
       "dietary": [
         "v"
       ],
-      "exposure_low": 47,
-      "exposure_high": 48
+      "exposure_low": 46,
+      "exposure_high": 47
     },
     {
       "id": "cream",
@@ -1646,7 +1646,7 @@
       "name": "Shrimp",
       "category": "seafood",
       "emoji": "🦐",
-      "crisis_exposure_pct": 16,
+      "crisis_exposure_pct": 18,
       "severity": "low",
       "base_price_eur_kg": 15.0,
       "current_price_eur_kg": 22.0,
@@ -1685,15 +1685,15 @@
       "pass_through_30d": 0.8,
       "local_cost_floor_pct": 35,
       "dietary": [],
-      "exposure_low": 16,
-      "exposure_high": 16
+      "exposure_low": 18,
+      "exposure_high": 18
     },
     {
       "id": "canned_sardines",
       "name": "Canned Sardines",
       "category": "seafood",
       "emoji": "🐟",
-      "crisis_exposure_pct": 13,
+      "crisis_exposure_pct": 15,
       "severity": "low",
       "base_price_eur_kg": 4.5,
       "current_price_eur_kg": 5.8,
@@ -1725,15 +1725,15 @@
       "pass_through_30d": 0.75,
       "local_cost_floor_pct": 35,
       "dietary": [],
-      "exposure_low": 13,
-      "exposure_high": 13
+      "exposure_low": 15,
+      "exposure_high": 15
     },
     {
       "id": "cod",
       "name": "Cod",
       "category": "seafood",
       "emoji": "🐠",
-      "crisis_exposure_pct": 13,
+      "crisis_exposure_pct": 15,
       "severity": "low",
       "base_price_eur_kg": 12.0,
       "current_price_eur_kg": 15.5,
@@ -1765,16 +1765,16 @@
       "pass_through_30d": 0.75,
       "local_cost_floor_pct": 35,
       "dietary": [],
-      "exposure_low": 13,
-      "exposure_high": 13
+      "exposure_low": 15,
+      "exposure_high": 15
     },
     {
       "id": "canned_tuna",
       "name": "Canned Tuna",
       "category": "seafood",
       "emoji": "🥫",
-      "crisis_exposure_pct": 37,
-      "severity": "moderate",
+      "crisis_exposure_pct": 40,
+      "severity": "high",
       "base_price_eur_kg": 4.0,
       "current_price_eur_kg": 5.8,
       "projected_price_eur_kg": 7.2,
@@ -1812,8 +1812,8 @@
       "pass_through_30d": 0.3,
       "local_cost_floor_pct": 50,
       "dietary": [],
-      "exposure_low": 36,
-      "exposure_high": 38
+      "exposure_low": 39,
+      "exposure_high": 41
     },
     {
       "id": "cooking_oil",
