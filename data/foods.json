@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-23",
+  "last_updated": "2026-10-24",
   "crisis_start": "2026-02-28",
   "sources": {
     "oil_brent_usd": 115.22,
@@ -14,13 +14,13 @@
     "methanol_pre_crisis_usd_ton": 400.0,
     "exchange_rates": {
       "EUR": 1.0,
-      "GBP": 0.8377,
-      "JPY": 175.97,
-      "PHP": 71.162,
-      "USD": 1.1205,
-      "INR": 106.249,
-      "BRL": 5.6574,
-      "AUD": 1.598,
+      "GBP": 0.83728,
+      "JPY": 175.51,
+      "PHP": 71.235,
+      "USD": 1.1193,
+      "INR": 106.272,
+      "BRL": 5.6485,
+      "AUD": 1.5939,
       "LKR": 331
     },
     "tipping_points": {
@@ -448,7 +448,7 @@
       "name": "Pasta",
       "category": "grains",
       "emoji": "🍝",
-      "crisis_exposure_pct": 43,
+      "crisis_exposure_pct": 44,
       "severity": "high",
       "base_price_eur_kg": 1.6,
       "current_price_eur_kg": 2.1,
@@ -483,15 +483,15 @@
         "v",
         "vg"
       ],
-      "exposure_low": 43,
-      "exposure_high": 43
+      "exposure_low": 44,
+      "exposure_high": 44
     },
     {
       "id": "flour",
       "name": "Flour",
       "category": "grains",
       "emoji": "🌾",
-      "crisis_exposure_pct": 43,
+      "crisis_exposure_pct": 44,
       "severity": "high",
       "base_price_eur_kg": 0.9,
       "current_price_eur_kg": 1.15,
@@ -526,8 +526,8 @@
         "v",
         "vg"
       ],
-      "exposure_low": 42,
-      "exposure_high": 43
+      "exposure_low": 44,
+      "exposure_high": 44
     },
     {
       "id": "oats",
@@ -613,7 +613,7 @@
       "name": "Couscous",
       "category": "grains",
       "emoji": "🫙",
-      "crisis_exposure_pct": 43,
+      "crisis_exposure_pct": 44,
       "severity": "high",
       "base_price_eur_kg": 1.9,
       "current_price_eur_kg": 2.45,
@@ -648,8 +648,8 @@
         "v",
         "vg"
       ],
-      "exposure_low": 42,
-      "exposure_high": 43
+      "exposure_low": 43,
+      "exposure_high": 44
     },
     {
       "id": "noodles",
