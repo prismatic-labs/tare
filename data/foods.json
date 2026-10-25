@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-24",
+  "last_updated": "2026-10-25",
   "crisis_start": "2026-02-28",
   "sources": {
     "oil_brent_usd": 115.22,
@@ -448,7 +448,7 @@
       "name": "Pasta",
       "category": "grains",
       "emoji": "🍝",
-      "crisis_exposure_pct": 44,
+      "crisis_exposure_pct": 45,
       "severity": "high",
       "base_price_eur_kg": 1.6,
       "current_price_eur_kg": 2.1,
@@ -483,15 +483,15 @@
         "v",
         "vg"
       ],
-      "exposure_low": 44,
-      "exposure_high": 44
+      "exposure_low": 45,
+      "exposure_high": 45
     },
     {
       "id": "flour",
       "name": "Flour",
       "category": "grains",
       "emoji": "🌾",
-      "crisis_exposure_pct": 44,
+      "crisis_exposure_pct": 45,
       "severity": "high",
       "base_price_eur_kg": 0.9,
       "current_price_eur_kg": 1.15,
@@ -527,7 +527,7 @@
         "vg"
       ],
       "exposure_low": 44,
-      "exposure_high": 44
+      "exposure_high": 45
     },
     {
       "id": "oats",
@@ -613,7 +613,7 @@
       "name": "Couscous",
       "category": "grains",
       "emoji": "🫙",
-      "crisis_exposure_pct": 44,
+      "crisis_exposure_pct": 45,
       "severity": "high",
       "base_price_eur_kg": 1.9,
       "current_price_eur_kg": 2.45,
@@ -648,8 +648,8 @@
         "v",
         "vg"
       ],
-      "exposure_low": 43,
-      "exposure_high": 44
+      "exposure_low": 45,
+      "exposure_high": 45
     },
     {
       "id": "noodles",
