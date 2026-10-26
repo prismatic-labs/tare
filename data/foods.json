@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-25",
+  "last_updated": "2026-10-26",
   "crisis_start": "2026-02-28",
   "sources": {
     "oil_brent_usd": 115.22,
@@ -526,7 +526,7 @@
         "v",
         "vg"
       ],
-      "exposure_low": 44,
+      "exposure_low": 45,
       "exposure_high": 45
     },
     {
