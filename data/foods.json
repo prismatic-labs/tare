@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-11-02",
+  "last_updated": "2026-11-03",
   "crisis_start": "2026-02-28",
   "sources": {
     "oil_brent_usd": 123.1,
@@ -14,13 +14,13 @@
     "methanol_pre_crisis_usd_ton": 400.0,
     "exchange_rates": {
       "EUR": 1.0,
-      "GBP": 0.8338,
-      "JPY": 175.68,
-      "PHP": 71.143,
-      "USD": 1.1172,
-      "INR": 106.084,
-      "BRL": 6.0692,
-      "AUD": 1.5904,
+      "GBP": 0.8358,
+      "JPY": 177.1,
+      "PHP": 71.274,
+      "USD": 1.1216,
+      "INR": 106.4505,
+      "BRL": 6.099,
+      "AUD": 1.6004,
       "LKR": 331
     },
     "tipping_points": {
@@ -970,7 +970,7 @@
       "name": "Milk",
       "category": "dairy",
       "emoji": "🥛",
-      "crisis_exposure_pct": 27,
+      "crisis_exposure_pct": 26,
       "severity": "moderate",
       "base_price_eur_kg": 1.2,
       "current_price_eur_kg": 1.55,
@@ -1004,8 +1004,8 @@
       "dietary": [
         "v"
       ],
-      "exposure_low": 27,
-      "exposure_high": 28
+      "exposure_low": 26,
+      "exposure_high": 27
     },
     {
       "id": "cheese",
@@ -1054,7 +1054,7 @@
       "name": "Butter",
       "category": "dairy",
       "emoji": "🧈",
-      "crisis_exposure_pct": 29,
+      "crisis_exposure_pct": 28,
       "severity": "moderate",
       "base_price_eur_kg": 6.0,
       "current_price_eur_kg": 8.8,
@@ -1088,8 +1088,8 @@
       "dietary": [
         "v"
       ],
-      "exposure_low": 29,
-      "exposure_high": 30
+      "exposure_low": 28,
+      "exposure_high": 29
     },
     {
       "id": "yoghurt",
@@ -1138,7 +1138,7 @@
       "name": "Eggs",
       "category": "dairy",
       "emoji": "🥚",
-      "crisis_exposure_pct": 30,
+      "crisis_exposure_pct": 29,
       "severity": "moderate",
       "base_price_eur_kg": 3.5,
       "current_price_eur_kg": 5.2,
@@ -1172,8 +1172,8 @@
       "dietary": [
         "v"
       ],
-      "exposure_low": 30,
-      "exposure_high": 31
+      "exposure_low": 29,
+      "exposure_high": 30
     },
     {
       "id": "cream",
