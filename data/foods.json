@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-11-03",
+  "last_updated": "2026-11-04",
   "crisis_start": "2026-02-28",
   "sources": {
     "oil_brent_usd": 123.1,
@@ -14,13 +14,13 @@
     "methanol_pre_crisis_usd_ton": 400.0,
     "exchange_rates": {
       "EUR": 1.0,
-      "GBP": 0.8358,
-      "JPY": 177.1,
-      "PHP": 71.274,
-      "USD": 1.1216,
-      "INR": 106.4505,
-      "BRL": 6.099,
-      "AUD": 1.6004,
+      "GBP": 0.83358,
+      "JPY": 176.95,
+      "PHP": 70.943,
+      "USD": 1.1179,
+      "INR": 105.9155,
+      "BRL": 6.1411,
+      "AUD": 1.6007,
       "LKR": 331
     },
     "tipping_points": {
@@ -970,7 +970,7 @@
       "name": "Milk",
       "category": "dairy",
       "emoji": "🥛",
-      "crisis_exposure_pct": 26,
+      "crisis_exposure_pct": 25,
       "severity": "moderate",
       "base_price_eur_kg": 1.2,
       "current_price_eur_kg": 1.55,
@@ -1004,8 +1004,8 @@
       "dietary": [
         "v"
       ],
-      "exposure_low": 26,
-      "exposure_high": 27
+      "exposure_low": 25,
+      "exposure_high": 26
     },
     {
       "id": "cheese",
@@ -1054,7 +1054,7 @@
       "name": "Butter",
       "category": "dairy",
       "emoji": "🧈",
-      "crisis_exposure_pct": 28,
+      "crisis_exposure_pct": 27,
       "severity": "moderate",
       "base_price_eur_kg": 6.0,
       "current_price_eur_kg": 8.8,
@@ -1088,8 +1088,8 @@
       "dietary": [
         "v"
       ],
-      "exposure_low": 28,
-      "exposure_high": 29
+      "exposure_low": 27,
+      "exposure_high": 28
     },
     {
       "id": "yoghurt",
@@ -1138,7 +1138,7 @@
       "name": "Eggs",
       "category": "dairy",
       "emoji": "🥚",
-      "crisis_exposure_pct": 29,
+      "crisis_exposure_pct": 28,
       "severity": "moderate",
       "base_price_eur_kg": 3.5,
       "current_price_eur_kg": 5.2,
@@ -1172,8 +1172,8 @@
       "dietary": [
         "v"
       ],
-      "exposure_low": 29,
-      "exposure_high": 30
+      "exposure_low": 28,
+      "exposure_high": 29
     },
     {
       "id": "cream",
