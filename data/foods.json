@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-11-06",
+  "last_updated": "2026-11-07",
   "crisis_start": "2026-02-28",
   "sources": {
     "oil_brent_usd": 107.03,
@@ -14,13 +14,13 @@
     "methanol_pre_crisis_usd_ton": 400.0,
     "exchange_rates": {
       "EUR": 1.0,
-      "GBP": 0.83393,
-      "JPY": 177.85,
-      "PHP": 70.706,
-      "USD": 1.1224,
-      "INR": 106.0395,
-      "BRL": 6.1355,
-      "AUD": 1.6033,
+      "GBP": 0.83415,
+      "JPY": 176.77,
+      "PHP": 70.358,
+      "USD": 1.1165,
+      "INR": 104.8645,
+      "BRL": 6.1449,
+      "AUD": 1.625,
       "LKR": 331
     },
     "tipping_points": {
@@ -356,7 +356,7 @@
       "name": "Salmon",
       "category": "seafood",
       "emoji": "🍣",
-      "crisis_exposure_pct": 61,
+      "crisis_exposure_pct": 60,
       "severity": "extreme",
       "base_price_eur_kg": 18.5,
       "current_price_eur_kg": 26.2,
@@ -395,8 +395,8 @@
       "pass_through_30d": 0.8,
       "local_cost_floor_pct": 30,
       "dietary": [],
-      "exposure_low": 61,
-      "exposure_high": 61
+      "exposure_low": 60,
+      "exposure_high": 60
     },
     {
       "id": "rice",
@@ -446,7 +446,7 @@
       "name": "Pasta",
       "category": "grains",
       "emoji": "🍝",
-      "crisis_exposure_pct": 44,
+      "crisis_exposure_pct": 45,
       "severity": "high",
       "base_price_eur_kg": 1.6,
       "current_price_eur_kg": 2.1,
@@ -481,7 +481,7 @@
         "v",
         "vg"
       ],
-      "exposure_low": 43,
+      "exposure_low": 45,
       "exposure_high": 45
     },
     {
@@ -489,7 +489,7 @@
       "name": "Flour",
       "category": "grains",
       "emoji": "🌾",
-      "crisis_exposure_pct": 44,
+      "crisis_exposure_pct": 45,
       "severity": "high",
       "base_price_eur_kg": 0.9,
       "current_price_eur_kg": 1.15,
@@ -524,7 +524,7 @@
         "v",
         "vg"
       ],
-      "exposure_low": 43,
+      "exposure_low": 45,
       "exposure_high": 45
     },
     {
@@ -611,7 +611,7 @@
       "name": "Couscous",
       "category": "grains",
       "emoji": "🫙",
-      "crisis_exposure_pct": 44,
+      "crisis_exposure_pct": 45,
       "severity": "high",
       "base_price_eur_kg": 1.9,
       "current_price_eur_kg": 2.45,
@@ -646,7 +646,7 @@
         "v",
         "vg"
       ],
-      "exposure_low": 43,
+      "exposure_low": 45,
       "exposure_high": 45
     },
     {
@@ -1644,7 +1644,7 @@
       "name": "Shrimp",
       "category": "seafood",
       "emoji": "🦐",
-      "crisis_exposure_pct": 56,
+      "crisis_exposure_pct": 55,
       "severity": "high",
       "base_price_eur_kg": 15.0,
       "current_price_eur_kg": 22.0,
@@ -1683,8 +1683,8 @@
       "pass_through_30d": 0.8,
       "local_cost_floor_pct": 35,
       "dietary": [],
-      "exposure_low": 56,
-      "exposure_high": 56
+      "exposure_low": 55,
+      "exposure_high": 55
     },
     {
       "id": "canned_sardines",
