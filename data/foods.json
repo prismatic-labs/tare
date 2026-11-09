@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-11-08",
+  "last_updated": "2026-11-09",
   "crisis_start": "2026-02-28",
   "sources": {
     "oil_brent_usd": 107.03,
@@ -356,7 +356,7 @@
       "name": "Salmon",
       "category": "seafood",
       "emoji": "🍣",
-      "crisis_exposure_pct": 59,
+      "crisis_exposure_pct": 58,
       "severity": "high",
       "base_price_eur_kg": 18.5,
       "current_price_eur_kg": 26.2,
@@ -395,8 +395,8 @@
       "pass_through_30d": 0.8,
       "local_cost_floor_pct": 30,
       "dietary": [],
-      "exposure_low": 59,
-      "exposure_high": 59
+      "exposure_low": 58,
+      "exposure_high": 58
     },
     {
       "id": "rice",
@@ -1644,7 +1644,7 @@
       "name": "Shrimp",
       "category": "seafood",
       "emoji": "🦐",
-      "crisis_exposure_pct": 54,
+      "crisis_exposure_pct": 53,
       "severity": "high",
       "base_price_eur_kg": 15.0,
       "current_price_eur_kg": 22.0,
@@ -1683,8 +1683,8 @@
       "pass_through_30d": 0.8,
       "local_cost_floor_pct": 35,
       "dietary": [],
-      "exposure_low": 54,
-      "exposure_high": 54
+      "exposure_low": 53,
+      "exposure_high": 53
     },
     {
       "id": "canned_sardines",
