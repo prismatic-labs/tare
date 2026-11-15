@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-11-14",
+  "last_updated": "2026-11-15",
   "crisis_start": "2026-02-28",
   "sources": {
     "oil_brent_usd": 92.14,
@@ -356,8 +356,8 @@
       "name": "Salmon",
       "category": "seafood",
       "emoji": "🍣",
-      "crisis_exposure_pct": 22,
-      "severity": "moderate",
+      "crisis_exposure_pct": 15,
+      "severity": "low",
       "base_price_eur_kg": 18.5,
       "current_price_eur_kg": 26.2,
       "projected_price_eur_kg": 32.0,
@@ -395,15 +395,15 @@
       "pass_through_30d": 0.8,
       "local_cost_floor_pct": 30,
       "dietary": [],
-      "exposure_low": 22,
-      "exposure_high": 22
+      "exposure_low": 15,
+      "exposure_high": 15
     },
     {
       "id": "rice",
       "name": "Rice",
       "category": "grains",
       "emoji": "🍚",
-      "crisis_exposure_pct": 10,
+      "crisis_exposure_pct": 11,
       "severity": "low",
       "base_price_eur_kg": 1.8,
       "current_price_eur_kg": 2.2,
@@ -438,8 +438,8 @@
         "v",
         "vg"
       ],
-      "exposure_low": 9,
-      "exposure_high": 10
+      "exposure_low": 10,
+      "exposure_high": 11
     },
     {
       "id": "pasta",
@@ -1644,8 +1644,8 @@
       "name": "Shrimp",
       "category": "seafood",
       "emoji": "🦐",
-      "crisis_exposure_pct": 20,
-      "severity": "moderate",
+      "crisis_exposure_pct": 13,
+      "severity": "low",
       "base_price_eur_kg": 15.0,
       "current_price_eur_kg": 22.0,
       "projected_price_eur_kg": 28.0,
@@ -1683,16 +1683,16 @@
       "pass_through_30d": 0.8,
       "local_cost_floor_pct": 35,
       "dietary": [],
-      "exposure_low": 20,
-      "exposure_high": 20
+      "exposure_low": 13,
+      "exposure_high": 13
     },
     {
       "id": "canned_sardines",
       "name": "Canned Sardines",
       "category": "seafood",
       "emoji": "🐟",
-      "crisis_exposure_pct": 24,
-      "severity": "moderate",
+      "crisis_exposure_pct": 17,
+      "severity": "low",
       "base_price_eur_kg": 4.5,
       "current_price_eur_kg": 5.8,
       "projected_price_eur_kg": 7.0,
@@ -1723,16 +1723,16 @@
       "pass_through_30d": 0.75,
       "local_cost_floor_pct": 35,
       "dietary": [],
-      "exposure_low": 23,
-      "exposure_high": 24
+      "exposure_low": 17,
+      "exposure_high": 17
     },
     {
       "id": "cod",
       "name": "Cod",
       "category": "seafood",
       "emoji": "🐠",
-      "crisis_exposure_pct": 24,
-      "severity": "moderate",
+      "crisis_exposure_pct": 17,
+      "severity": "low",
       "base_price_eur_kg": 12.0,
       "current_price_eur_kg": 15.5,
       "projected_price_eur_kg": 18.5,
@@ -1763,8 +1763,8 @@
       "pass_through_30d": 0.75,
       "local_cost_floor_pct": 35,
       "dietary": [],
-      "exposure_low": 23,
-      "exposure_high": 24
+      "exposure_low": 17,
+      "exposure_high": 17
     },
     {
       "id": "canned_tuna",
@@ -2457,7 +2457,7 @@
       "name": "Lentils",
       "category": "staples",
       "emoji": "🫘",
-      "crisis_exposure_pct": 9,
+      "crisis_exposure_pct": 10,
       "severity": "low",
       "base_price_eur_kg": 1.8,
       "current_price_eur_kg": 2.1,
@@ -2485,15 +2485,15 @@
         "v",
         "vg"
       ],
-      "exposure_low": 8,
-      "exposure_high": 9
+      "exposure_low": 9,
+      "exposure_high": 10
     },
     {
       "id": "chickpeas",
       "name": "Chickpeas",
       "category": "staples",
       "emoji": "🫘",
-      "crisis_exposure_pct": 9,
+      "crisis_exposure_pct": 10,
       "severity": "low",
       "base_price_eur_kg": 2.0,
       "current_price_eur_kg": 2.3,
@@ -2521,8 +2521,8 @@
         "v",
         "vg"
       ],
-      "exposure_low": 8,
-      "exposure_high": 9
+      "exposure_low": 9,
+      "exposure_high": 10
     },
     {
       "id": "tofu",
@@ -2572,7 +2572,7 @@
       "name": "Dried Beans",
       "category": "staples",
       "emoji": "🫘",
-      "crisis_exposure_pct": 9,
+      "crisis_exposure_pct": 10,
       "severity": "low",
       "base_price_eur_kg": 1.5,
       "current_price_eur_kg": 1.72,
@@ -2600,8 +2600,8 @@
         "v",
         "vg"
       ],
-      "exposure_low": 8,
-      "exposure_high": 9
+      "exposure_low": 9,
+      "exposure_high": 10
     },
     {
       "id": "quinoa",
