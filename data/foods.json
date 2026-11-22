@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-11-21",
+  "last_updated": "2026-11-22",
   "crisis_start": "2026-02-28",
   "sources": {
     "oil_brent_usd": 92.94,
@@ -403,7 +403,7 @@
       "name": "Rice",
       "category": "grains",
       "emoji": "🍚",
-      "crisis_exposure_pct": 17,
+      "crisis_exposure_pct": 18,
       "severity": "low",
       "base_price_eur_kg": 1.8,
       "current_price_eur_kg": 2.2,
@@ -438,8 +438,8 @@
         "v",
         "vg"
       ],
-      "exposure_low": 16,
-      "exposure_high": 17
+      "exposure_low": 18,
+      "exposure_high": 18
     },
     {
       "id": "pasta",
@@ -1691,7 +1691,7 @@
       "name": "Canned Sardines",
       "category": "seafood",
       "emoji": "🐟",
-      "crisis_exposure_pct": 2,
+      "crisis_exposure_pct": 1,
       "severity": "low",
       "base_price_eur_kg": 4.5,
       "current_price_eur_kg": 5.8,
@@ -1723,15 +1723,15 @@
       "pass_through_30d": 0.75,
       "local_cost_floor_pct": 35,
       "dietary": [],
-      "exposure_low": 2,
-      "exposure_high": 2
+      "exposure_low": 1,
+      "exposure_high": 1
     },
     {
       "id": "cod",
       "name": "Cod",
       "category": "seafood",
       "emoji": "🐠",
-      "crisis_exposure_pct": 2,
+      "crisis_exposure_pct": 1,
       "severity": "low",
       "base_price_eur_kg": 12.0,
       "current_price_eur_kg": 15.5,
@@ -1763,8 +1763,8 @@
       "pass_through_30d": 0.75,
       "local_cost_floor_pct": 35,
       "dietary": [],
-      "exposure_low": 2,
-      "exposure_high": 2
+      "exposure_low": 1,
+      "exposure_high": 1
     },
     {
       "id": "canned_tuna",
@@ -2457,7 +2457,7 @@
       "name": "Lentils",
       "category": "staples",
       "emoji": "🫘",
-      "crisis_exposure_pct": 16,
+      "crisis_exposure_pct": 17,
       "severity": "low",
       "base_price_eur_kg": 1.8,
       "current_price_eur_kg": 2.1,
@@ -2485,15 +2485,15 @@
         "v",
         "vg"
       ],
-      "exposure_low": 16,
-      "exposure_high": 16
+      "exposure_low": 17,
+      "exposure_high": 17
     },
     {
       "id": "chickpeas",
       "name": "Chickpeas",
       "category": "staples",
       "emoji": "🫘",
-      "crisis_exposure_pct": 16,
+      "crisis_exposure_pct": 17,
       "severity": "low",
       "base_price_eur_kg": 2.0,
       "current_price_eur_kg": 2.3,
@@ -2521,8 +2521,8 @@
         "v",
         "vg"
       ],
-      "exposure_low": 16,
-      "exposure_high": 16
+      "exposure_low": 17,
+      "exposure_high": 17
     },
     {
       "id": "tofu",
@@ -2572,7 +2572,7 @@
       "name": "Dried Beans",
       "category": "staples",
       "emoji": "🫘",
-      "crisis_exposure_pct": 16,
+      "crisis_exposure_pct": 17,
       "severity": "low",
       "base_price_eur_kg": 1.5,
       "current_price_eur_kg": 1.72,
@@ -2600,8 +2600,8 @@
         "v",
         "vg"
       ],
-      "exposure_low": 16,
-      "exposure_high": 16
+      "exposure_low": 17,
+      "exposure_high": 17
     },
     {
       "id": "quinoa",
