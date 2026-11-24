@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-11-23",
+  "last_updated": "2026-11-24",
   "crisis_start": "2026-02-28",
   "sources": {
     "oil_brent_usd": 92.94,
@@ -14,13 +14,13 @@
     "methanol_pre_crisis_usd_ton": 400.0,
     "exchange_rates": {
       "EUR": 1.0,
-      "GBP": 0.83673,
-      "JPY": 174.01,
-      "PHP": 69.851,
-      "USD": 1.0939,
-      "INR": 101.6395,
-      "BRL": 6.5611,
-      "AUD": 1.6532,
+      "GBP": 0.837,
+      "JPY": 174.39,
+      "PHP": 69.929,
+      "USD": 1.0963,
+      "INR": 101.867,
+      "BRL": 6.4349,
+      "AUD": 1.6507,
       "LKR": 331
     },
     "tipping_points": {
@@ -403,8 +403,8 @@
       "name": "Rice",
       "category": "grains",
       "emoji": "🍚",
-      "crisis_exposure_pct": 19,
-      "severity": "low",
+      "crisis_exposure_pct": 20,
+      "severity": "moderate",
       "base_price_eur_kg": 1.8,
       "current_price_eur_kg": 2.2,
       "projected_price_eur_kg": 2.6,
@@ -438,8 +438,8 @@
         "v",
         "vg"
       ],
-      "exposure_low": 19,
-      "exposure_high": 19
+      "exposure_low": 20,
+      "exposure_high": 20
     },
     {
       "id": "pasta",
@@ -2457,7 +2457,7 @@
       "name": "Lentils",
       "category": "staples",
       "emoji": "🫘",
-      "crisis_exposure_pct": 18,
+      "crisis_exposure_pct": 19,
       "severity": "low",
       "base_price_eur_kg": 1.8,
       "current_price_eur_kg": 2.1,
@@ -2485,15 +2485,15 @@
         "v",
         "vg"
       ],
-      "exposure_low": 18,
-      "exposure_high": 19
+      "exposure_low": 19,
+      "exposure_high": 20
     },
     {
       "id": "chickpeas",
       "name": "Chickpeas",
       "category": "staples",
       "emoji": "🫘",
-      "crisis_exposure_pct": 18,
+      "crisis_exposure_pct": 19,
       "severity": "low",
       "base_price_eur_kg": 2.0,
       "current_price_eur_kg": 2.3,
@@ -2521,8 +2521,8 @@
         "v",
         "vg"
       ],
-      "exposure_low": 18,
-      "exposure_high": 18
+      "exposure_low": 19,
+      "exposure_high": 20
     },
     {
       "id": "tofu",
@@ -2572,7 +2572,7 @@
       "name": "Dried Beans",
       "category": "staples",
       "emoji": "🫘",
-      "crisis_exposure_pct": 18,
+      "crisis_exposure_pct": 19,
       "severity": "low",
       "base_price_eur_kg": 1.5,
       "current_price_eur_kg": 1.72,
@@ -2600,8 +2600,8 @@
         "v",
         "vg"
       ],
-      "exposure_low": 18,
-      "exposure_high": 18
+      "exposure_low": 19,
+      "exposure_high": 20
     },
     {
       "id": "quinoa",
